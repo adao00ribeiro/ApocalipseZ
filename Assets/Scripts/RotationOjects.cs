@@ -53,7 +53,7 @@ namespace ApocalipseZ
         [Command(requiresAuthority = false)]
         public void CmdInteract(NetworkConnectionToClient sender = null)
         {
-            OnInteract(sender.identity.GetComponent<FpsPlayer>());
+            // OnInteract(sender.identity.GetComponent<FpsPlayer>());
         }
 
         public void OnInteract(IFpsPlayer player)

@@ -15,7 +15,7 @@ MonoBehaviour:
   GuidId: cf80967d-9004-4fd7-8943-fe0a3a25d998
   Type: 1
   Name: AK
-  isStackable: 1
+  isStackable: 0
   Thumbnail: {fileID: 21300000, guid: df98ff85ca3c6be469f4067838b0d2d8, type: 3}
   Description: Arma Ak
   maxStacksize: 4
@@ -24,4 +24,4 @@ MonoBehaviour:
   addSatiety: 0
   addHydratation: 0
   Durability: 100
-  Prefab: {fileID: 5834503735446302396, guid: b6b322d3cfec0044098358674715e1af, type: 3}
+  Prefab: {fileID: 8341400536769550694, guid: bde0dbe5ad29a3743a62a9f832b41697, type: 3}

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8b13a5473c22e94696564141049ab2a, type: 3}
-  m_Name: SCP_TextureSound
+  m_Name: DataTextureSound
   m_EditorClassIdentifier: 
   TextureType:
   - NomeGrupo: Grass

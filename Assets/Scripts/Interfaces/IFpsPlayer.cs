@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 using ApocalipseZ;
-public interface IFpsPlayer 
+public interface IFpsPlayer
 {
-   
-    IContainer GetInventory ( );
-    IContainer GetWeaponsSlots ( );
-    IContainer GetFastItems ( );
 
-    IMoviment GetMoviment ( );
-    PlayerStats GetPlayerStats ( );
+    IMoviment GetMoviment();
+    PlayerStats GetPlayerStats();
 
     [Command]
-    void CmdSpawBullet ( SpawBulletTransform spawBulletTransform , NetworkConnectionToClient networkConnectionToClient );
-    FirstPersonCamera GetFirstPersonCamera ( );
-    IWeaponManager GetWeaponManager ( );
+    void CmdSpawBullet(SpawBulletTransform spawBulletTransform, NetworkConnectionToClient networkConnectionToClient);
+    FirstPersonCamera GetFirstPersonCamera();
+    IWeaponManager GetWeaponManager();
+    Inventory GetInventory();
 }

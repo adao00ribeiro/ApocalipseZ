@@ -24,7 +24,7 @@ namespace ApocalipseZ
         private float normalSensY;
         public LayerMask layerNoWeapon;
         // Start is called before the first frame update
-        void Start()
+        void Init()
         {
             useCursor = transform.Find("UseCursor").gameObject;
             useText = useCursor.GetComponentInChildren<Text>();
@@ -52,7 +52,7 @@ namespace ApocalipseZ
         // Update is called once per frame
         void Update()
         {
-
+            return;
             if (weaponActive == null)
             {
                 cam.GetComponent<Camera>().fieldOfView = normalFOV;

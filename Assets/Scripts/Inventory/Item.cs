@@ -55,22 +55,20 @@ namespace ApocalipseZ
 
         public void OnInteract(IFpsPlayer player)
         {
-            IContainer inventory = player.GetInventory();
-            SSlotInventory slot = new SSlotInventory();
-            slot.SetSItem(dataItem);
-            slot.SetAmmo(Ammo);
-            slot.SetQuantity(dropQuantity);
+            Inventory inventory = player.GetInventory();
+            SlotInventoryTemp slot = new SlotInventoryTemp();
+            slot.guidid = dataItem.GuidId;
+            slot.Ammo = Ammo;
+            slot.Quantity = dropQuantity;
             Vector3 point = transform.position;
             if (inventory.AddItem(slot))
             {
-
                 DataAudio audioPickup = GameController.Instance.DataManager.GetDataAudio("Pickup");
                 GameController.Instance.SoundManager.PlayOneShot(transform.position, audioPickup.Audio);
                 if (IsServerSpaw)
                 {
                     GameController.Instance.TimerManager.Add(() =>
                     {
-
                         // SpawObjects.Spawn(ScriptableManager.Instance.GetPrefab(dataItem.sitem.Type), point);
                     }, 4);
                 }

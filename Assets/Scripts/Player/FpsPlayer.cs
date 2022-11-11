@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
-
 using UnityEngine.Events;
 using System;
 using Random = UnityEngine.Random;
@@ -10,22 +9,19 @@ using Random = UnityEngine.Random;
 namespace ApocalipseZ
 {
     //adicionar e conter components
-    [RequireComponent(typeof(NetworkTransform))]
+
     [RequireComponent(typeof(Moviment))]
     [RequireComponent(typeof(WeaponManager))]
     public class FpsPlayer : NetworkBehaviour, IFpsPlayer
     {
-      
-        public GameObject PrefabCanvasFpsPlayer;
+
+
         public event System.Action<FpsPlayer> OnLocalPlayerJoined;
-       // CanvasFpsPlayer CanvasFpsPlayer;
 
         IMoviment Moviment;
         IWeaponManager WeaponManager;
         IFastItemsManager FastItemsManager;
-        public Container WeaponsSlots;
-        public Container FastItems;
-        public Container Inventory;
+        public Inventory Inventory;
         IInteractObjects InteractObjects;
         PlayerStats PlayerStats;
         FirstPersonCamera FirstPersonCamera;
@@ -43,102 +39,17 @@ namespace ApocalipseZ
         // Start is called before the first frame update
         private void Awake()
         {
-          
-            Container[] cont = GetComponents<Container>();
-            //
+
+            Inventory = GetComponent<Inventory>();
             Moviment = GetComponent<Moviment>();
             WeaponManager = GetComponent<WeaponManager>();
             FastItemsManager = GetComponent<FastItemsManager>();
-            for (int i = 0; i < cont.Length; i++)
-            {
-                switch (cont[i].type)
-                {
-                    case TypeContainer.INVENTORY:
-                        Inventory = cont[i];
-                        break;
-                    case TypeContainer.FASTITEMS:
-                        FastItems = cont[i];
-                        break;
-                    case TypeContainer.WEAPONS:
-                        WeaponsSlots = cont[i];
-                        break;
-                }
-            }
-
             InteractObjects = transform.Find("Camera & Recoil").GetComponent<InteractObjects>();
             AnimatorController = transform.Find("Ch35_nonPBR").GetComponent<Animator>();
             AnimatorWeaponHolderController = transform.Find("Camera & Recoil/Weapon holder").GetComponent<Animator>();
             PlayerStats = GetComponent<PlayerStats>();
             FirstPersonCamera = transform.Find("Camera & Recoil").GetComponent<FirstPersonCamera>();
         }
-        [Server]
-        public void DroppAllItems()
-        {
-            print("dropando");
-            IContainer containerWeapon = GetWeaponsSlots();
-            IContainer containerInventory = GetInventory();
-            IContainer containerFastItems = GetFastItems();
-
-            for (int i = 0; i < containerWeapon.GetMaxSlots(); i++)
-            {
-                SSlotInventory slotDropItem = containerWeapon.GetSlotContainer(i);
-                if (slotDropItem != null)
-                {
-                    GameObject dropItemTemp = Instantiate(slotDropItem.GetDataItem().Prefab);
-                    dropItemTemp.GetComponent<Item>().SetAmmo(slotDropItem.GetAmmo());
-                    dropItemTemp.transform.position = GetFirstPersonCamera().transform.position + GetFirstPersonCamera().transform.forward * 0.5f;
-                    NetworkServer.Spawn(dropItemTemp);
-                    containerWeapon.RemoveItem(i);
-                }
-            }
-            for (int i = 0; i < containerInventory.GetMaxSlots(); i++)
-            {
-                SSlotInventory slotDropItem = containerWeapon.GetSlotContainer(i);
-                if (slotDropItem != null)
-                {
-                    GameObject dropItemTemp = Instantiate(slotDropItem.GetDataItem().Prefab);
-                    dropItemTemp.GetComponent<Item>().SetAmmo(slotDropItem.GetAmmo());
-                    dropItemTemp.transform.position = GetFirstPersonCamera().transform.position + GetFirstPersonCamera().transform.forward * 0.5f;
-                    NetworkServer.Spawn(dropItemTemp);
-                    containerInventory.RemoveItem(i);
-                }
-            }
-            for (int i = 0; i < containerFastItems.GetMaxSlots(); i++)
-            {
-                SSlotInventory slotDropItem = containerWeapon.GetSlotContainer(i);
-                if (slotDropItem != null)
-                {
-                    GameObject dropItemTemp = Instantiate(slotDropItem.GetDataItem().Prefab);
-                    dropItemTemp.GetComponent<Item>().SetAmmo(slotDropItem.GetAmmo());
-                    dropItemTemp.transform.position = GetFirstPersonCamera().transform.position + GetFirstPersonCamera().transform.forward * 0.5f;
-                    NetworkServer.Spawn(dropItemTemp);
-                    containerFastItems.RemoveItem(i);
-                }
-            }
-        }
-        [ClientRpc]
-        public void TargetRespaw()
-        {
-            transform.position = PlayerSpawPoints.Instance.GetPointSpaw();
-            AnimatorController.Play("Walk");
-            FirstPersonCamera.CameraAlive();
-            Moviment.EnableCharacterController();
-        }
-
-        [Command]
-        public void CmdDropAllItems(NetworkConnectionToClient sender = null)
-        {
-
-            NetworkIdentity opponentIdentity = sender.identity.GetComponent<NetworkIdentity>();
-            FpsPlayer fpstemp = sender.identity.GetComponent<FpsPlayer>();
-            IContainer containerWeapon = fpstemp.GetWeaponsSlots();
-            // IContainer containerInventory = fpstemp.GetInventory();
-            // IContainer containerFastItems = fpstemp.GetFastItems();
-            //
-            // containerWeapon.TargetGetContainer(opponentIdentity.connectionToClient, TypeContainer.WEAPONS, containerWeapon.GetContainerTemp());
-
-        }
-
         private void Start()
         {
             if (isLocalPlayer)
@@ -161,26 +72,57 @@ namespace ApocalipseZ
             }
             */
             Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-            WeaponManager.SetFpsPlayer(this);
-            FastItemsManager.SetFpsPlayer(this);
-          // CanvasFpsPlayer = Instantiate(PrefabCanvasFpsPlayer).GetComponent<CanvasFpsPlayer>();
-          // OnLocalPlayerJoined += CanvasFpsPlayer.Init; ;
-          // OnLocalPlayerJoined?.Invoke(this);
+
+            CanvasFpsPlayer CanvasFpsPlayer = GameObject.FindObjectOfType<CanvasFpsPlayer>();
+            CanvasFpsPlayer.SetPlayerStats(PlayerStats);
+            CanvasFpsPlayer.SetInventory(Inventory);
+
             CmdSetupPlayer("player", color);
         }
         void PlayerColorChanged(Color32 _, Color32 newPlayerColor)
         {
+            /*
+        for (int i = 0; i < mesh.Length; i++)
+        {
+            Material[] mats = mesh[i].GetComponent<SkinnedMeshRenderer>().materials;
 
-            for (int i = 0; i < mesh.Length; i++)
+            for (int j = 0; j < mats.Length; j++)
             {
-                Material[] mats = mesh[i].GetComponent<SkinnedMeshRenderer>().materials;
-
-                for (int j = 0; j < mats.Length; j++)
-                {
-                    mats[j].color = newPlayerColor;
-                }
+                mats[j].color = newPlayerColor;
             }
         }
+        */
+        }
+        [Server]
+        public void DroppAllItems()
+        {
+
+
+        }
+        [ClientRpc]
+        public void TargetRespaw()
+        {
+            transform.position = PlayerSpawPoints.Instance.GetPointSpaw();
+            AnimatorController.Play("Walk");
+            FirstPersonCamera.CameraAlive();
+            Moviment.EnableCharacterController();
+        }
+
+        [Command]
+        public void CmdDropAllItems(NetworkConnectionToClient sender = null)
+        {
+
+            NetworkIdentity opponentIdentity = sender.identity.GetComponent<NetworkIdentity>();
+            FpsPlayer fpstemp = sender.identity.GetComponent<FpsPlayer>();
+
+            // IContainer containerInventory = fpstemp.GetInventory();
+            // IContainer containerFastItems = fpstemp.GetFastItems();
+            //
+            // containerWeapon.TargetGetContainer(opponentIdentity.connectionToClient, TypeContainer.WEAPONS, containerWeapon.GetContainerTemp());
+
+        }
+
+
         [Command]
         public void CmdSetupPlayer(string _name, Color _col)
         {
@@ -196,7 +138,7 @@ namespace ApocalipseZ
 
         public override void OnStopLocalPlayer()
         {
-          //  Destroy(CanvasFpsPlayer.gameObject);
+            //  Destroy(CanvasFpsPlayer.gameObject);
         }
         // Update is called once per frame
         void Update()
@@ -205,7 +147,7 @@ namespace ApocalipseZ
             {
                 return;
             }
-          //  Animation();
+            //  Animation();
             if (PlayerStats.IsDead())
             {
                 Moviment.DisableCharacterController();
@@ -214,23 +156,19 @@ namespace ApocalipseZ
                 AnimatorWeaponHolderController.Play("Unhide");
                 return;
             }
-
             Moviment.UpdateMoviment();
             InteractObjects.UpdateInteract();
             FirstPersonCamera.UpdateCamera();
-
             if (InputManager.GetLanterna())
             {
                 Lanterna.enabled = !Lanterna.enabled;
             }
-
             //  transform.rotation = Quaternion.Euler ( 0 , GameObject.FindObjectOfType<CinemachinePovExtension> ( ).GetStartrotation ( ).x , 0 );
-
         }
 
         public void Animation()
         {
-           
+
             //animatorcontroller
             AnimatorController.SetFloat("Horizontal", InputManager.GetMoviment().x);
             AnimatorController.SetFloat("Vertical", InputManager.GetMoviment().y);
@@ -259,18 +197,7 @@ namespace ApocalipseZ
         {
             return Moviment;
         }
-        public IContainer GetInventory()
-        {
-            return Inventory;
-        }
-        public IContainer GetFastItems()
-        {
-            return FastItems;
-        }
-        public IContainer GetWeaponsSlots()
-        {
-            return WeaponsSlots;
-        }
+
         public IWeaponManager GetWeaponManager()
         {
             return WeaponManager;
@@ -279,7 +206,7 @@ namespace ApocalipseZ
         {
             return PlayerStats;
         }
-       
+
         public FirstPersonCamera GetFirstPersonCamera()
         {
             return FirstPersonCamera;
@@ -297,24 +224,7 @@ namespace ApocalipseZ
             }
         }
 
-        public IContainer GetContainer(TypeContainer type)
-        {
-            IContainer tempContainer = null;
-            switch (type)
-            {
-                case TypeContainer.INVENTORY:
-                    tempContainer = GetInventory();
-                    break;
-                case TypeContainer.FASTITEMS:
-                    tempContainer = GetFastItems();
-                    break;
-                case TypeContainer.WEAPONS:
-                    tempContainer = GetWeaponsSlots();
-                    break;
-            }
 
-            return tempContainer;
-        }
         #region command
         [Command]
         public void CmdSpawBullet(SpawBulletTransform spawbulettransform, NetworkConnectionToClient sender = null)
@@ -323,6 +233,11 @@ namespace ApocalipseZ
             FpsPlayer fpstemp = sender.identity.GetComponent<FpsPlayer>();
             //NetworkServer.Spawn ( Instantiate ( ScriptableManager.bullet , spawbulettransform.Position , spawbulettransform.Rotation ) );
             fpstemp.RpcSpawBullet(spawbulettransform);
+        }
+
+        public Inventory GetInventory()
+        {
+            return Inventory;
         }
         #endregion
     }

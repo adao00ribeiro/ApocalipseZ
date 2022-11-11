@@ -11,58 +11,58 @@ namespace ApocalipseZ
         public float speed;
         public bool IsOpen;
 
-        [SerializeField]private Vector3 PosicaoAberto;
-        [SerializeField]private Vector3 PosicaoFechado;
+        [SerializeField] private Vector3 PosicaoAberto;
+        [SerializeField] private Vector3 PosicaoFechado;
 
 
-        private void FixedUpdate ( )
+        private void FixedUpdate()
         {
             if (IsOpen)
             {
-                transform.localPosition = Vector3.MoveTowards ( transform.localPosition , PosicaoAberto , speed * Time.deltaTime );
+                transform.localPosition = Vector3.MoveTowards(transform.localPosition, PosicaoAberto, speed * Time.deltaTime);
             }
             else
             {
-                transform.localPosition = Vector3.MoveTowards ( transform.localPosition , PosicaoFechado , speed * Time.deltaTime );
+                transform.localPosition = Vector3.MoveTowards(transform.localPosition, PosicaoFechado, speed * Time.deltaTime);
             }
-          
+
         }
 
 
-        [Command ( requiresAuthority = false )]
-        public void CmdInteract ( NetworkConnectionToClient sender = null )
+        [Command(requiresAuthority = false)]
+        public void CmdInteract(NetworkConnectionToClient sender = null)
         {
-            OnInteract ( sender.identity.GetComponent<FpsPlayer> ( ) );
+            // OnInteract ( sender.identity.GetComponent<FpsPlayer> ( ) );
         }
 
-        public void EndFocus ( )
+        public void EndFocus()
         {
-            throw new System.NotImplementedException ( );
+            throw new System.NotImplementedException();
         }
 
-        public string GetTitle ( )
+        public string GetTitle()
         {
             return nameObject;
         }
 
-        public void OnInteract ( IFpsPlayer player )
+        public void OnInteract(IFpsPlayer player)
         {
             IsOpen = !IsOpen;
 
-            if ( IsOpen )
+            if (IsOpen)
             {
-               
+
             }
             else
             {
-             
+
             }
         }
 
-        public void StartFocus ( )
+        public void StartFocus()
         {
-            throw new System.NotImplementedException ( );
+            throw new System.NotImplementedException();
         }
-            
+
     }
 }

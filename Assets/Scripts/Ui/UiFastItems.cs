@@ -19,27 +19,15 @@ namespace ApocalipseZ
         }
         public void SetFpsPlayer(IFpsPlayer _player)
         {
-            player = _player;
 
-            FastSlot.ForEach((item) =>
-            {
-                item.SetFpsPlayer(player);
-                item.SetContainer(player.GetFastItems());
-            });
-            player.GetFastItems().OnContainerAltered += UpdateSlotsFastItems; ;
-
-            UpdateSlotsFastItems();
         }
         private void OnDestroy()
         {
-            player.GetFastItems().OnContainerAltered -= UpdateSlotsFastItems; ;
+            // player.GetFastItems().OnContainerAltered -= UpdateSlotsFastItems; ;
         }
         public void UpdateSlotsFastItems()
         {
-            for (int i = 0; i < FastSlot.Count; i++)
-            {
-                FastSlot[i].UpdateSlot();
-            }
+
 
         }
 

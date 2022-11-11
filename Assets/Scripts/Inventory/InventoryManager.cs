@@ -5,13 +5,13 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 namespace ApocalipseZ
 {
-    public class InventoryManager : MonoBehaviour,IInventoryManager
+    public class InventoryManager : MonoBehaviour, IInventoryManager
     {
-       Canvas canvas;
-       IFpsPlayer player;
-       UiInventory uiInventory;
-       [SerializeField] MotionBlur motionBlur;
-       [SerializeField] Volume volume;
+        Canvas canvas;
+        IFpsPlayer player;
+        UiInventory uiInventory;
+        [SerializeField] MotionBlur motionBlur;
+        [SerializeField] Volume volume;
 
         public static bool showInventory = false;
         public bool isOpen = true;
@@ -20,41 +20,41 @@ namespace ApocalipseZ
         {
             get
             {
-                if ( PInputManager == null )
+                if (PInputManager == null)
                 {
-                    PInputManager = GameObject.Find ( "InputManager" ).GetComponent<InputManager> ( );
+                    PInputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
                 }
                 return PInputManager;
             }
         }
         private void Start()
         {
-            uiInventory = transform.Find ("HUD/InventoryPanel" ).GetComponent<UiInventory> ( );
+            uiInventory = transform.Find("HUD/InventoryPanel").GetComponent<UiInventory>();
             canvas = GetComponent<Canvas>();
 
-            volume = GameObject.Find ( "PostProcessing" ).GetComponent<Volume>();
+            volume = GameObject.Find("PostProcessing").GetComponent<Volume>();
 
             VolumeProfile proflile = volume.sharedProfile;
             volume.profile.TryGet(out motionBlur);
-           
-            
+
+
         }
 
         private void Update()
         {
-            if (player == null )
+            if (player == null)
             {
                 return;
             }
-            if (InputManager.GetInventory() && !player.GetPlayerStats ( ).IsDead( ))
+            if (InputManager.GetInventory() && !player.GetPlayerStats().IsDead())
             {
                 showInventory = !showInventory;
             }
 
             if (showInventory)
             {
-               
-                InventoryOpen ();
+
+                InventoryOpen();
             }
             else
             {
@@ -64,8 +64,8 @@ namespace ApocalipseZ
         public void SetFpsPlayer(IFpsPlayer _player)
         {
             player = _player;
-            uiInventory.SetFpsPlayer ( _player );
-            InventoryClose ( );
+
+            InventoryClose();
         }
         public void InventoryOpen()
         {
@@ -74,8 +74,8 @@ namespace ApocalipseZ
             else
             {
                 canvas.enabled = true;
-             
-                 motionBlur.active = true;
+
+                motionBlur.active = true;
                 Time.timeScale = 0;
                 isOpen = true;
 

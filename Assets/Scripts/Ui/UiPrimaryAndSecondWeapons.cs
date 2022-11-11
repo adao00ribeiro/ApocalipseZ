@@ -32,26 +32,25 @@ namespace ApocalipseZ
             {
                 return;
             }
-            UiPrimaryWeapon.UpdateSlot();
-            UiSecondWeapon.UpdateSlot();
+
         }
 
         internal void SetFpsPlayer(IFpsPlayer _player)
         {
             player = _player;
-            UiPrimaryWeapon.SetFpsPlayer(_player);
-            UiPrimaryWeapon.SetContainer(_player.GetWeaponsSlots());
 
-            UiSecondWeapon.SetFpsPlayer(_player);
-            UiSecondWeapon.SetContainer(_player.GetWeaponsSlots());
+            //UiPrimaryWeapon.SetContainer(_player.GetWeaponsSlots());
 
-            player.GetWeaponsSlots().OnContainerAltered += UpdateSlots; ;
+
+            //UiSecondWeapon.SetContainer(_player.GetWeaponsSlots());
+
+            //player.GetWeaponsSlots().OnContainerAltered += UpdateSlots; ;
             UpdateSlots();
         }
 
         private void OnDestroy()
         {
-            player.GetWeaponsSlots().OnContainerAltered -= UpdateSlots; ;
+            // player.GetWeaponsSlots().OnContainerAltered -= UpdateSlots; ;
         }
     }
 }

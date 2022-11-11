@@ -5,22 +5,22 @@ using UnityEngine.UI;
 
 namespace ApocalipseZ
 {
-   
+
     public class InteractObjects : MonoBehaviour, IInteractObjects
     {
         [Tooltip("The distance within which you can pick up item")]
         public float distance = 1.5f;
 
-       [SerializeField]private IInteract interact;
+        [SerializeField] private IInteract interact;
 
-        [SerializeField]UiFpsScopeCursorReticles PUiFpsScopeCursorReticles;
+        [SerializeField] UiFpsScopeCursorReticles PUiFpsScopeCursorReticles;
         public UiFpsScopeCursorReticles UiFpsScopeCursorReticles
         {
             get
             {
-                if ( PUiFpsScopeCursorReticles ==null)
+                if (PUiFpsScopeCursorReticles == null)
                 {
-                    PUiFpsScopeCursorReticles = GameObject.FindObjectOfType<UiFpsScopeCursorReticles> ( );
+                    PUiFpsScopeCursorReticles = GameObject.FindObjectOfType<UiFpsScopeCursorReticles>();
                 }
                 return PUiFpsScopeCursorReticles;
             }
@@ -31,47 +31,47 @@ namespace ApocalipseZ
         {
             get
             {
-                if ( PInputManager == null )
+                if (PInputManager == null)
                 {
                     PInputManager = InputManager.Instance;
                 }
                 return PInputManager;
             }
         }
-       
+
 
         // Update is called once per frame
-       public void UpdateInteract ( )
+        public void UpdateInteract()
         {
-          
+
             RaycastHit hit;
 
-          
-            if ( Physics.Raycast ( transform.position , transform.forward , out hit , distance, layer ) )
+
+            if (Physics.Raycast(transform.position, transform.forward, out hit, distance, layer))
             {
-                 interact =  hit.collider.gameObject.GetComponent<IInteract> ( );
-                
-                if ( interact !=null )
+                interact = hit.collider.gameObject.GetComponent<IInteract>();
+
+                if (interact != null)
                 {
-                
-                    UiFpsScopeCursorReticles.EnableCursor ( );
-                    UiFpsScopeCursorReticles.SetUseText ( interact.GetTitle ( ) );
-                 
-                   
+
+                    // UiFpsScopeCursorReticles.EnableCursor ( );
+                    // UiFpsScopeCursorReticles.SetUseText ( interact.GetTitle ( ) );
+
+
                     if (InputManager.GetUse())
                     {
-                        interact.CmdInteract ( );
+                        interact.CmdInteract();
                         interact = null;
-                        UiFpsScopeCursorReticles.SetUseText ( "" );
+                        //UiFpsScopeCursorReticles.SetUseText ( "" );
                     }
 
                 }
                 else
                 {
-                  //  UiFpsScopeCursorReticles.DisableCursor ( );
-                   // UiFpsScopeCursorReticles.SetUseText ( "" );
+                    //  UiFpsScopeCursorReticles.DisableCursor ( );
+                    // UiFpsScopeCursorReticles.SetUseText ( "" );
                 }
-             
+
             }
             else
             {
@@ -80,7 +80,7 @@ namespace ApocalipseZ
             }
         }
 
-      
+
 
     }
 }

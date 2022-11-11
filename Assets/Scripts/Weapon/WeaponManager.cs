@@ -55,9 +55,9 @@ namespace ApocalipseZ
         }
         public void SetFpsPlayer(FpsPlayer player)
         {
-            fpsplayer = player;
+            //fpsplayer = player;
             playerTransform = player.gameObject.transform;
-            container = player.GetWeaponsSlots();
+            // container = player.GetWeaponsSlots();
             container.OnContainerAltered += SlotChange;
         }
         private void OnDestroy()
@@ -67,7 +67,7 @@ namespace ApocalipseZ
         // Update is called once per frame
         void Update()
         {
-          //  WeaponThir.position = pivoWeaponThir.position;
+            //  WeaponThir.position = pivoWeaponThir.position;
             SlotInput();
             if (IsChekInventory)
             {
@@ -204,6 +204,7 @@ namespace ApocalipseZ
         }
         private void SlotChange()
         {
+            return;
             SSlotInventory slottemp = container.GetSlotContainer(switchSlotIndex);
             if (slottemp != null)
             {

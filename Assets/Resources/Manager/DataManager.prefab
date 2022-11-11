@@ -46,3 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ListArmsWeapon: []
   ListItems: []
+  ListAudios: []
+  ListParticles: []
+  ScriptableTextureSounds: {fileID: 11400000, guid: 08c0806316a4246458ad40ebe55433dd,
+    type: 2}

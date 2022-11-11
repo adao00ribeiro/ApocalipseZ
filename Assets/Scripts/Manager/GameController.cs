@@ -23,7 +23,7 @@ namespace ApocalipseZ
 
         //privados 
         GameObject SpawPoint;
-
+        private CanvasFpsPlayer canvasFpsPlayer;
         private DataManager dataManager;
         private SceneManager _sceneManager;
         private InputManager Input;
@@ -50,6 +50,7 @@ namespace ApocalipseZ
 
         public void InitManagers()
         {
+
             Instantiate(PrefabDataManager, transform);
             Instantiate(PrefabInputManager, transform);
             Instantiate(PrefabSoundManager, transform);
@@ -106,6 +107,18 @@ namespace ApocalipseZ
             {
 
                 return _instance;
+            }
+        }
+
+        public CanvasFpsPlayer CanvasFpsPlayer
+        {
+            get
+            {
+                if (canvasFpsPlayer == null)
+                {
+                    canvasFpsPlayer = GameObject.FindObjectOfType<CanvasFpsPlayer>();
+                }
+                return canvasFpsPlayer;
             }
         }
         public DataManager DataManager

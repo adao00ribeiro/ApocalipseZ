@@ -13,7 +13,6 @@ namespace ApocalipseZ
         [SerializeField] private DataItem[] ListItems;
         [SerializeField] private DataAudio[] ListAudios;
         [SerializeField] private DataParticles[] ListParticles;
-
         [SerializeField] private ScriptableTextureSounds ScriptableTextureSounds;
         void Start()
         {
@@ -42,6 +41,18 @@ namespace ApocalipseZ
             foreach (DataItem item in ListItems)
             {
                 if (item.Name == Name)
+                {
+                    temp = item;
+                }
+            }
+            return temp;
+        }
+        internal DataItem GetDataItemById(string guidId)
+        {
+            DataItem temp = null;
+            foreach (DataItem item in ListItems)
+            {
+                if (item.GuidId == guidId)
                 {
                     temp = item;
                 }

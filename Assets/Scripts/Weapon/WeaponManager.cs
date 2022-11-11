@@ -67,7 +67,7 @@ namespace ApocalipseZ
         // Update is called once per frame
         void Update()
         {
-            WeaponThir.position = pivoWeaponThir.position;
+          //  WeaponThir.position = pivoWeaponThir.position;
             SlotInput();
             if (IsChekInventory)
             {

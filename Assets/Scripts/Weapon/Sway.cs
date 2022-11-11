@@ -26,7 +26,7 @@ namespace ApocalipseZ
             {
                 if ( PInputManager == null )
                 {
-                    PInputManager = GameObject.Find ( "InputManager" ).GetComponent<InputManager> ( );
+                    PInputManager = GameController.Instance.InputManager;
                 }
                 return PInputManager;
             }

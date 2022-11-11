@@ -18,9 +18,9 @@ namespace ApocalipseZ {
         FirstPersonCamera FirstPersonCamera;
         private void Awake ( )
         {
-            volume = GameObject.Find ( "PostProcessing" ).GetComponent<Volume> ( );
-            VolumeProfile proflile = volume.sharedProfile;
-            volume.profile.TryGet ( out motionBlur );
+          //  volume = GameObject.Find ( "PostProcessing" ).GetComponent<Volume> ( );
+          //  VolumeProfile proflile = volume.sharedProfile;
+           // volume.profile.TryGet ( out motionBlur );
         }
 
         public static bool IsInventoryOpen = false;

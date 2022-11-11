@@ -13,6 +13,8 @@ namespace ApocalipseZ
         [SerializeField] private DataItem[] ListItems;
         [SerializeField] private DataAudio[] ListAudios;
         [SerializeField] private DataParticles[] ListParticles;
+
+        [SerializeField] private ScriptableTextureSounds ScriptableTextureSounds;
         void Start()
         {
             ListArmsWeapon = Resources.LoadAll<DataArmsWeapon>("Datas/DataArmsWeapon");
@@ -75,7 +77,7 @@ namespace ApocalipseZ
 
         internal ScriptableTextureSounds GetScriptableTextureSounds()
         {
-            throw new NotImplementedException();
+            return ScriptableTextureSounds;
         }
     }
 }

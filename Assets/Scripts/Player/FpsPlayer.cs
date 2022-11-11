@@ -15,10 +15,10 @@ namespace ApocalipseZ
     [RequireComponent(typeof(WeaponManager))]
     public class FpsPlayer : NetworkBehaviour, IFpsPlayer
     {
-        public NetworkConnectionToClient conn;
+      
         public GameObject PrefabCanvasFpsPlayer;
         public event System.Action<FpsPlayer> OnLocalPlayerJoined;
-        CanvasFpsPlayer CanvasFpsPlayer;
+       // CanvasFpsPlayer CanvasFpsPlayer;
 
         IMoviment Moviment;
         IWeaponManager WeaponManager;
@@ -43,8 +43,7 @@ namespace ApocalipseZ
         // Start is called before the first frame update
         private void Awake()
         {
-            conn = this.connectionToClient;
-
+          
             Container[] cont = GetComponents<Container>();
             //
             Moviment = GetComponent<Moviment>();
@@ -155,19 +154,18 @@ namespace ApocalipseZ
         public override void OnStartLocalPlayer()
         {
 
-            //
+            /*
             for (int i = 0; i < mesh.Length; i++)
             {
                 mesh[i].layer = 7;
             }
-            //
+            */
             Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-
             WeaponManager.SetFpsPlayer(this);
             FastItemsManager.SetFpsPlayer(this);
-            CanvasFpsPlayer = Instantiate(PrefabCanvasFpsPlayer).GetComponent<CanvasFpsPlayer>();
-            OnLocalPlayerJoined += CanvasFpsPlayer.Init; ;
-            OnLocalPlayerJoined?.Invoke(this);
+          // CanvasFpsPlayer = Instantiate(PrefabCanvasFpsPlayer).GetComponent<CanvasFpsPlayer>();
+          // OnLocalPlayerJoined += CanvasFpsPlayer.Init; ;
+          // OnLocalPlayerJoined?.Invoke(this);
             CmdSetupPlayer("player", color);
         }
         void PlayerColorChanged(Color32 _, Color32 newPlayerColor)
@@ -198,7 +196,7 @@ namespace ApocalipseZ
 
         public override void OnStopLocalPlayer()
         {
-            Destroy(CanvasFpsPlayer.gameObject);
+          //  Destroy(CanvasFpsPlayer.gameObject);
         }
         // Update is called once per frame
         void Update()
@@ -207,7 +205,7 @@ namespace ApocalipseZ
             {
                 return;
             }
-            Animation();
+          //  Animation();
             if (PlayerStats.IsDead())
             {
                 Moviment.DisableCharacterController();
@@ -232,6 +230,7 @@ namespace ApocalipseZ
 
         public void Animation()
         {
+           
             //animatorcontroller
             AnimatorController.SetFloat("Horizontal", InputManager.GetMoviment().x);
             AnimatorController.SetFloat("Vertical", InputManager.GetMoviment().y);
@@ -280,10 +279,7 @@ namespace ApocalipseZ
         {
             return PlayerStats;
         }
-        public NetworkConnectionToClient GetConnection()
-        {
-            return conn;
-        }
+       
         public FirstPersonCamera GetFirstPersonCamera()
         {
             return FirstPersonCamera;
@@ -295,7 +291,7 @@ namespace ApocalipseZ
             {
                 if (PInputManager == null)
                 {
-                    PInputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+                    PInputManager = GameController.Instance.InputManager;
                 }
                 return PInputManager;
             }

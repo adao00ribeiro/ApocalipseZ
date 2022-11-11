@@ -68,15 +68,15 @@ namespace ApocalipseZ
                 }
                 else
                 {
-                    UiFpsScopeCursorReticles.DisableCursor ( );
-                    UiFpsScopeCursorReticles.SetUseText ( "" );
+                  //  UiFpsScopeCursorReticles.DisableCursor ( );
+                   // UiFpsScopeCursorReticles.SetUseText ( "" );
                 }
              
             }
             else
             {
-                UiFpsScopeCursorReticles.DisableCursor( );
-                UiFpsScopeCursorReticles.SetUseText ("");
+                //UiFpsScopeCursorReticles.DisableCursor( );
+                //UiFpsScopeCursorReticles.SetUseText ("");
             }
         }
 

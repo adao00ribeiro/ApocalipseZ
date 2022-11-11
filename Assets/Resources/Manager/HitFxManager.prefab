@@ -41,9 +41,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 378486619822342879}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b02280f402104ae46a63c48047aa13c4, type: 3}
+  m_Script: {fileID: 11500000, guid: 30e700bc0802be54192a203400f34441, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DataManager: {fileID: 0}
   objConcreteHitFX: {fileID: 0}
   objWoodHitFX: {fileID: 0}
   objDirtHitFX: {fileID: 0}

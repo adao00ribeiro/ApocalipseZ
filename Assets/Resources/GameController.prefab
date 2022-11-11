@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 121012257842986411, guid: 75815b464fcf01a4faf1afdeb599cedf, type: 3}
   PrefabDataManager: {fileID: 885607629, guid: 83f129e825b6bb84896c61aad2c8d0d4, type: 3}
-  PrefabSceneManager: {fileID: 5450615164125794720, guid: edaa22c13d21a814bab1c348067fdbf3,
+  PrefabSceneManager: {fileID: 5450615164125794720, guid: ff92e2d9f61d01141929e0fc2db38cb5,
     type: 3}
   PrefabInputManager: {fileID: -5106743470174388122, guid: c1d2ca4a58606984f99c81d2a2de928e,
     type: 3}

@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8b13a5473c22e94696564141049ab2a, type: 3}
+  m_Name: SCP_TextureSound
+  m_EditorClassIdentifier: 
+  TextureType:
+  - NomeGrupo: Grass
+    textures:
+    - {fileID: 2800000, guid: 2da5b1647d91761429a14e1b39899ad5, type: 3}
+    - {fileID: 2800000, guid: 07a2bc919ef9e4948bf07003e9d1fc4e, type: 3}
+    footStepSounds:
+    - {fileID: 8300000, guid: 5a552d319f7d5714a9036a2a1b22b111, type: 3}
+    - {fileID: 8300000, guid: 8a77b54effa5a43469103d332b13c30a, type: 3}
+    - {fileID: 8300000, guid: f6a92dc20e89521439dfbb817b4613b7, type: 3}
+    - {fileID: 8300000, guid: 553d0b80391181d4f8c9ebbb5b8e1804, type: 3}
+    - {fileID: 8300000, guid: 124c41070b30f374082cedb82cc3d29c, type: 3}
+    - {fileID: 8300000, guid: 61e7fd31bd19fcc4f9611974277e1bf9, type: 3}
+    - {fileID: 8300000, guid: da52a7e9f2b6c13488243726184ae554, type: 3}
+  - NomeGrupo: Dirt
+    textures: []
+    footStepSounds:
+    - {fileID: 8300000, guid: a57cd709ea90cea4e9b52c4399740e0f, type: 3}
+    - {fileID: 8300000, guid: 21d650d1b6089e140af99e2e23c2b35c, type: 3}
+    - {fileID: 8300000, guid: 6e6cdbb41c3125e4e8ef0f4912a199ea, type: 3}
+    - {fileID: 8300000, guid: d73612ccfcd0efe499e066ba77fd677b, type: 3}
+  - NomeGrupo: Metal
+    textures: []
+    footStepSounds:
+    - {fileID: 8300000, guid: 8a0e25032157f3f4a96bac6967b8ad4f, type: 3}
+    - {fileID: 8300000, guid: e30f5bbe22de48943b33a25a16d80c75, type: 3}
+    - {fileID: 8300000, guid: 5d2432f0c62ea6c41a71bce4ca5c5414, type: 3}
+    - {fileID: 8300000, guid: 8474ea0f9ac1b4c42a16fdeb7e4e989f, type: 3}
+  - NomeGrupo: Wood
+    textures: []
+    footStepSounds:
+    - {fileID: 8300000, guid: 905bf8644d44ee54786026a919e4d34b, type: 3}
+    - {fileID: 8300000, guid: ee36de9a5045348439e47d5a9e376c5e, type: 3}
+    - {fileID: 8300000, guid: cfee90e42a9ff5a41b20655a2c462b5c, type: 3}
+    - {fileID: 8300000, guid: 77bba0beafd282f438465ed7d31c0442, type: 3}
+  - NomeGrupo: Rock
+    textures: []
+    footStepSounds:
+    - {fileID: 8300000, guid: cbf7daaa78e3cc14096fad85e4327da5, type: 3}
+    - {fileID: 8300000, guid: 4aaac69f1c80f044697db0b535b41fbf, type: 3}
+    - {fileID: 8300000, guid: c66725f9433541d4398a2083034e39d2, type: 3}
+    - {fileID: 8300000, guid: 379ae9f708066084588d1633925c3021, type: 3}
+    - {fileID: 8300000, guid: 36a0a6bf34942f4409b32a2ce7b8f73f, type: 3}
+    - {fileID: 8300000, guid: 058a6bcc871960c469805e970beaec85, type: 3}
+    - {fileID: 8300000, guid: 8dae408ffed25e642bbeb1ce36eeb163, type: 3}
+  - NomeGrupo: Concrete
+    textures:
+    - {fileID: 2800000, guid: 8c79a4f572e038b46abfc0905143901e, type: 3}
+    footStepSounds:
+    - {fileID: 8300000, guid: 9ea11a2d13d536e4e8441a0f5895995c, type: 3}
+    - {fileID: 8300000, guid: 203ac8b6f07070e4f93f1c1a6fff06c3, type: 3}
+    - {fileID: 8300000, guid: ac6649006dbee9e4685752e124111da7, type: 3}
+    - {fileID: 8300000, guid: f42914d98b070f741b2feee96a2988ee, type: 3}
+    - {fileID: 8300000, guid: feb62160ad1f8334ab037017b843d162, type: 3}
+    - {fileID: 8300000, guid: 001f691d110d55648871a03f446ffa08, type: 3}
+    - {fileID: 8300000, guid: 6478d7fb30f301b4fa8f74d5d1dad094, type: 3}
+    - {fileID: 8300000, guid: f1547ad8fbfa4f24d83e5a445aee860d, type: 3}
+    - {fileID: 8300000, guid: 47832b56ccba5bc408b1d5aac1871746, type: 3}
+    - {fileID: 8300000, guid: 3d132da7af60f1145a3deb6a8bc42a08, type: 3}

@@ -25,15 +25,7 @@ namespace ApocalipseZ
         PlayerStats stats;
         FirstPersonCamera FirstPersonCamera;
 
-
-        [SerializeField] private UISlotItem PrefabUiSlotItem;
-        public static UISlotItem SlotSelecionado;
-        public static UISlotItem SlotEnter;
-
-        public static void Instancia(GameObject clone)
-        {
-            SlotSelecionado = Instantiate(clone).GetComponent<UISlotItem>();
-        }
+        
         private void Awake()
         {
             InputManager = GameController.Instance.InputManager;
@@ -65,7 +57,7 @@ namespace ApocalipseZ
 
         public void ActiveMotionBlur(bool active)
         {
-            //FirstPersonCamera.ActiveCursor(active);
+            FirstPersonCamera.ActiveCursor(active);
             // motionBlur.active = active;
             //  Time.timeScale = active ? 0 : 1;
         }
@@ -77,7 +69,10 @@ namespace ApocalipseZ
         {
             return UiInventory;
         }
-
+        internal void SetFirtPersonCamera(FirstPersonCamera camera)
+        {
+            FirstPersonCamera = camera;
+        }
         internal void SetPlayerStats(PlayerStats playerStats)
         {
             stats = playerStats;

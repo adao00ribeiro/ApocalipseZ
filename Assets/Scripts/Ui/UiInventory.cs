@@ -12,6 +12,8 @@ namespace ApocalipseZ
         [SerializeField] private List<UISlotItem> UIItems = new List<UISlotItem>();
         private Transform slotPanel;
         Inventory inventory;
+
+
         void Awake()
         {
             slotPanel = transform.Find("SlotPanel").transform;
@@ -34,6 +36,7 @@ namespace ApocalipseZ
             for (int i = 0; i < inventory.GetMaxSlots(); i++)
             {
                 UISlotItem instance = Instantiate(PrefabSlot, slotPanel);
+                instance.HUD = transform.parent;
                 instance.SetSlotIndex(i);
                 UIItems.Add(instance);
             }
@@ -49,17 +52,17 @@ namespace ApocalipseZ
                 }
             }
         }
-        internal void UpdateSlot(SSlotInventory newItem)
+        internal void UpdateSlot(SlotInventoryTemp newItem)
         {
-            print(newItem.GetQuantity());
+          
             foreach (UISlotItem item in UIItems)
             {
-                if (item.GetSlotIndex() == newItem.GetSlotIndex())
+                if (item.GetSlotIndex() == newItem.slotindex)
                 {
-                    print("aki");
+                    DataItem dataItem = GameController.Instance.DataManager.GetDataItemById(newItem.guidid);
                     item.SetInventorySlot(newItem);
-                    item.SetImage(newItem.GetDataItem().Thumbnail);
-                    item.SetTextQuantidade(newItem.GetQuantity().ToString());
+                    item.SetImage(dataItem.Thumbnail);
+                    item.SetTextQuantidade(newItem.Quantity.ToString());
                 }
             }
         }

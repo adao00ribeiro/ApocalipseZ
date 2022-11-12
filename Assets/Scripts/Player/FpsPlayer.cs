@@ -14,8 +14,6 @@ namespace ApocalipseZ
     [RequireComponent(typeof(WeaponManager))]
     public class FpsPlayer : NetworkBehaviour, IFpsPlayer
     {
-
-
         public event System.Action<FpsPlayer> OnLocalPlayerJoined;
 
         IMoviment Moviment;
@@ -39,7 +37,7 @@ namespace ApocalipseZ
         // Start is called before the first frame update
         private void Awake()
         {
-
+            GameController.Instance.FpsPlayer = this;
             Inventory = GetComponent<Inventory>();
             Moviment = GetComponent<Moviment>();
             WeaponManager = GetComponent<WeaponManager>();
@@ -74,6 +72,7 @@ namespace ApocalipseZ
             Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
 
             CanvasFpsPlayer CanvasFpsPlayer = GameObject.FindObjectOfType<CanvasFpsPlayer>();
+            CanvasFpsPlayer.SetFirtPersonCamera(FirstPersonCamera);
             CanvasFpsPlayer.SetPlayerStats(PlayerStats);
             CanvasFpsPlayer.SetInventory(Inventory);
 

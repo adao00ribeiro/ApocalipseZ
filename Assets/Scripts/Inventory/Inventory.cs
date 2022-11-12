@@ -25,19 +25,7 @@ public class Inventory : NetworkBehaviour
     [Command]
     public void CmdAddItem(SlotInventoryTemp slot)
     {
-
-        DataItem item = GameController.Instance.DataManager.GetDataItemById(slot.guidid);
-        if (item == null)
-        {
-            return;
-        }
-
-        if (maxSlot == inventory.Count)
-        {
-            print("cheio");
-            return;
-        }
-        inventory.Add(new SlotInventoryTemp(0, item.GuidId, slot.Ammo, slot.Quantity));
+        AddItem(slot);
     }
     public bool AddItem(SlotInventoryTemp slot)
     {
@@ -46,14 +34,50 @@ public class Inventory : NetworkBehaviour
         {
             return false;
         }
-
         if (maxSlot == inventory.Count)
         {
             print("cheio");
             return false;
         }
-        inventory.Add(new SlotInventoryTemp(0, item.GuidId, slot.Ammo, slot.Quantity));
+        int posicao = -1;
+        if (CheckFreeSpace(ref posicao))
+        {
+            slot.slotindex = posicao;
+        }
+        inventory.Add(slot);
         return true;
+    }
+    public void MoveItem(SlotInventoryTemp slotselecionado, SlotInventoryTemp slotenter)
+    {
+        inventory.Insert(slotenter.slotindex,slotselecionado);
+    }
+    public bool CheckFreeSpace(ref int posicao)
+    {
+        bool isfreespace = false;
+
+        for (int i = 0; i < maxSlot; i++)
+        {
+            SlotInventoryTemp item = GetSlotContainer(i);
+            if (item == null)
+            {
+                posicao = i;
+                isfreespace = true;
+                break;
+            }
+        }
+        return isfreespace;
+    }
+    public SlotInventoryTemp GetSlotContainer(int slotindex)
+    {
+        SlotInventoryTemp temp = null;
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            if (inventory[i].slotindex == slotindex)
+            {
+                temp = inventory[i];
+            }
+        }
+        return temp;
     }
     [Command]
     public void CmdRemoveItem(int slotIndex)
@@ -79,7 +103,7 @@ public class Inventory : NetworkBehaviour
                 // index is where it was added into the list
                 // newItem is the new item
 
-                uiInventory.UpdateSlot(new SSlotInventory(newItem.slotindex, item, newItem.Ammo, newItem.Quantity));
+                uiInventory.UpdateSlot(newItem);
                 break;
             case SyncList<SlotInventoryTemp>.Operation.OP_INSERT:
                 // index is where it was inserted into the list
@@ -96,7 +120,7 @@ public class Inventory : NetworkBehaviour
                 // oldItem is the previous value for the item at the index
                 // newItem is the new value for the item at the index
 
-                uiInventory.UpdateSlot(new SSlotInventory(newItem.slotindex, item, newItem.Ammo, newItem.Quantity));
+                uiInventory.UpdateSlot(newItem);
                 break;
             case SyncList<SlotInventoryTemp>.Operation.OP_CLEAR:
                 // list got cleared
@@ -110,5 +134,10 @@ public class Inventory : NetworkBehaviour
     internal int GetMaxSlots()
     {
         return maxSlot;
+    }
+    [Command]
+    public void CmdMoveItem(SlotInventoryTemp slotselecionado, SlotInventoryTemp slotenter)
+    {
+        MoveItem( slotselecionado,  slotenter);
     }
 }

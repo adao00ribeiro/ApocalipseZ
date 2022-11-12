@@ -11,12 +11,18 @@ namespace ApocalipseZ
 
     public class UISlotItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerUpHandler, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
     {
+        [SerializeField] private TypeContainer AcceptedType;
         [SerializeField] private int SlotIndex;
         [SerializeField] private Image Image;
         [SerializeField] private Text TextQuantidade;
-        [SerializeField] private SSlotInventory slot;
+        [SerializeField] private SlotInventoryTemp slot;
         private Vector2 offset;
         bool IsLocked = false;
+        public Transform HUD;
+        public static UISlotItem SlotSelecionado;
+        public static UISlotItem SlotEnter;
+
+
         private void Awake()
         {
 
@@ -24,23 +30,27 @@ namespace ApocalipseZ
             TextQuantidade = transform.Find("Image/TextQuantidade").GetComponent<Text>();
             TextQuantidade.text = "";
         }
+
+
+
+        
         // Start is called before the first frame update
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if (CanvasFpsPlayer.SlotSelecionado)
+            if (SlotSelecionado)
             {
                 //this.transform.SetParent(this.transform.parent.parent);
                 //this.transform.position = eventData.position - offset;
-                CanvasFpsPlayer.SlotSelecionado.GetComponent<Image>().raycastTarget = false;
+                SlotSelecionado.GetComponent<Image>().raycastTarget = false;
             }
         }
 
         public void OnDrag(PointerEventData eventData)
         {
-            if (CanvasFpsPlayer.SlotSelecionado)
+            if (SlotSelecionado)
             {
-                CanvasFpsPlayer.SlotSelecionado.transform.position = eventData.position - offset;
+                SlotSelecionado.transform.position = eventData.position - offset;
             }
         }
 
@@ -51,10 +61,27 @@ namespace ApocalipseZ
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            if (CanvasFpsPlayer.SlotSelecionado != null)
+            if (SlotSelecionado != null)
             {
+                if (SlotEnter != null && SlotSelecionado != SlotEnter)
+                {
+                    if (SlotEnter.AcceptedType == TypeContainer.INVENTORY)
+                    {
+                  Inventory inventory =  GameController.Instance.FpsPlayer.GetInventory();
+                  slotentervazio
+                  inventory.CmdMoveItem( SlotSelecionado.slot, SlotEnter.slot);
 
-                Destroy(CanvasFpsPlayer.SlotSelecionado.gameObject);
+                    }
+                     if (SlotEnter.AcceptedType == TypeContainer.FASTITEMS)
+                    {
+                         print("fastitens");
+                    }
+                     if (SlotEnter.AcceptedType == TypeContainer.WEAPONS)
+                    {
+                        print("weapons");
+                    }
+                }
+                Destroy(SlotSelecionado.gameObject);
             }
 
         }
@@ -71,8 +98,9 @@ namespace ApocalipseZ
             }
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-
-
+                SlotSelecionado = Instantiate(this, HUD);
+                SlotSelecionado.GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
+                SlotSelecionado.transform.position = eventData.position;
 
             }
             offset = eventData.position - new Vector2(this.transform.position.x, this.transform.position.y);
@@ -80,17 +108,25 @@ namespace ApocalipseZ
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-
+            if (SlotSelecionado != null)
+            {
+                SlotEnter = this;
+                SlotEnter.Image.color = Color.green;
+            }
 
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-
+            if (slot == null)
+            {
+                Image.color = Color.clear;
+            }
+            SlotEnter = null;
 
             //   tooltip.Deactivate();
         }
-        public void SetInventorySlot(SSlotInventory _slot)
+        public void SetInventorySlot(SlotInventoryTemp _slot)
         {
             slot = _slot;
         }

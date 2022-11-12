@@ -23,6 +23,7 @@ namespace ApocalipseZ
 
         //privados 
         GameObject SpawPoint;
+        private FpsPlayer fpsPlayer;
         private CanvasFpsPlayer canvasFpsPlayer;
         private DataManager dataManager;
         private SceneManager _sceneManager;
@@ -109,7 +110,18 @@ namespace ApocalipseZ
                 return _instance;
             }
         }
+        public FpsPlayer FpsPlayer
+        {
+            get
+            {
 
+                return fpsPlayer;
+            }
+            set
+            {
+                fpsPlayer = value;
+            }
+        }
         public CanvasFpsPlayer CanvasFpsPlayer
         {
             get

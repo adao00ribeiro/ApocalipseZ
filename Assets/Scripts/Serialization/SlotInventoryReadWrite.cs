@@ -5,12 +5,15 @@ using Mirror;
 using ApocalipseZ;
 using System;
 
-public struct SlotInventoryTemp
+public class SlotInventoryTemp
 {
     public int slotindex;
     public string guidid;
     public int Ammo;
     public int Quantity;
+    public SlotInventoryTemp(){
+
+    }
     public SlotInventoryTemp(int _slotindex, string _guidid, int _ammo, int _Quantity)
     {
         slotindex = _slotindex;

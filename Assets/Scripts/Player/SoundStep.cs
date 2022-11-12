@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
@@ -35,7 +35,6 @@ namespace ApocalipseZ
         {
             source = GetComponent<AudioSource>();
             GetCollisionGround = GetComponent<GetCollisionGround>();
-
             scriptableTextureSounds = GameController.Instance.DataManager.GetScriptableTextureSounds();
         }
         public void PlaySound()

@@ -5,28 +5,43 @@ using Mirror;
 using ApocalipseZ;
 using System;
 
+[System.Serializable]
 public class SlotInventoryTemp
 {
-    public int slotindex;
+
     public string guidid;
     public int Ammo;
     public int Quantity;
-    public SlotInventoryTemp(){
-
-    }
-    public SlotInventoryTemp(int _slotindex, string _guidid, int _ammo, int _Quantity)
+    public SlotInventoryTemp()
     {
-        slotindex = _slotindex;
+
+        guidid = "";
+        Ammo = 0;
+        Quantity = 0;
+    }
+    public SlotInventoryTemp(string _guidid, int _ammo, int _Quantity)
+    {
+
         guidid = _guidid;
         Ammo = _ammo;
         Quantity = _Quantity;
+    }
+
+    public bool Compare(SlotInventoryTemp other)
+    {
+        if (guidid == other.guidid && Ammo == other.Ammo && Quantity == other.Quantity)
+        {
+            return true;
+        }
+
+        return false;
     }
 }
 public static class SlotInventoryReadWrite
 {
     public static void WriteStringTest(this NetworkWriter writer, SlotInventoryTemp value)
     {
-        writer.WriteInt(value.slotindex);
+
         writer.WriteString(value.guidid);
         writer.WriteInt(value.Ammo);
         writer.WriteInt(value.Quantity);
@@ -34,7 +49,7 @@ public static class SlotInventoryReadWrite
     public static SlotInventoryTemp ReadStringTest(this NetworkReader reader)
     {
 
-        return new SlotInventoryTemp(reader.ReadInt(), reader.ReadString(), reader.ReadInt(), reader.ReadInt());
+        return new SlotInventoryTemp(reader.ReadString(), reader.ReadInt(), reader.ReadInt());
 
     }
 }

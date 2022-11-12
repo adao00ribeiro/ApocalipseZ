@@ -15,7 +15,13 @@ public class Inventory : NetworkBehaviour
     public bool teste;
     public override void OnStartClient()
     {
+        for (int i = 0; i < maxSlot; i++)
+        {
+            inventory.Add(new SlotInventoryTemp());
+        }
         uiInventory = GameController.Instance.CanvasFpsPlayer.GetUiInventory();
+        uiInventory.SetInventory(this);
+        uiInventory.AddSlots();
         inventory.Callback += OnInventoryUpdated;
         // Process initial SyncList payload
         for (int index = 0; index < inventory.Count; index++)
@@ -34,93 +40,67 @@ public class Inventory : NetworkBehaviour
         {
             return false;
         }
-        if (maxSlot == inventory.Count)
-        {
-            print("cheio");
-            return false;
-        }
-        int posicao = -1;
-        if (CheckFreeSpace(ref posicao))
-        {
-            slot.slotindex = posicao;
-        }
-        inventory.Add(slot);
-        return true;
-    }
-    public void MoveItem(SlotInventoryTemp slotselecionado, SlotInventoryTemp slotenter)
-    {
-        inventory.Insert(slotenter.slotindex,slotselecionado);
-    }
-    public bool CheckFreeSpace(ref int posicao)
-    {
-        bool isfreespace = false;
 
         for (int i = 0; i < maxSlot; i++)
         {
-            SlotInventoryTemp item = GetSlotContainer(i);
-            if (item == null)
+            if (inventory[i].Compare(new SlotInventoryTemp()))
             {
-                posicao = i;
-                isfreespace = true;
-                break;
+                inventory.RemoveAt(i);
+                inventory.Insert(i, slot);
+                return true;
             }
         }
-        return isfreespace;
+        return false;
     }
-    public SlotInventoryTemp GetSlotContainer(int slotindex)
+
+    public void InsertItem(int slotEnterIndex, int slotIndexselecionado)
     {
-        SlotInventoryTemp temp = null;
-        for (int i = 0; i < inventory.Count; i++)
-        {
-            if (inventory[i].slotindex == slotindex)
-            {
-                temp = inventory[i];
-            }
-        }
-        return temp;
+        // 0   5
+        print(slotEnterIndex + " " + slotIndexselecionado);
+        SlotInventoryTemp auxEnter = inventory[slotEnterIndex];
+        SlotInventoryTemp auxSelecionaddo = inventory[slotIndexselecionado];
+
+        inventory.Insert(slotEnterIndex, auxSelecionaddo);
+        inventory.Insert(slotIndexselecionado, auxEnter);
+
+        inventory.Remove(inventory[slotEnterIndex]);
+        inventory.Remove(inventory[slotIndexselecionado]);
+
+
     }
+
+
     [Command]
     public void CmdRemoveItem(int slotIndex)
     {
-        for (int i = 0; i < inventory.Count; i++)
-        {
-            if (inventory[i].slotindex == slotIndex)
-            {
-                // Debug.Log ( "Removed item: " + Items[i].GetSItem ( ).name + "  " + type.ToString ( ) );
-                inventory.Remove(inventory[i]);
-                break;
-            }
-        }
+
     }
     void OnInventoryUpdated(SyncList<SlotInventoryTemp>.Operation op, int index, SlotInventoryTemp oldItem, SlotInventoryTemp newItem)
     {
 
-
-        DataItem item = GameController.Instance.DataManager.GetDataItemById(newItem.guidid);
         switch (op)
         {
             case SyncList<SlotInventoryTemp>.Operation.OP_ADD:
                 // index is where it was added into the list
                 // newItem is the new item
-
-                uiInventory.UpdateSlot(newItem);
+                uiInventory.UpdateSlot(index, newItem);
                 break;
             case SyncList<SlotInventoryTemp>.Operation.OP_INSERT:
                 // index is where it was inserted into the list
                 // newItem is the new item
-
+                uiInventory.UpdateSlot(index, newItem);
                 break;
             case SyncList<SlotInventoryTemp>.Operation.OP_REMOVEAT:
                 // index is where it was removed from the list
                 // oldItem is the item that was removed
-
+                uiInventory.UpdateSlot(index, newItem);
                 break;
             case SyncList<SlotInventoryTemp>.Operation.OP_SET:
                 // index is of the item that was changed
                 // oldItem is the previous value for the item at the index
                 // newItem is the new value for the item at the index
+                uiInventory.UpdateSlot(index, newItem);
 
-                uiInventory.UpdateSlot(newItem);
                 break;
             case SyncList<SlotInventoryTemp>.Operation.OP_CLEAR:
                 // list got cleared
@@ -136,8 +116,9 @@ public class Inventory : NetworkBehaviour
         return maxSlot;
     }
     [Command]
-    public void CmdMoveItem(SlotInventoryTemp slotselecionado, SlotInventoryTemp slotenter)
+    public void CmdInsertItem(int slotIndex, int slotIndexselecionado)
     {
-        MoveItem( slotselecionado,  slotenter);
+
+        InsertItem(slotIndex, slotIndexselecionado);
     }
 }

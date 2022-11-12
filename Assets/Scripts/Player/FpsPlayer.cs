@@ -74,8 +74,6 @@ namespace ApocalipseZ
             CanvasFpsPlayer CanvasFpsPlayer = GameObject.FindObjectOfType<CanvasFpsPlayer>();
             CanvasFpsPlayer.SetFirtPersonCamera(FirstPersonCamera);
             CanvasFpsPlayer.SetPlayerStats(PlayerStats);
-            CanvasFpsPlayer.SetInventory(Inventory);
-
             CmdSetupPlayer("player", color);
         }
         void PlayerColorChanged(Color32 _, Color32 newPlayerColor)

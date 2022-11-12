@@ -92,7 +92,7 @@ namespace ApocalipseZ
 
         public SlotInventoryTemp GetSlotTemp()
         {
-            return new SlotInventoryTemp(SlotIndex, item.GuidId, Ammo, Quantity);
+            return new SlotInventoryTemp(item.GuidId, Ammo, Quantity);
         }
 
         internal int GetAmmo()
@@ -338,7 +338,7 @@ namespace ApocalipseZ
             for (int i = 0; i < Items.Count; i++)
             {
                 SlotInventoryTemp novo;
-                novo = new SlotInventoryTemp(Items[i].GetSlotIndex(), Items[i].GetDataItem().GuidId, Items[i].GetAmmo(), Items[i].GetQuantity());
+                novo = new SlotInventoryTemp(Items[i].GetDataItem().GuidId, Items[i].GetAmmo(), Items[i].GetQuantity());
                 list.Add(novo);
             }
             return new InventoryTemp(list, GetMaxSlots());
@@ -356,7 +356,7 @@ namespace ApocalipseZ
         }
         public void Update(SlotInventoryTemp slot)
         {
-            SSlotInventory slottemp = Items.Find(x => x.GetSlotIndex() == slot.slotindex);
+            SSlotInventory slottemp = Items.Find(x => x.Compare(new SSlotInventory()));
 
             if (slottemp != null)
             {

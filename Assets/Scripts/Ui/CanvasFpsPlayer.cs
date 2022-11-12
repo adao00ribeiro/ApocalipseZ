@@ -25,7 +25,7 @@ namespace ApocalipseZ
         PlayerStats stats;
         FirstPersonCamera FirstPersonCamera;
 
-        
+
         private void Awake()
         {
             InputManager = GameController.Instance.InputManager;
@@ -78,10 +78,7 @@ namespace ApocalipseZ
             stats = playerStats;
         }
 
-        internal void SetInventory(Inventory inventory)
-        {
-            UiInventory.SetInventory(inventory);
-        }
+
 
         private InputManager InputManager;
 

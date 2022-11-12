@@ -15,14 +15,13 @@ namespace ApocalipseZ
         [SerializeField] private int SlotIndex;
         [SerializeField] private Image Image;
         [SerializeField] private Text TextQuantidade;
-        [SerializeField] private SlotInventoryTemp slot;
         private Vector2 offset;
         bool IsLocked = false;
         public Transform HUD;
         public static UISlotItem SlotSelecionado;
         public static UISlotItem SlotEnter;
 
-
+        public bool isEmpty;
         private void Awake()
         {
 
@@ -33,7 +32,7 @@ namespace ApocalipseZ
 
 
 
-        
+
         // Start is called before the first frame update
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -67,16 +66,20 @@ namespace ApocalipseZ
                 {
                     if (SlotEnter.AcceptedType == TypeContainer.INVENTORY)
                     {
-                  Inventory inventory =  GameController.Instance.FpsPlayer.GetInventory();
-                  slotentervazio
-                  inventory.CmdMoveItem( SlotSelecionado.slot, SlotEnter.slot);
+                        Inventory inventory = GameController.Instance.FpsPlayer.GetInventory();
+
+                        if (SlotEnter.SlotIndex != SlotSelecionado.SlotIndex)
+                        {
+                            inventory.CmdInsertItem(SlotEnter.SlotIndex, SlotSelecionado.SlotIndex);
+                        }
+
 
                     }
-                     if (SlotEnter.AcceptedType == TypeContainer.FASTITEMS)
+                    if (SlotEnter.AcceptedType == TypeContainer.FASTITEMS)
                     {
-                         print("fastitens");
+                        print("fastitens");
                     }
-                     if (SlotEnter.AcceptedType == TypeContainer.WEAPONS)
+                    if (SlotEnter.AcceptedType == TypeContainer.WEAPONS)
                     {
                         print("weapons");
                     }
@@ -87,7 +90,7 @@ namespace ApocalipseZ
         }
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (slot == null)
+            if (isEmpty)
             {
                 return;
             }
@@ -118,7 +121,7 @@ namespace ApocalipseZ
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (slot == null)
+            if (isEmpty)
             {
                 Image.color = Color.clear;
             }
@@ -126,9 +129,9 @@ namespace ApocalipseZ
 
             //   tooltip.Deactivate();
         }
-        public void SetInventorySlot(SlotInventoryTemp _slot)
+        public void SetIsEmpty(bool empty)
         {
-            slot = _slot;
+            isEmpty = empty;
         }
         public void SetTextQuantidade(string text)
         {

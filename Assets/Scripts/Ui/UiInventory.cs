@@ -23,7 +23,6 @@ namespace ApocalipseZ
         public void SetInventory(Inventory _inventory)
         {
             inventory = _inventory;
-            AddSlots();
         }
 
         public void AddSlots()
@@ -52,19 +51,24 @@ namespace ApocalipseZ
                 }
             }
         }
-        internal void UpdateSlot(SlotInventoryTemp newItem)
+        internal void UpdateSlot(int index, SlotInventoryTemp newItem)
         {
-          
-            foreach (UISlotItem item in UIItems)
+            print(UIItems.Count);
+            DataItem dataItem = GameController.Instance.DataManager.GetDataItemById(newItem.guidid);
+            if (dataItem == null)
             {
-                if (item.GetSlotIndex() == newItem.slotindex)
-                {
-                    DataItem dataItem = GameController.Instance.DataManager.GetDataItemById(newItem.guidid);
-                    item.SetInventorySlot(newItem);
-                    item.SetImage(dataItem.Thumbnail);
-                    item.SetTextQuantidade(newItem.Quantity.ToString());
-                }
+                UIItems[index].SetIsEmpty(true);
+                UIItems[index].SetImage(null);
+                UIItems[index].SetTextQuantidade("");
             }
+            else
+            {
+                UIItems[index].SetIsEmpty(false);
+                UIItems[index].SetImage(dataItem.Thumbnail);
+                UIItems[index].SetTextQuantidade(newItem.Quantity.ToString());
+            }
+
+
         }
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Mirror;
 using UnityEngine;
 using UnityEngine.AI;
 using System;
 using Random = UnityEngine.Random;
+using FishNet.Object;
+
 namespace ApocalipseZ
 {
     [RequireComponent(typeof(NavMeshAgent))]
@@ -33,7 +34,7 @@ namespace ApocalipseZ
 
         private void Start()
         {
-            if (isServer)
+            if (base.IsServer)
             {
                 stats = GetComponent<IStats>();
                 Patrol = GetComponent<EnemyPatrol>();
@@ -57,7 +58,7 @@ namespace ApocalipseZ
 
         private void FixedUpdate()
         {
-            if (!isServer)
+            if (!base.IsServer)
             {
                 return;
             }

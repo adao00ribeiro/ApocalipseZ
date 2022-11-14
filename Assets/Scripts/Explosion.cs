@@ -1,48 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
+using FishNet.Object;
 using UnityEngine;
-using Mirror;
+
 public class Explosion : NetworkBehaviour
 {
-    
+
     public float explosionForce;
     public float damageRadius;
     public float damage;
     Collider[] colliders;
     GameObject effects_temp;
     public AudioSource audioSource;
-    private void OnEnable ( )
-    {
-        
-    }
-    public void EnableExplosion ( )
-    {
-        audioSource = GetComponent<AudioSource> ( );
-        audioSource.Play ( );
-        transform.LookAt ( Camera.main.transform.position );
-        Explosions ( );
-    }
-    void Explosions ( )
+    private void OnEnable()
     {
 
-        colliders = Physics.OverlapSphere ( transform.position , damageRadius );
+    }
+    public void EnableExplosion()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.Play();
+        transform.LookAt(Camera.main.transform.position);
+        Explosions();
+    }
+    void Explosions()
+    {
 
-        foreach ( Collider collider in colliders )
+        colliders = Physics.OverlapSphere(transform.position, damageRadius);
+
+        foreach (Collider collider in colliders)
         {
 
-            IStats stats =  collider.GetComponent<IStats> ( );
+            IStats stats = collider.GetComponent<IStats>();
 
-            if ( stats != null )
+            if (stats != null)
             {
-                stats.CmdTakeDamage ( ( int ) damage );
+                stats.CmdTakeDamage((int)damage);
             }
 
 
-            if ( collider.GetComponent<Rigidbody> ( ) )
+            if (collider.GetComponent<Rigidbody>())
             {
-                collider.GetComponent<Rigidbody> ( ).AddExplosionForce ( explosionForce , transform.position , damageRadius );
+                collider.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, damageRadius);
             }
         }
-        NetworkBehaviour.Destroy ( gameObject ,1);
+        NetworkBehaviour.Destroy(gameObject, 1);
     }
 }

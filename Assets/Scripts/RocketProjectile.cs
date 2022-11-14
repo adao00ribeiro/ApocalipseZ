@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using FishNet.Object;
 using UnityEngine;
-using Mirror;
+
 namespace ApocalipseZ
 {
 
@@ -42,7 +43,7 @@ namespace ApocalipseZ
                 }
                 Explosion ex = Instantiate(PrefabEffectExplosion, transform.position, Quaternion.identity).GetComponent<Explosion>();
                 ex.EnableExplosion();
-                NetworkServer.Spawn(ex.gameObject);
+                base.Spawn(ex.gameObject);
                 NetworkBehaviour.Destroy(gameObject, 2.5f);
                 enabled = false;
             }

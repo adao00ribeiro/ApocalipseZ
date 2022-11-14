@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using FishNet.Object;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using Mirror;
+
 namespace ApocalipseZ
 {
     [System.Serializable]
@@ -22,7 +23,7 @@ namespace ApocalipseZ
 
         private void FixedUpdate()
         {
-            if (isServer)
+            if (base.IsServer)
             {
                 if (NumberOfZombie > ListZombie.Count)
                 {
@@ -48,7 +49,7 @@ namespace ApocalipseZ
                 ListZombie.Remove(zombieTemp);
             };
             ListZombie.Add(zombieTemp);
-            NetworkServer.Spawn(temp);
+            base.Spawn(temp);
         }
         private Vector3 GetRandomPosition()
         {

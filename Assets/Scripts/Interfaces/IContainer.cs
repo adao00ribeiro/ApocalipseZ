@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 using ApocalipseZ;
 public interface IContainer
 {
@@ -17,7 +16,7 @@ public interface IContainer
     public int GetMaxSlots();
     public void SetMaxSlots(int maxslot);
     void MoveItem(int id, int idmove);
-    InventoryTemp GetContainerTemp();
+
     void InvokeOnContainer();
     TypeContainer GetTypeContainer();
     void Update(SlotInventoryTemp slot);

@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8748e0b602a81d45bb02bee722cd4bd, type: 3}
   m_Name: DataArmsWeaponAK
   m_EditorClassIdentifier: 
+  GuidId: 6f66e140-eef9-4b6e-a59d-dda4b63f62e9
   Name: AK
   Type: 0
-  fireRate: 0
+  fireRate: 0.2
   spread: 0
   recoil: {x: 0, y: 0, z: 0}
   MuzzleFlashParticlesFX: {fileID: 0}

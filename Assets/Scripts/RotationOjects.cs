@@ -1,8 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 using System;
+using FishNet.Component.Transforming;
+using FishNet.Object.Synchronizing;
+using FishNet.Transporting;
+using FishNet.Object;
+using FishNet.Connection;
 
 namespace ApocalipseZ
 {
@@ -11,12 +15,13 @@ namespace ApocalipseZ
     {
         public string nameObject;
         public float speed;
-        [SyncVar(hook = nameof(IsOpenChanged))]
+        [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(IsOpenChanged))]
+
         public bool IsOpen;
 
         public AudioClip OpenClip;
         public AudioClip CloseClip;
-        void IsOpenChanged(bool _, bool newIsOpen)
+        void IsOpenChanged(bool _, bool newIsOpen, bool asServer)
         {
             /*
             if ( newIsOpen )
@@ -36,7 +41,7 @@ namespace ApocalipseZ
 
         void FixedUpdate()
         {
-            if (isServer)
+            if (IsOwner)
             {
                 if (IsOpen)
                 {
@@ -50,8 +55,8 @@ namespace ApocalipseZ
 
         }
 
-        [Command(requiresAuthority = false)]
-        public void CmdInteract(NetworkConnectionToClient sender = null)
+        [ServerRpc(RequireOwnership = false)]
+        public void CmdInteract(NetworkConnection sender = null)
         {
             // OnInteract(sender.identity.GetComponent<FpsPlayer>());
         }

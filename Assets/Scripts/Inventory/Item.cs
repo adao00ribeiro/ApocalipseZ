@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Mirror;
+using FishNet.Component.Transforming;
+using FishNet.Connection;
+using FishNet.Object;
 using UnityEngine;
 
 namespace ApocalipseZ
@@ -97,10 +99,10 @@ namespace ApocalipseZ
             }
         }
 
-        [Command(requiresAuthority = false)]
-        public void CmdInteract(NetworkConnectionToClient sender = null)
+        [ServerRpc(RequireOwnership = false)]
+        public void CmdInteract(NetworkConnection sender = null)
         {
-            OnInteract(sender.identity.GetComponent<FpsPlayer>());
+            //OnInteract(sender.identity.GetComponent<FpsPlayer>());
         }
     }
 }

@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using UnityEngine;
-using Mirror;
-using System;
 using Random = UnityEngine.Random;
 namespace ApocalipseZ
 {

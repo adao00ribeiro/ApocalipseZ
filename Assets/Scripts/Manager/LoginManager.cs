@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Mirror;
+
 
 public class LoginManager : MonoBehaviour
 {
@@ -62,7 +62,7 @@ public class LoginManager : MonoBehaviour
 
     public void CenaServidor()
     {
-        GameObject.FindObjectOfType<NetworkManager>().StartServer();
+        //GameObject.FindObjectOfType<NetworkManager>().StartServer();
     }
 
     public void Sair()

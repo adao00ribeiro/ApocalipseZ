@@ -1,30 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
+using FishNet.Serializing;
 using ApocalipseZ;
 public struct UISlotItemTemp
 {
     public int slotIndex;
     public TypeContainer type;
     public SlotInventoryTemp slot;
-    public UISlotItemTemp ( int _id , TypeContainer _type , SlotInventoryTemp _slot )
+    public UISlotItemTemp(int _id, TypeContainer _type, SlotInventoryTemp _slot)
     {
         slotIndex = _id;
         type = _type;
         slot = _slot;
     }
 }
-public static class UISlotItemReadWrite 
+public static class UISlotItemReadWrite
 {
-    public static void WriteStringTest ( this NetworkWriter writer , UISlotItemTemp value )
+    public static void WriteStringTest(this Writer writer, UISlotItemTemp value)
     {
-        writer.WriteInt ( value.slotIndex );
-        writer.WriteByte ( (byte)value.type );
-        writer.Write ( value.slot );
+        writer.WriteInt32(value.slotIndex);
+        writer.WriteByte((byte)value.type);
+        writer.Write(value.slot);
     }
-    public static UISlotItemTemp ReadStringTest ( this NetworkReader reader )
+    public static UISlotItemTemp ReadStringTest(this Reader reader)
     {
-        return new UISlotItemTemp ( reader.ReadInt ( ) ,( TypeContainer ) reader.ReadByte () ,reader.Read<SlotInventoryTemp> ( ) );
+        return new UISlotItemTemp(reader.ReadInt32(), (TypeContainer)reader.ReadByte(), reader.Read<SlotInventoryTemp>());
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using Mirror;
+using FishNet.Object;
 namespace ApocalipseZ
 {
     public enum TypeContainer : byte { INVENTORY, FASTITEMS, WEAPONS }
@@ -92,7 +92,7 @@ namespace ApocalipseZ
 
         public SlotInventoryTemp GetSlotTemp()
         {
-            return new SlotInventoryTemp(item.Name,item.GuidId, Ammo, Quantity);
+            return new SlotInventoryTemp(item.Name, item.GuidId, Ammo, Quantity);
         }
 
         internal int GetAmmo()
@@ -331,18 +331,7 @@ namespace ApocalipseZ
             OnContainerAltered?.Invoke();
         }
 
-        public InventoryTemp GetContainerTemp()
-        {
-            List<SlotInventoryTemp> list = new List<SlotInventoryTemp>();
 
-            for (int i = 0; i < Items.Count; i++)
-            {
-                SlotInventoryTemp novo;
-                novo = new SlotInventoryTemp(Items[i].GetDataItem().Name,Items[i].GetDataItem().GuidId, Items[i].GetAmmo(), Items[i].GetQuantity());
-                list.Add(novo);
-            }
-            return new InventoryTemp(list, GetMaxSlots());
-        }
 
         public void InvokeOnContainer()
         {

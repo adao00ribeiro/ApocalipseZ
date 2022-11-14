@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using FishNet.Object;
 using UnityEngine;
-using Mirror;
+
 namespace ApocalipseZ
 {
     public class BalisticProjectile : NetworkBehaviour

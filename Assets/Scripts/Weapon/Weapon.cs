@@ -1,11 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 namespace ApocalipseZ
 {
     [RequireComponent(typeof(AudioSource))]
-    public class Weapon : NetworkBehaviour, IWeapon
+    public class Weapon : MonoBehaviour, IWeapon
     {
         [SerializeField] private DataArmsWeapon weaponSetting;
         public DataArmsWeapon WeaponSetting { get => weaponSetting; }
@@ -34,8 +33,7 @@ namespace ApocalipseZ
         [Header("Ammo")]
         [Tooltip("Ammo count in weapon magazine")]
 
-        [SyncVar(hook = nameof(setCurrent))]
-        [SerializeField]private int currentAmmo = 30;
+        [SerializeField] private int currentAmmo = 30;
         public int CurrentAmmo { get => currentAmmo; set => currentAmmo = value; }
 
 
@@ -74,8 +72,9 @@ namespace ApocalipseZ
         public bool isThrowingGrenade;
 
 
-        public void setCurrent(int oldcurrent,int newcurrent){
-currentAmmo = newcurrent;
+        public void setCurrent(int oldcurrent, int newcurrent)
+        {
+            currentAmmo = newcurrent;
         }
 
         // Start is called before the first frame update
@@ -105,70 +104,49 @@ currentAmmo = newcurrent;
 
         }
 
-         [Command(requiresAuthority = false)]
-        public void CmdFire(NetworkConnectionToClient sender = null){
-            Fire();
-        }
-        public void Fire()
+
+        public bool Fire()
         {
-            if (weaponSetting.Type != WeaponType.Melee && weaponSetting.Type != WeaponType.Grenade)
+
+            if (Time.time > nextFireTime && !reloading && canShot /*&& !controller.isClimbing*/ ) //Allow fire statement
             {
-                if (Time.time > nextFireTime && !reloading && canShot /*&& !controller.isClimbing*/ ) //Allow fire statement
+
+                if (currentAmmo > 0)
                 {
+                    currentAmmo -= 1;
 
-                    if (currentAmmo > 0)
+                    PlayFX();
+                    muzzleFlashTransform.LookAt(Camera.main.transform.position + Camera.main.transform.forward * 3000);
+
+                    GameObject tempbala = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Cube));
+                    tempbala.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                    // player.CmdSpawBullet(new SpawBulletTransform(weaponSetting.projectile.name, muzzleFlashTransform.position, muzzleFlashTransform.rotation), player.GetConnection());
+                    //Getting random damage from minimum and maximum damage.
+                    //calculatedDamage = Random.Range ( damageMin , damageMax );
+
+                    // ProjectilesManager ( );
+
+                    recoilComponent.AddRecoil(weaponSetting.recoil);
+
+                    //Calculating when next fire call allowed
+                    nextFireTime = Time.time + weaponSetting.fireRate;
+
+                    return true;
+                }
+                else
+                {
+                    if (!reloading && autoReload)
                     {
-                        currentAmmo -= 1;
-
-                        PlayFX();
-                        muzzleFlashTransform.LookAt(Camera.main.transform.position + Camera.main.transform.forward * 3000);
-                        // player.CmdSpawBullet(new SpawBulletTransform(weaponSetting.projectile.name, muzzleFlashTransform.position, muzzleFlashTransform.rotation), player.GetConnection());
-                        //Getting random damage from minimum and maximum damage.
-                        //calculatedDamage = Random.Range ( damageMin , damageMax );
-
-                        // ProjectilesManager ( );
-
-                        recoilComponent.AddRecoil(weaponSetting.recoil);
-
-                        //Calculating when next fire call allowed
-                        nextFireTime = Time.time + weaponSetting.fireRate;
+                        ReloadBegin();
                     }
                     else
-                    {
-                        if (!reloading && autoReload)
-                        {
-                            ReloadBegin();
-                        }
-                        else
-                            audioSource.PlayOneShot(emptySFX);
+                        audioSource.PlayOneShot(emptySFX);
 
-                        nextFireTime = Time.time + weaponSetting.fireRate;
-                    }
-
+                    nextFireTime = Time.time + weaponSetting.fireRate;
+                    return false;
                 }
-
-
-
-
             }
-            else if (weaponSetting.Type == WeaponType.Melee)
-            {
-                if (Time.time > nextFireTime) //Allow fire statement
-                {
-                    audioSource.Stop();
-                    audioSource.PlayOneShot(shotSFX);
-                    Animator.Play("Attack");
-                    Invoke("MeleeHit", weaponSetting.meleeHitTime);
-                    recoilComponent.AddRecoil(weaponSetting.recoil);
-                    nextFireTime = Time.time + weaponSetting.meleeAttackRate;
-                }
-
-            }
-            else if (weaponSetting.Type == WeaponType.Grenade && !isThrowingGrenade)
-            {
-                Animator.SetTrigger("Throw");
-                isThrowingGrenade = true;
-            }
+            return false;
         }
         public void ReloadBegin()
         {

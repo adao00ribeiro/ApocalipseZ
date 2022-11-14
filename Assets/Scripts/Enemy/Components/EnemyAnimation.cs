@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
+using FishNet.Object;
+using FishNet.Object.Synchronizing;
 public enum EnemyMovimentType
 {
     IDLE,
@@ -15,34 +16,34 @@ public class EnemyAnimation : NetworkBehaviour
     private Animator animator;
     [SyncVar]
     public EnemyMovimentType type;
-    private void Start ( )
+    private void Start()
     {
-        animator = GetComponent<Animator> ( );
+        animator = GetComponent<Animator>();
     }
-   
-    private void Update ( )
+
+    private void Update()
     {
-            Animation ( );
+        Animation();
     }
-    private void Animation ( )
+    private void Animation()
     {
-        if ( type == EnemyMovimentType.DIE )
+        if (type == EnemyMovimentType.DIE)
         {
-            animator.SetLayerWeight ( 1 , 0 );
-            animator.Play ( "Death" );
+            animator.SetLayerWeight(1, 0);
+            animator.Play("Death");
             return;
         }
-        if ( type == EnemyMovimentType.ATACK )
+        if (type == EnemyMovimentType.ATACK)
         {
-            animator.SetLayerWeight ( 1 , 1 );
-            animator.Play ( "Attack" );
+            animator.SetLayerWeight(1, 1);
+            animator.Play("Attack");
         }
-        animator.SetBool ( "Walk" , type == EnemyMovimentType.WALK);
-        animator.SetBool ( "Run" , type == EnemyMovimentType.RUN );
+        animator.SetBool("Walk", type == EnemyMovimentType.WALK);
+        animator.SetBool("Run", type == EnemyMovimentType.RUN);
     }
-    public void SetType ( EnemyMovimentType _type)
+    public void SetType(EnemyMovimentType _type)
     {
         type = _type;
     }
-    
+
 }

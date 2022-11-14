@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using FishNet.Object;
 using UnityEngine;
-using Mirror;
+
 namespace ApocalipseZ
 {
     [RequireComponent(typeof(Rigidbody))]
@@ -13,27 +14,27 @@ namespace ApocalipseZ
         public GameObject explosionEffects;
 
         GameObject effects_temp;
-    
-        void OnEnable ( )
+
+        void OnEnable()
         {
-            effects_temp = Instantiate ( explosionEffects );
-            effects_temp.SetActive ( false );
-            StartCoroutine ( Timer ( explosionTimer ) );
+            effects_temp = Instantiate(explosionEffects);
+            effects_temp.SetActive(false);
+            StartCoroutine(Timer(explosionTimer));
         }
 
-        IEnumerator Timer ( float explosionTimer )
+        IEnumerator Timer(float explosionTimer)
         {
-            yield return new WaitForSeconds ( explosionTimer );
-            Explosion ( );
+            yield return new WaitForSeconds(explosionTimer);
+            Explosion();
         }
 
-        void Explosion ( )
+        void Explosion()
         {
             effects_temp.transform.position = transform.position;
             effects_temp.transform.rotation = transform.rotation;
-            effects_temp.SetActive ( true );
-            effects_temp.GetComponent<Explosion> ( ).EnableExplosion ( );
-            Destroy ( gameObject );
+            effects_temp.SetActive(true);
+            effects_temp.GetComponent<Explosion>().EnableExplosion();
+            Destroy(gameObject);
         }
     }
 }

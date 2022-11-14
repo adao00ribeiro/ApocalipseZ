@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using FishNet.Managing;
 using UnityEngine;
-using Mirror;
+
 namespace ApocalipseZ
 {
     public class RegistrarPrefabSpaws : MonoBehaviour

@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
+using FishNet.Connection;
 public interface IFastItemsManager
 {
-    void CmdSlotChange ( int slotIndex , NetworkConnectionToClient sender = null );
-    void SetFpsPlayer ( IFpsPlayer _player );
+    void CmdSlotChange(int slotIndex, NetworkConnection sender = null);
+    void SetFpsPlayer(IFpsPlayer _player);
 }

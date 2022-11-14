@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using FishNet.Connection;
+using FishNet.Object;
 using UnityEngine;
-using Mirror;
+
 namespace ApocalipseZ
 {
     public class FastItemsManager : NetworkBehaviour, IFastItemsManager
@@ -15,7 +17,7 @@ namespace ApocalipseZ
 
         void Update()
         {
-            if (!isLocalPlayer)
+            if (!IsOwner)
             {
                 return;
             }
@@ -35,10 +37,10 @@ namespace ApocalipseZ
 
         #region COMMAND
 
-        [Command]
-        public void CmdSlotChange(int slotIndex, NetworkConnectionToClient sender = null)
+        [ServerRpc]
+        public void CmdSlotChange(int slotIndex, NetworkConnection sender = null)
         {
-            NetworkIdentity opponentIdentity = sender.identity.GetComponent<NetworkIdentity>();
+
 
 
         }

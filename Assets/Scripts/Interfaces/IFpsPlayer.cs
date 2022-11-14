@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
 using ApocalipseZ;
+using FishNet.Object;
+using FishNet.Connection;
 public interface IFpsPlayer
 {
 
     IMoviment GetMoviment();
     PlayerStats GetPlayerStats();
 
-    [Command]
-    void CmdSpawBullet(SpawBulletTransform spawBulletTransform, NetworkConnectionToClient networkConnectionToClient);
+    void CmdSpawBullet(SpawBulletTransform spawBulletTransform, NetworkConnection networkConnectionToClient);
     FirstPersonCamera GetFirstPersonCamera();
     WeaponManager GetWeaponManager();
     Inventory GetInventory();

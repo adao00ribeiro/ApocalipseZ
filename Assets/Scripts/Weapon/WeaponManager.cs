@@ -2,7 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Mirror;
+using FishNet;
+using FishNet.Connection;
+using FishNet.Object;
+using FishNet.Object.Synchronizing;
+using FishNet.Transporting;
+
 namespace ApocalipseZ
 {
     public class WeaponManager : NetworkBehaviour
@@ -10,11 +15,15 @@ namespace ApocalipseZ
 
         UiPrimaryAndSecondWeapons UiPrimaryAndSecondWeapons;
         public List<Weapon> ArmsWeapons = new List<Weapon>();
+
+
+        [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(SetWeaponNetwork))]
+        public WeaponNetwork activeSlotNetwork;
         public Weapon activeSlot;
 
-        [SyncVar(hook = nameof(SetPrimaryWeapon))]
+
+        [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(SetPrimaryWeapon))]
         public SlotInventoryTemp PrimaryWeapon;
-       
         public SlotInventoryTemp SecundaryWeapon;
 
         [Tooltip("Animator that contain pickup animation")]
@@ -31,6 +40,12 @@ namespace ApocalipseZ
 
         public static bool IsChekInventory;
         int currentSlot;
+
+
+        public void SetWeaponNetwork(WeaponNetwork oldSlot, WeaponNetwork newSlot, bool asServer)
+        {
+            activeSlotNetwork = newSlot;
+        }
         private void Awake()
         {
             InputManager = GameController.Instance.InputManager;
@@ -47,21 +62,22 @@ namespace ApocalipseZ
             }
 
         }
-      
+
         // Update is called once per frame
         void Update()
         {
-            if(!isLocalPlayer){
+            if (!IsOwner)
+            {
                 return;
             }
-          
+
             if (IsChekInventory)
             {
                 IsChekInventory = false;
             }
-               if (InputManager.GetAlpha1())
+            if (InputManager.GetAlpha1())
             {
-               
+
                 currentSlot = 0;
                 CmdSlotChange(this.gameObject);
             }
@@ -74,12 +90,12 @@ namespace ApocalipseZ
             {
                 return;
             }
-           
+
 
             if (InputManager.GetFire() && !fpsplayer.GetMoviment().CheckIsRun() && !CanvasFpsPlayer.IsInventoryOpen)
             {
                 CmdFire();
-              
+
             }
             if (InputManager.GetReload())
             {
@@ -107,73 +123,77 @@ namespace ApocalipseZ
             //     DropAllWeapons();
             // }
         }
-        [Command]
-        public void CmdFire(){
+        [ServerRpc]
+        public void CmdFire()
+        {
             activeSlot.Fire();
+            activeSlotNetwork.currentAmmo = activeSlot.CurrentAmmo;
         }
-        [Command]
+        [ServerRpc]
         public void CmdSlotChange(GameObject target)
         {
-             DataArmsWeapon tempArms = null;
-             int  ammo = 0 ;
-            if(currentSlot==0){
+            DataArmsWeapon tempArms = null;
+            int ammo = 0;
+            if (currentSlot == 0)
+            {
                 DesEquipWeapon();
-                 print("aki");
-                 tempArms = GameController.Instance.DataManager.GetArmsWeapon(PrimaryWeapon.Name);
-                 ammo = PrimaryWeapon.Ammo;
-            }else{
+                tempArms = GameController.Instance.DataManager.GetArmsWeapon(PrimaryWeapon.Name);
+                ammo = PrimaryWeapon.Ammo;
+            }
+            else
+            {
                 tempArms = GameController.Instance.DataManager.GetArmsWeapon(SecundaryWeapon.guidid);
                 ammo = SecundaryWeapon.Ammo;
             }
-         
+
             if (tempArms == null)
             {
-                  print("aki");
+                print("aki");
                 return;
             }
             activeSlot = Instantiate(tempArms.PrefabArmsWeapon, swayTransform).GetComponent<Weapon>();
             activeSlot.CurrentAmmo = ammo;
             activeSlot.gameObject.SetActive(true);
-              NetworkServer.Spawn(activeSlot.gameObject);
             weaponHolderAnimator.Play("Unhide");
-
-            NetworkIdentity opponentIdentity = target.GetComponent<NetworkIdentity>();
-            TargetRpcChanve(opponentIdentity.connectionToClient);
+            TargetRpcChanve(base.Owner);
         }
 
         [TargetRpc]
-        public void TargetRpcChanve(NetworkConnection target){
-             DataArmsWeapon tempArms = null;
-             int  ammo = 0 ;
-            if(currentSlot==0){
+        public void TargetRpcChanve(NetworkConnection target)
+        {
+            DataArmsWeapon tempArms = null;
+            int ammo = 0;
+            if (currentSlot == 0)
+            {
                 DesEquipWeapon();
-                 print("aki");
-                 tempArms = GameController.Instance.DataManager.GetArmsWeapon(PrimaryWeapon.Name);
-                 ammo = PrimaryWeapon.Ammo;
-            }else{
+                print("aki");
+                tempArms = GameController.Instance.DataManager.GetArmsWeapon(PrimaryWeapon.Name);
+                ammo = PrimaryWeapon.Ammo;
+            }
+            else
+            {
                 tempArms = GameController.Instance.DataManager.GetArmsWeapon(SecundaryWeapon.guidid);
                 ammo = SecundaryWeapon.Ammo;
             }
-         
+
             if (tempArms == null)
             {
-                  print("aki");
+                print("aki");
                 return;
             }
 
             activeSlot = Instantiate(tempArms.PrefabArmsWeapon, swayTransform).GetComponent<Weapon>();
             activeSlot.CurrentAmmo = ammo;
             activeSlot.gameObject.SetActive(true);
-          
             weaponHolderAnimator.Play("Unhide");
         }
-          private void SelecionaWeapon()
+        private void SelecionaWeapon()
         {
             if (CanvasFpsPlayer.IsInventoryOpen)
             {
                 return;
             }
-          
+
         }
         private void DropWeapon()
         {
@@ -222,8 +242,8 @@ namespace ApocalipseZ
             }
         }
         */
-     
-       
+
+
         public void DesEquipWeapon()
         {
             if (activeSlot != null)
@@ -234,32 +254,36 @@ namespace ApocalipseZ
             }
 
         }
-       
+
         public IWeapon GetActiveWeapon()
         {
             return activeSlot;
         }
-       public void SetPrimaryWeapon(SlotInventoryTemp oldSlot,SlotInventoryTemp newSlot){
-       
-       PrimaryWeapon = newSlot;
-        UiPrimaryAndSecondWeapons.UpdatePrimaryWeapon(newSlot);
-       }
+        public void SetPrimaryWeapon(SlotInventoryTemp oldSlot, SlotInventoryTemp newSlot, bool asServer)
+        {
 
-        [Command]
+            PrimaryWeapon = newSlot;
+            UiPrimaryAndSecondWeapons.UpdatePrimaryWeapon(newSlot);
+        }
+
+        [ServerRpc]
         public void CmdAddWeaponRemoveInventory(int slotenter, int SlotSelecionado)
         {
-           SlotInventoryTemp  slot = fpsplayer.GetInventory().GetSlot(SlotSelecionado);
-            if(slotenter==0){
-            PrimaryWeapon = slot;
-            }else{
-            SecundaryWeapon =  slot;
+            SlotInventoryTemp slot = fpsplayer.GetInventory().GetSlot(SlotSelecionado);
+            if (slotenter == 0)
+            {
+                PrimaryWeapon = slot;
+            }
+            else
+            {
+                SecundaryWeapon = slot;
             }
             fpsplayer.GetInventory().RemoveItem(slot);
         }
-     [Command]
+        [ServerRpc]
         internal void CmdMove(int slotIndex1, int slotIndex2)
         {
-            
+
         }
     }
 

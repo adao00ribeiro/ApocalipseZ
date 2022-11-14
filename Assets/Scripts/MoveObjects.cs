@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using FishNet.Connection;
+using FishNet.Object;
 using UnityEngine;
-using Mirror;
+
 namespace ApocalipseZ
 {
 
@@ -29,8 +31,8 @@ namespace ApocalipseZ
         }
 
 
-        [Command(requiresAuthority = false)]
-        public void CmdInteract(NetworkConnectionToClient sender = null)
+        [ServerRpc(RequireOwnership = false)]
+        public void CmdInteract(NetworkConnection sender = null)
         {
             // OnInteract ( sender.identity.GetComponent<FpsPlayer> ( ) );
         }

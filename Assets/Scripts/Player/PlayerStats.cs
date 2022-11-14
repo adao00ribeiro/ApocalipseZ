@@ -1,10 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
+
 using UnityEngine.UI;
 using System;
 using Random = UnityEngine.Random;
+using FishNet.Object;
+using FishNet.Object.Synchronizing;
+using FishNet.Transporting;
+using FishNet.Connection;
+
 namespace ApocalipseZ
 {
     public class PlayerStats : NetworkBehaviour, IStats
@@ -12,17 +17,14 @@ namespace ApocalipseZ
 
 
         public event Action OnAlteredStats;
-
-        [SyncVar(hook = nameof(OnSetHealth))]
+        [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(OnSetHealth))]
         public int health;
-
-        [SyncVar(hook = nameof(OnSetHydratation))]
+        [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(OnSetHydratation))]
         public int hydratation = 100;
         public float hydratationSubstractionRate = 3f;
         public int thirstDamage = 1;
         private float hydratationTimer;
-
-        [SyncVar(hook = nameof(OnSetSatiety))]
+        [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(OnSetSatiety))]
         public int satiety = 100;
         public float satietySubstractionRate = 5f;
         public int hungerDamage = 1;
@@ -31,7 +33,7 @@ namespace ApocalipseZ
         FpsPlayer player;
 
         public bool Disable;
-        private void OnSetHealth(int oldHealth, int newHealth)
+        private void OnSetHealth(int oldHealth, int newHealth, bool asServer)
         {
             health = newHealth;
             if (health > 0)
@@ -40,13 +42,13 @@ namespace ApocalipseZ
             }
             OnAlteredStats?.Invoke();
         }
-        private void OnSetHydratation(int oldHydratation, int newHydratation)
+        private void OnSetHydratation(int oldHydratation, int newHydratation, bool asServer)
         {
             hydratation = newHydratation;
 
             OnAlteredStats?.Invoke();
         }
-        private void OnSetSatiety(int oldSatiety, int newSatiety)
+        private void OnSetSatiety(int oldSatiety, int newSatiety, bool asServer)
         {
             satiety = newSatiety;
 
@@ -58,7 +60,7 @@ namespace ApocalipseZ
         }
         void Update()
         {
-            if (isServer)
+            if (base.IsServer)
             {
                 if (Time.time > satietyTimer + satietySubstractionRate)
                 {
@@ -93,7 +95,7 @@ namespace ApocalipseZ
                     satiety = 100;
                 }
             }
-            if (!isLocalPlayer || Disable)
+            if (!base.IsOwner || Disable)
             {
                 return;
             }
@@ -110,8 +112,8 @@ namespace ApocalipseZ
             }
         }
 
-        [Command(requiresAuthority = false)]
-        public void CmdTakeDamage(int damage, NetworkConnectionToClient sender = null)
+        [ServerRpc(RequireOwnership = false)]
+        public void CmdTakeDamage(int damage, NetworkConnection sender = null)
         {
             TakeDamage(damage);
         }
@@ -154,14 +156,11 @@ namespace ApocalipseZ
             GetComponent<FpsPlayer>().TargetRespaw();
             yield break;
         }
-        [Command(requiresAuthority = false)]
-        public void CmdPlayerDeath(NetworkConnectionToClient sender = null)
+        [ServerRpc(RequireOwnership = false)]
+        public void CmdPlayerDeath(NetworkConnection sender = null)
         {
-            NetworkIdentity opponentIdentity = sender.identity.GetComponent<NetworkIdentity>();
-            PlayerStats stats = sender.identity.GetComponent<PlayerStats>();
-            stats.PlayerDeath();
+            PlayerDeath();
             // sender.identity.GetComponent<FpsPlayer>().GetWeaponManager().TargetDesEquipWeapon(opponentIdentity.connectionToClient);
-
         }
 
         public float GetDamage()

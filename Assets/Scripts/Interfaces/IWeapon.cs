@@ -8,7 +8,7 @@ public interface IWeapon
     int CurrentAmmo { get; set; }
     GameObject gameObject { get; }
     string WeaponName { get; }
-    void Fire();
+    bool Fire();
     void ReloadBegin();
     void Aim(bool v);
     bool SetAim { get; }

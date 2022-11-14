@@ -186,6 +186,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde079f9e53fb78408e4578fca61893b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   Type: 0
   Target: {fileID: 0}
   TargetPosition: {x: 0, y: 0, z: 0}
@@ -202,6 +205,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f84fcef3fe090e4685997ec16f458b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   Damage: 23
   health: 100
 --- !u!136 &2503183505322669480
@@ -327,6 +333,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42634f7380f43e043bf7acceb2ede071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   type: 0
 --- !u!1 &2503183505322570401
 GameObject:

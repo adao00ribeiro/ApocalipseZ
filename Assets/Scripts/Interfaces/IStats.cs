@@ -1,19 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
+using FishNet.Connection;
 
-public interface IStats 
+public interface IStats
 {
-    public bool IsDead ( );
-    public void AddHealth ( int hp );
-    public void AddSatiety ( int points );
+    public bool IsDead();
+    public void AddHealth(int hp);
+    public void AddSatiety(int points);
 
-    public void AddHydratation ( int points );
-    public void TakeDamage ( int damage );
-  
-    [Command ( requiresAuthority = false )]
-    public void CmdTakeDamage ( int damage , NetworkConnectionToClient sender = null );
+    public void AddHydratation(int points);
+    public void TakeDamage(int damage);
 
-    float GetDamage ( );
+    public void CmdTakeDamage(int damage, NetworkConnection sender = null);
+
+    float GetDamage();
 }

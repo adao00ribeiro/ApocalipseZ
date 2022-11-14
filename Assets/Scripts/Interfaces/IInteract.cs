@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror;
+using FishNet.Connection;
 public interface IInteract
 {
 
-    void CmdInteract ( NetworkConnectionToClient sender = null );
-    
-    void OnInteract ( IFpsPlayer player );
+    void CmdInteract(NetworkConnection sender = null);
 
-    void StartFocus ( );
+    void OnInteract(IFpsPlayer player);
 
-    void EndFocus ( );
-    string GetTitle ( );
+    void StartFocus();
+
+    void EndFocus();
+    string GetTitle();
 }

@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Mirror;
 namespace ApocalipseZ
 {
     [RequireComponent(typeof(AudioSource))]
-    public class Weapon : MonoBehaviour, IWeapon
+    public class Weapon : NetworkBehaviour, IWeapon
     {
         [SerializeField] private DataArmsWeapon weaponSetting;
         public DataArmsWeapon WeaponSetting { get => weaponSetting; }
@@ -33,7 +33,9 @@ namespace ApocalipseZ
 
         [Header("Ammo")]
         [Tooltip("Ammo count in weapon magazine")]
-        private int currentAmmo = 30;
+
+        [SyncVar(hook = nameof(setCurrent))]
+        [SerializeField]private int currentAmmo = 30;
         public int CurrentAmmo { get => currentAmmo; set => currentAmmo = value; }
 
 
@@ -72,7 +74,9 @@ namespace ApocalipseZ
         public bool isThrowingGrenade;
 
 
-
+        public void setCurrent(int oldcurrent,int newcurrent){
+currentAmmo = newcurrent;
+        }
 
         // Start is called before the first frame update
         void Start()
@@ -95,15 +99,16 @@ namespace ApocalipseZ
 
             temp_MuzzleFlashParticlesFX = Instantiate(DataParticles.Particles, muzzleFlashTransform);
         }
-
-
-
         // Update is called once per frame
         void Update()
         {
 
         }
 
+         [Command(requiresAuthority = false)]
+        public void CmdFire(NetworkConnectionToClient sender = null){
+            Fire();
+        }
         public void Fire()
         {
             if (weaponSetting.Type != WeaponType.Melee && weaponSetting.Type != WeaponType.Grenade)

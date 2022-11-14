@@ -44,6 +44,8 @@ namespace ApocalipseZ
                 IsInventoryOpen = !IsInventoryOpen;
                 WeaponManager.IsChekInventory = true;
                 CanvasInventory.enabled = IsInventoryOpen;
+                CanvasPrimaryAndSecondWeapons.enabled = IsInventoryOpen;
+                CanvasFastItems.enabled = IsInventoryOpen;
                 ActiveMotionBlur(IsInventoryOpen);
             }
             if (InputManager.GetEsc())
@@ -51,6 +53,9 @@ namespace ApocalipseZ
                 IsInventoryOpen = false;
                 WeaponManager.IsChekInventory = true;
                 CanvasInventory.enabled = IsInventoryOpen;
+                CanvasInventory.enabled = IsInventoryOpen;
+                CanvasPrimaryAndSecondWeapons.enabled = IsInventoryOpen;
+                CanvasFastItems.enabled = IsInventoryOpen;
                 ActiveMotionBlur(IsInventoryOpen);
             }
         }
@@ -78,7 +83,10 @@ namespace ApocalipseZ
             stats = playerStats;
         }
 
-
+        internal UiPrimaryAndSecondWeapons GetUiPrimaryandSecundaryWeapons()
+        {
+             return UiPrimaryAndSecondWeapons;
+        }
 
         private InputManager InputManager;
 

@@ -7,19 +7,16 @@ namespace ApocalipseZ
 {
     public class UiInventory : MonoBehaviour
     {
-
         public UISlotItem PrefabSlot;
         [SerializeField] private List<UISlotItem> UIItems = new List<UISlotItem>();
         private Transform slotPanel;
         Inventory inventory;
-
 
         void Awake()
         {
             slotPanel = transform.Find("SlotPanel").transform;
 
         }
-
         public void SetInventory(Inventory _inventory)
         {
             inventory = _inventory;
@@ -53,7 +50,7 @@ namespace ApocalipseZ
         }
         internal void UpdateSlot(int index, SlotInventoryTemp newItem)
         {
-            print(UIItems.Count);
+         
             DataItem dataItem = GameController.Instance.DataManager.GetDataItemById(newItem.guidid);
             if (dataItem == null)
             {

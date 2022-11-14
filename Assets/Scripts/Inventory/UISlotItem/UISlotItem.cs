@@ -29,12 +29,7 @@ namespace ApocalipseZ
             TextQuantidade = transform.Find("Image/TextQuantidade").GetComponent<Text>();
             TextQuantidade.text = "";
         }
-
-
-
-
         // Start is called before the first frame update
-
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (SlotSelecionado)
@@ -73,7 +68,6 @@ namespace ApocalipseZ
                             inventory.CmdInsertItem(SlotEnter.SlotIndex, SlotSelecionado.SlotIndex);
                         }
 
-
                     }
                     if (SlotEnter.AcceptedType == TypeContainer.FASTITEMS)
                     {
@@ -81,7 +75,14 @@ namespace ApocalipseZ
                     }
                     if (SlotEnter.AcceptedType == TypeContainer.WEAPONS)
                     {
-                        print("weapons");
+                        WeaponManager weaponManager = GameController.Instance.FpsPlayer.GetWeaponManager();
+
+                            if(SlotSelecionado.AcceptedType ==  TypeContainer.INVENTORY){
+                                weaponManager.CmdAddWeaponRemoveInventory(SlotEnter.SlotIndex, SlotSelecionado.SlotIndex);
+                            }else if(SlotSelecionado.AcceptedType ==  TypeContainer.WEAPONS){
+                                weaponManager.CmdMove(SlotEnter.SlotIndex, SlotSelecionado.SlotIndex);
+                            }
+                       
                     }
                 }
                 Destroy(SlotSelecionado.gameObject);

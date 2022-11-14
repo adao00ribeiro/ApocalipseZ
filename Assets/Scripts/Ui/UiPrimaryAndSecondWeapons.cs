@@ -15,42 +15,52 @@ namespace ApocalipseZ
         {
             UiPrimaryWeapon = transform.Find("Container/Primary Weapon Slot").GetComponent<UISlotItem>();
             UiSecondWeapon = transform.Find("Container/Second Weapon Slot").GetComponent<UISlotItem>();
+            UiPrimaryWeapon.HUD = transform.parent;
+            UiSecondWeapon.HUD = transform.parent;
+            UpdatePrimaryWeapon(new SlotInventoryTemp());
         }
-        private void OnEnable()
+
+        public void UpdatePrimaryWeapon( SlotInventoryTemp newItem)
         {
-            if (player == null)
+           
+            DataItem dataItem = GameController.Instance.DataManager.GetDataItemById(newItem.guidid);
+             
+            if (dataItem == null)
             {
+                UiPrimaryWeapon.SetIsEmpty(true);
+                UiPrimaryWeapon.SetImage(null);
+                UiPrimaryWeapon.SetTextQuantidade("");
+            }
+            else
+            {
+            
+                UiPrimaryWeapon.SetIsEmpty(false);
+                UiPrimaryWeapon.SetImage(dataItem.Thumbnail);
+                UiPrimaryWeapon.SetTextQuantidade("1");
+            }
+        }
+        public void UpdateSecundaryWeapon(SlotInventoryTemp newItem)
+        {
+            if(newItem.Compare(new SlotInventoryTemp())){
+                UiSecondWeapon.SetIsEmpty(true);
+                UiSecondWeapon.SetImage(null);
+                UiSecondWeapon.SetTextQuantidade("");
                 return;
             }
-            //   player.GetWeaponsSlots ( ).CmdGetContainer ( TypeContainer.WEAPONS );
-
-        }
-
-        public void UpdateSlots()
-        {
-            if (player == null)
+            DataItem dataItem = GameController.Instance.DataManager.GetDataItem(newItem.guidid);
+            if (dataItem == null)
             {
-                return;
+                UiSecondWeapon.SetIsEmpty(true);
+                UiSecondWeapon.SetImage(null);
+                UiSecondWeapon.SetTextQuantidade("");
             }
-
+            else
+            {
+                UiSecondWeapon.SetIsEmpty(false);
+                UiSecondWeapon.SetImage(dataItem.Thumbnail);
+                UiSecondWeapon.SetTextQuantidade("1");
+            }
         }
 
-        internal void SetFpsPlayer(IFpsPlayer _player)
-        {
-            player = _player;
-
-            //UiPrimaryWeapon.SetContainer(_player.GetWeaponsSlots());
-
-
-            //UiSecondWeapon.SetContainer(_player.GetWeaponsSlots());
-
-            //player.GetWeaponsSlots().OnContainerAltered += UpdateSlots; ;
-            UpdateSlots();
-        }
-
-        private void OnDestroy()
-        {
-            // player.GetWeaponsSlots().OnContainerAltered -= UpdateSlots; ;
-        }
     }
 }

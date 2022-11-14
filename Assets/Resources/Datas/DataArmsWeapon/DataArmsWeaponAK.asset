@@ -33,10 +33,10 @@ MonoBehaviour:
   meleeDamagePoints: 0
   meleeRigidbodyHitForce: 0
   meleeHitTime: 0
-  meleeHitFX: {fileID: 0}
+  meleeHitFX: 
   bulletInitialVelocity: 0
   airResistanceForce: 0
   projectile: {fileID: 0}
   projectilePoolSize: 0
-  PrefabArmsWeapon: {fileID: 5249001025089567256, guid: 08edfde4f7cc7a24cadcae1827c33784,
+  PrefabArmsWeapon: {fileID: 5249001025089567256, guid: 8724e999ca3f88449bc2e800f86f82a0,
     type: 3}

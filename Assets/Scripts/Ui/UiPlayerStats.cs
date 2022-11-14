@@ -23,7 +23,7 @@ namespace ApocalipseZ
 
         IFpsPlayer player;
         [SerializeField] PlayerStats stats;
-        [SerializeField] IWeaponManager WeaponManager;
+        [SerializeField] WeaponManager WeaponManager;
         private void Awake()
         {
             HealthSlider = transform.Find("HealthSlider").GetComponent<Slider>();

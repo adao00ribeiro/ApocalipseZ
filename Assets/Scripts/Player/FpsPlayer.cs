@@ -17,7 +17,7 @@ namespace ApocalipseZ
         public event System.Action<FpsPlayer> OnLocalPlayerJoined;
 
         IMoviment Moviment;
-        IWeaponManager WeaponManager;
+        WeaponManager WeaponManager;
         IFastItemsManager FastItemsManager;
         public Inventory Inventory;
         IInteractObjects InteractObjects;
@@ -195,7 +195,7 @@ namespace ApocalipseZ
             return Moviment;
         }
 
-        public IWeaponManager GetWeaponManager()
+        public WeaponManager GetWeaponManager()
         {
             return WeaponManager;
         }

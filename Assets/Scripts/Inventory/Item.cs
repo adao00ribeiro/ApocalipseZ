@@ -57,6 +57,7 @@ namespace ApocalipseZ
         {
             Inventory inventory = player.GetInventory();
             SlotInventoryTemp slot = new SlotInventoryTemp();
+            slot.Name = dataItem.Name;
             slot.guidid = dataItem.GuidId;
             slot.Ammo = Ammo;
             slot.Quantity = dropQuantity;

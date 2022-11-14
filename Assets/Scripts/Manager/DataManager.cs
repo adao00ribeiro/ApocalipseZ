@@ -21,7 +21,18 @@ namespace ApocalipseZ
             ListAudios = Resources.LoadAll<DataAudio>("Datas/DataAudios");
             ListParticles = Resources.LoadAll<DataParticles>("Datas/DataParticles");
         }
-
+        internal DataArmsWeapon GetArmsWeaponById(string guidId)
+        {
+            DataArmsWeapon temp = null;
+            foreach (DataArmsWeapon arms in ListArmsWeapon)
+            {
+                if (arms.GuidId == guidId)
+                {
+                    temp = arms;
+                }
+            }
+            return temp;
+        }
         internal DataArmsWeapon GetArmsWeapon(string weaponName)
         {
             DataArmsWeapon temp = null;

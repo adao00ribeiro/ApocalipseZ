@@ -262,7 +262,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 174352631028909073}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -274,7 +274,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!114 &6960985781557493745
 MonoBehaviour:
@@ -3046,10 +3046,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23c7767686b5cc4fbf16cc15d7d7c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AcceptedType: 2
   SlotIndex: 0
   Image: {fileID: 0}
   TextQuantidade: {fileID: 0}
-  PrefabUiSlotItem: {fileID: 953581165, guid: 5deda34205ca1fe4ca2c7573aeec546c, type: 3}
+  HUD: {fileID: 0}
+  isEmpty: 0
 --- !u!1 &2404380897940348646
 GameObject:
   m_ObjectHideFlags: 0
@@ -3247,10 +3249,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23c7767686b5cc4fbf16cc15d7d7c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AcceptedType: 0
   SlotIndex: 1
   Image: {fileID: 0}
   TextQuantidade: {fileID: 0}
-  PrefabUiSlotItem: {fileID: 953581165, guid: 5deda34205ca1fe4ca2c7573aeec546c, type: 3}
+  HUD: {fileID: 0}
+  isEmpty: 0
 --- !u!1 &2577955492511654700
 GameObject:
   m_ObjectHideFlags: 0
@@ -3783,10 +3787,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23c7767686b5cc4fbf16cc15d7d7c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AcceptedType: 0
   SlotIndex: 0
   Image: {fileID: 0}
   TextQuantidade: {fileID: 0}
-  PrefabUiSlotItem: {fileID: 953581165, guid: 5deda34205ca1fe4ca2c7573aeec546c, type: 3}
+  HUD: {fileID: 0}
+  isEmpty: 0
 --- !u!1 &2747470011838191900
 GameObject:
   m_ObjectHideFlags: 0
@@ -4685,7 +4691,7 @@ MonoBehaviour:
   CanvasScope: {fileID: 359815017172626346}
   CanvasPlayerStats: {fileID: 1583292434272212191}
   CanvasMissao: {fileID: 7697212301749718163}
-  UiPrimaryAndSecondWeapons: {fileID: 0}
+  UiPrimaryAndSecondWeapons: {fileID: 6020982915600274590}
   UiInventory: {fileID: 1969139384393397127}
   UiFastItems: {fileID: 0}
   UiFpsScopeCursorReticles: {fileID: 0}
@@ -6087,10 +6093,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23c7767686b5cc4fbf16cc15d7d7c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AcceptedType: 2
   SlotIndex: 1
   Image: {fileID: 0}
   TextQuantidade: {fileID: 0}
-  PrefabUiSlotItem: {fileID: 953581165, guid: 5deda34205ca1fe4ca2c7573aeec546c, type: 3}
+  HUD: {fileID: 0}
+  isEmpty: 0
 --- !u!1 &3969820844434526279
 GameObject:
   m_ObjectHideFlags: 0
@@ -8121,10 +8129,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23c7767686b5cc4fbf16cc15d7d7c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AcceptedType: 0
   SlotIndex: 2
   Image: {fileID: 0}
   TextQuantidade: {fileID: 0}
-  PrefabUiSlotItem: {fileID: 953581165, guid: 5deda34205ca1fe4ca2c7573aeec546c, type: 3}
+  HUD: {fileID: 0}
+  isEmpty: 0
 --- !u!1 &5868665302093142275
 GameObject:
   m_ObjectHideFlags: 0
@@ -8803,7 +8813,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: a5c106fbc6637144596db917447ec097, type: 3}
+    m_Font: {fileID: 12800000, guid: e3265ab4bf004d28a9537516768c1c75, type: 3}
     m_FontSize: 22
     m_FontStyle: 0
     m_BestFit: 1
@@ -12103,3 +12113,4 @@ MonoBehaviour:
   WeaponText: {fileID: 0}
   AmmoText: {fileID: 0}
   stats: {fileID: 0}
+  WeaponManager: {fileID: 0}

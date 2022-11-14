@@ -13,12 +13,17 @@ public class Inventory : NetworkBehaviour
     [SerializeField] private int maxSlot = 6;
 
     public bool teste;
-    public override void OnStartClient()
-    {
+
+    void Start(){
         for (int i = 0; i < maxSlot; i++)
         {
             inventory.Add(new SlotInventoryTemp());
         }
+    }
+    public override void OnStartClient()
+    {
+        
+
         uiInventory = GameController.Instance.CanvasFpsPlayer.GetUiInventory();
         uiInventory.SetInventory(this);
         uiInventory.AddSlots();
@@ -33,6 +38,10 @@ public class Inventory : NetworkBehaviour
     {
         AddItem(slot);
     }
+    public SlotInventoryTemp GetSlot(int index){
+
+       return inventory[index];
+    }
     public bool AddItem(SlotInventoryTemp slot)
     {
         DataItem item = GameController.Instance.DataManager.GetDataItemById(slot.guidid);
@@ -45,8 +54,7 @@ public class Inventory : NetworkBehaviour
         {
             if (inventory[i].Compare(new SlotInventoryTemp()))
             {
-                inventory.RemoveAt(i);
-                inventory.Insert(i, slot);
+                inventory[i] = slot;
                 return true;
             }
         }
@@ -55,21 +63,20 @@ public class Inventory : NetworkBehaviour
 
     public void InsertItem(int slotEnterIndex, int slotIndexselecionado)
     {
-        // 0   5
-        print(slotEnterIndex + " " + slotIndexselecionado);
         SlotInventoryTemp auxEnter = inventory[slotEnterIndex];
-        SlotInventoryTemp auxSelecionaddo = inventory[slotIndexselecionado];
-
-        inventory.Insert(slotEnterIndex, auxSelecionaddo);
-        inventory.Insert(slotIndexselecionado, auxEnter);
-
-        inventory.Remove(inventory[slotEnterIndex]);
-        inventory.Remove(inventory[slotIndexselecionado]);
-
-
+        inventory[slotEnterIndex] = inventory[slotIndexselecionado];
+        inventory[slotIndexselecionado] = auxEnter;
     }
 
-
+    public void RemoveItem(SlotInventoryTemp slot){
+       
+         for (int i = 0; i < inventory.Count; i++)
+        {
+            if(inventory[i].Compare(slot)){
+                inventory[i] = new SlotInventoryTemp();
+            }
+        }
+    }
     [Command]
     public void CmdRemoveItem(int slotIndex)
     {
@@ -100,7 +107,6 @@ public class Inventory : NetworkBehaviour
                 // oldItem is the previous value for the item at the index
                 // newItem is the new value for the item at the index
                 uiInventory.UpdateSlot(index, newItem);
-
                 break;
             case SyncList<SlotInventoryTemp>.Operation.OP_CLEAR:
                 // list got cleared

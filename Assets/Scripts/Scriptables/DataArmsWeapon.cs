@@ -7,6 +7,7 @@ public enum WeaponType { SMG, SniperRiffle, Pistol, Shotgun, Melee, Grenade }
 [CreateAssetMenu(fileName = "DataArmsWeapon", menuName = "Data/ArmsWeapon", order = 0)]
 public class DataArmsWeapon : ScriptableObject
 {
+     public string GuidId;
     public string Name;
     public WeaponType Type;
 
@@ -53,4 +54,8 @@ public class DataArmsWeapon : ScriptableObject
     public int projectilePoolSize;
 
     public GameObject PrefabArmsWeapon;
+
+    public DataArmsWeapon(){
+           this.GuidId = System.Guid.NewGuid().ToString();
+    }
 }

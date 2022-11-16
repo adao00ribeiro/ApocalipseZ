@@ -9,10 +9,29 @@ using FishNet.Object.Synchronizing;
 using FishNet.Transporting;
 using FishNet.Connection;
 using TMPro;
+using FishNet.Object.Prediction;
+
 namespace ApocalipseZ
 {
     //adicionar e conter components
+    public struct MoveData
+    {
+        public bool Jump;
+        public float Horizontal;
+        public float Forward;
+        public bool IsRun;
+        public bool IsCrouch;
 
+        public float RotationX;
+        public Vector2 MouseDelta;
+
+    }
+    public struct ReconcileData
+    {
+        public Vector3 Position;
+        public Quaternion Rotation;
+        public bool Grounded;
+    }
     [RequireComponent(typeof(Moviment))]
     [RequireComponent(typeof(WeaponManager))]
     public class FpsPlayer : NetworkBehaviour, IFpsPlayer
@@ -38,33 +57,132 @@ namespace ApocalipseZ
 
         [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(PlayerColorChanged))]
         public Color32 playerColor = Color.white;
+
+        public bool Grounded;
+        //MoveData for client simulation
+        private MoveData _clientMoveData;
         // Start is called before the first frame update
         private void Awake()
         {
-           
+
             Inventory = GetComponent<Inventory>();
             Moviment = GetComponent<Moviment>();
             WeaponManager = GetComponent<WeaponManager>();
             FastItemsManager = GetComponent<FastItemsManager>();
             InteractObjects = transform.Find("Camera & Recoil").GetComponent<InteractObjects>();
-            AnimatorController = transform.Find("Ch35_nonPBR").GetComponent<Animator>();
             AnimatorWeaponHolderController = transform.Find("Camera & Recoil/Weapon holder").GetComponent<Animator>();
             PlayerStats = GetComponent<PlayerStats>();
             FirstPersonCamera = transform.Find("Camera & Recoil").GetComponent<FirstPersonCamera>();
-
-           
             WeaponManager.SetFpsPlayer(this);
-           
+
         }
         private void Start()
         {
 
         }
-     
+        public override void OnStartNetwork()
+        {
+            base.OnStartNetwork();
+            base.TimeManager.OnTick += TimeManager_OnTick;
+            base.TimeManager.OnUpdate += TimeManager_OnUpdate;
+
+        }
+        public override void OnStopNetwork()
+        {
+            base.OnStopNetwork();
+            if (base.TimeManager != null)
+            {
+                base.TimeManager.OnTick -= TimeManager_OnTick;
+                base.TimeManager.OnUpdate -= TimeManager_OnUpdate;
+            }
+        }
+        private void LateUpdate()
+        {
+            if (base.IsOwner)
+            {
+                FirstPersonCamera.UpdateCamera();
+            }
+
+        }
+        private void TimeManager_OnTick()
+        {
+
+            if (base.IsOwner)
+            {
+                Reconcile(default, false);
+                BuildActions(out MoveData md);
+                Move(md, false);
+            }
+            if (base.IsServer)
+            {
+                Move(default, true);
+                ReconcileData rd = new ReconcileData()
+                {
+                    Position = transform.position,
+                    Rotation = transform.rotation,
+                    Grounded = Grounded
+                };
+                Reconcile(rd, true);
+            }
+        }
+        private void TimeManager_OnUpdate()
+        {
+            if (base.IsOwner)
+            {
+                Moviment.GravityJumpUpdate(_clientMoveData, Time.deltaTime);
+                GroundedCheck();
+                Moviment.MoveTick(_clientMoveData, Time.deltaTime);
+            }
+        }
+
+        private void GroundedCheck()
+        {
+            Grounded = Moviment.isGrounded();
+        }
+        private void BuildActions(out MoveData moveData)
+        {
+            moveData = default;
+            moveData.Jump = InputManager.GetIsJump();
+            moveData.Forward = InputManager.GetMoviment().y;
+            moveData.Horizontal = InputManager.GetMoviment().x;
+            moveData.IsRun = InputManager.GetRun();
+            moveData.IsCrouch = InputManager.GetCrouch();
+            moveData.MouseDelta.x = InputManager.GetMouseDelta().x;
+            moveData.MouseDelta.y = InputManager.GetMouseDelta().y;
+            moveData.RotationX = FirstPersonCamera.GetRotationX();
+        }
+        [Replicate]
+        private void Move(MoveData moveData, bool asServer, bool replaying = false)
+        {
+            if (asServer || replaying)
+            {
+
+
+                Moviment.GravityJumpUpdate(_clientMoveData, (float)base.TimeManager.TickDelta);
+                GroundedCheck();
+                Moviment.MoveTick(moveData, (float)base.TimeManager.TickDelta);
+
+            }
+            else if (!asServer)
+            {
+                _clientMoveData = moveData;
+            }
+
+        }
+        [Reconcile]
+        private void Reconcile(ReconcileData recData, bool asServer)
+        {
+            //Reset the client to the received position. It's okay to do this
+            //even if there is no de-synchronization.
+            transform.position = recData.Position;
+            transform.rotation = recData.Rotation;
+            Grounded = recData.Grounded;
+
+        }
         public override void OnStartServer()
         {
             base.OnStartServer();
-            
+
         }
         public override void OnStartClient()
         {
@@ -74,7 +192,9 @@ namespace ApocalipseZ
             {
                 FirstPersonCamera.tag = "MainCamera";
                 FirstPersonCamera.GetComponent<Camera>().enabled = true;
-            }else{
+            }
+            else
+            {
                 FirstPersonCamera.RemoveAudioListener();
             }
 
@@ -105,7 +225,7 @@ namespace ApocalipseZ
         }
         */
         }
-       
+
         [Server]
         public void DroppAllItems()
         {
@@ -153,30 +273,7 @@ namespace ApocalipseZ
             //  Destroy(CanvasFpsPlayer.gameObject);
         }
         // Update is called once per frame
-        void Update()
-        {
-            if (!IsOwner)
-            {
-                return;
-            }
-            //  Animation();
-            if (PlayerStats.IsDead())
-            {
-                Moviment.DisableCharacterController();
-                FirstPersonCamera.CameraDeath();
-                AnimatorController.Play("BlendDeath");
-                AnimatorWeaponHolderController.Play("Unhide");
-                return;
-            }
-            Moviment.UpdateMoviment();
-            InteractObjects.UpdateInteract();
-            FirstPersonCamera.UpdateCamera();
-            if (InputManager.GetLanterna())
-            {
-                Lanterna.enabled = !Lanterna.enabled;
-            }
-            //  transform.rotation = Quaternion.Euler ( 0 , GameObject.FindObjectOfType<CinemachinePovExtension> ( ).GetStartrotation ( ).x , 0 );
-        }
+
 
         public void Animation()
         {

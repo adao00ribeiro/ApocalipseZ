@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public interface IMoviment
+namespace ApocalipseZ
 {
-    void Move ( );
-    void Jump ( );
-    bool CheckMovement ( );
-    bool isGrounded ( );
-    bool CheckIsRun ( );
-    void UpdateMoviment ( );
+    public interface IMoviment
+    {
 
-    public void EnableCharacterController ( );
-    public void DisableCharacterController ( );
+        void Move(MoveData moveData, float delta);
+        void Jump(MoveData moveData, float delta);
+        bool CheckMovement();
+        bool isGrounded();
+        void CheckGround();
+        bool CheckIsRun();
+        void MoveTick(MoveData moveData, float delta);
+        void GravityJumpUpdate(MoveData moveData, float delta);
+
+        public void EnableCharacterController();
+        public void DisableCharacterController();
+    }
 }

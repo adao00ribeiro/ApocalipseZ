@@ -27,10 +27,13 @@ namespace ApocalipseZ
 
 
         Transform CameraTransform;
+
+
+
         private void Awake()
         {
             InputManager = GameController.Instance.InputManager;
-            mesh = transform.Find("Ch35_nonPBR");
+            mesh = transform.Find("Mesh/Ch35_nonPBR");
             CharacterController = GetComponent<CharacterController>();
             CameraTransform = transform.Find("Camera & Recoil");
             SoundStep = GetComponent<SoundStep>();
@@ -45,40 +48,57 @@ namespace ApocalipseZ
         {
             CharacterController.enabled = false;
         }
-        public void UpdateMoviment()
+        public void MoveTick(MoveData md, float delta)
         {
-            IsGrounded = CharacterController.isGrounded;
-            Move();
-            Gravity();
-            Jump();
+
+            Move(md, delta);
             SoundStep.SetIsGround(isGrounded());
             SoundStep.SetIsMoviment(CheckMovement());
         }
-        public void Move()
+        public void GravityJumpUpdate(MoveData md, float delta)
+        {
+            CheckGround();
+
+            Gravity(delta);
+            Jump(md, delta);
+        }
+        public float GroundedRadius = 0.28f;
+        public float GroundedOffset = -0.14f;
+        public LayerMask GroundLayers;
+        public void CheckGround()
+        {
+            // set sphere position, with offset
+            Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
+                transform.position.z);
+            IsGrounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers,
+                QueryTriggerInteraction.Ignore);
+        }
+        public void Move(MoveData md, float delta)
         {
             Vector3 moveDirection = Vector3.zero;
-            moveDirection = new Vector3(InputManager.GetMoviment().x, 0, InputManager.GetMoviment().y);
+            moveDirection = new Vector3(md.Horizontal, 0, md.Forward);
             currentSpeed = Walk;
-            currentSpeed = InputManager.GetRun() ? Run : currentSpeed;
-            currentSpeed = InputManager.GetCrouch() ? crouchSpeed : currentSpeed;
-            SetCrouchHeight();
-            CharacterController.Move(transform.TransformDirection(moveDirection) * currentSpeed * Time.deltaTime);
+            currentSpeed = md.IsRun ? Run : currentSpeed;
+            currentSpeed = md.IsCrouch ? crouchSpeed : currentSpeed;
+            //SetCrouchHeight();
+            transform.localRotation = Quaternion.Euler(0, md.RotationX, 0);
+            CharacterController.Move(transform.TransformDirection(moveDirection) * currentSpeed * delta);
 
         }
-        public void Gravity()
+        public void Gravity(float delta)
         {
-            PlayerVelocity.y += Physics.gravity.y * Time.deltaTime;
+            PlayerVelocity.y += Physics.gravity.y * delta;
             if (IsGrounded && PlayerVelocity.y < 0)
             {
                 PlayerVelocity.y = -2f;
             }
-            CharacterController.Move(PlayerVelocity * Time.deltaTime);
+            CharacterController.Move(PlayerVelocity * delta);
         }
-        public void Jump()
+        public void Jump(MoveData md, float delta)
         {
-            if (InputManager.GetIsJump() && isGrounded())
+            if (md.Jump && akita errado)
             {
-                PlayerVelocity.y = Mathf.Sqrt(jumpSpeed * -3.0f * Physics.gravity.y);
+                PlayerVelocity.y = Mathf.Sqrt(jumpSpeed * -2.0f * Physics.gravity.y);
             }
         }
         public void SetCrouchHeight()
@@ -99,7 +119,6 @@ namespace ApocalipseZ
         {
             return IsGrounded;
         }
-
         public bool CheckIsRun()
         {
             return InputManager.GetRun();

@@ -11,7 +11,7 @@ namespace ApocalipseZ
         [SerializeField] private List<UISlotItem> UIItems = new List<UISlotItem>();
         private Transform slotPanel;
         Inventory inventory;
-
+        WeaponManager weaponManager;
         void Awake()
         {
             slotPanel = transform.Find("SlotPanel").transform;
@@ -21,7 +21,10 @@ namespace ApocalipseZ
         {
             inventory = _inventory;
         }
-
+        public void SetWeaponManager(WeaponManager _weaponmanager)
+        {
+            weaponManager = _weaponmanager;
+        }
         public void AddSlots()
         {
             foreach (UISlotItem item in UIItems)
@@ -34,6 +37,8 @@ namespace ApocalipseZ
                 UISlotItem instance = Instantiate(PrefabSlot, slotPanel);
                 instance.HUD = transform.parent;
                 instance.SetSlotIndex(i);
+                instance.SetInventory(inventory);
+                instance.SetWeaponManager(weaponManager);
                 UIItems.Add(instance);
             }
         }

@@ -25,7 +25,7 @@ namespace ApocalipseZ
         PlayerStats stats;
         FirstPersonCamera FirstPersonCamera;
 
-
+       
         private void Awake()
         {
             InputManager = GameController.Instance.InputManager;
@@ -59,7 +59,7 @@ namespace ApocalipseZ
                 ActiveMotionBlur(IsInventoryOpen);
             }
         }
-
+  
         public void ActiveMotionBlur(bool active)
         {
             FirstPersonCamera.ActiveCursor(active);

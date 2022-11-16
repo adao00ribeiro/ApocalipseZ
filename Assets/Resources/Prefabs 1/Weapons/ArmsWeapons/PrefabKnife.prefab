@@ -1594,7 +1594,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6936633848590275401}
-  - component: {fileID: -1506585987468791923}
   - component: {fileID: 3625838376205592697}
   m_Layer: 6
   m_Name: PrefabKnife
@@ -1619,24 +1618,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-1506585987468791923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6203856247229931866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a83373c94efa81244811001d31381cff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponSetting: {fileID: 0}
-  weaponName: KNIFE
-  sway: {fileID: 0}
-  audioSource: {fileID: 0}
-  shotSFX: {fileID: 0}
-  recoilComponent: {fileID: 0}
 --- !u!82 &3625838376205592697
 AudioSource:
   m_ObjectHideFlags: 0

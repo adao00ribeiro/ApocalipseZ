@@ -6,9 +6,6 @@ namespace ApocalipseZ
 {
     public class GameController : MonoBehaviour
     {
-        [Header("Prefab Player")]
-        [SerializeField] private GameObject Player;
-
 
         [Header("Prefab Managers")]
         [SerializeField] private DataManager PrefabDataManager;
@@ -46,9 +43,9 @@ namespace ApocalipseZ
                 _instance = this;
             }
             InitManagers();
-            SpawPlayer();
+        
         }
-
+            
         public void InitManagers()
         {
 
@@ -65,7 +62,7 @@ namespace ApocalipseZ
             }
 
         }
-
+/*
         public void SpawPlayer(GameObject player = null)
         {
             if (Player == null)
@@ -100,7 +97,7 @@ namespace ApocalipseZ
 
             }
         }
-
+*/
         private static GameController _instance;
         public static GameController Instance
         {
@@ -110,18 +107,7 @@ namespace ApocalipseZ
                 return _instance;
             }
         }
-        public FpsPlayer FpsPlayer
-        {
-            get
-            {
-
-                return fpsPlayer;
-            }
-            set
-            {
-                fpsPlayer = value;
-            }
-        }
+      
         public CanvasFpsPlayer CanvasFpsPlayer
         {
             get

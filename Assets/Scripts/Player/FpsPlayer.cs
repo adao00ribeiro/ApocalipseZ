@@ -8,7 +8,7 @@ using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using FishNet.Transporting;
 using FishNet.Connection;
-
+using TMPro;
 namespace ApocalipseZ
 {
     //adicionar e conter components
@@ -25,7 +25,7 @@ namespace ApocalipseZ
         public Inventory Inventory;
         IInteractObjects InteractObjects;
         PlayerStats PlayerStats;
-        FirstPersonCamera FirstPersonCamera;
+        public FirstPersonCamera FirstPersonCamera;
         //--------------------------------------------
         public bool isClimbing = true;
         private Vector3 previousPos = new Vector3();
@@ -41,7 +41,7 @@ namespace ApocalipseZ
         // Start is called before the first frame update
         private void Awake()
         {
-            GameController.Instance.FpsPlayer = this;
+           
             Inventory = GetComponent<Inventory>();
             Moviment = GetComponent<Moviment>();
             WeaponManager = GetComponent<WeaponManager>();
@@ -51,10 +51,20 @@ namespace ApocalipseZ
             AnimatorWeaponHolderController = transform.Find("Camera & Recoil/Weapon holder").GetComponent<Animator>();
             PlayerStats = GetComponent<PlayerStats>();
             FirstPersonCamera = transform.Find("Camera & Recoil").GetComponent<FirstPersonCamera>();
+
+           
+            WeaponManager.SetFpsPlayer(this);
+           
         }
         private void Start()
         {
 
+        }
+     
+        public override void OnStartServer()
+        {
+            base.OnStartServer();
+            
         }
         public override void OnStartClient()
         {
@@ -63,12 +73,11 @@ namespace ApocalipseZ
             if (base.IsOwner)
             {
                 FirstPersonCamera.tag = "MainCamera";
-            }
-            else
-            {
+                FirstPersonCamera.GetComponent<Camera>().enabled = true;
+            }else{
                 FirstPersonCamera.RemoveAudioListener();
-                FirstPersonCamera.GetComponent<Camera>().enabled = false;
             }
+
             /*
             for (int i = 0; i < mesh.Length; i++)
             {
@@ -96,6 +105,7 @@ namespace ApocalipseZ
         }
         */
         }
+       
         [Server]
         public void DroppAllItems()
         {

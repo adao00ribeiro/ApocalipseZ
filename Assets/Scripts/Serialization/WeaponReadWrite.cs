@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FishNet.Serializing;
+using FishNet.Object.Synchronizing.Internal;
+using FishNet.Object.Synchronizing;
 
 namespace ApocalipseZ
 {
@@ -15,17 +17,20 @@ namespace ApocalipseZ
             currentAmmo = current;
         }
     }
+  public class SyncMyContainer : SyncBase, ICustomSync
+{
+    /* If you intend to serialize your type
+    * as a whole at any point in your custom
+    * SyncObject and would like the automatic
+    * serializers to include it then use
+    * GetSerializedType() to return the type.
+    * In this case, the type is MyContainer.
+    * If you do not need a serializer generated
+    * you may return null. */
+    public object GetSerializedType() => typeof(WeaponNetwork);
+}
     public static class WeaponReadWrite
     {
-        public static void WriteWeapon(this Writer writer, WeaponNetwork value)
-        {
-            writer.WriteInt32(value.currentAmmo);
-        }
-        public static WeaponNetwork ReadWeapon(this Reader reader)
-        {
-
-            return new WeaponNetwork(reader.ReadInt32());
-
-        }
+      
     }
 }

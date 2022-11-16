@@ -20,6 +20,13 @@ public class Inventory : NetworkBehaviour
     {
 
     }
+    void FixedUpdate(){
+     ListInspector.Clear();
+      for (int i = 0; i < inventory.Count; i++)
+      {
+            ListInspector.Add(new ListItemsInspector(i,inventory[i].Name , inventory[i].Ammo));
+      }
+    }
     void StartInventory()
     {
         for (int i = 0; i < maxSlot; i++)
@@ -27,14 +34,23 @@ public class Inventory : NetworkBehaviour
             inventory.Add(new SlotInventoryTemp());
         }
     }
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+         StartInventory();
+    }
     public override void OnStartClient()
     {
 
         base.OnStartClient();
+        if(base.IsOwner){
+            
         uiInventory = GameController.Instance.CanvasFpsPlayer.GetUiInventory();
         uiInventory.SetInventory(this);
+        uiInventory.SetWeaponManager(GetComponent<WeaponManager>());
         uiInventory.AddSlots();
         inventory.OnChange += OnInventoryUpdated;
+          }
 
     }
 

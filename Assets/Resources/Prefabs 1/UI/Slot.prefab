@@ -244,12 +244,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f23c7767686b5cc4fbf16cc15d7d7c73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  AcceptedType: 0
   SlotIndex: 0
-  Image: {fileID: 0}
-  TextQuantidade: {fileID: 0}
-  nameItemSlot: 
-  PrefabUiSlotItem: {fileID: 953581165}
+  Image: {fileID: 490094488644805347}
+  TextQuantidade: {fileID: 2769872201476157232}
+  HUD: {fileID: 0}
+  isEmpty: 0
 --- !u!1 &5275480285760205075
 GameObject:
   m_ObjectHideFlags: 0

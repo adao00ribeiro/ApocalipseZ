@@ -1,8 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using FishNet;
+
 using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
@@ -17,10 +16,9 @@ namespace ApocalipseZ
         public List<Weapon> ArmsWeapons = new List<Weapon>();
 
 
-        [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(SetWeaponNetwork))]
-        public WeaponNetwork activeSlotNetwork;
+        [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(SetAmmoNetwork))]
+        public int AmmoNetwork;
         public Weapon activeSlot;
-
 
         [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(SetPrimaryWeapon))]
         public SlotInventoryTemp PrimaryWeapon;
@@ -42,14 +40,15 @@ namespace ApocalipseZ
         int currentSlot;
 
 
-        public void SetWeaponNetwork(WeaponNetwork oldSlot, WeaponNetwork newSlot, bool asServer)
+        public void SetAmmoNetwork(int oldSlot, int newSlot, bool asServer)
         {
-            activeSlotNetwork = newSlot;
+            AmmoNetwork = newSlot;
+         
         }
         private void Awake()
         {
             InputManager = GameController.Instance.InputManager;
-            fpsplayer = GameController.Instance.FpsPlayer;
+          
         }
         void Start()
         {
@@ -62,7 +61,9 @@ namespace ApocalipseZ
             }
 
         }
-
+        public void SetFpsPlayer(IFpsPlayer fps){
+                fpsplayer = fps;
+        }
         // Update is called once per frame
         void Update()
         {
@@ -126,8 +127,14 @@ namespace ApocalipseZ
         [ServerRpc]
         public void CmdFire()
         {
-            activeSlot.Fire();
-            activeSlotNetwork.currentAmmo = activeSlot.CurrentAmmo;
+             if(activeSlot.Fire()){
+                RpcFire(base.Owner);
+             }
+            AmmoNetwork = activeSlot.CurrentAmmo;
+        }
+            [TargetRpc]
+        public void RpcFire(NetworkConnection conn){
+                activeSlot.PlayFX();
         }
         [ServerRpc]
         public void CmdSlotChange(GameObject target)
@@ -152,6 +159,7 @@ namespace ApocalipseZ
                 return;
             }
             activeSlot = Instantiate(tempArms.PrefabArmsWeapon, swayTransform).GetComponent<Weapon>();
+            activeSlot.Cam = fpsplayer.GetFirstPersonCamera();
             activeSlot.CurrentAmmo = ammo;
             activeSlot.gameObject.SetActive(true);
             weaponHolderAnimator.Play("Unhide");
@@ -183,6 +191,7 @@ namespace ApocalipseZ
             }
 
             activeSlot = Instantiate(tempArms.PrefabArmsWeapon, swayTransform).GetComponent<Weapon>();
+            activeSlot.Cam = fpsplayer.GetFirstPersonCamera();
             activeSlot.CurrentAmmo = ammo;
             activeSlot.gameObject.SetActive(true);
             weaponHolderAnimator.Play("Unhide");

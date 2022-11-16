@@ -21,13 +21,25 @@ namespace ApocalipseZ
         public static UISlotItem SlotSelecionado;
         public static UISlotItem SlotEnter;
 
+        Inventory inventory;
+        WeaponManager weaponManager;
         public bool isEmpty;
+
+
         private void Awake()
         {
-
-            Image = transform.Find("Image").GetComponent<Image>();
-            TextQuantidade = transform.Find("Image/TextQuantidade").GetComponent<Text>();
             TextQuantidade.text = "";
+
+            SetImage(null);
+        }
+
+        public void SetInventory(Inventory _inventory)
+        {
+            inventory = _inventory;
+        }
+        public void SetWeaponManager(WeaponManager _weaponmanager)
+        {
+            weaponManager = _weaponmanager;
         }
         // Start is called before the first frame update
         public void OnBeginDrag(PointerEventData eventData)
@@ -48,6 +60,7 @@ namespace ApocalipseZ
             }
         }
 
+
         public void OnEndDrag(PointerEventData eventData)
         {
 
@@ -61,7 +74,6 @@ namespace ApocalipseZ
                 {
                     if (SlotEnter.AcceptedType == TypeContainer.INVENTORY)
                     {
-                        Inventory inventory = GameController.Instance.FpsPlayer.GetInventory();
 
                         if (SlotEnter.SlotIndex != SlotSelecionado.SlotIndex)
                         {
@@ -75,14 +87,15 @@ namespace ApocalipseZ
                     }
                     if (SlotEnter.AcceptedType == TypeContainer.WEAPONS)
                     {
-                        WeaponManager weaponManager = GameController.Instance.FpsPlayer.GetWeaponManager();
+                        if (SlotSelecionado.AcceptedType == TypeContainer.INVENTORY)
+                        {
+                            weaponManager.CmdAddWeaponRemoveInventory(SlotEnter.SlotIndex, SlotSelecionado.SlotIndex);
+                        }
+                        else if (SlotSelecionado.AcceptedType == TypeContainer.WEAPONS)
+                        {
+                            weaponManager.CmdMove(SlotEnter.SlotIndex, SlotSelecionado.SlotIndex);
+                        }
 
-                            if(SlotSelecionado.AcceptedType ==  TypeContainer.INVENTORY){
-                                weaponManager.CmdAddWeaponRemoveInventory(SlotEnter.SlotIndex, SlotSelecionado.SlotIndex);
-                            }else if(SlotSelecionado.AcceptedType ==  TypeContainer.WEAPONS){
-                                weaponManager.CmdMove(SlotEnter.SlotIndex, SlotSelecionado.SlotIndex);
-                            }
-                       
                     }
                 }
                 Destroy(SlotSelecionado.gameObject);
@@ -141,6 +154,10 @@ namespace ApocalipseZ
         public void SetImage(Sprite image)
         {
             Image.sprite = image;
+            if (image == null)
+            {
+                Image.color = Color.clear;
+            }
         }
         public void SetSlotIndex(int index)
         {

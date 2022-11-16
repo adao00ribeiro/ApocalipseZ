@@ -10,7 +10,6 @@ namespace ApocalipseZ
         public DataArmsWeapon WeaponSetting { get => weaponSetting; }
         [SerializeField] private string weaponName;
         public string WeaponName { get => weaponName; }
-
         private float scopeSensitivityX, scopeSensitivityY;
 
         [Header("Transforms Objects Spaws")]
@@ -55,7 +54,7 @@ namespace ApocalipseZ
         [SerializeField] private AudioClip reloadSFX;
         [SerializeField] private AudioClip emptySFX;
         //prefabs
-
+        public FirstPersonCamera Cam;
         private GameObject PrefabProjectile;
 
         private float nextFireTime;
@@ -116,8 +115,7 @@ namespace ApocalipseZ
                     currentAmmo -= 1;
 
                     PlayFX();
-                    muzzleFlashTransform.LookAt(Camera.main.transform.position + Camera.main.transform.forward * 3000);
-
+                    muzzleFlashTransform.LookAt(Cam.transform.position + Cam.transform.forward * 3000);
                     GameObject tempbala = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Cube));
                     tempbala.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
                     // player.CmdSpawBullet(new SpawBulletTransform(weaponSetting.projectile.name, muzzleFlashTransform.position, muzzleFlashTransform.rotation), player.GetConnection());
@@ -261,7 +259,7 @@ namespace ApocalipseZ
             // weaponManager.UnhideWeaponAfterGrenadeDrop ( );
         }
 */
-        private void PlayFX()
+        public void PlayFX()
         {
             if (useAnimator)
                 Animator.Play("Shot");

@@ -22,7 +22,6 @@ namespace ApocalipseZ
         public float Forward;
         public bool IsRun;
         public bool IsCrouch;
-
         public float RotationX;
         public Vector2 MouseDelta;
 
@@ -61,12 +60,11 @@ namespace ApocalipseZ
         public Color32 playerColor = Color.white;
 
         //MoveData for client simulation
-        private MoveData _clientMoveData;
+
         // Start is called before the first frame update
         private void Awake()
         {
-             InstanceFinder.TimeManager.OnTick += TimeManager_OnTick;
-            InstanceFinder.TimeManager.OnUpdate += TimeManager_OnUpdate;
+
             Inventory = GetComponent<Inventory>();
             Moviment = GetComponent<Moviment>();
             WeaponManager = GetComponent<WeaponManager>();
@@ -76,29 +74,32 @@ namespace ApocalipseZ
             PlayerStats = GetComponent<PlayerStats>();
             FirstPersonCamera = transform.Find("Camera & Recoil").GetComponent<FirstPersonCamera>();
             WeaponManager.SetFpsPlayer(this);
-
-
-
         }
-        private void Start()
-        {
 
-        }
         public override void OnStartNetwork()
         {
             base.OnStartNetwork();
 
+            base.TimeManager.OnTick += TimeManager_OnTick;
+            base.TimeManager.OnUpdate += TimeManager_OnUpdate;
+
         }
+
+        private void TimeManager_OnUpdate()
+        {
+
+        }
+
         public override void OnStopNetwork()
         {
             base.OnStopNetwork();
             if (base.TimeManager != null)
             {
                 base.TimeManager.OnTick -= TimeManager_OnTick;
-                base.TimeManager.OnUpdate -= TimeManager_OnUpdate;
+
             }
         }
-        private void Update()
+        private void LateUpdate()
         {
             if (base.IsOwner)
             {
@@ -127,16 +128,9 @@ namespace ApocalipseZ
                 Reconcile(rd, true);
             }
         }
-        private void TimeManager_OnUpdate()
-        {
-            if (base.IsOwner)
-            {
-                Moviment.GravityJumpUpdate(_clientMoveData, Time.deltaTime);
-                Moviment.MoveTick(_clientMoveData, Time.deltaTime);
-            }
-        }
 
-        
+
+
         private void BuildActions(out MoveData moveData)
         {
             moveData = default;
@@ -148,22 +142,14 @@ namespace ApocalipseZ
             moveData.MouseDelta.x = InputManager.GetMouseDelta().x;
             moveData.MouseDelta.y = InputManager.GetMouseDelta().y;
             moveData.RotationX = FirstPersonCamera.GetRotationX();
-           
+
         }
         [Replicate]
         private void Move(MoveData moveData, bool asServer, bool replaying = false)
         {
-            if (asServer || replaying)
-            {
 
-                Moviment.GravityJumpUpdate(_clientMoveData, (float)base.TimeManager.TickDelta);
-                Moviment.MoveTick(moveData, (float)base.TimeManager.TickDelta);
-
-            }
-            else if (!asServer)
-            {
-                _clientMoveData = moveData;
-            }
+            Moviment.GravityJumpUpdate(moveData, (float)base.TimeManager.TickDelta);
+            Moviment.MoveTick(moveData, (float)base.TimeManager.TickDelta);
 
         }
         [Reconcile]
@@ -190,6 +176,7 @@ namespace ApocalipseZ
             {
                 FirstPersonCamera.tag = "MainCamera";
                 FirstPersonCamera.GetComponent<Camera>().enabled = true;
+                FirstPersonCamera.ActiveCursor(false);
             }
             else
             {

@@ -40,14 +40,10 @@ namespace ApocalipseZ
             {
                 return;
             }
-
             Quaternion targetOrientation = Quaternion.Euler(targetDirection);
-
             rotationX += InputManager.Instance.GetMouseDelta().x * sensitivity.x;
             rotationY += InputManager.Instance.GetMouseDelta().y * sensitivity.y;
-
             rotationY = Mathf.Clamp(rotationY, angleYmin, angleYmax);
-
             //characterBody.localRotation = Quaternion.Euler(0, rotationX, 0);
             transform.localRotation = Quaternion.Euler(-rotationY, 0, 0);
 

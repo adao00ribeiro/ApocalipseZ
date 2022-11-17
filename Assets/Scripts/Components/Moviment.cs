@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ApocalipseZ
 {
     [RequireComponent(typeof(CharacterController))]
-    public class Moviment : MonoBehaviour, IMoviment
+    public class Moviment : MonoBehaviour
     {
         [Header("Moviment,Jump,croush,sprint")]
         public float Walk = 3f;
@@ -15,6 +15,7 @@ namespace ApocalipseZ
         public float CrouchHeight = 0.5f;
         public bool IsGrounded;
 
+        private float _terminalVelocity = 53.0f;
         public Vector3 PlayerVelocity;
 
         private float currentSpeed;
@@ -58,13 +59,31 @@ namespace ApocalipseZ
         public void GravityJumpUpdate(MoveData md, float delta)
         {
             CheckGround();
+          
+           if( IsGrounded){
+      
+            if (PlayerVelocity.y < 0)
+            {
+                PlayerVelocity.y = -2f;
+            }
+           
+            if (md.Jump )
+            {
+                PlayerVelocity.y = Mathf.Sqrt(jumpSpeed * -2.0f * Physics.gravity.y);
+            }
+            }
 
-            Gravity(delta);
-            Jump(md, delta);
+            if (PlayerVelocity.y < _terminalVelocity){
+            PlayerVelocity.y += Physics.gravity.y * delta;
+            }
+         
+          
         }
         public float GroundedRadius = 0.28f;
         public float GroundedOffset = -0.14f;
         public LayerMask GroundLayers;
+        
+      
         public void CheckGround()
         {
             // set sphere position, with offset
@@ -82,25 +101,11 @@ namespace ApocalipseZ
             currentSpeed = md.IsCrouch ? crouchSpeed : currentSpeed;
             //SetCrouchHeight();
             transform.localRotation = Quaternion.Euler(0, md.RotationX, 0);
-            CharacterController.Move(transform.TransformDirection(moveDirection) * currentSpeed * delta);
+            CharacterController.Move(transform.TransformDirection(moveDirection) * currentSpeed * delta +   new Vector3(0.0f, PlayerVelocity.y , 0.0f) * delta);
 
         }
-        public void Gravity(float delta)
-        {
-            PlayerVelocity.y += Physics.gravity.y * delta;
-            if (IsGrounded && PlayerVelocity.y < 0)
-            {
-                PlayerVelocity.y = -2f;
-            }
-            CharacterController.Move(PlayerVelocity * delta);
-        }
-        public void Jump(MoveData md, float delta)
-        {
-            if (md.Jump && akita errado)
-            {
-                PlayerVelocity.y = Mathf.Sqrt(jumpSpeed * -2.0f * Physics.gravity.y);
-            }
-        }
+     
+       
         public void SetCrouchHeight()
         {
             CharacterController.height = InputManager.GetCrouch() ? CrouchHeight : 1.8f;
@@ -118,6 +123,9 @@ namespace ApocalipseZ
         public bool isGrounded()
         {
             return IsGrounded;
+        }
+          public void SetIsGround(bool isgrounded){
+                IsGrounded = isgrounded;
         }
         public bool CheckIsRun()
         {

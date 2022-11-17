@@ -74,7 +74,6 @@ MonoBehaviour:
   playerColor:
     serializedVersion: 2
     rgba: 4294967295
-  Grounded: 0
 --- !u!143 &2961391874206293327
 CharacterController:
   m_ObjectHideFlags: 0
@@ -266,7 +265,7 @@ MonoBehaviour:
   GroundedOffset: -0.14
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 64
 --- !u!114 &7433572165634752114
 MonoBehaviour:
   m_ObjectHideFlags: 0

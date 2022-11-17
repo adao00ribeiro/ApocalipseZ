@@ -10,6 +10,8 @@ namespace ApocalipseZ
         void Jump(MoveData moveData, float delta);
         bool CheckMovement();
         bool isGrounded();
+
+        void SetIsGround(bool isgrounded);
         void CheckGround();
         bool CheckIsRun();
         void MoveTick(MoveData moveData, float delta);

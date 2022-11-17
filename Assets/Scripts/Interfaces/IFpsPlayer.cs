@@ -7,7 +7,7 @@ using FishNet.Connection;
 public interface IFpsPlayer
 {
 
-    IMoviment GetMoviment();
+    Moviment GetMoviment();
     PlayerStats GetPlayerStats();
 
     void CmdSpawBullet(SpawBulletTransform spawBulletTransform, NetworkConnection networkConnectionToClient);

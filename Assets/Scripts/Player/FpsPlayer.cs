@@ -10,6 +10,7 @@ using FishNet.Transporting;
 using FishNet.Connection;
 using TMPro;
 using FishNet.Object.Prediction;
+using FishNet;
 
 namespace ApocalipseZ
 {
@@ -30,6 +31,7 @@ namespace ApocalipseZ
     {
         public Vector3 Position;
         public Quaternion Rotation;
+        public float VerticalVelocity;
         public bool Grounded;
     }
     [RequireComponent(typeof(Moviment))]
@@ -38,7 +40,7 @@ namespace ApocalipseZ
     {
         public event System.Action<FpsPlayer> OnLocalPlayerJoined;
 
-        IMoviment Moviment;
+        Moviment Moviment;
         WeaponManager WeaponManager;
         IFastItemsManager FastItemsManager;
         public Inventory Inventory;
@@ -58,13 +60,13 @@ namespace ApocalipseZ
         [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(PlayerColorChanged))]
         public Color32 playerColor = Color.white;
 
-        public bool Grounded;
         //MoveData for client simulation
         private MoveData _clientMoveData;
         // Start is called before the first frame update
         private void Awake()
         {
-
+             InstanceFinder.TimeManager.OnTick += TimeManager_OnTick;
+            InstanceFinder.TimeManager.OnUpdate += TimeManager_OnUpdate;
             Inventory = GetComponent<Inventory>();
             Moviment = GetComponent<Moviment>();
             WeaponManager = GetComponent<WeaponManager>();
@@ -75,6 +77,8 @@ namespace ApocalipseZ
             FirstPersonCamera = transform.Find("Camera & Recoil").GetComponent<FirstPersonCamera>();
             WeaponManager.SetFpsPlayer(this);
 
+
+
         }
         private void Start()
         {
@@ -83,8 +87,6 @@ namespace ApocalipseZ
         public override void OnStartNetwork()
         {
             base.OnStartNetwork();
-            base.TimeManager.OnTick += TimeManager_OnTick;
-            base.TimeManager.OnUpdate += TimeManager_OnUpdate;
 
         }
         public override void OnStopNetwork()
@@ -96,7 +98,7 @@ namespace ApocalipseZ
                 base.TimeManager.OnUpdate -= TimeManager_OnUpdate;
             }
         }
-        private void LateUpdate()
+        private void Update()
         {
             if (base.IsOwner)
             {
@@ -120,7 +122,7 @@ namespace ApocalipseZ
                 {
                     Position = transform.position,
                     Rotation = transform.rotation,
-                    Grounded = Grounded
+                    Grounded = Moviment.isGrounded()
                 };
                 Reconcile(rd, true);
             }
@@ -130,15 +132,11 @@ namespace ApocalipseZ
             if (base.IsOwner)
             {
                 Moviment.GravityJumpUpdate(_clientMoveData, Time.deltaTime);
-                GroundedCheck();
                 Moviment.MoveTick(_clientMoveData, Time.deltaTime);
             }
         }
 
-        private void GroundedCheck()
-        {
-            Grounded = Moviment.isGrounded();
-        }
+        
         private void BuildActions(out MoveData moveData)
         {
             moveData = default;
@@ -150,6 +148,7 @@ namespace ApocalipseZ
             moveData.MouseDelta.x = InputManager.GetMouseDelta().x;
             moveData.MouseDelta.y = InputManager.GetMouseDelta().y;
             moveData.RotationX = FirstPersonCamera.GetRotationX();
+           
         }
         [Replicate]
         private void Move(MoveData moveData, bool asServer, bool replaying = false)
@@ -157,9 +156,7 @@ namespace ApocalipseZ
             if (asServer || replaying)
             {
 
-
                 Moviment.GravityJumpUpdate(_clientMoveData, (float)base.TimeManager.TickDelta);
-                GroundedCheck();
                 Moviment.MoveTick(moveData, (float)base.TimeManager.TickDelta);
 
             }
@@ -176,7 +173,8 @@ namespace ApocalipseZ
             //even if there is no de-synchronization.
             transform.position = recData.Position;
             transform.rotation = recData.Rotation;
-            Grounded = recData.Grounded;
+            Moviment.PlayerVelocity.y = recData.VerticalVelocity;
+            Moviment.SetIsGround(recData.Grounded);
 
         }
         public override void OnStartServer()
@@ -302,7 +300,7 @@ namespace ApocalipseZ
             previousPos = transform.position;
             return velocity;
         }
-        public IMoviment GetMoviment()
+        public Moviment GetMoviment()
         {
             return Moviment;
         }

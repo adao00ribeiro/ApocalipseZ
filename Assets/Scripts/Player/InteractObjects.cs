@@ -56,8 +56,6 @@ namespace ApocalipseZ
 
                     // UiFpsScopeCursorReticles.EnableCursor ( );
                     // UiFpsScopeCursorReticles.SetUseText ( interact.GetTitle ( ) );
-
-
                     if (InputManager.GetUse())
                     {
                         interact.CmdInteract();

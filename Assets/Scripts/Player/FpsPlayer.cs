@@ -37,8 +37,6 @@ namespace ApocalipseZ
     [RequireComponent(typeof(WeaponManager))]
     public class FpsPlayer : NetworkBehaviour, IFpsPlayer
     {
-        public event System.Action<FpsPlayer> OnLocalPlayerJoined;
-
         Moviment Moviment;
         WeaponManager WeaponManager;
         IFastItemsManager FastItemsManager;
@@ -87,6 +85,16 @@ namespace ApocalipseZ
 
         private void TimeManager_OnUpdate()
         {
+            if (base.IsOwner)
+            {
+                InteractObjects.UpdateInteract();
+
+                if (InputManager.GetLanterna())
+                {
+                    Lanterna.enabled = !Lanterna.enabled;
+                }
+
+            }
 
         }
 
@@ -183,12 +191,7 @@ namespace ApocalipseZ
                 FirstPersonCamera.RemoveAudioListener();
             }
 
-            /*
-            for (int i = 0; i < mesh.Length; i++)
-            {
-                mesh[i].layer = 7;
-            }
-            */
+
             Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
 
             CanvasFpsPlayer CanvasFpsPlayer = GameObject.FindObjectOfType<CanvasFpsPlayer>();
@@ -209,6 +212,7 @@ namespace ApocalipseZ
             }
         }
         */
+            GetComponentInChildren<MeshRenderer>().material.color = newPlayerColor;
         }
 
         [Server]

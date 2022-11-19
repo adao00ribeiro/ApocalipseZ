@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using FishNet;
 using UnityEngine;
 namespace ApocalipseZ
 {
@@ -55,7 +56,7 @@ namespace ApocalipseZ
         [SerializeField] private AudioClip emptySFX;
         //prefabs
         public FirstPersonCamera Cam;
-        private GameObject PrefabProjectile;
+        [SerializeField]private GameObject PrefabProjectile;
 
         private float nextFireTime;
 
@@ -67,9 +68,7 @@ namespace ApocalipseZ
         [SerializeField] private bool setAim = false;
         public bool SetAim { get => setAim; }
 
-
         public bool isThrowingGrenade;
-
 
         public void setCurrent(int oldcurrent, int newcurrent)
         {
@@ -80,15 +79,12 @@ namespace ApocalipseZ
         void Start()
         {
             weaponSetting = GameController.Instance.DataManager.GetArmsWeapon(weaponName);
+            PrefabProjectile =  GameController.Instance.DataManager.GetDataBullet(weaponSetting.projectile).Bullet;
             DataParticles DataParticles = GameController.Instance.DataManager.GetDataParticles("FlashParticles");
-
             shotSFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.shotSFX).Audio;
             reloadSFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.reloadingSFX).Audio;
             emptySFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.emptySFX).Audio;
-
-            PrefabProjectile = weaponSetting.projectile;
             muzzleFlashTransform = transform.Find("ArmsAk/Muzzle flash transform");
-
             sway = transform.GetComponentInParent<Sway>();
             recoilComponent = GameObject.FindObjectOfType<Recoil>();
             audioSource = GetComponent<AudioSource>();
@@ -116,8 +112,8 @@ namespace ApocalipseZ
 
                     PlayFX();
                     muzzleFlashTransform.LookAt(Cam.transform.position + Cam.transform.forward * 3000);
-                    GameObject tempbala = Instantiate(GameObject.CreatePrimitive(PrimitiveType.Cube));
-                    tempbala.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+                    GameObject go = Instantiate(PrefabProjectile,muzzleFlashTransform.position , muzzleFlashTransform.rotation);
+                    InstanceFinder.ServerManager.Spawn(go, null);
                     // player.CmdSpawBullet(new SpawBulletTransform(weaponSetting.projectile.name, muzzleFlashTransform.position, muzzleFlashTransform.rotation), player.GetConnection());
                     //Getting random damage from minimum and maximum damage.
                     //calculatedDamage = Random.Range ( damageMin , damageMax );

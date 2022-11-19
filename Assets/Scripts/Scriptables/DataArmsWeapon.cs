@@ -7,7 +7,7 @@ public enum WeaponType { SMG, SniperRiffle, Pistol, Shotgun, Melee, Grenade }
 [CreateAssetMenu(fileName = "DataArmsWeapon", menuName = "Data/ArmsWeapon", order = 0)]
 public class DataArmsWeapon : ScriptableObject
 {
-     public string GuidId;
+    public string GuidId;
     public string Name;
     public WeaponType Type;
 
@@ -48,11 +48,8 @@ public class DataArmsWeapon : ScriptableObject
     [Tooltip("Air resistance force that slow down bullet in air. Default value is 1. If 0 no air resistance applied to bullet")]
     public float airResistanceForce;
     [Tooltip("Projectile prefab used as projectile. Select one from prefabs")]
-    public GameObject projectile;
+    public string projectile;
     [Tooltip("Max amount of projectiles which being created on Start()")]
-    [Range(1, 100)]
-    public int projectilePoolSize;
-
     public GameObject PrefabArmsWeapon;
 
     public DataArmsWeapon(){

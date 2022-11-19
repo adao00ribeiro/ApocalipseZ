@@ -56,7 +56,7 @@ namespace ApocalipseZ
         [SerializeField] private AudioClip emptySFX;
         //prefabs
         public FirstPersonCamera Cam;
-        [SerializeField]private GameObject PrefabProjectile;
+        [SerializeField] private GameObject PrefabProjectile;
 
         private float nextFireTime;
 
@@ -79,12 +79,11 @@ namespace ApocalipseZ
         void Start()
         {
             weaponSetting = GameController.Instance.DataManager.GetArmsWeapon(weaponName);
-            PrefabProjectile =  GameController.Instance.DataManager.GetDataBullet(weaponSetting.projectile).Bullet;
+            PrefabProjectile = GameController.Instance.DataManager.GetDataBullet(weaponSetting.projectile).Bullet;
             DataParticles DataParticles = GameController.Instance.DataManager.GetDataParticles("FlashParticles");
             shotSFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.shotSFX).Audio;
             reloadSFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.reloadingSFX).Audio;
             emptySFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.emptySFX).Audio;
-            muzzleFlashTransform = transform.Find("ArmsAk/Muzzle flash transform");
             sway = transform.GetComponentInParent<Sway>();
             recoilComponent = GameObject.FindObjectOfType<Recoil>();
             audioSource = GetComponent<AudioSource>();
@@ -112,10 +111,9 @@ namespace ApocalipseZ
 
                     PlayFX();
                     muzzleFlashTransform.LookAt(Cam.transform.position + Cam.transform.forward * 3000);
-                    GameObject go = Instantiate(PrefabProjectile,muzzleFlashTransform.position , muzzleFlashTransform.rotation);
+                    GameObject go = Instantiate(PrefabProjectile, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
                     InstanceFinder.ServerManager.Spawn(go, null);
-                    // player.CmdSpawBullet(new SpawBulletTransform(weaponSetting.projectile.name, muzzleFlashTransform.position, muzzleFlashTransform.rotation), player.GetConnection());
-                    //Getting random damage from minimum and maximum damage.
+
                     //calculatedDamage = Random.Range ( damageMin , damageMax );
 
                     // ProjectilesManager ( );

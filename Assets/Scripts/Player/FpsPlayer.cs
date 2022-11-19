@@ -93,7 +93,7 @@ namespace ApocalipseZ
                 {
                     Lanterna.enabled = !Lanterna.enabled;
                 }
-
+                Animation();
             }
 
         }

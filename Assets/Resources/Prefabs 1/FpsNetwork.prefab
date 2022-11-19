@@ -1096,6 +1096,7 @@ GameObject:
   - component: {fileID: 8281796558461799469}
   - component: {fileID: 3343793659741000443}
   - component: {fileID: 7656315447663483202}
+  - component: {fileID: 7398204285746526369}
   m_Layer: 20
   m_Name: Weapon holder
   m_TagString: Untagged
@@ -1270,6 +1271,27 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8474ea0f9ac1b4c42a16fdeb7e4e989f, type: 3}
   usedByNPC: 0
   audioSourceNPC: {fileID: 0}
+--- !u!114 &7398204285746526369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7512878692265357606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 5475215427857851610}
+  _networkObjectCache: {fileID: 0}
+  IgnoredParameters: []
+  _animator: {fileID: 8281796558461799469}
+  _smoothFloats: 1
+  _interpolation: 2
+  _clientAuthoritative: 1
+  _sendToOwner: 0
 --- !u!1 &9191147390043615100
 GameObject:
   m_ObjectHideFlags: 0

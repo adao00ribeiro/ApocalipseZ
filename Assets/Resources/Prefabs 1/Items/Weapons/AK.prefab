@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 4729162742303762535}
   - component: {fileID: 1253240489069597418}
   - component: {fileID: 8358758486193461695}
+  - component: {fileID: 7014041887655280641}
   m_Layer: 0
   m_Name: AK
   m_TagString: Untagged
@@ -252,6 +253,20 @@ MonoBehaviour:
   <AssetPathHash>k__BackingField: 3586000953763594899
   _sceneNetworkObjects:
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 8358758486193461695}
+--- !u!114 &7014041887655280641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8341400536769550694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _overrideType: 3
+  _updateHostVisibility: 1
+  _observerConditions:
+  - {fileID: 0}

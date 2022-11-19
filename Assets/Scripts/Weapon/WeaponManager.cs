@@ -43,12 +43,12 @@ namespace ApocalipseZ
         public void SetAmmoNetwork(int oldSlot, int newSlot, bool asServer)
         {
             AmmoNetwork = newSlot;
-         
+
         }
         private void Awake()
         {
             InputManager = GameController.Instance.InputManager;
-          
+
         }
         void Start()
         {
@@ -61,8 +61,9 @@ namespace ApocalipseZ
             }
 
         }
-        public void SetFpsPlayer(IFpsPlayer fps){
-                fpsplayer = fps;
+        public void SetFpsPlayer(IFpsPlayer fps)
+        {
+            fpsplayer = fps;
         }
         // Update is called once per frame
         void Update()
@@ -127,14 +128,16 @@ namespace ApocalipseZ
         [ServerRpc]
         public void CmdFire()
         {
-             if(activeSlot.Fire()){
+            if (activeSlot.Fire())
+            {
                 RpcFire(base.Owner);
-             }
+            }
             AmmoNetwork = activeSlot.CurrentAmmo;
         }
-            [TargetRpc]
-        public void RpcFire(NetworkConnection conn){
-                activeSlot.PlayFX();
+        [TargetRpc]
+        public void RpcFire(NetworkConnection conn)
+        {
+            activeSlot.PlayFX();
         }
         [ServerRpc]
         public void CmdSlotChange(GameObject target)
@@ -149,10 +152,9 @@ namespace ApocalipseZ
             }
             else
             {
-                tempArms = GameController.Instance.DataManager.GetArmsWeapon(SecundaryWeapon.guidid);
+                tempArms = GameController.Instance.DataManager.GetArmsWeapon(SecundaryWeapon.Name);
                 ammo = SecundaryWeapon.Ammo;
             }
-
             if (tempArms == null)
             {
                 print("aki");

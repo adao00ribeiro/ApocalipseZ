@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AnimatorBARRETTI
+  m_Controller: {fileID: 9100000, guid: 2586ed2b20c2dd7439c1b7cebea6afa2, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: cf3b3b01cda9ad4439e50c123b5e6f9f, type: 2}
+    m_OverrideClip: {fileID: -725090118012471319, guid: 6134906be4a768e439bb1783747646f6,
+      type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: 4375fb456856e0741a270f5395a22ed9, type: 2}
+    m_OverrideClip: {fileID: -623603649343465320, guid: 6134906be4a768e439bb1783747646f6,
+      type: 3}
+  - m_OriginalClip: {fileID: 7400000, guid: d5651c51c4b5de84187fe5e9d8f633ec, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: fba6c5d7fb190b6438247d1f9cab3b02, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 8373e0424613e2b46b08ffc83ede8214, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f404162e7d0ae9f478b1d39f31ad69cc, type: 2}

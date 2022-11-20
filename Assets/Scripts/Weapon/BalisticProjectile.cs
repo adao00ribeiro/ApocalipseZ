@@ -29,19 +29,19 @@ namespace ApocalipseZ
         private void Update()
         {
             if(base.IsServer){
+                
             time += Time.deltaTime;
 
             RaycastHit hit;
             if (Physics.Linecast(lastPosition, transform.position, out hit))
             {
-                
                 //HitFXManager.Instance.ApplyFX ( hit );
-
                 IStats stat = hit.collider.GetComponent<IStats>();
                 if (stat != null)
                 {
-                    stat.CmdTakeDamage(Random.Range(damageMinimum, damageMaximum));
+                    stat.TakeDamage(Random.Range(damageMinimum, damageMaximum));
                 }
+               
                 base.Despawn();
             }
             lastPosition = transform.position;

@@ -67,7 +67,7 @@ namespace ApocalipseZ
                 OnZombieIsDead?.Invoke();
                 GameController.Instance.TimerManager.Add(() =>
                 {
-                    NetworkBehaviour.Destroy(gameObject);
+                    base.Despawn();
                 }, 10);
 
                 Animation.SetType(Type = EnemyMovimentType.DIE);
@@ -78,8 +78,10 @@ namespace ApocalipseZ
                 enabled = false;
                 return;
             }
-
+            if(agent.velocity.x ==0 && agent.velocity.z == 0 && !Attack.IsAttacking){
             Type = EnemyMovimentType.IDLE;
+            }
+           
 
             if (Target)
             {

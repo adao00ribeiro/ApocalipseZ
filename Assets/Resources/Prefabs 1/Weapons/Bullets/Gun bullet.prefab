@@ -53,7 +53,7 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 8145932330565699101}
   _networkObjectCache: {fileID: 8145932330565699101}
-  initialVelocity: 3000
+  initialVelocity: 100
   airResistance: 0.1
   damageMinimum: 10
   damageMaximum: 50

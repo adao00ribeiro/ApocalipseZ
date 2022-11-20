@@ -20,6 +20,9 @@ public class EnemyAttack : MonoBehaviour
                 IsAttacking = true;
                 StartCoroutine ( "ResetAtack");
             }
+            else{
+                IsAttacking = false;
+            }
         }
     }
 

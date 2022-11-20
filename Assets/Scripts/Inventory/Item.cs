@@ -25,10 +25,10 @@ namespace ApocalipseZ
         {
             Ammo = dataItem.Ammo;
         }
-        [Server]
+      
         void Start()
         {
-            if (!IsServerSpaw)
+            if (!IsServerSpaw && base.IsServer)
             {
                 NetworkBehaviour.Destroy(gameObject, 30);
             }

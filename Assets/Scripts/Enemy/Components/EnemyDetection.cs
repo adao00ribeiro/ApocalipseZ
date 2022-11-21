@@ -11,13 +11,19 @@ public class EnemyDetection : MonoBehaviour
     public LayerMask layer;
     public bool isProvoked;
     public bool IsDetection;
-   
+    public Transform target;
     private void Start ( )
     {
         isProvoked = true;
     }
-   
-    public void Detection (ref Transform target )
+   private void Update(){
+    Detection();
+   }
+   void OnDisable()
+    {
+       IsDetection = false;
+    }
+    public void Detection ()
     {
         if ( target == null )
         {

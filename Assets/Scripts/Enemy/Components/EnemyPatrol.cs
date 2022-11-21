@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 public class EnemyPatrol : MonoBehaviour
 {
-    
     public float Radius;
     public Vector3 positionSpaw;
     public float DistanceSpaw;
@@ -12,11 +11,15 @@ public class EnemyPatrol : MonoBehaviour
     public Vector3 walkPoint;
     public float TimerReset;
     public float CurrentTimerReset;
-
+    private NavMeshAgent agent;
     public bool IsWalk;
     private void Start ( )
     {
+        agent = GetComponent<NavMeshAgent>();
         Invoke ( "Init" , 1 );
+    }
+    void Update(){
+            Patrol();
     }
     public void Init ( )
     {
@@ -24,7 +27,8 @@ public class EnemyPatrol : MonoBehaviour
         walkPoint = positionSpaw;
         walkPointSet = false;
     }
-    public void Patrol ( NavMeshAgent agent)
+
+    public void Patrol ( )
     {
         if ( !walkPointSet )
         {

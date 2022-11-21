@@ -8,24 +8,26 @@ public class EnemyAttack : MonoBehaviour
     public bool IsAttacking;
     public float timeBetweenAttacks;
     public float distanceAttack;
-    Transform target;
+    public Transform target;
 
-    public void Attack (ref Transform Target )
+    public void Attack ()
     {
-        target = Target;
-        if (Target!= null)
+        if (target)
         {
-            if ( !IsAttacking && Vector3.Distance ( transform.position , Target.position ) < distanceAttack )
-            {
-                IsAttacking = true;
-                StartCoroutine ( "ResetAtack");
-            }
-            else{
+            if(Vector3.Distance(transform.position , target.position) > distanceAttack){
                 IsAttacking = false;
+            return;
+            }
+            if ( !IsAttacking  )
+            {
+                StartCoroutine ( "ResetAtack");
+                 IsAttacking = true;
             }
         }
     }
-
+    void Update(){
+        Attack ();
+    }
    IEnumerator ResetAtack ( )
     {
         yield return new WaitForSecondsRealtime ( 1.5f );
@@ -48,6 +50,7 @@ public class EnemyAttack : MonoBehaviour
         if ( distanceFromTarget <= distanceAttack )
         {
             target.GetComponent<IStats> ( ).TakeDamage ( ( int ) GetComponent<IStats> ( ).GetDamage ( ) );
+          
         }
     }
 }

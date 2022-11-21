@@ -26,9 +26,9 @@ namespace ApocalipseZ
         EnemyDetection Detection;
         EnemyAttack Attack;
         EnemyAnimation Animation;
-
+        EnemyChase chase;
         //target
-        public Transform Target;
+        public List<MonoBehaviour> listMono = new List<MonoBehaviour>();
         public Vector3 TargetPosition;
         public AudioClip zombieRoar;
 
@@ -41,18 +41,17 @@ namespace ApocalipseZ
                 Detection = GetComponent<EnemyDetection>();
                 Attack = GetComponent<EnemyAttack>();
                 Animation = GetComponent<EnemyAnimation>();
+                chase = GetComponent<EnemyChase>();
+                listMono.Add(Patrol);
+                listMono.Add(Detection);
+                listMono.Add(Attack);
+                listMono.Add(Animation);
+                listMono.Add(chase);
                 agent = GetComponent<NavMeshAgent>();
                 path = new NavMeshPath();
                 animator = GetComponent<Animator>();
                 agent.angularSpeed = 999;
             }
-            else
-            {
-                Destroy(GetComponent<EnemyPatrol>());
-                Destroy(GetComponent<EnemyDetection>());
-
-            }
-
 
         }
 
@@ -69,57 +68,55 @@ namespace ApocalipseZ
                 {
                     base.Despawn();
                 }, 10);
-
+                DisablesAllMonos();
                 Animation.SetType(Type = EnemyMovimentType.DIE);
                 agent.speed = 0;
-                Patrol.enabled = false;
-                Detection.enabled = false;
-                Attack.enabled = false;
                 enabled = false;
                 return;
             }
-            if(agent.velocity.x ==0 && agent.velocity.z == 0 && !Attack.IsAttacking){
-            Type = EnemyMovimentType.IDLE;
-            }
-           
-
-            if (Target)
+            if (Detection.target)
             {
-                float distance = Vector3.Distance(transform.position, Target.position);
-                if (distance > 30)
+                if (Detection.target.GetComponent<IStats>().IsDead())
                 {
-                    Target = null;
-                }
-
-            }
-            Detection.Detection(ref Target);
-            if (!Detection.IsDetection && !Attack.IsAttacking)
-            {
-                Patrol.Patrol(agent);
-                if (Patrol.IsWalk)
-                {
-                    Type = EnemyMovimentType.WALK;
+                    DisablesAllMonos();
+                    Patrol.enabled = true;
+                    Detection.enabled = true;
+                    Detection.target = null;
+                    Attack.target = null;
+                    chase.Target = null;
                 }
             }
-            if (Detection.IsDetection && !Attack.IsAttacking)
+
+            if (agent.velocity.x == 0 && agent.velocity.z == 0 && !Attack.IsAttacking)
             {
-                ChasePlayer();
-                Type = EnemyMovimentType.RUN;
+                Type = EnemyMovimentType.IDLE;
             }
-            Attack.Attack(ref Target);
-            if (Attack.IsAttacking && Detection.IsDetection)
+            if (agent.velocity.x != 0 || agent.velocity.z != 0 && !Attack.IsAttacking)
+            {
+                Type = EnemyMovimentType.WALK;
+            }
+            if (Attack.IsAttacking)
             {
                 Type = EnemyMovimentType.ATACK;
             }
+
+            if (Detection.IsDetection)
+            {
+                DisablesAllMonos();
+                chase.Target = Detection.target;
+                Attack.target = Detection.target;
+                chase.enabled = true;
+                Attack.enabled = true;
+            }
             Animation.SetType(Type);
         }
-        private void ChasePlayer()
+        public void DisablesAllMonos()
         {
-            agent.stoppingDistance = 1.5f;
-            agent.speed = 3;
-            agent.SetDestination(Target.position);
+            foreach (var item in listMono)
+            {
+                item.enabled = false;
+            }
         }
-
         private void FaceTarget()
         {
             // Vector3 direction = (target.position - transform.position).normalized;

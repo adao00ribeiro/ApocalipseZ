@@ -1,7 +1,5 @@
 using FishNet.Managing;
-using FishNet.Managing.Logging;
 using FishNet.Managing.Transporting;
-using LiteNetLib;
 using LiteNetLib.Layers;
 using System;
 using System.Runtime.CompilerServices;
@@ -308,15 +306,8 @@ namespace FishNet.Transporting.Tugboat
         /// <param name="value"></param>
         public override void SetMaximumClients(int value)
         {
-            if (_server.GetConnectionState() != LocalConnectionState.Stopped)
-            {
-                if (base.NetworkManager.CanLog(LoggingType.Warning))
-                    Debug.LogWarning($"Cannot set maximum clients when server is running.");
-            }
-            else
-            {
-                _maximumClients = value;
-            }
+            _maximumClients = value;
+            _server.SetMaximumClients(value);
         }
         /// <summary>
         /// Sets which address the client will connect to.
@@ -437,7 +428,10 @@ namespace FishNet.Transporting.Tugboat
         /// </summary>
         private bool StopServer()
         {
-            return _server.StopConnection();
+            if (_server == null)
+                return false;
+            else
+                return _server.StopConnection();
         }
 
         /// <summary>
@@ -467,7 +461,10 @@ namespace FishNet.Transporting.Tugboat
         /// </summary>
         private bool StopClient()
         {
-            return _client.StopConnection();
+            if (_client == null)
+                return false;
+            else
+                return _client.StopConnection();
         }
         #endregion
         #endregion
@@ -481,8 +478,7 @@ namespace FishNet.Transporting.Tugboat
         {
             if (channelId < 0 || channelId >= TransportManager.CHANNEL_COUNT)
             {
-                if (NetworkManager.CanLog(LoggingType.Warning))
-                    Debug.LogWarning($"Channel of {channelId} is out of range of supported channels. Channel will be defaulted to reliable.");
+                NetworkManager.LogWarning($"Channel of {channelId} is out of range of supported channels. Channel will be defaulted to reliable.");
                 channelId = 0;
             }
         }

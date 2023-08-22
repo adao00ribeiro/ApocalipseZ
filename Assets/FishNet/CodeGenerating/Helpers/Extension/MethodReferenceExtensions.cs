@@ -1,4 +1,5 @@
-﻿using MonoFN.Cecil;
+﻿using FishNet.CodeGenerating.Extension;
+using MonoFN.Cecil;
 using MonoFN.Cecil.Rocks;
 using System;
 
@@ -7,6 +8,16 @@ namespace FishNet.CodeGenerating.Helping.Extension
 
     internal static class MethodReferenceExtensions
     {
+
+        /// <summary>
+        /// Returns a custom attribute.
+        /// </summary>
+        public static CustomAttribute GetCustomAttribute(this MethodReference mr, string attributeFullName)
+        {
+            MethodDefinition md = mr.Resolve();
+            return MethodDefinitionExtensions.GetCustomAttribute(md, attributeFullName);
+        }
+
         /// <summary>
         /// Makes a generic method with specified arguments.
         /// </summary>
@@ -34,6 +45,39 @@ namespace FishNet.CodeGenerating.Helping.Extension
 
             return result;
         }
+
+        /// <summary>
+        /// Returns a method reference for a generic method.
+        /// </summary>
+        public static MethodReference GetMethodReference(this MethodReference mr, CodegenSession session, TypeReference typeReference)
+        {
+            return mr.GetMethodReference(session, new TypeReference[] { typeReference });
+        }
+
+        /// <summary>
+        /// Returns a method reference for a generic method.
+        /// </summary>
+        public static MethodReference GetMethodReference(this MethodReference mr, CodegenSession session, TypeReference[] typeReferences)
+        {
+            if (mr.HasGenericParameters)
+            {
+                if (typeReferences == null || typeReferences.Length == 0)
+                {
+                    session.LogError($"Method {mr.Name} has generic parameters but TypeReferences are null or 0 length.");
+                    return null;
+                }
+                else
+                {
+                    GenericInstanceMethod gim = mr.MakeGenericMethod(typeReferences);
+                    return gim;
+                }
+            }
+            else
+            {
+                return mr;
+            }
+        }
+
 
         /// <summary>
         /// Gets a Resolve favoring cached results first.

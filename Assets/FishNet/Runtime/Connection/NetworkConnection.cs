@@ -1,10 +1,14 @@
-﻿using FishNet.Documenting;
+﻿using FishNet.Component.Observing;
+using FishNet.Documenting;
 using FishNet.Managing;
+using FishNet.Managing.Timing;
 using FishNet.Object;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEngine;
 using UnityEngine.SceneManagement;
+using static FishNet.Managing.Timing.EstimatedTick;
 
 namespace FishNet.Connection
 {
@@ -35,7 +39,17 @@ namespace FishNet.Connection
         /// <summary>
         /// True if connection has loaded start scenes. Available to this connection and server.
         /// </summary>
-        public bool LoadedStartScenes => (_loadedStartScenesAsServer || _loadedStartScenesAsClient);
+        public bool LoadedStartScenes() => (_loadedStartScenesAsServer || _loadedStartScenesAsClient);
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool LoadedStartScenes(bool asServer)
+        {
+            if (asServer)
+                return _loadedStartScenesAsServer;
+            else
+                return _loadedStartScenesAsClient;
+        }
         /// <summary>
         /// True if loaded start scenes as server.
         /// </summary>
@@ -44,6 +58,15 @@ namespace FishNet.Connection
         /// True if loaded start scenes as client.
         /// </summary>
         private bool _loadedStartScenesAsClient;
+        /// <summary>
+        /// ObjectIds to use for predicted spawning.
+        /// </summary>
+        internal Queue<int> PredictedObjectIds = new Queue<int>();
+        /// <summary>
+        /// TransportIndex this connection is on.
+        /// For security reasons this value will be unset on clients if this is not their connection.
+        /// </summary>
+        public int TransportIndex { get; internal set; } = -1;
         /// <summary>
         /// True if this connection is authenticated. Only available to server.
         /// </summary>
@@ -61,17 +84,33 @@ namespace FishNet.Connection
         /// </summary>
         public int ClientId = -1;
         /// <summary>
-        /// 
-        /// </summary>
-        private HashSet<NetworkObject> _objects = new HashSet<NetworkObject>();
-        /// <summary>
         /// Objects owned by this connection. Available to this connection and server.
         /// </summary>
-        public IReadOnlyCollection<NetworkObject> Objects => _objects;
+        public HashSet<NetworkObject> Objects = new HashSet<NetworkObject>();
         /// <summary>
         /// The first object within Objects.
         /// </summary>
         public NetworkObject FirstObject { get; private set; }
+        /// <summary>
+        /// Sets a custom FirstObject. This connection must be owner of the specified object.
+        /// </summary>
+        /// <param name="nob"></param>
+        public void SetFirstObject(NetworkObject nob)
+        {
+            //Invalid object.
+            if (!Objects.Contains(nob))
+            {
+                string errMessage = $"FirstObject for {ClientId} cannot be set to {nob.name} as it's not within Objects for this connection.";
+                if (NetworkManager == null)
+                    NetworkManager.StaticLogError(errMessage);
+                else
+                    NetworkManager.LogError(errMessage);
+
+                return;
+            }
+
+            FirstObject = nob;
+        }
         /// <summary>
         /// Scenes this connection is in. Available to this connection and server.
         /// </summary>
@@ -90,57 +129,24 @@ namespace FishNet.Connection
         /// </summary>
         public object CustomData = null;
         /// <summary>
-        /// Local tick of the server when this connection last replicated.
-        /// </summary>
-        public uint LocalReplicateTick { get; internal set; }
-        /// <summary>
-        /// Tick of the last packet received from this connection.
+        /// Tick of the last packet received from this connection which was not out of order.
         /// This value is only available on the server.
         /// </summary>
-        /* This is not used internally. At this time it's just
-         * here for the users convienence. */
-        public uint LastPacketTick { get; private set; }
+        public EstimatedTick PacketTick;
+        [Obsolete("Use LocalTick instead.")] //Remove on 2023/06/01
+        public uint Tick => LocalTick.Value(NetworkManager.TimeManager);
         /// <summary>
-        /// Sets LastPacketTick value.
+        /// Approximate local tick as it is on this connection.
+        /// This also contains the last set value for local and remote.
         /// </summary>
-        /// <param name="value"></param>
-        internal void SetLastPacketTick(uint value)
-        {
-            //If new largest tick from the client then update client tick data.
-            if (value > LastPacketTick)
-            {
-                _latestTick = value;
-                _serverLatestTick = NetworkManager.TimeManager.Tick;
-            }
-            LastPacketTick = value;
-        }
-        /// <summary>
-        /// Latest tick that did not arrive out of order from this connection.
-        /// </summary>
-        private uint _latestTick;
-        /// <summary>
-        /// Tick on the server when latestTick was set.
-        /// </summary>
-        private uint _serverLatestTick;
-        /// <summary>
-        /// Current approximate network tick as it is on this connection.
-        /// </summary>
-        public uint Tick
-        {
-            get
-            {
-                NetworkManager nm = NetworkManager;
-                if (nm != null)
-                {
-                    uint diff = (nm.TimeManager.Tick - _serverLatestTick);
-                    return (diff + _latestTick);
-                }
+        public EstimatedTick LocalTick;
+        #endregion
 
-                //Fall through, could not process.
-                return 0;
-            }
-        }
-
+        #region Const.
+        /// <summary>
+        /// Value used when ClientId has not been set.
+        /// </summary>
+        public const int UNSET_CLIENTID_VALUE = -1;
         #endregion
 
         #region Comparers.
@@ -156,7 +162,7 @@ namespace FishNet.Connection
             if (nc is null)
                 return false;
             //If either is -1 Id.
-            if (this.ClientId == -1 || nc.ClientId == -1)
+            if (this.ClientId == NetworkConnection.UNSET_CLIENTID_VALUE || nc.ClientId == NetworkConnection.UNSET_CLIENTID_VALUE)
                 return false;
             //Same object.
             if (System.Object.ReferenceEquals(this, nc))
@@ -186,26 +192,42 @@ namespace FishNet.Connection
         [APIExclude]
         public NetworkConnection() { }
         [APIExclude]
-        public NetworkConnection(NetworkManager manager, int clientId, bool asServer)
+        public NetworkConnection(NetworkManager manager, int clientId, int transportIndex, bool asServer)
         {
-            Initialize(manager, clientId, asServer);
+            Initialize(manager, clientId, transportIndex, asServer);
         }
 
-        public void Dispose()
+        internal void Dispose()
         {
-            foreach (PacketBundle p in _toClientBundles)
-                p.Dispose();
-            _toClientBundles.Clear();
+            Deinitialize();
+        }
+
+        /// <summary>
+        /// Outputs data about this connection as a string.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            int clientId = ClientId;
+            string ip = (NetworkManager != null) ? NetworkManager.TransportManager.Transport.GetConnectionAddress(clientId) : "Unset";
+            return $"Id [{ClientId}] Address [{ip}]";
         }
 
         /// <summary>
         /// Initializes this for use.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void Initialize(NetworkManager nm, int clientId, bool asServer)
+        private void Initialize(NetworkManager nm, int clientId, int transportIndex, bool asServer)
         {
             NetworkManager = nm;
+            TransportIndex = transportIndex;
             ClientId = clientId;
+            /* Set PacketTick to current values so
+            * that timeouts and other things around
+           * first packet do not occur due to an unset value. */
+            PacketTick.Update(nm.TimeManager, 0, OldTickOption.SetLastRemoteTick);
+            Observers_Initialize(nm);
+            Prediction_Initialize(nm, asServer);
             //Only the server uses the ping and buffer.
             if (asServer)
             {
@@ -215,14 +237,19 @@ namespace FishNet.Connection
         }
 
         /// <summary>
-        /// Resets this instance.
+        /// Deinitializes this NetworkConnection. This is called prior to resetting.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void Reset()
+        internal void Deinitialize()
         {
-            _latestTick = 0;
-            _serverLatestTick = 0;
-            LastPacketTick = 0;
+            MatchCondition.RemoveFromMatchesWithoutRebuild(this, NetworkManager);
+
+            foreach (PacketBundle p in _toClientBundles)
+                p.Dispose();
+            _toClientBundles.Clear();
+
+            PacketTick.Reset();
+            TransportIndex = -1;
             ClientId = -1;
             ClearObjects();
             Authenticated = false;
@@ -231,7 +258,14 @@ namespace FishNet.Connection
             _loadedStartScenesAsServer = false;
             SetDisconnecting(false);
             Scenes.Clear();
+            PredictedObjectIds.Clear();
             ResetPingPong();
+            ResetStates_Lod();
+            AllowedForcedLodUpdates = 0;
+            LastLevelOfDetailUpdate = 0;
+            LevelOfDetailInfractions = 0;
+            Observers_Reset();
+            Prediction_Reset();
         }
 
         /// <summary>
@@ -250,6 +284,12 @@ namespace FishNet.Connection
         /// <param name="immediately">True to disconnect immediately. False to send any pending data first.</param>
         public void Disconnect(bool immediately)
         {
+            if (!IsValid)
+            {
+                //NetworkManager is likely null if invalid.
+                NetworkManager.StaticLogWarning($"Disconnect called on an invalid connection.");
+                return;
+            }
             if (Disconnecting)
             {
                 NetworkManager.LogWarning($"ClientId {ClientId} is already disconnecting.");
@@ -299,10 +339,13 @@ namespace FishNet.Connection
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void AddObject(NetworkObject nob)
         {
-            _objects.Add(nob);
+            if (!IsValid)
+                return;
+
+            Objects.Add(nob);
             //If adding the first object then set new FirstObject.
-            if (_objects.Count == 1)
-                FirstObject = nob;
+            if (Objects.Count == 1)
+                SetFirstObject();
 
             OnObjectAdded?.Invoke(nob);
         }
@@ -314,7 +357,13 @@ namespace FishNet.Connection
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void RemoveObject(NetworkObject nob)
         {
-            _objects.Remove(nob);
+            if (!IsValid)
+            {
+                ClearObjects();
+                return;
+            }
+
+            Objects.Remove(nob);
             //If removing the first object then set a new one.
             if (nob == FirstObject)
                 SetFirstObject();
@@ -327,7 +376,7 @@ namespace FishNet.Connection
         /// </summary>
         private void ClearObjects()
         {
-            _objects.Clear();
+            Objects.Clear();
             FirstObject = null;
         }
 
@@ -336,7 +385,7 @@ namespace FishNet.Connection
         /// </summary>
         private void SetFirstObject()
         {
-            if (_objects.Count == 0)
+            if (Objects.Count == 0)
             {
                 FirstObject = null;
             }
@@ -345,6 +394,7 @@ namespace FishNet.Connection
                 foreach (NetworkObject nob in Objects)
                 {
                     FirstObject = nob;
+                    Observers_FirstObjectChanged();
                     break;
                 }
             }

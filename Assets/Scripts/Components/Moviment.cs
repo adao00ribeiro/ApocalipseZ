@@ -56,7 +56,7 @@ namespace ApocalipseZ
             SoundStep.SetIsGround(isGrounded());
             SoundStep.SetIsMoviment(CheckMovement());
         }
-        public void GravityJumpUpdate(MoveData md, float delta)
+        public void GravityJumpUpdate(bool IsJump, float delta)
         {
             CheckGround();
           
@@ -67,7 +67,7 @@ namespace ApocalipseZ
                 PlayerVelocity.y = -2f;
             }
            
-            if (md.Jump )
+            if (IsJump)
             {
                 PlayerVelocity.y = Mathf.Sqrt(jumpSpeed * -2.0f * Physics.gravity.y);
             }

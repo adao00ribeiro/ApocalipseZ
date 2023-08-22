@@ -21,18 +21,18 @@ namespace FishNet.CodeGenerating.ILCore
         #region Const.
         internal const string RUNTIME_ASSEMBLY_NAME = "FishNet.Runtime";
         #endregion
-
+         
         public override bool WillProcess(ICompiledAssembly compiledAssembly)
         {
             if (compiledAssembly.Name.StartsWith("Unity."))
                 return false;
             if (compiledAssembly.Name.StartsWith("UnityEngine."))
-                return false;
-            if (compiledAssembly.Name.StartsWith("UnityEditor."))
+                return false;  
+            if (compiledAssembly.Name.StartsWith("UnityEditor.")) 
                 return false;
             if (compiledAssembly.Name.Contains("Editor"))
-                return false;
-
+                return false; 
+             
             /* This line contradicts the one below where referencesFishNet
              * becomes true if the assembly is FishNetAssembly. This is here
              * intentionally to stop codegen from running on the runtime
@@ -60,36 +60,35 @@ namespace FishNet.CodeGenerating.ILCore
 
             CodegenSession session = new CodegenSession();
             if (!session.Initialize(assemblyDef.MainModule))
-                return null;
+                return null; 
 
             bool modified = false;
 
+            bool fnAssembly = IsFishNetAssembly(compiledAssembly);
+            if (fnAssembly)
+                modified |= ModifyMakePublicMethods(session);
             /* If one or more scripts use RPCs but don't inherit NetworkBehaviours
              * then don't bother processing the rest. */
             if (session.GetClass<NetworkBehaviourProcessor>().NonNetworkBehaviourHasInvalidAttributes(session.Module.Types))
                 return new ILPostProcessResult(null, session.Diagnostics);
 
-            if (IsFishNetAssembly(compiledAssembly))
+            modified |= session.GetClass<WriterProcessor>().Process();
+            modified |= session.GetClass<ReaderProcessor>().Process();
+            modified |= CreateDeclaredSerializerDelegates(session);
+            modified |= CreateDeclaredSerializers(session);
+            modified |= CreateDeclaredComparerDelegates(session);
+            modified |= CreateIBroadcast(session);
+#if !DISABLE_QOL_ATTRIBUTES
+            modified |= CreateQOLAttributes(session);
+#endif
+            modified |= CreateNetworkBehaviours(session);
+            modified |= CreateGenericReadWriteDelegates(session);
+
+            if (fnAssembly)
             {
-                modified |= ModifyMakePublicMethods(session);
-            }
-            else
-            {
-                //before 226ms, after 17ms                   
-                modified |= CreateDeclaredSerializerDelegates(session);
-                //before 5ms, after 5ms
-                modified |= CreateDeclaredSerializers(session);
-                //before 30ms, after 26ms
-                modified |= CreateIBroadcast(session);
-                //before 140ms, after 10ms
-                modified |= CreateQOLAttributes(session);
-                //before 75ms, after 6ms
-                modified |= CreateNetworkBehaviours(session);
-                //before 260ms, after 215ms 
-                modified |= CreateGenericReadWriteDelegates(session);
-                //before 52ms, after 27ms
-                //Total at once
-                //before 761, after 236ms
+                AssemblyNameReference anr = session.Module.AssemblyReferences.FirstOrDefault<AssemblyNameReference>(x => x.FullName == session.Module.Assembly.FullName);
+                if (anr != null)
+                    session.Module.AssemblyReferences.Remove(anr);
             }
 
             /* If there are warnings about SyncVars being in different assemblies.
@@ -179,8 +178,6 @@ namespace FishNet.CodeGenerating.ILCore
         /// <summary>
         /// Creates serializers for custom types within user declared serializers.
         /// </summary>
-        /// <param name="moduleDef"></param>
-        /// <param name="diagnostics"></param>
         private bool CreateDeclaredSerializers(CodegenSession session)
         {
             bool modified = false;
@@ -200,6 +197,25 @@ namespace FishNet.CodeGenerating.ILCore
         }
 
         /// <summary>
+        /// Creates delegates for user declared comparers.
+        /// </summary>
+        internal bool CreateDeclaredComparerDelegates(CodegenSession session)
+        {
+            bool modified = false;
+            List<TypeDefinition> allTypeDefs = session.Module.Types.ToList();
+            foreach (TypeDefinition td in allTypeDefs)
+            {
+                if (session.GetClass<GeneralHelper>().IgnoreTypeDefinition(td))
+                    continue;
+
+                modified |= session.GetClass<CustomSerializerProcessor>().CreateComparerDelegates(td);
+            }
+
+            return modified;
+        }
+
+
+        /// <summary>
         /// Creaters serializers and calls for IBroadcast.
         /// </summary>
         /// <param name="moduleDef"></param>
@@ -209,9 +225,6 @@ namespace FishNet.CodeGenerating.ILCore
             bool modified = false;
 
             string networkBehaviourFullName = session.GetClass<NetworkBehaviourHelper>().FullName;
-            bool fnRuntime = (session.Module.Name == "FishNet.Runtime.dll");
-            if (fnRuntime)
-                session.LogWarning(session.Module.Name);
             HashSet<TypeDefinition> typeDefs = new HashSet<TypeDefinition>();
             foreach (TypeDefinition td in session.Module.Types)
             {
@@ -305,12 +318,6 @@ namespace FishNet.CodeGenerating.ILCore
             /* Remove types which are inherited. This gets the child most networkbehaviours.
              * Since processing iterates all parent classes there's no reason to include them */
             RemoveInheritedTypeDefinitions(networkBehaviourTypeDefs);
-            //Set how many rpcs are in children classes for each typedef.
-            Dictionary<TypeDefinition, uint> inheritedRpcCounts = new Dictionary<TypeDefinition, uint>();
-            SetChildRpcCounts(inheritedRpcCounts, networkBehaviourTypeDefs);
-            //Set how many synctypes are in children classes for each typedef.
-            Dictionary<TypeDefinition, uint> inheritedSyncTypeCounts = new Dictionary<TypeDefinition, uint>();
-            SetChildSyncTypeCounts(inheritedSyncTypeCounts, networkBehaviourTypeDefs);
 
             /* This holds all sync types created, synclist, dictionary, var
              * and so on. This data is used after all syncvars are made so
@@ -325,8 +332,7 @@ namespace FishNet.CodeGenerating.ILCore
                 session.ImportReference(typeDef);
                 //Synctypes processed for this nb and it's inherited classes.
                 List<(SyncType, ProcessedSync)> processedSyncs = new List<(SyncType, ProcessedSync)>();
-                session.GetClass<NetworkBehaviourProcessor>().Process(typeDef, processedSyncs,
-                    inheritedSyncTypeCounts, inheritedRpcCounts);
+                session.GetClass<NetworkBehaviourProcessor>().ProcessLocal(typeDef, processedSyncs);
                 //Add to all processed.
                 allProcessedSyncs.AddRange(processedSyncs);
             }
@@ -375,100 +381,6 @@ namespace FishNet.CodeGenerating.ILCore
                     tds.Remove(item);
             }
 
-            /* Sets how many Rpcs are within the children
-             * of each typedefinition. EG: if our structure is
-             * A : B : C, with the following RPC counts...
-             * A 3
-             * B 1
-             * C 2
-             * then B child rpc counts will be 3, and C will be 4. */
-            void SetChildRpcCounts(Dictionary<TypeDefinition, uint> typeDefCounts, List<TypeDefinition> tds)
-            {
-                foreach (TypeDefinition typeDef in tds)
-                {
-                    //Number of RPCs found while climbing typeDef.
-                    uint childCount = 0;
-
-                    TypeDefinition copyTd = typeDef;
-                    do
-                    {
-                        //How many RPCs are in copyTd.
-                        uint copyCount = session.GetClass<RpcProcessor>().GetRpcCount(copyTd);
-
-                        /* If not found it this is the first time being
-                         * processed. When this occurs set the value
-                         * to 0. It will be overwritten below if baseCount
-                         * is higher. */
-                        uint previousCopyChildCount = 0;
-                        if (!typeDefCounts.TryGetValue(copyTd, out previousCopyChildCount))
-                            typeDefCounts[copyTd] = 0;
-                        /* If baseCount is higher then replace count for copyTd.
-                         * This can occur when a class is inherited by several types
-                         * and the first processed type might only have 1 rpc, while
-                         * the next has 2. This could be better optimized but to keep
-                         * the code easier to read, it will stay like this. */
-                        if (childCount > previousCopyChildCount)
-                            typeDefCounts[copyTd] = childCount;
-
-                        //Increase baseCount with RPCs found here.
-                        childCount += copyCount;
-
-                        copyTd = copyTd.GetNextBaseClassToProcess(session);
-                    } while (copyTd != null);
-                }
-
-            }
-
-
-            /* This performs the same functionality as SetChildRpcCounts
-             * but for SyncTypes. */
-            void SetChildSyncTypeCounts(Dictionary<TypeDefinition, uint> typeDefCounts, List<TypeDefinition> tds)
-            {
-                foreach (TypeDefinition typeDef in tds)
-                {
-                    //Number of RPCs found while climbing typeDef.
-                    uint childCount = 0;
-
-                    TypeDefinition copyTd = typeDef;
-                    /* Iterate up to the parent script and then reverse
-                     * the order. This is so that the topmost is 0
-                     * and each inerhiting script adds onto that.
-                     * Setting child types this way makes it so parent
-                     * types don't need to have their synctype/rpc counts
-                     * rebuilt when scripts are later to be found
-                     * inheriting from them. */
-                    List<TypeDefinition> reversedTypeDefs = new List<TypeDefinition>();
-                    do
-                    {
-                        reversedTypeDefs.Add(copyTd);
-                        copyTd = copyTd.GetNextBaseClassToProcess(session);
-                    } while (copyTd != null);
-                    reversedTypeDefs.Reverse();
-
-                    foreach (TypeDefinition td in reversedTypeDefs)
-                    {
-                        //How many RPCs are in copyTd.
-                        uint copyCount = session.GetClass<NetworkBehaviourSyncProcessor>().GetSyncTypeCount(td);
-                        /* If not found it this is the first time being
-                         * processed. When this occurs set the value
-                         * to 0. It will be overwritten below if baseCount
-                         * is higher. */
-                        uint previousCopyChildCount = 0;
-                        if (!typeDefCounts.TryGetValue(td, out previousCopyChildCount))
-                            typeDefCounts[td] = 0;
-                        /* If baseCount is higher then replace count for copyTd.
-                         * This can occur when a class is inherited by several types
-                         * and the first processed type might only have 1 rpc, while
-                         * the next has 2. This could be better optimized but to keep
-                         * the code easier to read, it will stay like this. */
-                        if (childCount > previousCopyChildCount)
-                            typeDefCounts[td] = childCount;
-                        //Increase baseCount with RPCs found here.
-                        childCount += copyCount;
-                    }
-                }
-            }
-
 
             return modified;
         }
@@ -480,11 +392,10 @@ namespace FishNet.CodeGenerating.ILCore
         /// <param name="diagnostics"></param>
         private bool CreateGenericReadWriteDelegates(CodegenSession session)
         {
-            bool modified = false;
-            modified |= session.GetClass<WriterHelper>().CreateGenericDelegates();
-            modified |= session.GetClass<ReaderHelper>().CreateGenericDelegates();
+            session.GetClass<WriterProcessor>().CreateStaticMethodDelegates();
+            session.GetClass<ReaderProcessor>().CreateStaticMethodDelegates();
 
-            return modified;
+            return true;
         }
 
         internal static bool IsFishNetAssembly(ICompiledAssembly assembly) => (assembly.Name == FishNetILPP.RUNTIME_ASSEMBLY_NAME);

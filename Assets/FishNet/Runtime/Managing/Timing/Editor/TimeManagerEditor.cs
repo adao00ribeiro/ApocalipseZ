@@ -11,21 +11,23 @@ namespace FishNet.Managing.Timing.Editing
     public class TimeManagerEditor : Editor
     {
         private SerializedProperty _updateOrder;
+        private SerializedProperty _timingType;
         private SerializedProperty _tickRate;
         private SerializedProperty _allowTickDropping;
         private SerializedProperty _maximumFrameTicks;
         private SerializedProperty _pingInterval;
-        private SerializedProperty _timingInterval;
+        //private SerializedProperty _timingInterval;
         private SerializedProperty _physicsMode;        
 
         protected virtual void OnEnable()
         {
             _updateOrder = serializedObject.FindProperty("_updateOrder");
+            _timingType = serializedObject.FindProperty("_timingType");
             _tickRate = serializedObject.FindProperty("_tickRate");
             _allowTickDropping = serializedObject.FindProperty("_allowTickDropping");
             _maximumFrameTicks = serializedObject.FindProperty("_maximumFrameTicks");
             _pingInterval = serializedObject.FindProperty("_pingInterval");
-            _timingInterval = serializedObject.FindProperty("_timingInterval");
+            //_timingInterval = serializedObject.FindProperty("_timingInterval");
             _physicsMode = serializedObject.FindProperty("_physicsMode");
         }
 
@@ -41,6 +43,7 @@ namespace FishNet.Managing.Timing.Editing
             EditorGUILayout.LabelField("Timing", EditorStyles.boldLabel);
             EditorGUI.indentLevel++;
             EditorGUILayout.PropertyField(_updateOrder);
+            EditorGUILayout.PropertyField(_timingType);
             EditorGUILayout.PropertyField(_allowTickDropping);
             if (_allowTickDropping.boolValue == true)
             {
@@ -50,7 +53,7 @@ namespace FishNet.Managing.Timing.Editing
             }
             EditorGUILayout.PropertyField(_tickRate);
             EditorGUILayout.PropertyField(_pingInterval);
-            EditorGUILayout.PropertyField(_timingInterval);            
+            //EditorGUILayout.PropertyField(_timingInterval);            
             EditorGUI.indentLevel--;
             EditorGUILayout.Space();
 

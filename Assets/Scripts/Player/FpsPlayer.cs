@@ -11,11 +11,12 @@ using FishNet.Connection;
 using TMPro;
 using FishNet.Object.Prediction;
 using FishNet;
+using FishNet.Managing.Timing;
 
 namespace ApocalipseZ
 {
     //adicionar e conter components
-    public struct MoveData
+    public struct MoveData : IReplicateData
     {
         public bool Jump;
         public float Horizontal;
@@ -24,14 +25,25 @@ namespace ApocalipseZ
         public bool IsCrouch;
         public float RotationX;
         public Vector2 MouseDelta;
+        private uint _tick;
 
+        public void Dispose() { }
+        public uint GetTick() => _tick;
+        public void SetTick(uint value) => _tick = value;
     }
-    public struct ReconcileData
+    public struct ReconcileData : IReconcileData
     {
         public Vector3 Position;
         public Quaternion Rotation;
         public float VerticalVelocity;
         public bool Grounded;
+
+        private uint _tick;
+
+
+        public void Dispose() { }
+        public uint GetTick() => _tick;
+        public void SetTick(uint value) => _tick = value;
     }
     [RequireComponent(typeof(Moviment))]
     [RequireComponent(typeof(WeaponManager))]
@@ -73,19 +85,32 @@ namespace ApocalipseZ
             FirstPersonCamera = transform.Find("Camera & Recoil").GetComponent<FirstPersonCamera>();
             WeaponManager.SetFpsPlayer(this);
         }
-
+      
         public override void OnStartNetwork()
         {
             base.OnStartNetwork();
-
             base.TimeManager.OnTick += TimeManager_OnTick;
-            base.TimeManager.OnUpdate += TimeManager_OnUpdate;
+               base.TimeManager.OnUpdate += TimeManager_OnUpdate;
+            base.TimeManager.OnPostTick += TimeManager_OnPostTick;
 
         }
 
-        private void TimeManager_OnUpdate()
+        private void TimeManager_OnPostTick()
         {
-            if (base.IsOwner)
+            if (IsServer)
+            {
+                ReconcileData rd = new();
+
+                rd.Position = transform.position;
+                rd.Rotation = transform.rotation;
+                rd.Grounded = Moviment.isGrounded();
+                rd.VerticalVelocity = Moviment.PlayerVelocity.y;
+                Reconciliation(rd);
+            }
+
+        }
+    private void TimeManager_OnUpdate(){
+             if (base.IsOwner)
             {
                 InteractObjects.UpdateInteract();
 
@@ -95,9 +120,7 @@ namespace ApocalipseZ
                 }
                 Animation();
             }
-
-        }
-
+    }
         public override void OnStopNetwork()
         {
             base.OnStopNetwork();
@@ -105,6 +128,7 @@ namespace ApocalipseZ
             {
                 base.TimeManager.OnTick -= TimeManager_OnTick;
 
+                base.TimeManager.OnPostTick -= TimeManager_OnPostTick;
             }
         }
         private void LateUpdate()
@@ -115,60 +139,49 @@ namespace ApocalipseZ
             }
 
         }
+
         private void TimeManager_OnTick()
         {
-
-            if (base.IsOwner)
-            {
-                Reconcile(default, false);
-                BuildActions(out MoveData md);
-                Move(md, false);
-            }
-            if (base.IsServer)
-            {
-                Move(default, true);
-                ReconcileData rd = new ReconcileData()
-                {
-                    Position = transform.position,
-                    Rotation = transform.rotation,
-                    Grounded = Moviment.isGrounded()
-                };
-                Reconcile(rd, true);
-            }
+            Move(BuildMoveData());
         }
-
-
-
-        private void BuildActions(out MoveData moveData)
+        private MoveData BuildMoveData()
         {
-            moveData = default;
-            moveData.Jump = InputManager.GetIsJump();
-            moveData.Forward = InputManager.GetMoviment().y;
-            moveData.Horizontal = InputManager.GetMoviment().x;
-            moveData.IsRun = InputManager.GetRun();
-            moveData.IsCrouch = InputManager.GetCrouch();
-            moveData.MouseDelta.x = InputManager.GetMouseDelta().x;
-            moveData.MouseDelta.y = InputManager.GetMouseDelta().y;
-            moveData.RotationX = FirstPersonCamera.GetRotationX();
+            if (!base.IsOwner)
+            {
+                return default;
+            }
+              
 
+            MoveData md = new();
+          
+            md.Jump = InputManager.GetIsJump();
+            md.Forward = InputManager.GetMoviment().y;
+            md.Horizontal = InputManager.GetMoviment().x;
+            md.IsRun = InputManager.GetRun();
+            md.IsCrouch = InputManager.GetCrouch();
+            md.MouseDelta.x = InputManager.GetMouseDelta().x;
+            md.MouseDelta.y = InputManager.GetMouseDelta().y;
+            md.RotationX = FirstPersonCamera.GetRotationX();
+            return md;
         }
-        [Replicate]
-        private void Move(MoveData moveData, bool asServer, bool replaying = false)
+
+
+        [ReplicateV2]
+        private void Move(MoveData md, ReplicateState state = ReplicateState.Invalid, Channel channel = Channel.Unreliable)
         {
-
-            Moviment.GravityJumpUpdate(moveData, (float)base.TimeManager.TickDelta);
-            Moviment.MoveTick(moveData, (float)base.TimeManager.TickDelta);
-
+                
+            Moviment.MoveTick(md, (float)base.TimeManager.TickDelta);
+            Moviment.GravityJumpUpdate(md.Jump, (float)base.TimeManager.TickDelta);
         }
-        [Reconcile]
-        private void Reconcile(ReconcileData recData, bool asServer)
+        [ReconcileV2]
+        private void Reconciliation(ReconcileData rd, Channel channel = Channel.Unreliable)
         {
             //Reset the client to the received position. It's okay to do this
             //even if there is no de-synchronization.
-            transform.position = recData.Position;
-            transform.rotation = recData.Rotation;
-            Moviment.PlayerVelocity.y = recData.VerticalVelocity;
-            Moviment.SetIsGround(recData.Grounded);
+            transform.position = rd.Position;
+            transform.rotation = rd.Rotation;
+            Moviment.PlayerVelocity.y = rd.VerticalVelocity;
+            Moviment.SetIsGround(rd.Grounded);
 
         }
         public override void OnStartServer()
@@ -310,6 +323,8 @@ namespace ApocalipseZ
             return FirstPersonCamera;
         }
         private InputManager PInputManager;
+
+
         public InputManager InputManager
         {
             get

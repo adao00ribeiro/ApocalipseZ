@@ -1,5 +1,5 @@
-﻿using FishNet.Connection;
-using FishNet.Managing.Logging;
+﻿using FishNet.Component.Observing;
+using FishNet.Connection;
 using FishNet.Observing;
 using System;
 using System.Collections.Generic;
@@ -8,22 +8,41 @@ using UnityEngine;
 
 namespace FishNet.Object
 {
-    public sealed partial class NetworkObject : MonoBehaviour
+    public partial class NetworkObject : MonoBehaviour
     {
         #region Public.
+        /// <summary>
+        /// Called when the clientHost gains or loses visibility of this object.
+        /// Boolean value will be true if clientHost has visibility.
+        /// </summary>        
+        public event HostVisibilityUpdatedDelegate OnHostVisibilityUpdated;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="prevVisible">True if clientHost was known to have visibility of the object prior to this invoking.</param>
+        /// <param name="nextVisible">True if the clientHost now has visibility of the object.</param>
+        public delegate void HostVisibilityUpdatedDelegate(bool prevVisible, bool nextVisible);
         /// <summary>
         /// Called when this NetworkObject losses all observers or gains observers while previously having none.
         /// </summary>
         public event Action<NetworkObject> OnObserversActive;
         /// <summary>
-        /// NetworkObserver on this object. May be null if not using observers.
+        /// NetworkObserver on this object.
         /// </summary>
         [HideInInspector]
         public NetworkObserver NetworkObserver = null;
         /// <summary>
         /// Clients which can see and get messages from this NetworkObject.
         /// </summary>
+        [HideInInspector]
         public HashSet<NetworkConnection> Observers = new HashSet<NetworkConnection>();
+        #endregion
+
+        #region Internal.
+        /// <summary>
+        /// Current HashGrid entry this belongs to.
+        /// </summary>
+        internal GridEntry HashGridEntry;
         #endregion
 
         #region Private.
@@ -44,7 +63,48 @@ namespace FishNet.Object
         /// Last visibility value for clientHost on this object.
         /// </summary>
         private bool _lastClientHostVisibility;
+        /// <summary>
+        /// HashGrid for this object.
+        /// </summary>
+        private HashGrid _hashGrid;
+        /// <summary>
+        /// Next time this object may update it's position for HashGrid.
+        /// </summary>
+        private float _nextHashGridUpdateTime;
+        /// <summary>
+        /// True if this gameObject is static.
+        /// </summary>
+        private bool _isStatic;
+        /// <summary>
+        /// Current grid position.
+        /// </summary>
+        private Vector2Int _hashGridPosition = HashGrid.UnsetGridPosition;
         #endregion
+
+        /// <summary>
+        /// Updates Objects positions in the HashGrid for this Networkmanager.
+        /// </summary>
+        internal void UpdateForNetworkObject(bool force)
+        {
+            if (_hashGrid == null)
+                return;
+            if (_isStatic)
+                return;
+
+            float unscaledTime = Time.unscaledTime;
+            //Not enough time has passed to update.
+            if (!force && unscaledTime < _nextHashGridUpdateTime)
+                return;
+
+            const float updateInterval = 1f;
+            _nextHashGridUpdateTime = unscaledTime + updateInterval;
+            Vector2Int newPosition = _hashGrid.GetHashGridPosition(this);
+            if (newPosition != _hashGridPosition)
+            {
+                _hashGridPosition = newPosition;
+                HashGridEntry = _hashGrid.GetGridEntry(newPosition);
+            }            
+        }
 
         /// <summary>
         /// Updates cached renderers used to managing clientHost visibility.
@@ -53,7 +113,7 @@ namespace FishNet.Object
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void UpdateRenderers(bool updateVisibility = true)
         {
-            UpdateRenderersInternal(updateVisibility);
+            UpdateRenderers_Internal(updateVisibility);
         }
 
         /// <summary>
@@ -72,7 +132,7 @@ namespace FishNet.Object
 
             if (!_renderersPopulated)
             {
-                UpdateRenderersInternal(false);
+                UpdateRenderers_Internal(false);
                 _renderersPopulated = true;
             }
 
@@ -83,9 +143,19 @@ namespace FishNet.Object
         /// Clears and updates renderers.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void UpdateRenderersInternal(bool updateVisibility)
+        private void UpdateRenderers_Internal(bool updateVisibility)
         {
             _renderers = GetComponentsInChildren<Renderer>(true);
+            List<Renderer> enabledRenderers = new List<Renderer>();
+            foreach (Renderer r in _renderers)
+            {
+                if (r.enabled)
+                    enabledRenderers.Add(r);
+            }
+            //If there are any disabled renderers then change _renderers to cached values.
+            if (enabledRenderers.Count != _renderers.Length)
+                _renderers = enabledRenderers.ToArray();
+
             if (updateVisibility)
                 UpdateRenderVisibility(_lastClientHostVisibility);
         }
@@ -112,7 +182,9 @@ namespace FishNet.Object
                 r.enabled = visible;
             }
 
+            OnHostVisibilityUpdated?.Invoke(_lastClientHostVisibility, visible);
             _lastClientHostVisibility = visible;
+
             //If to rebuild then do so, while updating visibility.
             if (rebuildRenderers)
                 UpdateRenderers(true);
@@ -154,8 +226,7 @@ namespace FishNet.Object
             //If not a valid connection.
             if (!connection.IsValid)
             {
-                if (NetworkManager.CanLog(LoggingType.Warning))
-                    Debug.LogWarning($"An invalid connection was used when rebuilding observers.");
+                NetworkManager.LogWarning($"An invalid connection was used when rebuilding observers.");
                 return ObserverStateChange.Unchanged;
             }
             //Valid not not active.
@@ -175,8 +246,12 @@ namespace FishNet.Object
                 return ObserverStateChange.Unchanged;
             }
 
+            //Update hashgrid if needed.
+            UpdateForNetworkObject(!timedOnly);
+
             int startCount = Observers.Count;
             ObserverStateChange osc = NetworkObserver.RebuildObservers(connection, timedOnly);
+
             if (osc == ObserverStateChange.Added)
                 Observers.Add(connection);
             else if (osc == ObserverStateChange.Removed)

@@ -6,6 +6,7 @@ using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using FishNet.Transporting;
+using Unity.Mathematics;
 
 namespace ApocalipseZ
 {
@@ -37,9 +38,6 @@ namespace ApocalipseZ
         private InputManager InputManager;
 
         public static bool IsChekInventory;
-        int currentSlot;
-
-
         public void SetAmmoNetwork(int oldSlot, int newSlot, bool asServer)
         {
             AmmoNetwork = newSlot;
@@ -79,14 +77,11 @@ namespace ApocalipseZ
             }
             if (InputManager.GetAlpha1())
             {
-
-                currentSlot = 0;
-                CmdSlotChange(this.gameObject);
+               CmdSlotChange(0);
             }
             else if (InputManager.GetAlpha2())
             {
-                currentSlot = 1;
-                CmdSlotChange(this.gameObject);
+                CmdSlotChange(1);
             }
             if (activeSlot == null)
             {
@@ -96,7 +91,11 @@ namespace ApocalipseZ
 
             if (InputManager.GetFire() && !fpsplayer.GetMoviment().CheckIsRun() && !CanvasFpsPlayer.IsInventoryOpen)
             {
-                CmdFire();
+                if (activeSlot.Fire())
+            {
+              //  RpcFire(base.Owner);
+            }
+            AmmoNetwork = activeSlot.CurrentAmmo;
 
             }
             if (InputManager.GetReload())
@@ -106,6 +105,7 @@ namespace ApocalipseZ
             }
             if (InputManager.GetAim() && !fpsplayer.GetMoviment().CheckIsRun())
             {
+               
                 activeSlot.Aim(true);
                 weaponHolderAnimator.SetBool("Walk", false);
                 weaponHolderAnimator.SetBool("Run", false);
@@ -139,8 +139,10 @@ namespace ApocalipseZ
         {
             activeSlot.PlayFX();
         }
+
+
         [ServerRpc]
-        public void CmdSlotChange(GameObject target)
+        public void CmdSlotChange(int currentSlot)
         {
             DataArmsWeapon tempArms = null;
             int ammo = 0;
@@ -152,6 +154,7 @@ namespace ApocalipseZ
             }
             else
             {
+                DesEquipWeapon();
                 tempArms = GameController.Instance.DataManager.GetArmsWeapon(SecundaryWeapon.Name);
                 ammo = SecundaryWeapon.Ammo;
             }
@@ -164,39 +167,26 @@ namespace ApocalipseZ
             activeSlot.Cam = fpsplayer.GetFirstPersonCamera();
             activeSlot.CurrentAmmo = ammo;
             activeSlot.gameObject.SetActive(true);
+            base.Spawn(activeSlot.gameObject);
             weaponHolderAnimator.Play("Unhide");
-            TargetRpcChanve(base.Owner);
+            ObserverRpcSlotChange(activeSlot.gameObject);
         }
 
         [TargetRpc]
-        public void TargetRpcChanve(NetworkConnection target)
+        public void TargetRpcSlotChange( NetworkConnection target,GameObject weapon , Transform sway )
         {
-            DataArmsWeapon tempArms = null;
-            int ammo = 0;
-            if (currentSlot == 0)
-            {
-                DesEquipWeapon();
-                print("aki");
-                tempArms = GameController.Instance.DataManager.GetArmsWeapon(PrimaryWeapon.Name);
-                ammo = PrimaryWeapon.Ammo;
-            }
-            else
-            {
-                tempArms = GameController.Instance.DataManager.GetArmsWeapon(SecundaryWeapon.guidid);
-                ammo = SecundaryWeapon.Ammo;
-            }
+            activeSlot = weapon.GetComponent<Weapon>();
+        }
+        [ObserversRpc]
+          public void ObserverRpcSlotChange( GameObject weapon  )
+        {
+      
+             activeSlot = weapon.GetComponent<Weapon>();
+             activeSlot.Cam = fpsplayer.GetFirstPersonCamera();
+             activeSlot.transform.SetParent(swayTransform);
+             activeSlot.transform.localPosition = Vector3.zero;
+             activeSlot.transform.localRotation = quaternion.identity;
 
-            if (tempArms == null)
-            {
-                print("aki");
-                return;
-            }
-
-            activeSlot = Instantiate(tempArms.PrefabArmsWeapon, swayTransform).GetComponent<Weapon>();
-            activeSlot.Cam = fpsplayer.GetFirstPersonCamera();
-            activeSlot.CurrentAmmo = ammo;
-            activeSlot.gameObject.SetActive(true);
-            weaponHolderAnimator.Play("Unhide");
         }
         private void SelecionaWeapon()
         {
@@ -260,7 +250,7 @@ namespace ApocalipseZ
             if (activeSlot != null)
             {
                 weaponHolderAnimator.Play("Hide");
-                Destroy(activeSlot.gameObject);
+                base.Despawn(activeSlot.gameObject);
                 activeSlot = null;
             }
 
@@ -299,4 +289,3 @@ namespace ApocalipseZ
     }
 
 }
-

@@ -93,7 +93,7 @@ namespace ApocalipseZ
                         }
                         else if (SlotSelecionado.AcceptedType == TypeContainer.WEAPONS)
                         {
-                            weaponManager.CmdMove(SlotEnter.SlotIndex, SlotSelecionado.SlotIndex);
+                            //weaponManager.CmdMove(SlotEnter.SlotIndex, SlotSelecionado.SlotIndex);
                         }
 
                     }

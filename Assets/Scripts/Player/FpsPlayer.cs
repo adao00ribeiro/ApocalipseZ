@@ -165,11 +165,9 @@ namespace ApocalipseZ
             return md;
         }
 
-
         [ReplicateV2]
         private void Move(MoveData md, ReplicateState state = ReplicateState.Invalid, Channel channel = Channel.Unreliable)
         {
-                
             Moviment.MoveTick(md, (float)base.TimeManager.TickDelta);
             Moviment.GravityJumpUpdate(md.Jump, (float)base.TimeManager.TickDelta);
         }
@@ -182,7 +180,6 @@ namespace ApocalipseZ
             transform.rotation = rd.Rotation;
             Moviment.PlayerVelocity.y = rd.VerticalVelocity;
             Moviment.SetIsGround(rd.Grounded);
-
         }
         public override void OnStartServer()
         {

@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using FishNet;
+using FishNet.Object;
+using GameKit.Utilities.ObjectPooling.Examples;
 using UnityEngine;
 namespace ApocalipseZ
 {
     [RequireComponent(typeof(AudioSource))]
-    public class Weapon : MonoBehaviour, IWeapon
+    public class Weapon : NetworkBehaviour, IWeapon
     {
         [SerializeField] private DataArmsWeapon weaponSetting;
         public DataArmsWeapon WeaponSetting { get => weaponSetting; }
@@ -46,7 +48,7 @@ namespace ApocalipseZ
         [Header("Fire mode")]
         public FireMode fireMode;
 
-        private Animator Animator;
+        [SerializeField]private Animator Animator;
         [SerializeField] private Sway sway;
         [SerializeField] private Recoil recoilComponent;
         [SerializeField] private AudioSource audioSource;
@@ -74,7 +76,11 @@ namespace ApocalipseZ
         {
             currentAmmo = newcurrent;
         }
-
+     private void OnValidate()
+    {
+        
+    }
+ 
         // Start is called before the first frame update
         void Start()
         {
@@ -93,11 +99,7 @@ namespace ApocalipseZ
             temp_MuzzleFlashParticlesFX = Instantiate(DataParticles.Particles, muzzleFlashTransform);
         }
         // Update is called once per frame
-        void Update()
-        {
-
-        }
-
+        
 
         public bool Fire()
         {
@@ -108,21 +110,15 @@ namespace ApocalipseZ
                 if (currentAmmo > 0)
                 {
                     currentAmmo -= 1;
-
                     PlayFX();
                     muzzleFlashTransform.LookAt(Cam.transform.position + Cam.transform.forward * 3000);
-                    GameObject go = Instantiate(PrefabProjectile, muzzleFlashTransform.position, muzzleFlashTransform.rotation);
-                    InstanceFinder.ServerManager.Spawn(go, null);
-
+                    SpawnProjectile(muzzleFlashTransform.position, muzzleFlashTransform.forward, 0f);
                     //calculatedDamage = Random.Range ( damageMin , damageMax );
-
+                    CmdFire(muzzleFlashTransform.position , muzzleFlashTransform.forward , base.TimeManager.Tick);
                     // ProjectilesManager ( );
-
                     recoilComponent.AddRecoil(weaponSetting.recoil);
-
                     //Calculating when next fire call allowed
                     nextFireTime = Time.time + weaponSetting.fireRate;
-
                     return true;
                 }
                 else
@@ -139,6 +135,59 @@ namespace ApocalipseZ
                 }
             }
             return false;
+        }
+        private const float MAX_PASSED_TIME = 0.3f;
+        private void ClientFire()
+        {
+            Vector3 position = transform.position;
+            Vector3 direction = transform.forward;
+
+            /* Spawn locally with 0f passed time.
+             * Since this is the firing client
+             * they do not need to accelerate/catch up
+             * the projectile. */
+            SpawnProjectile(position, direction, 0f);
+            //Ask server to also fire passing in current Tick.
+            CmdFire(position, direction, base.TimeManager.Tick);
+        }
+        private void SpawnProjectile(Vector3 position, Vector3 direction, float passedTime)
+        {
+                    BalisticProjectile go = Instantiate(PrefabProjectile, position, Quaternion.identity).GetComponent<BalisticProjectile>();
+                    go.Initialize(direction, passedTime);
+        }
+        [ServerRpc(RequireOwnership = false)]
+        private void CmdFire(Vector3 position, Vector3 direction, uint tick)
+        {
+            
+            /* You may want to validate position and direction here.
+             * How this is done depends largely upon your game so it
+             * won't be covered in this guide. */
+
+            //Get passed time. Note the false for allow negative values.
+            float passedTime = (float)base.TimeManager.TimePassed(tick, false);
+            /* Cap passed time at half of constant value for the server.
+             * In our example max passed time is 300ms, so server value
+             * would be max 150ms. This means if it took a client longer
+             * than 150ms to send the rpc to the server, the time would
+             * be capped to 150ms. This might sound restrictive, but that would
+             * mean the client would have roughly a 300ms ping; we do not want
+             * to punish other players because a laggy client is firing. */
+            passedTime = Mathf.Min(MAX_PASSED_TIME / 2f, passedTime);
+
+            //Spawn on the server.
+            SpawnProjectile(position, direction, passedTime);
+            //Tell other clients to spawn the projectile.
+            ObserversFire(position, direction, tick);
+        }
+        [ObserversRpc(ExcludeOwner = true)]
+        private void ObserversFire(Vector3 position, Vector3 direction, uint tick)
+        {
+            //Like on server get the time passed and cap it. Note the false for allow negative values.
+            float passedTime = (float)base.TimeManager.TimePassed(tick, false);
+            passedTime = Mathf.Min(MAX_PASSED_TIME, passedTime);
+
+            //Spawn the projectile locally.
+            SpawnProjectile(position, direction, passedTime);
         }
         public void ReloadBegin()
         {
@@ -214,6 +263,7 @@ namespace ApocalipseZ
             setAim = isAim;
             if (Animator == null)
             {
+                print("opa");
                 return;
             }
             if (useAnimator)

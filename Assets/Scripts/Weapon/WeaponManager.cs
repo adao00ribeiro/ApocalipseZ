@@ -48,6 +48,8 @@ namespace ApocalipseZ
             InputManager = GameController.Instance.InputManager;
 
         }
+
+      
         void Start()
         {
             UiPrimaryAndSecondWeapons = GameController.Instance.CanvasFpsPlayer.GetUiPrimaryandSecundaryWeapons();
@@ -178,15 +180,13 @@ namespace ApocalipseZ
             activeSlot = weapon.GetComponent<Weapon>();
         }
         [ObserversRpc]
-          public void ObserverRpcSlotChange( GameObject weapon  )
+        public void ObserverRpcSlotChange( GameObject weapon  )
         {
-      
              activeSlot = weapon.GetComponent<Weapon>();
              activeSlot.Cam = fpsplayer.GetFirstPersonCamera();
              activeSlot.transform.SetParent(swayTransform);
              activeSlot.transform.localPosition = Vector3.zero;
              activeSlot.transform.localRotation = quaternion.identity;
-
         }
         private void SelecionaWeapon()
         {
@@ -194,7 +194,6 @@ namespace ApocalipseZ
             {
                 return;
             }
-
         }
         private void DropWeapon()
         {

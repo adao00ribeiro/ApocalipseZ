@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3742dce09f6e0b24eb2edf491c25b974, type: 3}
+  m_Name: DataItemMAKAROV
+  m_EditorClassIdentifier: 
+  GuidId: 9c88fa3a-3619-46e3-83cc-41e35d11bfa5
+  Type: 1
+  Name: MAKAROV
+  isStackable: 0
+  Thumbnail: {fileID: 21300000, guid: 74b90c9d47b888b48bb9b7f59ddc0d6e, type: 3}
+  Description: NONE
+  maxStacksize: 1
+  Ammo: 30
+  addHealth: 0
+  addSatiety: 0
+  addHydratation: 0
+  Durability: 100
+  Prefab: {fileID: 7862708039569744048, guid: d3c86360bead2674b9ae46045ff98326, type: 3}

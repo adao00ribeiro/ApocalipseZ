@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3742dce09f6e0b24eb2edf491c25b974, type: 3}
+  m_Name: SCP_REFRIGERANTEPESSATO600ML
+  m_EditorClassIdentifier: 
+  GuidId: bfa6dad1-7635-48e1-81d1-3bce6fc4c979
+  Type: 3
+  Name: NONE
+  isStackable: 1
+  Thumbnail: {fileID: 0}
+  Description: NONE
+  maxStacksize: 4
+  Ammo: 0
+  addHealth: 0
+  addSatiety: 0
+  addHydratation: 0
+  Durability: 0
+  Prefab: {fileID: 0}

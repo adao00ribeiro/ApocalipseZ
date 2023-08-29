@@ -116,6 +116,8 @@ namespace ApocalipseZ
             if (eventData.button == PointerEventData.InputButton.Left)
             {
                 SlotSelecionado = Instantiate(this, HUD);
+                SlotSelecionado.SetSlotIndex(SlotIndex);
+                SlotSelecionado.SetImage(Image.sprite);
                 SlotSelecionado.GetComponent<RectTransform>().sizeDelta = new Vector2(70, 70);
                 SlotSelecionado.transform.position = eventData.position;
 

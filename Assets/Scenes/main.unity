@@ -351,10 +351,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 221173368710141018, guid: 7dafd12d7591194408f8ea149263f178,
+        type: 3}
+      propertyPath: dataItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 8219be3ed4a6fe604a821223fe3abf95,
+        type: 2}
     - target: {fileID: 221173368710141021, guid: 7dafd12d7591194408f8ea149263f178,
         type: 3}
       propertyPath: m_Name
       value: BARRETI
+      objectReference: {fileID: 0}
+    - target: {fileID: 221173368710141021, guid: 7dafd12d7591194408f8ea149263f178,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3288861873688063623, guid: 7dafd12d7591194408f8ea149263f178,
         type: 3}
@@ -389,6 +400,27 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 997093392}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &219041258 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5106662521076766715, guid: 2763f0302aff01a4aa48b3815eef4a23,
+    type: 3}
+  m_PrefabInstance: {fileID: 282990284}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &219041265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219041258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _overrideType: 3
+  _updateHostVisibility: 1
+  _observerConditions: []
 --- !u!114 &232729689 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7032926271390923855, guid: bdf3533602f2bf644a5240d1b3cacdd7,
@@ -431,10 +463,21 @@ PrefabInstance:
       propertyPath: <SceneId>k__BackingField
       value: 1693455143577401469
       objectReference: {fileID: 0}
+    - target: {fileID: 5106662521076766714, guid: 2763f0302aff01a4aa48b3815eef4a23,
+        type: 3}
+      propertyPath: dataItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 8219be3ed4a6fe604a821223fe3abf95,
+        type: 2}
     - target: {fileID: 5106662521076766715, guid: 2763f0302aff01a4aa48b3815eef4a23,
         type: 3}
       propertyPath: m_Name
       value: GLOCK
+      objectReference: {fileID: 0}
+    - target: {fileID: 5106662521076766715, guid: 2763f0302aff01a4aa48b3815eef4a23,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5106662521076766719, guid: 2763f0302aff01a4aa48b3815eef4a23,
         type: 3}
@@ -489,7 +532,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5106662521076766715, guid: 2763f0302aff01a4aa48b3815eef4a23,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 219041265}
   m_SourcePrefab: {fileID: 100100000, guid: 2763f0302aff01a4aa48b3815eef4a23, type: 3}
 --- !u!114 &337068356 stripped
 MonoBehaviour:
@@ -730,6 +777,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: KNIFE
       objectReference: {fileID: 0}
+    - target: {fileID: 6091085126310407120, guid: cfbc99345edb46748bd27dfa792280d7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6091085126310407148, guid: cfbc99345edb46748bd27dfa792280d7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -839,6 +891,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RPG
+      objectReference: {fileID: 0}
+    - target: {fileID: 6594048609170016072, guid: 14a79c8e63b65c049a1c2636d6178f38,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6594048609170016116, guid: 14a79c8e63b65c049a1c2636d6178f38,
         type: 3}
@@ -1286,6 +1343,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SHOTGUN
       objectReference: {fileID: 0}
+    - target: {fileID: 2502674061504812186, guid: 36844521ece0bb4499884f5014055ab0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2502674061504812262, guid: 36844521ece0bb4499884f5014055ab0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1425,6 +1487,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GRENADE
+      objectReference: {fileID: 0}
+    - target: {fileID: 1793213720044310199, guid: ebde7a6cde6434c48bd1e4894dde2622,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1982,6 +2049,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Conserve
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840443892232721706, guid: a096406947075374a941f8909b914127,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7321512492527966732, guid: a096406947075374a941f8909b914127,
         type: 3}
@@ -3177,6 +3249,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MAKAROV
       objectReference: {fileID: 0}
+    - target: {fileID: 7862708039569744048, guid: ca4a883b956d5254f85ceb5b88800a6b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7862708039569744060, guid: ca4a883b956d5254f85ceb5b88800a6b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3185,7 +3262,7 @@ PrefabInstance:
     - target: {fileID: 7862708039569744060, guid: ca4a883b956d5254f85ceb5b88800a6b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.787
+      value: 0.811
       objectReference: {fileID: 0}
     - target: {fileID: 7862708039569744060, guid: ca4a883b956d5254f85ceb5b88800a6b,
         type: 3}
@@ -3342,6 +3419,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Medkit
       objectReference: {fileID: 0}
+    - target: {fileID: 4416297259736414357, guid: d17fe662eff9f2147bba71b180da8492,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3409,6 +3491,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SCAR
+      objectReference: {fileID: 0}
+    - target: {fileID: 7662800925189616045, guid: 9f68a8d62d893c244b83d6823be9fd50,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8951027101408946125, guid: 9f68a8d62d893c244b83d6823be9fd50,
         type: 3}
@@ -4065,8 +4152,8 @@ SceneRoots:
   - {fileID: 948141248}
   - {fileID: 7014041887655280624}
   - {fileID: 3773446187579387441}
-  - {fileID: 75891422}
   - {fileID: 282990284}
+  - {fileID: 75891422}
   - {fileID: 905009644}
   - {fileID: 378278216}
   - {fileID: 1650377299}

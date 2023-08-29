@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GuidId: 287368e1-2b38-4e82-be58-4a0578e6ef7e
   Type: 3
-  Name: NONE
+  Name: MedKit
   isStackable: 1
   Thumbnail: {fileID: 0}
-  Description: NONE
+  Description: KitMed
   maxStacksize: 4
   Ammo: 0
-  addHealth: 0
+  addHealth: 70
   addSatiety: 0
   addHydratation: 0
-  Durability: 0
-  Prefab: {fileID: 0}
+  Durability: 100
+  Prefab: {fileID: 4416297259736414357, guid: d17fe662eff9f2147bba71b180da8492, type: 3}

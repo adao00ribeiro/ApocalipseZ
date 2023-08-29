@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: -4811204848361078545}
   - component: {fileID: 172540518600539519}
   - component: {fileID: 2389191641346556427}
+  - component: {fileID: 1510723161879214165}
   m_Layer: 0
   m_Name: GLOCK
   m_TagString: Untagged
@@ -353,7 +354,7 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 2389191641346556427}
   _networkObjectCache: {fileID: 2389191641346556427}
-  dataItem: {fileID: 0}
+  dataItem: {fileID: 11400000, guid: 8219be3ed4a6fe604a821223fe3abf95, type: 2}
   dropQuantity: 1
   IsServerSpaw: 0
 --- !u!135 &-4811204848361078545
@@ -435,9 +436,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 24
+  <PrefabId>k__BackingField: 15
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 0
+  _scenePathHash: 394288251
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 8128095047526423931
   <IsNested>k__BackingField: 0
@@ -476,3 +477,18 @@ MonoBehaviour:
   _isGlobal: 0
   _initializeOrder: 0
   _defaultDespawnType: 0
+--- !u!114 &1510723161879214165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5106662521076766715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _overrideType: 3
+  _updateHostVisibility: 1
+  _observerConditions: []

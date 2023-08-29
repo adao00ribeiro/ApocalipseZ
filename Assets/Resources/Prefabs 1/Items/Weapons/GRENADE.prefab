@@ -244,7 +244,7 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 0}
   _networkObjectCache: {fileID: 0}
-  dataItem: {fileID: 0}
+  dataItem: {fileID: 11400000, guid: 96eac13fe68c32b4fbf5b2e163576445, type: 2}
   dropQuantity: 1
   IsServerSpaw: 0
 --- !u!33 &5810607321932624467

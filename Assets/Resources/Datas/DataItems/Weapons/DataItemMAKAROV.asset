@@ -24,4 +24,4 @@ MonoBehaviour:
   addSatiety: 0
   addHydratation: 0
   Durability: 100
-  Prefab: {fileID: 7862708039569744048, guid: d3c86360bead2674b9ae46045ff98326, type: 3}
+  Prefab: {fileID: 7862708039569744048, guid: ca4a883b956d5254f85ceb5b88800a6b, type: 3}

@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3742dce09f6e0b24eb2edf491c25b974, type: 3}
-  m_Name: DataItemRPG
+  m_Name: DataItemConserve
   m_EditorClassIdentifier: 
-  GuidId: 9797b836-f8be-4240-b1e2-6bfb36b64b6e
-  Type: 1
-  Name: RPG
-  isStackable: 0
-  Thumbnail: {fileID: 21300032, guid: 5acb27b603af6d44ea6113c4b7b15385, type: 3}
+  GuidId: 5be6f248-ad68-4f11-9e85-f22b1e913d63
+  Type: 3
+  Name: Conserve
+  isStackable: 1
+  Thumbnail: {fileID: 0}
   Description: NONE
-  maxStacksize: 1
-  Ammo: 30
+  maxStacksize: 4
+  Ammo: 0
   addHealth: 0
   addSatiety: 0
-  addHydratation: 0
+  addHydratation: 30
   Durability: 100
-  Prefab: {fileID: 6594048609170016072, guid: 14a79c8e63b65c049a1c2636d6178f38, type: 3}
+  Prefab: {fileID: 5840443892232721706, guid: a096406947075374a941f8909b914127, type: 3}

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8748e0b602a81d45bb02bee722cd4bd, type: 3}
   m_Name: DataArmsWeaponKNIFE
   m_EditorClassIdentifier: 
+  GuidId: d9ed97fa-5644-4b4e-9d15-e35dd9d2e1e8
   Name: KNIFE
   Type: 4
   fireRate: 0
@@ -36,7 +37,6 @@ MonoBehaviour:
   meleeHitFX: KnifeStab
   bulletInitialVelocity: 0
   airResistanceForce: 0
-  projectile: {fileID: 0}
-  projectilePoolSize: 0
-  PrefabArmsWeapon: {fileID: 6203856247229931866, guid: 0d14d0fea2f96234490703dd8910ca5a,
+  projectile: 
+  PrefabArmsWeapon: {fileID: 6203856247229931866, guid: bcc3ca9de166016499d69e3f4dffcbbd,
     type: 3}

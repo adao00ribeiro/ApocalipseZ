@@ -14,8 +14,6 @@ namespace ApocalipseZ
     {
 
         UiPrimaryAndSecondWeapons UiPrimaryAndSecondWeapons;
-        public List<Weapon> ArmsWeapons = new List<Weapon>();
-
 
         [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(SetAmmoNetwork))]
         public int AmmoNetwork;
@@ -27,16 +25,11 @@ namespace ApocalipseZ
 
         [Tooltip("Animator that contain pickup animation")]
         public Animator weaponHolderAnimator;
-
-
         IFpsPlayer fpsplayer;
         //Transform where weapons will dropped on Drop()
         private Transform playerTransform;
-
         [SerializeField] private Transform swayTransform;
-
         private InputManager InputManager;
-
         public static bool IsChekInventory;
         public void SetAmmoNetwork(int oldSlot, int newSlot, bool asServer)
         {
@@ -49,16 +42,12 @@ namespace ApocalipseZ
 
         }
 
-      
+
         void Start()
         {
             UiPrimaryAndSecondWeapons = GameController.Instance.CanvasFpsPlayer.GetUiPrimaryandSecundaryWeapons();
             swayTransform = transform.Find("Camera & Recoil/Weapon holder/Sway").transform;
             weaponHolderAnimator = transform.Find("Camera & Recoil/Weapon holder").GetComponent<Animator>();
-            foreach (Weapon weapon in swayTransform.GetComponentsInChildren<Weapon>(true))
-            {
-                ArmsWeapons.Add(weapon);
-            }
 
         }
         public void SetFpsPlayer(IFpsPlayer fps)
@@ -79,7 +68,7 @@ namespace ApocalipseZ
             }
             if (InputManager.GetAlpha1())
             {
-               CmdSlotChange(0);
+                CmdSlotChange(0);
             }
             else if (InputManager.GetAlpha2())
             {
@@ -94,10 +83,10 @@ namespace ApocalipseZ
             if (InputManager.GetFire() && !fpsplayer.GetMoviment().CheckIsRun() && !CanvasFpsPlayer.IsInventoryOpen)
             {
                 if (activeSlot.Fire())
-            {
-              //  RpcFire(base.Owner);
-            }
-            AmmoNetwork = activeSlot.CurrentAmmo;
+                {
+                    //  RpcFire(base.Owner);
+                }
+                AmmoNetwork = activeSlot.CurrentAmmo;
 
             }
             if (InputManager.GetReload())
@@ -107,7 +96,7 @@ namespace ApocalipseZ
             }
             if (InputManager.GetAim() && !fpsplayer.GetMoviment().CheckIsRun())
             {
-               
+
                 activeSlot.Aim(true);
                 weaponHolderAnimator.SetBool("Walk", false);
                 weaponHolderAnimator.SetBool("Run", false);
@@ -175,18 +164,18 @@ namespace ApocalipseZ
         }
 
         [TargetRpc]
-        public void TargetRpcSlotChange( NetworkConnection target,GameObject weapon , Transform sway )
+        public void TargetRpcSlotChange(NetworkConnection target, GameObject weapon, Transform sway)
         {
             activeSlot = weapon.GetComponent<Weapon>();
         }
         [ObserversRpc]
-        public void ObserverRpcSlotChange( GameObject weapon  )
+        public void ObserverRpcSlotChange(GameObject weapon)
         {
-             activeSlot = weapon.GetComponent<Weapon>();
-             activeSlot.Cam = fpsplayer.GetFirstPersonCamera();
-             activeSlot.transform.SetParent(swayTransform);
-             activeSlot.transform.localPosition = Vector3.zero;
-             activeSlot.transform.localRotation = quaternion.identity;
+            activeSlot = weapon.GetComponent<Weapon>();
+            activeSlot.Cam = fpsplayer.GetFirstPersonCamera();
+            activeSlot.transform.SetParent(swayTransform);
+            activeSlot.transform.localPosition = Vector3.zero;
+            activeSlot.transform.localRotation = quaternion.identity;
         }
         private void SelecionaWeapon()
         {

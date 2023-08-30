@@ -12,15 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8748e0b602a81d45bb02bee722cd4bd, type: 3}
   m_Name: DataArmsWeaponSHOTGUN
   m_EditorClassIdentifier: 
+  GuidId: e028e426-3ef4-4017-92ca-2dfcde06bcb3
   Name: SHOTGUN
   Type: 3
-  fireRate: 0
+  fireRate: 2
   spread: 0
   recoil: {x: 0, y: 0, z: 0}
   MuzzleFlashParticlesFX: {fileID: 0}
-  shotSFX: {fileID: 0}
-  reloadingSFX: {fileID: 0}
-  emptySFX: {fileID: 0}
+  shotSFX: ScarShot
+  reloadingSFX: ScarReload
+  emptySFX: Empty
   shell: {fileID: 0}
   shellsPoolSize: 0
   shellEjectingForce: 0
@@ -33,9 +34,9 @@ MonoBehaviour:
   meleeDamagePoints: 0
   meleeRigidbodyHitForce: 0
   meleeHitTime: 0
-  meleeHitFX: {fileID: 0}
+  meleeHitFX: 
   bulletInitialVelocity: 0
   airResistanceForce: 0
-  projectile: {fileID: 0}
-  projectilePoolSize: 0
-  PrefabArmsWeapon: {fileID: 0}
+  projectile: Bullet
+  PrefabArmsWeapon: {fileID: 5436522767758331307, guid: 5986cb08dbc2c904a92b117bfc8a3f2f,
+    type: 3}

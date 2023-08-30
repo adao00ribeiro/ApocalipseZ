@@ -2169,6 +2169,11 @@ PrefabInstance:
       propertyPath: TextQuantidade
       value: 
       objectReference: {fileID: 337068356}
+    - target: {fileID: 359815017172626346, guid: bdf3533602f2bf644a5240d1b3cacdd7,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 459760617194356971, guid: bdf3533602f2bf644a5240d1b3cacdd7,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -2282,6 +2287,11 @@ PrefabInstance:
     - target: {fileID: 1360516085196988240, guid: bdf3533602f2bf644a5240d1b3cacdd7,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1672957320785584962, guid: bdf3533602f2bf644a5240d1b3cacdd7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1908779042121630933, guid: bdf3533602f2bf644a5240d1b3cacdd7,
@@ -2879,6 +2889,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8049081499635867110, guid: bdf3533602f2bf644a5240d1b3cacdd7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8162929264681746490, guid: bdf3533602f2bf644a5240d1b3cacdd7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8305119953402884930, guid: bdf3533602f2bf644a5240d1b3cacdd7,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -3270,7 +3290,7 @@ GameObject:
   - component: {fileID: 1796344937}
   - component: {fileID: 1796344936}
   m_Layer: 0
-  m_Name: GameObject (2)
+  m_Name: NavMeshSurface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4101,6 +4121,7 @@ SceneRoots:
   - {fileID: 1917030953}
   - {fileID: 1488865159}
   - {fileID: 1435113045}
+  - {fileID: 1796344937}
   - {fileID: 1662003608}
   - {fileID: 655149818}
   - {fileID: 1973485774}
@@ -4118,4 +4139,3 @@ SceneRoots:
   - {fileID: 757801401}
   - {fileID: 1308727717}
   - {fileID: 1854157895}
-  - {fileID: 1796344937}

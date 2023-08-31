@@ -66,5 +66,9 @@ namespace ApocalipseZ
             throw new System.NotImplementedException();
         }
 
+        public void CmdInteract()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

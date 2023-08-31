@@ -434,12 +434,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 6
-  <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 394288251
-  <SceneId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 3586000953763594899
   <IsNested>k__BackingField: 0
   _enablePrediction: 0
   _predictionType: 0
@@ -476,3 +470,9 @@ MonoBehaviour:
   _isGlobal: 0
   _initializeOrder: 0
   _defaultDespawnType: 0
+  NetworkObserver: {fileID: 0}
+  <PrefabId>k__BackingField: 6
+  <SpawnableCollectionId>k__BackingField: 0
+  _scenePathHash: 1772421895
+  <SceneId>k__BackingField: 0
+  <AssetPathHash>k__BackingField: 3586000953763594899

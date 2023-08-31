@@ -25,7 +25,7 @@ namespace ApocalipseZ
         {
             Ammo = dataItem.Ammo;
         }
-      
+
         void Start()
         {
             if (!IsServerSpaw && base.IsServer)
@@ -103,6 +103,11 @@ namespace ApocalipseZ
         public void CmdInteract(NetworkConnection sender = null)
         {
             OnInteract(sender.FirstObject.GetComponent<FpsPlayer>());
+        }
+
+        public void CmdInteract()
+        {
+            throw new NotImplementedException();
         }
     }
 }

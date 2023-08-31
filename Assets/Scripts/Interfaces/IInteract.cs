@@ -6,11 +6,8 @@ public interface IInteract
 {
 
     void CmdInteract(NetworkConnection sender = null);
-
     void OnInteract(IFpsPlayer player);
-
     void StartFocus();
-
     void EndFocus();
     string GetTitle();
 }

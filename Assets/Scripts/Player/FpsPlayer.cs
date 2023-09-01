@@ -85,12 +85,12 @@ namespace ApocalipseZ
             FirstPersonCamera = transform.Find("Camera & Recoil").GetComponent<FirstPersonCamera>();
             WeaponManager.SetFpsPlayer(this);
         }
-      
+
         public override void OnStartNetwork()
         {
             base.OnStartNetwork();
             base.TimeManager.OnTick += TimeManager_OnTick;
-               base.TimeManager.OnUpdate += TimeManager_OnUpdate;
+            base.TimeManager.OnUpdate += TimeManager_OnUpdate;
             base.TimeManager.OnPostTick += TimeManager_OnPostTick;
 
         }
@@ -109,8 +109,9 @@ namespace ApocalipseZ
             }
 
         }
-    private void TimeManager_OnUpdate(){
-             if (base.IsOwner)
+        private void TimeManager_OnUpdate()
+        {
+            if (base.IsOwner)
             {
                 InteractObjects.UpdateInteract();
 
@@ -120,7 +121,7 @@ namespace ApocalipseZ
                 }
                 Animation();
             }
-    }
+        }
         public override void OnStopNetwork()
         {
             base.OnStopNetwork();
@@ -150,10 +151,10 @@ namespace ApocalipseZ
             {
                 return default;
             }
-              
+
 
             MoveData md = new();
-          
+
             md.Jump = InputManager.GetIsJump();
             md.Forward = InputManager.GetMoviment().y;
             md.Horizontal = InputManager.GetMoviment().x;
@@ -195,6 +196,7 @@ namespace ApocalipseZ
                 FirstPersonCamera.tag = "MainCamera";
                 FirstPersonCamera.GetComponent<Camera>().enabled = true;
                 FirstPersonCamera.ActiveCursor(false);
+                CmdSpawCharacter(PlayerPrefs.GetString("NamePlayer"));
             }
             else
             {
@@ -202,12 +204,33 @@ namespace ApocalipseZ
             }
 
 
-            Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
 
+            Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
             CanvasFpsPlayer CanvasFpsPlayer = GameObject.FindObjectOfType<CanvasFpsPlayer>();
             CanvasFpsPlayer.SetFirtPersonCamera(FirstPersonCamera);
             CanvasFpsPlayer.SetPlayerStats(PlayerStats);
+
             CmdSetupPlayer("player", color);
+        }
+        [ServerRpc]
+        void CmdSpawCharacter(string nameCharacter)
+        {
+            SpawCharacter(nameCharacter);
+            ObserverSpawCharacter(nameCharacter);
+        }
+        [ObserversRpc]
+        void ObserverSpawCharacter(string nameCharacter)
+        {
+            SpawCharacter(nameCharacter);
+        }
+
+        void SpawCharacter(string nameCharacter)
+        {
+            DataCharacter cha = GameController.Instance.DataManager.GetDataCharacter(nameCharacter);
+            if (cha)
+            {
+                Instantiate(cha.PrefabCharacter, transform.GetChild(0).transform);
+            }
         }
         void PlayerColorChanged(Color32 _, Color32 newPlayerColor, bool asServer)
         {
@@ -276,7 +299,10 @@ namespace ApocalipseZ
 
         public void Animation()
         {
-
+            if (AnimatorController == null)
+            {
+                return;
+            }
             //animatorcontroller
             AnimatorController.SetFloat("Horizontal", InputManager.GetMoviment().x);
             AnimatorController.SetFloat("Vertical", InputManager.GetMoviment().y);

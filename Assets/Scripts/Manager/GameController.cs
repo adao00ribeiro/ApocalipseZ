@@ -15,8 +15,7 @@ namespace ApocalipseZ
         [SerializeField] private TimerManager PrefabTimerManager;
         [SerializeField] private HitFXManager PrefabHitFxManager;
         [SerializeField] private DecalFxManager PrefabDecalFxManager;
-
-
+        [SerializeField] private PlayerSpawPoints PrefabPlayerSpawPoints;
 
         //privados 
         GameObject SpawPoint;
@@ -29,8 +28,7 @@ namespace ApocalipseZ
         private TimerManager timerManager;
         private HitFXManager hitfxManager;
         private DecalFxManager decalfxManager;
-
-
+        private PlayerSpawPoints playerSpawPoints;
         // Start is called before the first frame update
         void Awake()
         {
@@ -43,9 +41,9 @@ namespace ApocalipseZ
                 _instance = this;
             }
             InitManagers();
-        
+
         }
-            
+
         public void InitManagers()
         {
 
@@ -55,6 +53,7 @@ namespace ApocalipseZ
             Instantiate(PrefabTimerManager, transform);
             Instantiate(PrefabHitFxManager, transform);
             Instantiate(PrefabDecalFxManager, transform);
+            Instantiate(PrefabPlayerSpawPoints, transform);
 
             if (GameObject.FindObjectOfType<SceneManager>() == null)
             {
@@ -62,42 +61,42 @@ namespace ApocalipseZ
             }
 
         }
-/*
-        public void SpawPlayer(GameObject player = null)
-        {
-            if (Player == null)
-            {
-                return;
-            }
-
-            SpawPoint = GameObject.Find("SpawPoint");
-
-            if (SpawPoint == null)
-            {
-                if (player == null)
+        /*
+                public void SpawPlayer(GameObject player = null)
                 {
-                    Instantiate(Player).transform.position = transform.position;
-                }
-                else
-                {
-                    player.transform.position = transform.position;
-                }
+                    if (Player == null)
+                    {
+                        return;
+                    }
 
-            }
-            else
-            {
-                if (player == null)
-                {
-                    Instantiate(Player, SpawPoint.transform.position, SpawPoint.transform.rotation);
-                }
-                else
-                {
-                    player.transform.position = SpawPoint.transform.position;
-                }
+                    SpawPoint = GameObject.Find("SpawPoint");
 
-            }
-        }
-*/
+                    if (SpawPoint == null)
+                    {
+                        if (player == null)
+                        {
+                            Instantiate(Player).transform.position = transform.position;
+                        }
+                        else
+                        {
+                            player.transform.position = transform.position;
+                        }
+
+                    }
+                    else
+                    {
+                        if (player == null)
+                        {
+                            Instantiate(Player, SpawPoint.transform.position, SpawPoint.transform.rotation);
+                        }
+                        else
+                        {
+                            player.transform.position = SpawPoint.transform.position;
+                        }
+
+                    }
+                }
+        */
         private static GameController _instance;
         public static GameController Instance
         {
@@ -107,7 +106,7 @@ namespace ApocalipseZ
                 return _instance;
             }
         }
-      
+
         public CanvasFpsPlayer CanvasFpsPlayer
         {
             get
@@ -196,6 +195,16 @@ namespace ApocalipseZ
                 return decalfxManager;
             }
         }
-
+        public PlayerSpawPoints PlayerSpawPoints
+        {
+            get
+            {
+                if (playerSpawPoints == null)
+                {
+                    playerSpawPoints = transform.GetComponentInChildren<PlayerSpawPoints>();
+                }
+                return playerSpawPoints;
+            }
+        }
     }
 }

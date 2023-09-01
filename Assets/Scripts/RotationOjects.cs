@@ -13,7 +13,7 @@ namespace ApocalipseZ
     public class RotationOjects : MonoBehaviour
     {
         private DoorManager DoorManager;
-        public readonly string guidid = System.Guid.NewGuid().ToString();
+        public  int guidid ;
         public string nameObject;
         public float speed;
         public bool IsOpen;
@@ -49,7 +49,6 @@ namespace ApocalipseZ
         public void OnInteract()
         {
             DoorManager.CmdInteract(guidid);
-
         }
         public void Open()
         {

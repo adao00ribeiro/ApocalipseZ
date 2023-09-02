@@ -11,8 +11,8 @@ namespace ApocalipseZ
 
         [SerializeField] private DataArmsWeapon[] ListArmsWeapon;
         [SerializeField] private DataItem[] ListItems;
-
-         [SerializeField] private DataBullet[] ListBullets;
+        [SerializeField] private DataCharacter[] ListChareacter;
+        [SerializeField] private DataBullet[] ListBullets;
         [SerializeField] private DataAudio[] ListAudios;
         [SerializeField] private DataParticles[] ListParticles;
         [SerializeField] private ScriptableTextureSounds ScriptableTextureSounds;
@@ -20,6 +20,7 @@ namespace ApocalipseZ
         {
             ListArmsWeapon = Resources.LoadAll<DataArmsWeapon>("Datas/DataArmsWeapon");
             ListItems = Resources.LoadAll<DataItem>("Datas/DataItems");
+            ListChareacter = Resources.LoadAll<DataCharacter>("Datas/DataCharacters");
             ListBullets = Resources.LoadAll<DataBullet>("Datas/DataBullets");
             ListAudios = Resources.LoadAll<DataAudio>("Datas/DataAudios");
             ListParticles = Resources.LoadAll<DataParticles>("Datas/DataParticles");
@@ -61,7 +62,19 @@ namespace ApocalipseZ
             }
             return temp;
         }
-          internal DataBullet GetDataBullet(string Name)
+        internal DataCharacter GetDataCharacter(string Name)
+        {
+            DataCharacter temp = null;
+            foreach (DataCharacter item in ListChareacter)
+            {
+                if (item.Name == Name)
+                {
+                    temp = item;
+                }
+            }
+            return temp;
+        }
+        internal DataBullet GetDataBullet(string Name)
         {
             DataBullet temp = null;
             foreach (DataBullet item in ListBullets)

@@ -94,13 +94,14 @@ namespace ApocalipseZ
         }
         public void Move(MoveData md, float delta)
         {
+         
             Vector3 moveDirection = Vector3.zero;
             moveDirection = new Vector3(md.Horizontal, 0, md.Forward);
             currentSpeed = Walk;
             currentSpeed = md.IsRun ? Run : currentSpeed;
             currentSpeed = md.IsCrouch ? crouchSpeed : currentSpeed;
             //SetCrouchHeight();
-            transform.localRotation = Quaternion.Euler(0, md.RotationX, 0);
+           transform.localRotation = Quaternion.Euler(0, md.RotationX, 0);
             CharacterController.Move(transform.TransformDirection(moveDirection) * currentSpeed * delta +   new Vector3(0.0f, PlayerVelocity.y , 0.0f) * delta);
 
         }

@@ -12,7 +12,6 @@ namespace ApocalipseZ
         public float distance = 1.5f;
 
         [SerializeField] private IInteract interact;
-
         [SerializeField] UiFpsScopeCursorReticles PUiFpsScopeCursorReticles;
         public UiFpsScopeCursorReticles UiFpsScopeCursorReticles
         {
@@ -69,7 +68,15 @@ namespace ApocalipseZ
                     //  UiFpsScopeCursorReticles.DisableCursor ( );
                     // UiFpsScopeCursorReticles.SetUseText ( "" );
                 }
+                RotationOjects door = hit.collider.gameObject.GetComponent<RotationOjects>();
 
+                if (door != null)
+                {
+                    if (InputManager.GetUse())
+                    {
+                        door.OnInteract();
+                    }
+                }
             }
             else
             {

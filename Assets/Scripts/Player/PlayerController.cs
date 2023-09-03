@@ -9,10 +9,10 @@ using UnityEngine;
 
 public class PlayerController : NetworkBehaviour
 {
-  [SyncVar]
-        public string playerName;
     [SyncVar]
-    private NetworkObject player;
+    public string playerName;
+
+    private FpsPlayer player;
     [SerializeField] private NetworkBehaviour PrefabPlayer;
     // Start is called before the first frame update
 
@@ -21,7 +21,7 @@ public class PlayerController : NetworkBehaviour
     {
         base.OnStartServer();
 
-          //playerName = (string)connectionToClient.authenticationData;
+        //playerName = (string)connectionToClient.authenticationData;
     }
     public override void OnStartClient()
     {
@@ -29,7 +29,7 @@ public class PlayerController : NetworkBehaviour
 
         if (base.IsOwner)
         {
-               ChatUI.localPlayerName = playerName;
+            ChatUI.localPlayerName = playerName;
             CmdSpawPlayer();
 
         }
@@ -41,8 +41,9 @@ public class PlayerController : NetworkBehaviour
     {
         PlayerSpawPoints playerspaw = GameController.Instance.PlayerSpawPoints;
         Vector3 novo = playerspaw.GetPointSpaw();
-      
-        NetworkBehaviour go = Instantiate(PrefabPlayer,novo,Quaternion.identity);
+
+        NetworkBehaviour go = Instantiate(PrefabPlayer, novo, Quaternion.identity);
+        player = go.GetComponent<FpsPlayer>();
         go.transform.SetParent(this.transform);
         base.Spawn(go.gameObject, sender);
 
@@ -53,7 +54,7 @@ public class PlayerController : NetworkBehaviour
     {
         player.transform.SetParent(this.transform);
     }
-    public NetworkObject GetPlayer()
+    public FpsPlayer GetPlayer()
     {
         return player;
     }

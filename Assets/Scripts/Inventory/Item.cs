@@ -102,7 +102,8 @@ namespace ApocalipseZ
         [ServerRpc(RequireOwnership = false)]
         public void CmdInteract(NetworkConnection sender = null)
         {
-            OnInteract(sender.FirstObject.GetComponent<FpsPlayer>());
+           PlayerController playerController =  sender.FirstObject.GetComponent<PlayerController>();
+            OnInteract(playerController.GetPlayer());
         }
 
         public void CmdInteract()

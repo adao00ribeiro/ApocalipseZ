@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Ramdom = UnityEngine.Random;
 namespace ApocalipseZ
@@ -21,7 +22,8 @@ namespace ApocalipseZ
 
         public GameObject GetPrefab()
         {
-            GameObject objeto = null;
+          
+            DataItem objeto = GameController.Instance.DataManager.GetDataItemWeapon();
             /*
             ScriptableItem[]items;
 
@@ -37,7 +39,7 @@ namespace ApocalipseZ
                     break;
             }
             */
-            return objeto;
+            return objeto.Prefab;
         }
 
     }

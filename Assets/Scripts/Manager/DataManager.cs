@@ -49,7 +49,21 @@ namespace ApocalipseZ
             }
             return temp;
         }
+          internal DataItem GetDataItemWeapon()
+        {
 
+            List<DataItem> listWeapons = new List<DataItem>();
+            foreach (DataItem item in ListItems)
+            {
+                if (item.Type == ItemType.weapon)
+                {
+                    listWeapons.Add(item);
+                }
+            }
+
+            
+            return listWeapons[Random.Range(0,listWeapons.Count-1)];
+        }
         internal DataItem GetDataItem(string Name)
         {
             DataItem temp = null;

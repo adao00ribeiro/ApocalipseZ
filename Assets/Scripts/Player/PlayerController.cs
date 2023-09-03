@@ -9,17 +9,27 @@ using UnityEngine;
 
 public class PlayerController : NetworkBehaviour
 {
-
+  [SyncVar]
+        public string playerName;
     [SyncVar]
     private NetworkObject player;
     [SerializeField] private NetworkBehaviour PrefabPlayer;
     // Start is called before the first frame update
+
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+
+          //playerName = (string)connectionToClient.authenticationData;
+    }
     public override void OnStartClient()
     {
         base.OnStartClient();
 
         if (base.IsOwner)
         {
+               ChatUI.localPlayerName = playerName;
             CmdSpawPlayer();
 
         }

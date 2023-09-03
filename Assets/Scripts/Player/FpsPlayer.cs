@@ -55,6 +55,7 @@ namespace ApocalipseZ
     [RequireComponent(typeof(WeaponManager))]
     public class FpsPlayer : NetworkBehaviour, IFpsPlayer
     {
+        
         Moviment Moviment;
         WeaponManager WeaponManager;
         IFastItemsManager FastItemsManager;
@@ -192,8 +193,9 @@ namespace ApocalipseZ
         public override void OnStartServer()
         {
             base.OnStartServer();
-
+            //playerName = (string)connectionToClient.authenticationData;
         }
+      
         public override void OnStartClient()
         {
             base.OnStartClient();

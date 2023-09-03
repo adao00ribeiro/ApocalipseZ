@@ -79,7 +79,7 @@ namespace ApocalipseZ
         [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(CharacterChanged))]
         public string CharacterName = "";
 
-
+        MoveData md = new();
         ReconcileData rd = new();
         //MoveData for client simulation
 
@@ -116,7 +116,6 @@ namespace ApocalipseZ
                 rd.Rotation = transform.rotation;
                 rd.VerticalVelocity = Moviment.PlayerVelocity.y;
                 rd.Grounded = Moviment.isGrounded();
-
                 Reconciliation(rd);
             }
 
@@ -163,7 +162,6 @@ namespace ApocalipseZ
             {
                 return default;
             }
-            MoveData md = new();
             md.Jump = InputManager.GetIsJump();
             md.Forward = InputManager.GetMoviment().y;
             md.Horizontal = InputManager.GetMoviment().x;

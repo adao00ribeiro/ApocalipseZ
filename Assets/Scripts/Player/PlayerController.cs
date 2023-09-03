@@ -4,11 +4,11 @@ using ApocalipseZ;
 using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerController : NetworkBehaviour
 {
-
 
     [SyncVar]
     private NetworkObject player;
@@ -30,10 +30,19 @@ public class PlayerController : NetworkBehaviour
     public void CmdSpawPlayer(NetworkConnection sender = null)
     {
         PlayerSpawPoints playerspaw = GameController.Instance.PlayerSpawPoints;
-        NetworkBehaviour go = Instantiate(PrefabPlayer, playerspaw.GetPointSpaw(), Quaternion.identity, transform);
+        Vector3 novo = playerspaw.GetPointSpaw();
+      
+        NetworkBehaviour go = Instantiate(PrefabPlayer,novo,Quaternion.identity);
+        go.transform.SetParent(this.transform);
         base.Spawn(go.gameObject, sender);
-    }
 
+
+    }
+    [ObserversRpc]
+    public void ObserverSpawPlayer(GameObject player)
+    {
+        player.transform.SetParent(this.transform);
+    }
     public NetworkObject GetPlayer()
     {
         return player;

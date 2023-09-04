@@ -55,6 +55,7 @@ namespace ApocalipseZ
     [RequireComponent(typeof(WeaponManager))]
     public class FpsPlayer : NetworkBehaviour, IFpsPlayer
     {
+        
         Moviment Moviment;
         WeaponManager WeaponManager;
         IFastItemsManager FastItemsManager;
@@ -71,7 +72,7 @@ namespace ApocalipseZ
         [SerializeField] private GameObject[] mesh;
         public Transform pivohead;
         public Light Lanterna;
-       [SerializeField] MeshRenderer meshteste;
+        [SerializeField] MeshRenderer meshteste;
 
         [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(PlayerColorChanged))]
         public Color32 playerColor = Color.white;
@@ -79,8 +80,8 @@ namespace ApocalipseZ
         [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(CharacterChanged))]
         public string CharacterName = "";
 
-
-            ReconcileData rd  = new ();
+        MoveData md = new();
+        ReconcileData rd = new();
         //MoveData for client simulation
 
         // Start is called before the first frame update
@@ -109,17 +110,16 @@ namespace ApocalipseZ
 
         private void TimeManager_OnPostTick()
         {
-               
+
             if (IsServer)
             {
-               rd.Position =  transform.position;
-               rd.Rotation = transform.rotation;
-               rd.VerticalVelocity = Moviment.PlayerVelocity.y; 
-               rd.Grounded = Moviment.isGrounded();
-               
-               Reconciliation(rd);
+                rd.Position = transform.position;
+                rd.Rotation = transform.rotation;
+                rd.VerticalVelocity = Moviment.PlayerVelocity.y;
+                rd.Grounded = Moviment.isGrounded();
+                Reconciliation(rd);
             }
-              
+
         }
         private void TimeManager_OnUpdate()
         {
@@ -163,7 +163,6 @@ namespace ApocalipseZ
             {
                 return default;
             }
-            MoveData md = new();
             md.Jump = InputManager.GetIsJump();
             md.Forward = InputManager.GetMoviment().y;
             md.Horizontal = InputManager.GetMoviment().x;
@@ -194,8 +193,9 @@ namespace ApocalipseZ
         public override void OnStartServer()
         {
             base.OnStartServer();
-
+            //playerName = (string)connectionToClient.authenticationData;
         }
+      
         public override void OnStartClient()
         {
             base.OnStartClient();
@@ -217,13 +217,13 @@ namespace ApocalipseZ
             CanvasFpsPlayer CanvasFpsPlayer = GameObject.FindObjectOfType<CanvasFpsPlayer>();
             CanvasFpsPlayer.SetFirtPersonCamera(FirstPersonCamera);
             CanvasFpsPlayer.SetPlayerStats(PlayerStats);
-          
+
             CmdSetupPlayer("player", color);
         }
-      [ServerRpc(RequireOwnership = false)]
+        [ServerRpc(RequireOwnership = false)]
         void CmdSpawCharacter(string nameCharacter)
         {
-           CharacterName = nameCharacter;
+            CharacterName = nameCharacter;
         }
 
         void SpawCharacter(string nameCharacter)
@@ -231,8 +231,8 @@ namespace ApocalipseZ
             DataCharacter cha = GameController.Instance.DataManager.GetDataCharacter(nameCharacter);
             if (cha)
             {
-              GameObject go =   Instantiate(cha.PrefabCharacter, transform.GetChild(0).transform);
-              meshteste = go.GetComponent<MeshRenderer>();
+                GameObject go = Instantiate(cha.PrefabCharacter, transform.GetChild(0).transform);
+                meshteste = go.GetComponent<MeshRenderer>();
             }
         }
         void PlayerColorChanged(Color32 _, Color32 newPlayerColor, bool asServer)
@@ -254,7 +254,7 @@ namespace ApocalipseZ
                 meshteste.material.color = newPlayerColor;
             }
         }
- void CharacterChanged(string _, string newPlayerColor, bool asServer)
+        void CharacterChanged(string _, string newPlayerColor, bool asServer)
         {
             /*
         for (int i = 0; i < mesh.Length; i++)
@@ -268,7 +268,7 @@ namespace ApocalipseZ
         }
         */
             SpawCharacter(newPlayerColor);
-          
+
         }
         [Server]
         public void DroppAllItems()

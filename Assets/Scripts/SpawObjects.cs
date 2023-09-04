@@ -5,6 +5,8 @@ using UnityEngine;
 using ApocalipseZ;
 using FishNet.Object;
 using FishNet.Broadcast;
+using FishNet;
+
 public struct SpawObjectTransform
 {
     public string guidid;
@@ -17,18 +19,21 @@ public struct ConnectMessage : IBroadcast
     public Vector3 scorePos;
     public int lives;
 }
-public class SpawObjects : NetworkBehaviour
+public class SpawObjects : MonoBehaviour
 {
+    private float timeSpaw;
     private void Start()
     {
-
+        if( InstanceFinder.IsClient){
+            Destroy(gameObject);
+            return;
+        }
         foreach (Transform item in transform)
         {
             PointItem point = item.gameObject.GetComponent<PointItem>();
-
+           
             GameController.Instance.TimerManager.Add(() =>
             {
-
                 Spawn(point.GetPrefab(), point.transform.position);
                 Destroy(point.gameObject);
             }, Random.Range(1, 20));
@@ -41,9 +46,8 @@ public class SpawObjects : NetworkBehaviour
             return;
         }
         GameObject treeGo = Instantiate(prefab, pointSpawn, Quaternion.identity);
-
         treeGo.GetComponent<Item>().IsServerSpaw = true;
-        base.Spawn(treeGo);
+        InstanceFinder.ServerManager.Spawn(treeGo);
 
     }
 

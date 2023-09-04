@@ -52,7 +52,7 @@ namespace ApocalipseZ
 
                 if (interact != null)
                 {
-
+                        print("interact");
                     // UiFpsScopeCursorReticles.EnableCursor ( );
                     // UiFpsScopeCursorReticles.SetUseText ( interact.GetTitle ( ) );
                     if (InputManager.GetUse())

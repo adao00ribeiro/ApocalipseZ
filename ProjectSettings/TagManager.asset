@@ -10,6 +10,7 @@ TagManager:
   - Target
   - Mob
   - noCollider
+  - SpawPlayer
   layers:
   - Default
   - TransparentFX

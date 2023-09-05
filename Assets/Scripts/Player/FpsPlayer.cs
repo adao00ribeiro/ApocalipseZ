@@ -55,7 +55,7 @@ namespace ApocalipseZ
     [RequireComponent(typeof(WeaponManager))]
     public class FpsPlayer : NetworkBehaviour, IFpsPlayer
     {
-        
+
         Moviment Moviment;
         WeaponManager WeaponManager;
         IFastItemsManager FastItemsManager;
@@ -195,7 +195,7 @@ namespace ApocalipseZ
             base.OnStartServer();
             //playerName = (string)connectionToClient.authenticationData;
         }
-      
+
         public override void OnStartClient()
         {
             base.OnStartClient();
@@ -279,7 +279,7 @@ namespace ApocalipseZ
         [ObserversRpc]
         public void TargetRespaw()
         {
-            transform.position = PlayerSpawPoints.Instance.GetPointSpaw();
+            transform.position = PlayerSpawPointsManager.Instance.GetPointSpaw();
             AnimatorController.Play("Walk");
             FirstPersonCamera.CameraAlive();
             Moviment.EnableCharacterController();

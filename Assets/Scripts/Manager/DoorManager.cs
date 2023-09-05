@@ -1,18 +1,14 @@
-using System.Collections;
 using System.Collections.Generic;
 using ApocalipseZ;
 using FishNet.Connection;
 using FishNet.Object;
-using FishNet.Object.Synchronizing;
-using FishNet.Transporting;
-using Unity.Mathematics;
 using UnityEngine;
+
 
 public class DoorManager : NetworkBehaviour
 {
 
     public RotationOjects[] ListDoor;
-    
 
     public override void OnStartNetwork()
     {
@@ -25,15 +21,20 @@ public class DoorManager : NetworkBehaviour
             ListDoor[i].guidid = i;
             ListDoor[i].SetDoorManager(this);
         }
-     
+
     }
 
+    public void GetDoorInScene()
+    {
+        ListDoor = null;
+        ListDoor = GameObject.FindObjectsByType<RotationOjects>(FindObjectsSortMode.None);
+    }
     public override void OnStartClient()
     {
         base.OnStartClient();
 
         CmdUpdateAllDoors();
-        
+
     }
     [ServerRpc(RequireOwnership = false)]
     public void CmdInteract(int id)
@@ -63,10 +64,10 @@ public class DoorManager : NetworkBehaviour
         }
     }
 
-   [ServerRpc(RequireOwnership = false)]
+    [ServerRpc(RequireOwnership = false)]
     public void CmdUpdateAllDoors(NetworkConnection conn = null)
     {
-        print("chamandoupdate"+ conn.ClientId);
+        print("chamandoupdate" + conn.ClientId);
         List<int> ListOpenDoor = new List<int>();
 
         foreach (var item in ListDoor)
@@ -87,6 +88,14 @@ public class DoorManager : NetworkBehaviour
         foreach (var item in ListOpenDoor)
         {
             ActionDoor(item);
+        }
+    }
+
+    private void OnGUI()
+    {
+        if (GUILayout.Button("Generate Nodes"))
+        {
+
         }
     }
 }

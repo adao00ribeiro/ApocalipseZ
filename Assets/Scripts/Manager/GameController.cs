@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using FishNet;
 using UnityEngine;
 
 namespace ApocalipseZ
@@ -8,14 +9,8 @@ namespace ApocalipseZ
     {
 
         [Header("Prefab Managers")]
-        [SerializeField] private DataManager PrefabDataManager;
-        [SerializeField] private SceneManager PrefabSceneManager;
-        [SerializeField] private InputManager PrefabInputManager;
-        [SerializeField] private SoundManager PrefabSoundManager;
-        [SerializeField] private TimerManager PrefabTimerManager;
-        [SerializeField] private HitFXManager PrefabHitFxManager;
-        [SerializeField] private DecalFxManager PrefabDecalFxManager;
-        [SerializeField] private PlayerSpawPoints PrefabPlayerSpawPoints;
+
+        [SerializeField] private GameObject[] ObjectsManager;
 
         //privados 
         GameObject SpawPoint;
@@ -28,7 +23,7 @@ namespace ApocalipseZ
         private TimerManager timerManager;
         private HitFXManager hitfxManager;
         private DecalFxManager decalfxManager;
-        private PlayerSpawPoints playerSpawPoints;
+        private PlayerSpawPointsManager playerSpawPoints;
         // Start is called before the first frame update
         void Awake()
         {
@@ -40,6 +35,7 @@ namespace ApocalipseZ
             {
                 _instance = this;
             }
+            ObjectsManager = Resources.LoadAll<GameObject>("Manager");
             InitManagers();
 
         }
@@ -47,17 +43,20 @@ namespace ApocalipseZ
         public void InitManagers()
         {
 
-            Instantiate(PrefabDataManager, transform);
-            Instantiate(PrefabInputManager, transform);
-            Instantiate(PrefabSoundManager, transform);
-            Instantiate(PrefabTimerManager, transform);
-            Instantiate(PrefabHitFxManager, transform);
-            Instantiate(PrefabDecalFxManager, transform);
-            Instantiate(PrefabPlayerSpawPoints, transform);
-
-            if (GameObject.FindObjectOfType<SceneManager>() == null)
+            foreach (var item in ObjectsManager)
             {
-                Instantiate(PrefabSceneManager);
+                if (item.GetComponent<SceneManager>())
+                {
+                    if (GameObject.FindObjectOfType<SceneManager>() == null)
+                    {
+                        Instantiate(item);
+                    }
+                }
+                else
+                {
+                    Instantiate(item, transform);
+                }
+
             }
 
         }
@@ -195,13 +194,13 @@ namespace ApocalipseZ
                 return decalfxManager;
             }
         }
-        public PlayerSpawPoints PlayerSpawPoints
+        public PlayerSpawPointsManager PlayerSpawPoints
         {
             get
             {
                 if (playerSpawPoints == null)
                 {
-                    playerSpawPoints = transform.GetComponentInChildren<PlayerSpawPoints>();
+                    playerSpawPoints = transform.GetComponentInChildren<PlayerSpawPointsManager>();
                 }
                 return playerSpawPoints;
             }

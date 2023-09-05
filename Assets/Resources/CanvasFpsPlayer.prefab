@@ -12149,6 +12149,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 730893679924098365, guid: fd7fa5357ceb9e8fd98626c5181d13bc,
         type: 3}
+      propertyPath: <PrefabId>k__BackingField
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 730893679924098365, guid: fd7fa5357ceb9e8fd98626c5181d13bc,
+        type: 3}
       propertyPath: SerializedTransformProperties.Position.x
       value: 960
       objectReference: {fileID: 0}
@@ -12370,7 +12375,7 @@ PrefabInstance:
     - target: {fileID: 6964561932844156838, guid: fd7fa5357ceb9e8fd98626c5181d13bc,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000015258789
+      value: -0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 8445724210885112618, guid: fd7fa5357ceb9e8fd98626c5181d13bc,
         type: 3}

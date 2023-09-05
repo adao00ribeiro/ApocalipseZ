@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
-public class PlayerSpawPoints : MonoBehaviour
+public class PlayerSpawPointsManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] SpawPoints;
-    private static PlayerSpawPoints _instance;
-    public static PlayerSpawPoints Instance
+    private static PlayerSpawPointsManager _instance;
+    public static PlayerSpawPointsManager Instance
     {
         get
         {

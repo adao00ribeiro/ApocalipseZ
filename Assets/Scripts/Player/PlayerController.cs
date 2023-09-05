@@ -39,7 +39,7 @@ public class PlayerController : NetworkBehaviour
     [ServerRpc]
     public void CmdSpawPlayer(NetworkConnection sender = null)
     {
-        PlayerSpawPoints playerspaw = GameController.Instance.PlayerSpawPoints;
+        PlayerSpawPointsManager playerspaw = GameController.Instance.PlayerSpawPoints;
         Vector3 novo = playerspaw.GetPointSpaw();
 
         NetworkBehaviour go = Instantiate(PrefabPlayer, novo, Quaternion.identity);

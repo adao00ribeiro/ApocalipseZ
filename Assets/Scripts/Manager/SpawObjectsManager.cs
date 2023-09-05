@@ -19,23 +19,24 @@ public struct ConnectMessage : IBroadcast
     public Vector3 scorePos;
     public int lives;
 }
-public class SpawObjects : MonoBehaviour
+public class SpawObjectsManager : MonoBehaviour
 {
     private float timeSpaw;
     private void Start()
     {
-        if( InstanceFinder.IsClient){
+        if (InstanceFinder.IsClient)
+        {
             Destroy(gameObject);
             return;
         }
-        foreach (Transform item in transform)
+        PointItem[] ListPointItems = GameObject.FindObjectsByType<PointItem>(FindObjectsSortMode.None);
+
+        foreach (var item in ListPointItems)
         {
-            PointItem point = item.gameObject.GetComponent<PointItem>();
-           
             GameController.Instance.TimerManager.Add(() =>
             {
-                Spawn(point.GetPrefab(), point.transform.position);
-                Destroy(point.gameObject);
+                Spawn(item.GetPrefab(), item.transform.position);
+                Destroy(item.gameObject);
             }, Random.Range(1, 20));
         }
     }

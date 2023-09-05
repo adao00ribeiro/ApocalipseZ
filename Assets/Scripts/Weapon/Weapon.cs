@@ -48,7 +48,7 @@ namespace ApocalipseZ
         [Header("Fire mode")]
         public FireMode fireMode;
 
-        [SerializeField]private Animator Animator;
+        [SerializeField] private Animator Animator;
         [SerializeField] private Sway sway;
         [SerializeField] private Recoil recoilComponent;
         [SerializeField] private AudioSource audioSource;
@@ -76,11 +76,11 @@ namespace ApocalipseZ
         {
             currentAmmo = newcurrent;
         }
-     private void OnValidate()
-    {
-        
-    }
- 
+        private void OnValidate()
+        {
+
+        }
+
         // Start is called before the first frame update
         void Start()
         {
@@ -90,7 +90,7 @@ namespace ApocalipseZ
             shotSFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.shotSFX).Audio;
             reloadSFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.reloadingSFX).Audio;
             emptySFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.emptySFX).Audio;
-            sway = transform.GetComponentInParent<Sway>();
+
             recoilComponent = GameObject.FindObjectOfType<Recoil>();
             audioSource = GetComponent<AudioSource>();
             if (GetComponentInChildren<Animator>())
@@ -99,7 +99,7 @@ namespace ApocalipseZ
             temp_MuzzleFlashParticlesFX = Instantiate(DataParticles.Particles, muzzleFlashTransform);
         }
         // Update is called once per frame
-        
+
 
         public bool Fire()
         {
@@ -114,7 +114,7 @@ namespace ApocalipseZ
                     muzzleFlashTransform.LookAt(Cam.transform.position + Cam.transform.forward * 3000);
                     SpawnProjectile(muzzleFlashTransform.position, muzzleFlashTransform.forward, 0f);
                     //calculatedDamage = Random.Range ( damageMin , damageMax );
-                    CmdFire(muzzleFlashTransform.position , muzzleFlashTransform.forward , base.TimeManager.Tick);
+                    CmdFire(muzzleFlashTransform.position, muzzleFlashTransform.forward, base.TimeManager.Tick);
                     // ProjectilesManager ( );
                     recoilComponent.AddRecoil(weaponSetting.recoil);
                     //Calculating when next fire call allowed
@@ -152,13 +152,13 @@ namespace ApocalipseZ
         }
         private void SpawnProjectile(Vector3 position, Vector3 direction, float passedTime)
         {
-                    BalisticProjectile go = Instantiate(PrefabProjectile, position, Quaternion.identity).GetComponent<BalisticProjectile>();
-                    go.Initialize(direction, passedTime);
+            BalisticProjectile go = Instantiate(PrefabProjectile, position, Quaternion.identity).GetComponent<BalisticProjectile>();
+            go.Initialize(direction, passedTime);
         }
         [ServerRpc(RequireOwnership = false)]
         private void CmdFire(Vector3 position, Vector3 direction, uint tick)
         {
-            
+
             /* You may want to validate position and direction here.
              * How this is done depends largely upon your game so it
              * won't be covered in this guide. */
@@ -272,13 +272,13 @@ namespace ApocalipseZ
             }
             if (setAim)
             {
-                sway.AmountX = sway.AmountX * 0.3f;
-                sway.AmountY = sway.AmountY * 0.3f;
+                Sway.AmountX = Sway.AmountX * 0.3f;
+                Sway.AmountY = Sway.AmountY * 0.3f;
             }
             else
             {
-                sway.AmountX = sway.startX;
-                sway.AmountY = sway.startY;
+                Sway.AmountX = Sway.startX;
+                Sway.AmountY = Sway.startY;
             }
 
 
@@ -306,7 +306,9 @@ namespace ApocalipseZ
         public void PlayFX()
         {
             if (useAnimator)
+            {
                 Animator.Play("Shot");
+            }
 
             temp_MuzzleFlashParticlesFX.time = 0;
             temp_MuzzleFlashParticlesFX.Play();
@@ -318,6 +320,20 @@ namespace ApocalipseZ
         public DataArmsWeapon GetScriptableWeapon()
         {
             return weaponSetting;
+        }
+
+
+        public Sway Sway
+        {
+            get
+            {
+                if (sway == null)
+                {
+                    sway = transform.GetComponentInParent<Sway>();
+                }
+                return sway;
+            }
+
         }
     }
 

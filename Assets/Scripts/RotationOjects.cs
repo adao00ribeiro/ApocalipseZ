@@ -13,7 +13,7 @@ namespace ApocalipseZ
     public class RotationOjects : MonoBehaviour
     {
         private DoorManager DoorManager;
-        public  int guidid ;
+        public int guidid;
         public string nameObject;
         public float speed;
         public bool IsOpen;
@@ -67,6 +67,7 @@ namespace ApocalipseZ
         public string GetTitle()
         {
             return nameObject;
+
         }
         public void SetDoorManager(DoorManager manager)
         {

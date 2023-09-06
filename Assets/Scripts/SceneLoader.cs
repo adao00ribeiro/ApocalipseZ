@@ -1,49 +1,83 @@
-using System.Collections;
-using System.Collections.Generic;
-using FishNet;
 using FishNet.Managing.Scened;
 using FishNet.Object;
-using Unity.VisualScripting;
+
 using UnityEngine;
 
-public class SceneLoader : MonoBehaviour
+public class SceneLoader : NetworkBehaviour
 {
-    public const string SCENE_NAME = "NewScene";
-
     private void OnTriggerEnter(Collider other)
     {
-
+        if (!base.IsServer)
+        {
+            return;
+        }
         PlayerController nob = other.GetComponentInParent<PlayerController>();
 
-        print(nob.gameObject.name);
+
         if (nob != null)
         {
             LoadScene(nob.NetworkObject);
         }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if (!base.IsServer)
+        {
+            return;
+        }
 
-    private void LoadScene(NetworkObject nob)
+        PlayerController nob = other.GetComponentInParent<PlayerController>();
+        if (nob != null)
+        {
+            UnloadScene(nob.NetworkObject);
+        }
+    }
+
+    public void LoadScene(NetworkObject nob)
     {
         if (!nob.Owner.IsActive)
         {
             return;
         }
-
         //SceneLoadData sld = new SceneLoadData(SCENE_NAME);
-        SceneLookupData lookup = new SceneLookupData(_stackedSceneHandle, SCENE_NAME);
-        SceneLoadData sld = new SceneLoadData(lookup);
-        sld.Options.AllowStacking = false;
-        sld.MovedNetworkObjects = new NetworkObject[] { nob };
-        sld.ReplaceScenes = ReplaceOption.None;
-        InstanceFinder.SceneManager.LoadGlobalScenes(sld);
-    }
+        SceneLookupData lookupData = new SceneLookupData(_stackedSceneHandle, gameObject.scene.name);
+        SceneLoadData sld = new SceneLoadData(lookupData)
+        {
+            Options = new LoadOptions()
+            {
+                AutomaticallyUnload = false,
+                AllowStacking = false,
+            },
+            MovedNetworkObjects = new NetworkObject[] { nob },
+            ReplaceScenes = ReplaceOption.None,
+            PreferredActiveScene = lookupData,
+        };
 
+        base.SceneManager.LoadConnectionScenes(nob.Owner, sld);
+    }
+    public void UnloadScene(NetworkObject nob)
+    {
+        SceneLookupData lookupData = new SceneLookupData(gameObject.scene.name);
+
+        SceneUnloadData sud = new SceneUnloadData(lookupData)
+        {
+            Options = new UnloadOptions()
+            {
+                Mode = UnloadOptions.ServerUnloadMode.KeepUnused
+            }
+        };
+
+        base.SceneManager.UnloadConnectionScenes(nob.Owner, sud);
+    }
     public bool SceneStack = false;
     private int _stackedSceneHandle = 0;
 
     private void Start()
     {
-        InstanceFinder.SceneManager.OnLoadEnd += SceneManager_OnLoadEnd;
+        if (base.SceneManager != null)
+        {
+            base.SceneManager.OnLoadEnd += SceneManager_OnLoadEnd;
+        }
     }
 
 

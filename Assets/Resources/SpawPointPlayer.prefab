@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 530042628798148604}
   - component: {fileID: 530042628798148605}
+  - component: {fileID: 1258999826171247245}
   m_Layer: 0
   m_Name: SpawPointPlayer
   m_TagString: SpawPlayer
@@ -50,3 +51,15 @@ MonoBehaviour:
   typeDraw: 0
   radius: 0
   size: {x: 2, y: 3, z: 2}
+--- !u!114 &1258999826171247245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 530042628798148579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6074845e633d89140827c597735f6ac9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

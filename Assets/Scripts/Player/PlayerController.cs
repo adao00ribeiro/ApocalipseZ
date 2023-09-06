@@ -11,16 +11,15 @@ public class PlayerController : NetworkBehaviour
 {
     [SyncVar]
     public string playerName;
-
     private FpsPlayer player;
     [SerializeField] private NetworkBehaviour PrefabPlayer;
     // Start is called before the first frame update
-
-
+    public string currentSCENE_NAME;
+    public string anteriorSCENE_NAME;
     public override void OnStartServer()
     {
         base.OnStartServer();
-
+        currentSCENE_NAME = this.gameObject.scene.name;
         //playerName = (string)connectionToClient.authenticationData;
     }
     public override void OnStartClient()
@@ -36,18 +35,17 @@ public class PlayerController : NetworkBehaviour
 
     }
 
+
+
     [ServerRpc]
     public void CmdSpawPlayer(NetworkConnection sender = null)
     {
         PlayerSpawPointsManager playerspaw = GameController.Instance.PlayerSpawPoints;
         Vector3 novo = playerspaw.GetPointSpaw();
-
         NetworkBehaviour go = Instantiate(PrefabPlayer, novo, Quaternion.identity);
         player = go.GetComponent<FpsPlayer>();
         go.transform.SetParent(this.transform);
         base.Spawn(go.gameObject, sender);
-
-
     }
     [ObserversRpc]
     public void ObserverSpawPlayer(GameObject player)

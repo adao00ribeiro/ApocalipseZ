@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using FishNet.Object;
 using ApocalipseZ;
+using GameKit.Utilities.Types;
+using FishNet.Managing;
 public class LobbyManager : MonoBehaviour
 {
-    public Transform pointSpaw;
+    /// <summary>
+
     public GameObject model;
 
     public void SpawCharacter(string nameCharacter)
@@ -17,7 +20,9 @@ public class LobbyManager : MonoBehaviour
         DataCharacter cha = GameController.Instance.DataManager.GetDataCharacter(nameCharacter);
         if (cha)
         {
-            model = Instantiate(cha.PrefabCharacter, pointSpaw);
+
+            model = Instantiate(cha.PrefabCharacter);
+            model.transform.position = GameController.Instance.PlayerSpawPoints.GetPointSpaw();
         }
     }
 

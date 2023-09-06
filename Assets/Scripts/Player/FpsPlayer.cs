@@ -279,7 +279,7 @@ namespace ApocalipseZ
         [ObserversRpc]
         public void TargetRespaw()
         {
-            transform.position = PlayerSpawPointsManager.Instance.GetPointSpaw();
+            //transform.position = Game.Instance.GetPointSpaw();
             AnimatorController.Play("Walk");
             FirstPersonCamera.CameraAlive();
             Moviment.EnableCharacterController();

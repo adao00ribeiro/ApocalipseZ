@@ -7,38 +7,23 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/Lobby.unity
-    guid: 797e14ada70e53b468fdcde43f9f6f8b
+    guid: a9c894d8706d3e340ba40b5e93ca1008
   - enabled: 1
-    path: Assets/Scenes/teste.unity
+    path: Assets/Scenes/CenaT0.unity
     guid: 712e49dc29495534da62f66a4719ab7c
   - enabled: 1
-    path: Assets/Scenes/NewScene.unity
+    path: Assets/Scenes/CenaT1.unity
     guid: e781868eb9e2e634fbd85da407c643cc
   - enabled: 1
-    path: Assets/Scenes/Cena3.unity
+    path: Assets/Scenes/CenaT2.unity
     guid: e29e9ca8f42509549a451287de2ea758
   - enabled: 1
-    path: Assets/FishNet/Demos/SceneManager/Additive Scenes/Scenes/AdditiveScenes_0.unity
-    guid: 7643cdc3eefb15f4f8608cc633c55f7e
+    path: Assets/Scenes/CenaT3.unity
+    guid: 1d427a44dcd275946bec80e3886ccbee
   - enabled: 1
-    path: Assets/FishNet/Demos/SceneManager/Additive Scenes/Scenes/AdditiveScenes_1.unity
-    guid: aab2581cdfbe8f44698ef91d36f2d6c6
+    path: Assets/Scenes/CenaT4.unity
+    guid: b23e6ac03714b2b40aaead7fd0dee177
   - enabled: 1
-    path: Assets/FishNet/Demos/SceneManager/Additive Scenes/Scenes/AdditiveScenes_2.unity
-    guid: 969cc8a8a67c58b4da9baa82a65c66bf
-  - enabled: 1
-    path: Assets/FishNet/Demos/SceneManager/Additive Scenes/Scenes/AdditiveScenes_3.unity
-    guid: 8ac819f926d1e914e9552e79c147082d
-  - enabled: 1
-    path: Assets/FishNet/Demos/SceneManager/Additive Scenes/Scenes/AdditiveScenes_Start.unity
-    guid: afbcf8f41ca78ef4296672aeb824f605
-  - enabled: 1
-    path: Assets/FishNet/Demos/SceneManager (Old Examples)/Scenes/Additive/AdditiveConnection.unity
-    guid: cc489be8bb6ae444283f394c5e5fa8e2
-  - enabled: 1
-    path: Assets/FishNet/Demos/SceneManager (Old Examples)/Scenes/Additive/AdditiveGlobal.unity
-    guid: c43835f124dc68747a2091c4b8c42f80
-  - enabled: 1
-    path: Assets/FishNet/Demos/SceneManager (Old Examples)/Scenes/Additive/AdditiveMain.unity
-    guid: e7d3ac2d556912042aca9aa1947aea07
+    path: Assets/Scenes/CenaC.unity
+    guid: 2d710ddacb1d7ff41bd2344691ce54a6
   m_configObjects: {}

@@ -13574,7 +13574,7 @@ MonoBehaviour:
   _enableGlobalScenes: 1
   _startInOffline: 1
   _offlineScene: Assets/Scenes/Lobby.unity
-  _onlineScene: Assets/Scenes/teste.unity
+  _onlineScene: Assets/Scenes/CenaT0.unity
   _replaceScenes: 0
 --- !u!114 &2106290739
 MonoBehaviour:

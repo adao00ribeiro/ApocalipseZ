@@ -14,6 +14,7 @@ public class NewBehaviourScript : MonoBehaviour
     public void OnEnable()
     {
         InstanceFinder.SceneManager.OnLoadEnd += RegisterScenes;
+        
     }
     public void RegisterScenes(SceneLoadEndEventArgs args)
     {
@@ -25,6 +26,8 @@ public class NewBehaviourScript : MonoBehaviour
         {
             ScenesLoaded.Add(scene);
         }
+      
+
     }
     public void OnDisable()
     {

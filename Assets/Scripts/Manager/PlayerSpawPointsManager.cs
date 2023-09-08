@@ -5,35 +5,22 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 public class PlayerSpawPointsManager : MonoBehaviour
 {
-    [SerializeField] private GameObject[] SpawPoints;
-    private static PlayerSpawPointsManager _instance;
-    public static PlayerSpawPointsManager Instance
-    {
-        get
-        {
-            return _instance;
-        }
-    }
+    [SerializeField] private List<GameObject> SpawPoints = new List<GameObject>();
 
     // Start is called before the first frame update
-    void Start()
-    {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            _instance = this;
-        }
-        SpawPoints = GameObject.FindGameObjectsWithTag("SpawPlayer");
-
-
-    }
 
     internal Vector3 GetPointSpaw()
     {
-        GameObject point = SpawPoints[Random.Range(0, SpawPoints.Length - 1)];
+        GameObject point = SpawPoints[Random.Range(0, SpawPoints.Count - 1)];
         return point.transform.position;
+    }
+
+    internal void Add(GameObject gameObject)
+    {
+        SpawPoints.Add(gameObject);
+    }
+    internal void Remove(GameObject gameObject)
+    {
+        SpawPoints.Remove(gameObject);
     }
 }

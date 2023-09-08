@@ -53,7 +53,7 @@ namespace ApocalipseZ
             {
                 if (PInputManager == null)
                 {
-                    PInputManager = InputManager.Instance;
+                    PInputManager = GameController.Instance.InputManager;
                 }
                 return PInputManager;
             }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.1273174, g: 0.13414761, b: 0.12107885, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -259,10 +259,10 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 2134535186}
   _networkObjectCache: {fileID: 2134535186}
   _scenes:
-  - Assets/FishNet/Demos/Additive Scenes/Scenes/AdditiveScenes_0.unity
-  - Assets/FishNet/Demos/Additive Scenes/Scenes/AdditiveScenes_1.unity
-  - Assets/FishNet/Demos/Additive Scenes/Scenes/AdditiveScenes_2.unity
-  - Assets/FishNet/Demos/Additive Scenes/Scenes/AdditiveScenes_3.unity
+  - Assets/FishNet/Demos/SceneManager/Additive Scenes/Scenes/AdditiveScenes_0.unity
+  - Assets/FishNet/Demos/SceneManager/Additive Scenes/Scenes/AdditiveScenes_1.unity
+  - Assets/FishNet/Demos/SceneManager/Additive Scenes/Scenes/AdditiveScenes_2.unity
+  - Assets/FishNet/Demos/SceneManager/Additive Scenes/Scenes/AdditiveScenes_3.unity
 --- !u!4 &2134535188
 Transform:
   m_ObjectHideFlags: 0
@@ -811,7 +811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerPrefab: {fileID: 8192566354860284824, guid: 6331b3542e64a564c81bc39cedf70c8d,
     type: 3}
-  _addToDefaultScene: 0
+  _addToDefaultScene: 1
   Spawns: []
 --- !u!114 &7443408887457311804
 MonoBehaviour:
@@ -831,7 +831,7 @@ MonoBehaviour:
   _objectPool: {fileID: 0}
   _persistence: 0
   _logging: {fileID: 0}
-  _spawnablePrefabs: {fileID: 11400000, guid: 3a54436bdb916194f99da0d17231e617, type: 2}
+  _spawnablePrefabs: {fileID: 11400000, guid: 331b6b7d899fa2a46b503f27a8c2ea55, type: 2}
 --- !u!1 &7443408887457311805
 GameObject:
   m_ObjectHideFlags: 0
@@ -844,6 +844,7 @@ GameObject:
   - component: {fileID: 7443408887457311804}
   - component: {fileID: 1565068570}
   - component: {fileID: 7443408887457311794}
+  - component: {fileID: 7443408887457311808}
   m_Layer: 0
   m_Name: NetworkManager
   m_TagString: Untagged
@@ -867,6 +868,25 @@ Transform:
   - {fileID: 4393252311304163330}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7443408887457311808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7443408887457311805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f48f002b825cbd45a19bd96d90f9edb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _unreliableMTU: 1023
+  _ipv4BindAddress: 
+  _ipv6BindAddress: 
+  _port: 7770
+  _maximumClients: 4095
+  _clientAddress: localhost
+  _timeout: 15
 --- !u!224 &9139860296387939653
 RectTransform:
   m_ObjectHideFlags: 0

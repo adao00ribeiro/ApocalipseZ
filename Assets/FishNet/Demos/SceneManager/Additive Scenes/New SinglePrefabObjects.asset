@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c3e28fa2e37d1d41b4f63c8a0cc2553, type: 3}
-  m_Name: DistanceCondition
+  m_Script: {fileID: 11500000, guid: 4489d77032a81ef42b0067acf2737d4d, type: 3}
+  m_Name: New SinglePrefabObjects
   m_EditorClassIdentifier: 
-  NetworkObject: {fileID: 0}
-  _maximumDistance: 30
-  _hideDistancePercent: 0.057
-  UpdateFrequency: 0
+  _prefabs:
+  - {fileID: 8192566354860284824, guid: 6331b3542e64a564c81bc39cedf70c8d, type: 3}

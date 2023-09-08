@@ -32,7 +32,7 @@ namespace ApocalipseZ
             {
                 if (PInputManager == null)
                 {
-                    PInputManager = InputManager.Instance;
+                    PInputManager = GameController.Instance.InputManager;
                 }
                 return PInputManager;
             }
@@ -52,7 +52,7 @@ namespace ApocalipseZ
 
                 if (interact != null)
                 {
-                        print("interact");
+                    print("interact");
                     // UiFpsScopeCursorReticles.EnableCursor ( );
                     // UiFpsScopeCursorReticles.SetUseText ( interact.GetTitle ( ) );
                     if (InputManager.GetUse())

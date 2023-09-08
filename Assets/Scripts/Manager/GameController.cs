@@ -11,11 +11,10 @@ namespace ApocalipseZ
         [Header("Prefab Managers")]
 
         [SerializeField] private GameObject[] ObjectsManager;
-
         //privados 
         GameObject SpawPoint;
         private FpsPlayer fpsPlayer;
-        private CanvasFpsPlayer canvasFpsPlayer;
+       [SerializeField] private CanvasFpsPlayer canvasFpsPlayer;
         private DataManager dataManager;
         private SceneManager _sceneManager;
         private InputManager Input;
@@ -37,7 +36,7 @@ namespace ApocalipseZ
             }
             ObjectsManager = Resources.LoadAll<GameObject>("Manager");
             InitManagers();
-
+            DontDestroyOnLoad(this);
         }
 
         public void InitManagers()

@@ -38,7 +38,7 @@ public class SceneLoader : NetworkBehaviour
         PlayerController nob = other.GetComponentInParent<PlayerController>();
         if (nob != null)
         {
-           // UnloadScene(nob.NetworkObject);
+            // UnloadScene(nob.NetworkObject);
         }
     }
 
@@ -76,6 +76,7 @@ public class SceneLoader : NetworkBehaviour
     public void UnloadScene(NetworkObject nob)
     {
         List<string> removeScenes = new List<string>();
+
         foreach (var pair in SceneManager.SceneConnections)
         {
             removeScenes.Add(pair.Key.name);
@@ -83,25 +84,26 @@ public class SceneLoader : NetworkBehaviour
         removeScenes.Remove("CenaC");
         List<string> ListScenes = ArrayScenes.ToList();
         List<string> filteredScenes = new List<string>();
-       ListScenes.Add(gameObject.scene.name);
+        ListScenes.Add(gameObject.scene.name);
         foreach (var item in removeScenes)
         {
             if (!ListScenes.Contains(item))
             {
-               filteredScenes.Add(item);
+                filteredScenes.Add(item);
             }
-        }   
+        }
         foreach (var pair in filteredScenes)
         {
             print(pair);
         }
-        if(filteredScenes.Count ==0 ){
+        if (filteredScenes.Count == 0)
+        {
             return;
         }
         List<SceneLookupData> ListSceneLook = new List<SceneLookupData>();
         foreach (var item in filteredScenes)
         {
-           print(item);
+            print(item);
             SceneLookupData lookupData = new SceneLookupData(_stackedSceneHandle, item);
             ListSceneLook.Add(lookupData);
         }
@@ -114,7 +116,7 @@ public class SceneLoader : NetworkBehaviour
             }
         };
 
-        base.SceneManager.UnloadConnectionScenes(nob.Owner , sud);
+        base.SceneManager.UnloadConnectionScenes(nob.Owner, sud);
     }
     public bool SceneStack = false;
     private int _stackedSceneHandle = 0;

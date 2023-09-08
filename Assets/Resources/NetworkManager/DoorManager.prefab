@@ -48,7 +48,10 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 7705054665673940359}
   _networkObjectCache: {fileID: 7705054665673940359}
-  ListDoor: []
+  ListDoor:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &7705054665673940359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,8 +100,8 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 22
+  <PrefabId>k__BackingField: 26
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 1772421895
+  _scenePathHash: 1211793723
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 14190617545456769213

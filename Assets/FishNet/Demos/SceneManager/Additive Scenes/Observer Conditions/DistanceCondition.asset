@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NetworkObject: {fileID: 0}
   _maximumDistance: 30
-  _hideDistancePercent: 0
+  _hideDistancePercent: 0.057
   UpdateFrequency: 0

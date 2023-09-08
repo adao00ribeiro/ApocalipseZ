@@ -35,8 +35,6 @@ public class PlayerController : NetworkBehaviour
 
     }
 
-
-
     [ServerRpc]
     public void CmdSpawPlayer(NetworkConnection sender = null)
     {
@@ -46,11 +44,17 @@ public class PlayerController : NetworkBehaviour
         player = go.GetComponent<FpsPlayer>();
         go.transform.SetParent(this.transform);
         base.Spawn(go.gameObject, sender);
+        ObserverSpawPlayer(go.gameObject);
     }
     [ObserversRpc]
     public void ObserverSpawPlayer(GameObject player)
     {
         player.transform.SetParent(this.transform);
+
+        if (base.IsOwner)
+        {
+            GameController.Instance.CanvasFpsPlayer.gameObject.transform.SetParent(player.transform);
+        }
     }
     public FpsPlayer GetPlayer()
     {

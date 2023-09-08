@@ -14,7 +14,7 @@ namespace ApocalipseZ
         //privados 
         GameObject SpawPoint;
         private FpsPlayer fpsPlayer;
-        private CanvasFpsPlayer canvasFpsPlayer;
+       [SerializeField] private CanvasFpsPlayer canvasFpsPlayer;
         private DataManager dataManager;
         private SceneManager _sceneManager;
         private InputManager Input;

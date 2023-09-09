@@ -12,7 +12,7 @@ public class SceneLoader : NetworkBehaviour
 {
     [SerializeField, Scene]
     public string[] ArrayScenes;
-    
+
     List<NetworkConnection> ListConns = new List<NetworkConnection>();
     private void OnTriggerEnter(Collider other)
     {
@@ -163,14 +163,104 @@ public class SceneLoader : NetworkBehaviour
     }
 
 
-    
-    public Object[] ScenesTeSTES;
 
+
+    public string[,] sceneMatrix = new string[10, 8];
     public void GetScene()
     {
-      ScenesTeSTES = Resources.LoadAll<Object>("SceneTchanks");
 
-        Object[,] matrix = new Object[8,10];
 
+        int rowIndex = 0;
+        int colIndex = 0;
+        // Adicione as cenas do arquivo de configuração de build à lista
+        for (int i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings; i++)
+        {
+            string scenePath = SceneUtility.GetScenePathByBuildIndex(i);
+            string sceneName = System.IO.Path.GetFileNameWithoutExtension(scenePath);
+
+            // Verifique se o nome da cena contém "Assets/Scenes/Tchanks"
+            if (scenePath.Contains("Assets/Scenes/Tchanks"))
+            {
+                // Adicione o nome da cena à matriz
+                sceneMatrix[rowIndex, colIndex] = sceneName;
+
+                // Avance para a próxima coluna
+                colIndex++;
+
+                // Se atingir a última coluna, vá para a próxima linha
+                if (colIndex >= 8)
+                {
+                    colIndex = 0;
+                    rowIndex++;
+
+                    // Se atingir a última linha, saia do loop
+                    if (rowIndex >= 10)
+                    {
+                        break;
+                    }
+                }
+            }
+        }
+        for (int row = 0; row < 10; row++)
+        {
+            for (int col = 0; col < 8; col++)
+            {
+                string sceneName = sceneMatrix[row, col];
+                if (!string.IsNullOrEmpty(sceneName))
+                {
+                    //  Debug.Log("Scene name at [" + row + "," + col + "]: " + sceneName);
+                }
+            }
+        }
+
+        for (int row = 0; row < 10; row++)
+        {
+            for (int col = 0; col < 8; col++)
+            {
+
+                if (sceneMatrix[row, col] == gameObject.scene.name)
+                {
+
+                    ArrayScenes = ElementosAoRedor(sceneMatrix, row, col);
+                    break;
+                }
+            }
+        }
+
+
+
+        //ScenesTeSTES = Resources.LoadAll<Object>("SceneTchanks");
+
+        //Object[,] matrix = new Object[8,10];
+
+    }
+
+
+    string[] ElementosAoRedor(string[,] matriz, int linha, int coluna)
+    {
+        int linhas = matriz.GetLength(0);
+        int colunas = matriz.GetLength(1);
+        List<string> elementos = new List<string>();
+
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                int novaLinha = linha + i;
+                int novaColuna = coluna + j;
+
+                // Verifique se a nova linha e a nova coluna estão dentro dos limites da matriz
+                if (novaLinha >= 0 && novaLinha < linhas && novaColuna >= 0 && novaColuna < colunas)
+                {
+                    if (matriz[linha, coluna] != matriz[novaLinha, novaColuna])
+                    {
+                        elementos.Add(matriz[novaLinha, novaColuna]);
+                    }
+
+                }
+            }
+        }
+
+        return elementos.ToArray();
     }
 }

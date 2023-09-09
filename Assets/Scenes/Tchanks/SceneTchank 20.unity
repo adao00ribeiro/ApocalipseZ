@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731715, g: 0.13414735, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.1273174, g: 0.13414761, b: 0.12107885, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -397,8 +397,8 @@ MonoBehaviour:
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 0
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 4250450449
-  <SceneId>k__BackingField: 18255545674327189311
+  _scenePathHash: 457446674
+  <SceneId>k__BackingField: 1964718507261380502
   <AssetPathHash>k__BackingField: 0
 --- !u!114 &1878948053
 MonoBehaviour:
@@ -416,7 +416,14 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 1878948052}
   _networkObjectCache: {fileID: 1878948052}
   ArrayScenes:
-  - Assets/Scenes/Tchanks/SceneTchank 2.unity
+  - Assets/Scenes/Tchanks/SceneTchank 11.unity
+  - Assets/Scenes/Tchanks/SceneTchank 12.unity
+  - Assets/Scenes/Tchanks/SceneTchank 13.unity
+  - Assets/Scenes/Tchanks/SceneTchank 19.unity
+  - Assets/Scenes/Tchanks/SceneTchank 21.unity
+  - Assets/Scenes/Tchanks/SceneTchank 27.unity
+  - Assets/Scenes/Tchanks/SceneTchank 28.unity
+  - Assets/Scenes/Tchanks/SceneTchank 29.unity
   SceneStack: 0
 --- !u!65 &1878948054
 BoxCollider:

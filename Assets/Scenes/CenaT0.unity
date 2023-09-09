@@ -39,7 +39,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2090296540}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -245,9 +245,9 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 108531235}
   _networkObjectCache: {fileID: 108531235}
   ArrayScenes:
-  - CenaT1
-  - CenaT2
-  - CenaT3
+  - Assets/Scenes/CenaT1.unity
+  - Assets/Scenes/CenaT2.unity
+  - Assets/Scenes/CenaT3.unity
   SceneStack: 0
 --- !u!65 &108531231
 BoxCollider:
@@ -884,9 +884,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 0
   _addedNetworkObject: {fileID: 1432192944}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 1432192944}
   _componentConfiguration: 0
   _synchronizeParent: 0
   _packing:
@@ -952,7 +952,8 @@ MonoBehaviour:
     InterpolationIncreaseStep: 2
   <ComponentIndex>k__BackingField: 0
   <PredictedSpawn>k__BackingField: {fileID: 0}
-  _networkBehaviours: []
+  _networkBehaviours:
+  - {fileID: 1432192943}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   SerializedTransformProperties:

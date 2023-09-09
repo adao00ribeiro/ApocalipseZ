@@ -1,5 +1,10 @@
 fileFormatVersion: 2
-guid: 319cb33f625f0c7428a5fff596c104e5
+<<<<<<<< Updated upstream:Assets/Sprites/MenuLogin/IconeApocalipseZ.ico.meta
+guid: 32fcd6ae818f9104ebfb9bc84a449320
+========
+guid: e9ac448c74f369b4caaa0cb7d2889669
+folderAsset: yes
+>>>>>>>> Stashed changes:Assets/1 Models.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

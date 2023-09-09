@@ -264,7 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e94bab5fad56a28419e6f025ba93db37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Walk: 3
+  Walk: 25
   Run: 5
   crouchSpeed: 1
   jumpSpeed: 1
@@ -455,7 +455,6 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 30
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0

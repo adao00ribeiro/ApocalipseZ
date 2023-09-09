@@ -1,5 +1,9 @@
 fileFormatVersion: 2
-guid: db37d6d540566a74086f9e4f1aaaa9b5
+<<<<<<<< Updated upstream:Assets/Sprites/MenuLogin/Icone-Apocalipse-Z.ico.meta
+guid: d9c5b0899a60a424d88073af10966093
+========
+guid: 9fc0d4010bbf28b4594072e72b8655ab
+>>>>>>>> Stashed changes:Assets/Scenes/Mapa Apocalipse Z.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

@@ -58,7 +58,7 @@ namespace ApocalipseZ
         }
         public void GravityJumpUpdate(bool IsJump, float delta)
         {
-            CheckGround();
+           CheckGround();
           
            if( IsGrounded){
       

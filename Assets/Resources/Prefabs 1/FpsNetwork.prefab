@@ -275,7 +275,7 @@ MonoBehaviour:
   GroundedOffset: -0.14
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 65
 --- !u!114 &7433572165634752114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,7 +455,6 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 31
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0

@@ -62,7 +62,6 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 5475215427857851610}
   _networkObjectCache: {fileID: 5475215427857851610}
-  playerName: PlayerName
   Inventory: {fileID: 0}
   FirstPersonCamera: {fileID: 0}
   isClimbing: 1
@@ -265,7 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e94bab5fad56a28419e6f025ba93db37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Walk: 3
+  Walk: 25
   Run: 5
   crouchSpeed: 1
   jumpSpeed: 1
@@ -411,12 +410,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 30
-  <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 0
-  <SceneId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 16206840360572392962
   <IsNested>k__BackingField: 0
   _enablePrediction: 1
   _predictionType: 0
@@ -461,6 +454,12 @@ MonoBehaviour:
   _isGlobal: 0
   _initializeOrder: 0
   _defaultDespawnType: 0
+  NetworkObserver: {fileID: 0}
+  <PrefabId>k__BackingField: 31
+  <SpawnableCollectionId>k__BackingField: 0
+  _scenePathHash: 0
+  <SceneId>k__BackingField: 0
+  <AssetPathHash>k__BackingField: 16206840360572392962
 --- !u!114 &6955809048429089047
 MonoBehaviour:
   m_ObjectHideFlags: 0

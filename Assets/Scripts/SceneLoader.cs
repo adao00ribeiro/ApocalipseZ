@@ -1,18 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
-using FishNet;
 using FishNet.Connection;
 using FishNet.Managing.Scened;
 using FishNet.Object;
-using FishNet.Utility.Extension;
-using Unity.VisualScripting;
 using UnityEngine;
-
+using GameKit.Utilities.Types;
 
 public class SceneLoader : NetworkBehaviour
 {
-
+    [SerializeField, Scene]
     public string[] ArrayScenes;
+    
     List<NetworkConnection> ListConns = new List<NetworkConnection>();
     private void OnTriggerEnter(Collider other)
     {

@@ -5,6 +5,8 @@ using FishNet.Managing.Scened;
 using FishNet.Object;
 using UnityEngine;
 using GameKit.Utilities.Types;
+using UnityEngine.SceneManagement;
+
 
 public class SceneLoader : NetworkBehaviour
 {
@@ -160,4 +162,15 @@ public class SceneLoader : NetworkBehaviour
         }
     }
 
+
+    
+    public Object[] ScenesTeSTES;
+
+    public void GetScene()
+    {
+      ScenesTeSTES = Resources.LoadAll<Object>("SceneTchanks");
+
+        Object[,] matrix = new Object[8,10];
+
+    }
 }

@@ -27,12 +27,12 @@ EditorBuildSettings:
     path: Assets/Scenes/CenaT4.unity
     guid: b23e6ac03714b2b40aaead7fd0dee177
   - enabled: 1
-    path: Assets/Scenes/Tchanks/SceneTchank 1.unity
+    path: Assets/Resources/SceneTchanks/SceneTchank 1.unity
     guid: 8f9bbbc4de403b847828ca63429db9c2
   - enabled: 1
-    path: Assets/Scenes/Tchanks/SceneTchank 2.unity
+    path: Assets/Resources/SceneTchanks/SceneTchank 2.unity
     guid: 80b2d3784145a814e86ab353037c2032
   - enabled: 1
-    path: Assets/Scenes/Tchanks/SceneTchank 3.unity
+    path: Assets/Resources/SceneTchanks/SceneTchank 3.unity
     guid: a56006c48bff3d943ba0a99ff281bc87
   m_configObjects: {}

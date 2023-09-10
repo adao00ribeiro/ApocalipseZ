@@ -6,9 +6,10 @@ using FishNet.Object;
 using UnityEngine;
 using GameKit.Utilities.Types;
 using UnityEngine.SceneManagement;
+using FishNet;
 
 
-public class SceneLoader : NetworkBehaviour
+public class SceneLoader : MonoBehaviour
 {
     [SerializeField, Scene]
     public string[] ArrayScenes;
@@ -20,12 +21,16 @@ public class SceneLoader : NetworkBehaviour
      public string[,] sceneMatrix = new string[10, 8];
     private void Start()
     {
+        if(InstanceFinder.NetworkManager.IsClient){
+            Destroy(gameObject);
+            return;
+        }
          GetScene();
-        if (base.SceneManager != null)
+        if (InstanceFinder.SceneManager != null)
         {
-            base.SceneManager.OnLoadEnd += SceneManager_OnLoadEnd;
-            base.SceneManager.OnClientPresenceChangeStart += SceneManager_OnClientPresenceChangeStart;
-            base.SceneManager.OnClientPresenceChangeEnd += SceneManager_OnClientPresenceChangeEnd;
+            InstanceFinder.SceneManager.OnLoadEnd += SceneManager_OnLoadEnd;
+            InstanceFinder.SceneManager.OnClientPresenceChangeStart += SceneManager_OnClientPresenceChangeStart;
+            InstanceFinder.SceneManager.OnClientPresenceChangeEnd += SceneManager_OnClientPresenceChangeEnd;
         }
     }
    
@@ -66,7 +71,7 @@ public class SceneLoader : NetworkBehaviour
         {
             return;
         }
-        UnloadScene(nob);
+         UnloadScene(nob);
         List<SceneLookupData> ListSceneLook = new List<SceneLookupData>();
         ListSceneLook.Add(new SceneLookupData(_stackedSceneHandle, "CenaC"));
         ListSceneLook.Add(new SceneLookupData(_stackedSceneHandle, gameObject.scene.name));
@@ -88,14 +93,14 @@ public class SceneLoader : NetworkBehaviour
             ReplaceScenes = ReplaceOption.None,
             PreferredActiveScene = ListSceneLook.ToArray()[0],
         };
-        base.SceneManager.LoadConnectionScenes(nob.Owner, sld);
+        InstanceFinder.SceneManager.LoadConnectionScenes(nob.Owner, sld);
 
     }
     public void UnloadScene(NetworkObject nob)
     {
         List<string> removeScenes = new List<string>();
 
-        foreach (var pair in SceneManager.SceneConnections)
+        foreach (var pair in   InstanceFinder.SceneManager.SceneConnections)
         {
             removeScenes.Add(pair.Key.name);
         }
@@ -130,11 +135,11 @@ public class SceneLoader : NetworkBehaviour
         {
             Options = new UnloadOptions()
             {
-                Mode = UnloadOptions.ServerUnloadMode.KeepUnused
+                Mode = UnloadOptions.ServerUnloadMode.UnloadUnused
             }
         };
 
-        base.SceneManager.UnloadConnectionScenes(nob.Owner, sud);
+        InstanceFinder.SceneManager.UnloadConnectionScenes(nob.Owner, sud);
     }
 
 
@@ -238,7 +243,7 @@ public class SceneLoader : NetworkBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (!base.IsServer)
+        if (!InstanceFinder.NetworkManager.IsServer)
         {
             return;
         }
@@ -252,7 +257,7 @@ public class SceneLoader : NetworkBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (!base.IsServer)
+        if (!InstanceFinder.NetworkManager.IsServer)
         {
             return;
         }

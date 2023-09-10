@@ -11,7 +11,7 @@ public class PlayerSpawPointsManager : MonoBehaviour
 
     internal Vector3 GetPointSpaw()
     {
-        GameObject point = SpawPoints[Random.Range(0, SpawPoints.Count - 1)];
+        GameObject point = SpawPoints[Random.Range(0, SpawPoints.Count )];
         return point.transform.position;
     }
 

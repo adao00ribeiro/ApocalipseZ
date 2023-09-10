@@ -6,39 +6,62 @@ using FishNet.Object;
 using UnityEngine;
 using GameKit.Utilities.Types;
 using UnityEngine.SceneManagement;
+using FishNet;
 
 
-public class SceneLoader : NetworkBehaviour
+public class SceneLoader : MonoBehaviour
 {
     [SerializeField, Scene]
     public string[] ArrayScenes;
 
     List<NetworkConnection> ListConns = new List<NetworkConnection>();
-    private void OnTriggerEnter(Collider other)
+
+    public bool SceneStack = false;
+    private int _stackedSceneHandle = 0;
+     public string[,] sceneMatrix = new string[10, 8];
+    private void Start()
     {
-        if (!base.IsServer)
-        {
+        if(InstanceFinder.NetworkManager.IsClient){
+            Destroy(gameObject);
             return;
         }
-        PlayerController nob = other.GetComponentInParent<PlayerController>();
-
-
-        if (nob != null)
+         GetScene();
+        if (InstanceFinder.SceneManager != null)
         {
-            LoadScene(nob.NetworkObject);
+            InstanceFinder.SceneManager.OnLoadEnd += SceneManager_OnLoadEnd;
+            InstanceFinder.SceneManager.OnClientPresenceChangeStart += SceneManager_OnClientPresenceChangeStart;
+            InstanceFinder.SceneManager.OnClientPresenceChangeEnd += SceneManager_OnClientPresenceChangeEnd;
         }
     }
-    private void OnTriggerExit(Collider other)
+   
+    private void SceneManager_OnClientPresenceChangeStart(ClientPresenceChangeEventArgs obj)
     {
-        if (!base.IsServer)
+
+        ListConns.Add(obj.Connection);
+    }
+    private void SceneManager_OnClientPresenceChangeEnd(ClientPresenceChangeEventArgs obj)
+    {
+
+        ListConns.Remove(obj.Connection);
+    }
+    private void SceneManager_OnLoadEnd(SceneLoadEndEventArgs obj)
+    {
+        if (!obj.QueueData.AsServer)
+        {
+            return;
+        }
+        if (!SceneStack)
+        {
+            return;
+        }
+        if (_stackedSceneHandle != 0)
         {
             return;
         }
 
-        PlayerController nob = other.GetComponentInParent<PlayerController>();
-        if (nob != null)
+        if (obj.LoadedScenes.Length > 0)
         {
-            // UnloadScene(nob.NetworkObject);
+            _stackedSceneHandle = obj.LoadedScenes[0].handle;
         }
     }
 
@@ -48,7 +71,7 @@ public class SceneLoader : NetworkBehaviour
         {
             return;
         }
-        UnloadScene(nob);
+         UnloadScene(nob);
         List<SceneLookupData> ListSceneLook = new List<SceneLookupData>();
         ListSceneLook.Add(new SceneLookupData(_stackedSceneHandle, "CenaC"));
         ListSceneLook.Add(new SceneLookupData(_stackedSceneHandle, gameObject.scene.name));
@@ -70,14 +93,14 @@ public class SceneLoader : NetworkBehaviour
             ReplaceScenes = ReplaceOption.None,
             PreferredActiveScene = ListSceneLook.ToArray()[0],
         };
-        base.SceneManager.LoadConnectionScenes(nob.Owner, sld);
+        InstanceFinder.SceneManager.LoadConnectionScenes(nob.Owner, sld);
 
     }
     public void UnloadScene(NetworkObject nob)
     {
         List<string> removeScenes = new List<string>();
 
-        foreach (var pair in SceneManager.SceneConnections)
+        foreach (var pair in   InstanceFinder.SceneManager.SceneConnections)
         {
             removeScenes.Add(pair.Key.name);
         }
@@ -112,64 +135,19 @@ public class SceneLoader : NetworkBehaviour
         {
             Options = new UnloadOptions()
             {
-                Mode = UnloadOptions.ServerUnloadMode.KeepUnused
+                Mode = UnloadOptions.ServerUnloadMode.UnloadUnused
             }
         };
 
-        base.SceneManager.UnloadConnectionScenes(nob.Owner, sud);
-    }
-    public bool SceneStack = false;
-    private int _stackedSceneHandle = 0;
-
-    private void Start()
-    {
-        if (base.SceneManager != null)
-        {
-            base.SceneManager.OnLoadEnd += SceneManager_OnLoadEnd;
-            base.SceneManager.OnClientPresenceChangeStart += SceneManager_OnClientPresenceChangeStart;
-            base.SceneManager.OnClientPresenceChangeEnd += SceneManager_OnClientPresenceChangeEnd;
-        }
-    }
-
-    private void SceneManager_OnClientPresenceChangeStart(ClientPresenceChangeEventArgs obj)
-    {
-
-        ListConns.Add(obj.Connection);
-    }
-    private void SceneManager_OnClientPresenceChangeEnd(ClientPresenceChangeEventArgs obj)
-    {
-
-        ListConns.Remove(obj.Connection);
-    }
-    private void SceneManager_OnLoadEnd(SceneLoadEndEventArgs obj)
-    {
-        if (!obj.QueueData.AsServer)
-        {
-            return;
-        }
-        if (!SceneStack)
-        {
-            return;
-        }
-        if (_stackedSceneHandle != 0)
-        {
-            return;
-        }
-
-        if (obj.LoadedScenes.Length > 0)
-        {
-            _stackedSceneHandle = obj.LoadedScenes[0].handle;
-        }
+        InstanceFinder.SceneManager.UnloadConnectionScenes(nob.Owner, sud);
     }
 
 
 
 
-    public string[,] sceneMatrix = new string[10, 8];
+  
     public void GetScene()
     {
-
-
         int rowIndex = 0;
         int colIndex = 0;
         // Adicione as cenas do arquivo de configuração de build à lista
@@ -262,6 +240,33 @@ public class SceneLoader : NetworkBehaviour
         }
 
         return elementos.ToArray();
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!InstanceFinder.NetworkManager.IsServer)
+        {
+            return;
+        }
+        PlayerController nob = other.GetComponentInParent<PlayerController>();
+
+
+        if (nob != null)
+        {
+            LoadScene(nob.NetworkObject);
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (!InstanceFinder.NetworkManager.IsServer)
+        {
+            return;
+        }
+
+        PlayerController nob = other.GetComponentInParent<PlayerController>();
+        if (nob != null)
+        {
+            // UnloadScene(nob.NetworkObject);
+        }
     }
 }
 

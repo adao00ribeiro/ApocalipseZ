@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
+  m_Sun: {fileID: 296592088}
   m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
@@ -97,8 +97,10 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 5d3e34941dfc15342a5b12bba8252944,
+    type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 0a53b1cd51d9d2a4ebf0386fce0c3ee7,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1163,7 +1165,7 @@ MonoBehaviour:
   <ComponentIndex>k__BackingField: 0
   <PredictedSpawn>k__BackingField: {fileID: 0}
   _networkBehaviours:
-  - {fileID: 0}
+  - {fileID: 2134535189}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   SerializedTransformProperties:
@@ -1207,90 +1209,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14563e130f14ce44d8d9446423b497be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 0
   _addedNetworkObject: {fileID: 2134535186}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 2134535186}
   ListScenes:
-  - Assets/Scenes/Tchanks/SceneTchank 1.unity
-  - Assets/Scenes/Tchanks/SceneTchank 2.unity
-  - Assets/Scenes/Tchanks/SceneTchank 3.unity
-  - Assets/Scenes/Tchanks/SceneTchank 4.unity
-  - Assets/Scenes/Tchanks/SceneTchank 5.unity
-  - Assets/Scenes/Tchanks/SceneTchank 6.unity
-  - Assets/Scenes/Tchanks/SceneTchank 7.unity
-  - Assets/Scenes/Tchanks/SceneTchank 8.unity
-  - Assets/Scenes/Tchanks/SceneTchank 9.unity
-  - Assets/Scenes/Tchanks/SceneTchank 10.unity
-  - Assets/Scenes/Tchanks/SceneTchank 11.unity
-  - Assets/Scenes/Tchanks/SceneTchank 12.unity
-  - Assets/Scenes/Tchanks/SceneTchank 13.unity
-  - Assets/Scenes/Tchanks/SceneTchank 14.unity
-  - Assets/Scenes/Tchanks/SceneTchank 15.unity
-  - Assets/Scenes/Tchanks/SceneTchank 16.unity
-  - Assets/Scenes/Tchanks/SceneTchank 17.unity
-  - Assets/Scenes/Tchanks/SceneTchank 18.unity
-  - Assets/Scenes/Tchanks/SceneTchank 19.unity
-  - Assets/Scenes/Tchanks/SceneTchank 20.unity
-  - Assets/Scenes/Tchanks/SceneTchank 21.unity
-  - Assets/Scenes/Tchanks/SceneTchank 22.unity
-  - Assets/Scenes/Tchanks/SceneTchank 23.unity
-  - Assets/Scenes/Tchanks/SceneTchank 24.unity
-  - Assets/Scenes/Tchanks/SceneTchank 25.unity
-  - Assets/Scenes/Tchanks/SceneTchank 26.unity
-  - Assets/Scenes/Tchanks/SceneTchank 27.unity
-  - Assets/Scenes/Tchanks/SceneTchank 28.unity
-  - Assets/Scenes/Tchanks/SceneTchank 29.unity
-  - Assets/Scenes/Tchanks/SceneTchank 30.unity
-  - Assets/Scenes/Tchanks/SceneTchank 31.unity
-  - Assets/Scenes/Tchanks/SceneTchank 32.unity
-  - Assets/Scenes/Tchanks/SceneTchank 33.unity
-  - Assets/Scenes/Tchanks/SceneTchank 34.unity
-  - Assets/Scenes/Tchanks/SceneTchank 35.unity
-  - Assets/Scenes/Tchanks/SceneTchank 36.unity
-  - Assets/Scenes/Tchanks/SceneTchank 37.unity
-  - Assets/Scenes/Tchanks/SceneTchank 38.unity
-  - Assets/Scenes/Tchanks/SceneTchank 39.unity
-  - Assets/Scenes/Tchanks/SceneTchank 40.unity
-  - Assets/Scenes/Tchanks/SceneTchank 41.unity
-  - Assets/Scenes/Tchanks/SceneTchank 42.unity
-  - Assets/Scenes/Tchanks/SceneTchank 43.unity
-  - Assets/Scenes/Tchanks/SceneTchank 44.unity
-  - Assets/Scenes/Tchanks/SceneTchank 45.unity
-  - Assets/Scenes/Tchanks/SceneTchank 46.unity
-  - Assets/Scenes/Tchanks/SceneTchank 47.unity
-  - Assets/Scenes/Tchanks/SceneTchank 48.unity
-  - Assets/Scenes/Tchanks/SceneTchank 49.unity
-  - Assets/Scenes/Tchanks/SceneTchank 50.unity
-  - Assets/Scenes/Tchanks/SceneTchank 51.unity
-  - Assets/Scenes/Tchanks/SceneTchank 52.unity
-  - Assets/Scenes/Tchanks/SceneTchank 53.unity
-  - Assets/Scenes/Tchanks/SceneTchank 54.unity
-  - Assets/Scenes/Tchanks/SceneTchank 55.unity
-  - Assets/Scenes/Tchanks/SceneTchank 56.unity
-  - Assets/Scenes/Tchanks/SceneTchank 57.unity
-  - Assets/Scenes/Tchanks/SceneTchank 58.unity
-  - Assets/Scenes/Tchanks/SceneTchank 59.unity
-  - Assets/Scenes/Tchanks/SceneTchank 60.unity
-  - Assets/Scenes/Tchanks/SceneTchank 61.unity
-  - Assets/Scenes/Tchanks/SceneTchank 62.unity
-  - Assets/Scenes/Tchanks/SceneTchank 63.unity
-  - Assets/Scenes/Tchanks/SceneTchank 64.unity
-  - Assets/Scenes/Tchanks/SceneTchank 65.unity
   - Assets/Scenes/Tchanks/SceneTchank 66.unity
-  - Assets/Scenes/Tchanks/SceneTchank 67.unity
-  - Assets/Scenes/Tchanks/SceneTchank 68.unity
-  - Assets/Scenes/Tchanks/SceneTchank 69.unity
-  - Assets/Scenes/Tchanks/SceneTchank 70.unity
-  - Assets/Scenes/Tchanks/SceneTchank 71.unity
-  - Assets/Scenes/Tchanks/SceneTchank 72.unity
-  - Assets/Scenes/Tchanks/SceneTchank 73.unity
-  - Assets/Scenes/Tchanks/SceneTchank 74.unity
-  - Assets/Scenes/Tchanks/SceneTchank 75.unity
-  - Assets/Scenes/Tchanks/SceneTchank 76.unity
-  - Assets/Scenes/Tchanks/SceneTchank 77.unity
-  - Assets/Scenes/Tchanks/SceneTchank 78.unity
-  - Assets/Scenes/Tchanks/SceneTchank 79.unity
-  - Assets/Scenes/Tchanks/SceneTchank 80.unity
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

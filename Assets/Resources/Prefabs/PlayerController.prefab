@@ -48,9 +48,11 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 4848930099070904954}
   _networkObjectCache: {fileID: 4848930099070904954}
-  player: {fileID: 0}
+  playerName: 
   PrefabPlayer: {fileID: -5810222880455609214, guid: dbcf82867e2696c488a93ef1ecdf3839,
     type: 3}
+  currentSCENE_NAME: 
+  anteriorSCENE_NAME: 
 --- !u!114 &4848930099070904954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,8 +101,8 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 9
+  <PrefabId>k__BackingField: 10
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 1772421895
   <SceneId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 4693122810454055774
+  <AssetPathHash>k__BackingField: 10897490476156064751

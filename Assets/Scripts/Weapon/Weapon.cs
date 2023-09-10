@@ -103,12 +103,22 @@ namespace ApocalipseZ
 
         public bool Fire()
         {
-
+            
             if (Time.time > nextFireTime && !reloading && canShot /*&& !controller.isClimbing*/ ) //Allow fire statement
             {
 
                 if (currentAmmo > 0)
                 {
+                   if(isThrowingGrenade){
+            Grenade go = Instantiate(PrefabProjectile, muzzleFlashTransform.position, Quaternion.identity).GetComponent<Grenade>();
+                //go.transform.position = transform.position + transform.forward * 0.3f;
+            go.GetComponent<Rigidbody>().AddForce(transform.forward * 5);
+            base.Spawn(go.gameObject);
+                  PlayFX();
+            currentAmmo -= 1;
+
+             return true;
+            }
                     currentAmmo -= 1;
                     PlayFX();
                     muzzleFlashTransform.LookAt(Cam.transform.position + Cam.transform.forward * 3000);
@@ -152,8 +162,11 @@ namespace ApocalipseZ
         }
         private void SpawnProjectile(Vector3 position, Vector3 direction, float passedTime)
         {
+           
             BalisticProjectile go = Instantiate(PrefabProjectile, position, Quaternion.identity).GetComponent<BalisticProjectile>();
             go.Initialize(direction, passedTime);
+          
+           
         }
         [ServerRpc(RequireOwnership = false)]
         private void CmdFire(Vector3 position, Vector3 direction, uint tick)
@@ -307,12 +320,16 @@ namespace ApocalipseZ
         {
             if (useAnimator)
             {
+                if(isThrowingGrenade){
+                    Animator.SetTrigger("Throw");
+                }
+                else{
                 Animator.Play("Shot");
+                  temp_MuzzleFlashParticlesFX.time = 0;
+                 temp_MuzzleFlashParticlesFX.Play();
+                }
             }
-
-            temp_MuzzleFlashParticlesFX.time = 0;
-            temp_MuzzleFlashParticlesFX.Play();
-
+          
             audioSource.Stop();
             audioSource.PlayOneShot(shotSFX);
 

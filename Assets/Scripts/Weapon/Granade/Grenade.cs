@@ -17,6 +17,9 @@ namespace ApocalipseZ
 
         void OnEnable()
         {
+            if(explosionEffects==null){
+                return;
+            }
             effects_temp = Instantiate(explosionEffects);
             effects_temp.SetActive(false);
             StartCoroutine(Timer(explosionTimer));
@@ -30,6 +33,7 @@ namespace ApocalipseZ
 
         void Explosion()
         {
+
             effects_temp.transform.position = transform.position;
             effects_temp.transform.rotation = transform.rotation;
             effects_temp.SetActive(true);

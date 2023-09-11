@@ -6,8 +6,9 @@ using UnityEngine;
 
 namespace ApocalipseZ
 {
-    public class BalisticProjectile : MonoBehaviour , IProjectile
+    public class BalisticProjectile : MonoBehaviour, IProjectile
     {
+        public GameObject gameobject { get => this.gameObject; }
 
         public float initialVelocity = 1000;
         [HideInInspector]
@@ -23,7 +24,7 @@ namespace ApocalipseZ
 
         private float _passedTime = 0f;
 
-      
+
         private void OnEnable()
         {
 
@@ -39,27 +40,27 @@ namespace ApocalipseZ
 
         private void Update()
         {
-           
-                time += Time.deltaTime;
-                RaycastHit hit;
-                if (Physics.Linecast(lastPosition, transform.position, out hit))
+
+            time += Time.deltaTime;
+            RaycastHit hit;
+            if (Physics.Linecast(lastPosition, transform.position, out hit))
+            {
+                //HitFXManager.Instance.ApplyFX ( hit );
+                IStats stat = hit.collider.GetComponent<IStats>();
+                if (stat != null)
                 {
-                    //HitFXManager.Instance.ApplyFX ( hit );
-                    IStats stat = hit.collider.GetComponent<IStats>();
-                    if (stat != null)
-                    {
-                        stat.TakeDamage(Random.Range(damageMinimum, damageMaximum));
-                    }
-                    print("colissao");
-                    Destroy(gameObject);
+                    stat.TakeDamage(Random.Range(damageMinimum, damageMaximum));
                 }
-                lastPosition = transform.position;
-                if (time > livingTime)
-                {
-                      print("colissao livingtime");
-                    Destroy(gameObject);
-                }
-            
+                print("colissao");
+                Destroy(gameObject);
+            }
+            lastPosition = transform.position;
+            if (time > livingTime)
+            {
+                print("colissao livingtime");
+                Destroy(gameObject);
+            }
+
             Move();
         }
 

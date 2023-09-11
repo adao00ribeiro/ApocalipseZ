@@ -52,7 +52,7 @@ namespace ApocalipseZ
 
             if (time > livingTime)
             {
-                NetworkBehaviour.Destroy(gameObject);
+                base.Despawn(gameObject);
             }
         }
 

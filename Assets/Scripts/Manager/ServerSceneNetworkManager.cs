@@ -11,7 +11,7 @@ public class ServerSceneNetworkManager : NetworkBehaviour
 {
         [SerializeField, Scene]
         private List<string> ListScenes = new List<string>();
-
+ 
         public override void OnStartServer()
         {
             foreach (string item in ListScenes)

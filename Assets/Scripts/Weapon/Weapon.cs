@@ -152,8 +152,13 @@ namespace ApocalipseZ
         }
         private void SpawnProjectile(Vector3 position, Vector3 direction, float passedTime)
         {
-            BalisticProjectile go = Instantiate(PrefabProjectile, position, Quaternion.identity).GetComponent<BalisticProjectile>();
+             if (weaponSetting.Type == WeaponType.Grenade)
+                {
+                        return;
+            }
+            IProjectile go = Instantiate(PrefabProjectile, position, Quaternion.identity).GetComponent<IProjectile>();
             go.Initialize(direction, passedTime);
+
         }
         [ServerRpc(RequireOwnership = false)]
         private void CmdFire(Vector3 position, Vector3 direction, uint tick)
@@ -182,6 +187,7 @@ namespace ApocalipseZ
         [ObserversRpc(ExcludeOwner = true)]
         private void ObserversFire(Vector3 position, Vector3 direction, uint tick)
         {
+
             //Like on server get the time passed and cap it. Note the false for allow negative values.
             float passedTime = (float)base.TimeManager.TimePassed(tick, false);
             passedTime = Mathf.Min(MAX_PASSED_TIME, passedTime);
@@ -307,11 +313,17 @@ namespace ApocalipseZ
         {
             if (useAnimator)
             {
-                Animator.Play("Shot");
+                if (weaponSetting.Type == WeaponType.Grenade)
+                {
+                    Animator.SetTrigger("Throw");
+                }
+                else
+                {
+                    Animator.Play("Shot");
+                    temp_MuzzleFlashParticlesFX.time = 0;
+                    temp_MuzzleFlashParticlesFX.Play();
+                }
             }
-
-            temp_MuzzleFlashParticlesFX.time = 0;
-            temp_MuzzleFlashParticlesFX.Play();
 
             audioSource.Stop();
             audioSource.PlayOneShot(shotSFX);

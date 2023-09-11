@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace ApocalipseZ
 {
-    public class BalisticProjectile : MonoBehaviour
+    public class BalisticProjectile : MonoBehaviour , IProjectile
     {
 
         public float initialVelocity = 1000;

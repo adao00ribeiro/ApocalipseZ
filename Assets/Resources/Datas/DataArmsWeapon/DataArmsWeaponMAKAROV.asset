@@ -15,7 +15,7 @@ MonoBehaviour:
   GuidId: 4528a095-7158-41d1-8ef3-40367d3b9dad
   Name: MAKAROV
   Type: 0
-  fireRate: 0
+  fireRate: 0.5
   spread: 0
   recoil: {x: 0, y: 0, z: 0}
   MuzzleFlashParticlesFX: {fileID: 0}

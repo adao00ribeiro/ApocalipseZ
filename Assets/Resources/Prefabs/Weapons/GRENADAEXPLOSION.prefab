@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7401991065440942714}
   - component: {fileID: 5669476043857683648}
   - component: {fileID: -5697807726941712511}
+  - component: {fileID: 5820536122359426242}
   m_Layer: 7
   m_Name: GRENADAEXPLOSION
   m_TagString: Untagged
@@ -49,10 +50,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7718a9cbf572eb469f79c89e8a84285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 5820536122359426242}
+  _networkObjectCache: {fileID: 0}
   throwForce: 700
   explosionTimer: 3
   explosionForce: 20
-  explosionEffects: {fileID: 159918, guid: a0040bf7072bc2f4e82d887d50a9c5e2, type: 3}
+  explosionEffects: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664,
+    type: 3}
   rd: {fileID: 5669476043857683648}
 --- !u!54 &5669476043857683648
 Rigidbody:
@@ -104,6 +109,58 @@ CapsuleCollider:
   m_Height: 0.048358917
   m_Direction: 1
   m_Center: {x: 0.02251625, y: -0.016105622, z: -0.0010404587}
+--- !u!114 &5820536122359426242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808119780353337631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <IsNested>k__BackingField: 0
+  _enablePrediction: 0
+  _predictionType: 0
+  _graphicalObject: {fileID: 0}
+  _enableStateForwarding: 1
+  _ownerInterpolation: 1
+  _enableTeleport: 0
+  _ownerTeleportThreshold: 1
+  _spectatorAdaptiveInterpolation: 1
+  _spectatorInterpolation: 1
+  _adaptiveSmoothingType: 0
+  _customSmoothingData:
+    InterpolationPercent: 1
+    CollisionInterpolationPercent: 0.1
+    InterpolationDecreaseStep: 1
+    InterpolationIncreaseStep: 3
+  _preconfiguredSmoothingDataPreview:
+    InterpolationPercent: 0.5
+    CollisionInterpolationPercent: 0.05
+    InterpolationDecreaseStep: 1
+    InterpolationIncreaseStep: 2
+  <ComponentIndex>k__BackingField: 0
+  <PredictedSpawn>k__BackingField: {fileID: 0}
+  _networkBehaviours: []
+  <ParentNetworkObject>k__BackingField: {fileID: 0}
+  <ChildNetworkObjects>k__BackingField: []
+  SerializedTransformProperties:
+    Position: {x: 0, y: 0, z: 0}
+    Rotation: {x: 0, y: 0, z: 0, w: 0}
+    LocalScale: {x: 0, y: 0, z: 0}
+  _isNetworked: 1
+  _isGlobal: 0
+  _initializeOrder: 0
+  _defaultDespawnType: 0
+  NetworkObserver: {fileID: 0}
+  <PrefabId>k__BackingField: 0
+  <SpawnableCollectionId>k__BackingField: 0
+  _scenePathHash: 0
+  <SceneId>k__BackingField: 0
+  <AssetPathHash>k__BackingField: 995262076751158101
 --- !u!1 &1214107958350685790
 GameObject:
   m_ObjectHideFlags: 0

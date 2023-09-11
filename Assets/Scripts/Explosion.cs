@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using FishNet.Object;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Explosion : NetworkBehaviour
@@ -10,12 +11,9 @@ public class Explosion : NetworkBehaviour
     public float damageRadius;
     public float damage;
     Collider[] colliders;
-    GameObject effects_temp;
     public AudioSource audioSource;
-    private void OnEnable()
-    {
 
-    }
+
     public void EnableExplosion()
     {
         audioSource = GetComponent<AudioSource>();
@@ -23,9 +21,13 @@ public class Explosion : NetworkBehaviour
         transform.LookAt(Camera.main.transform.position);
         Explosions();
     }
+
     void Explosions()
     {
-
+        if (base.IsClient)
+        {
+            return;
+        }
         colliders = Physics.OverlapSphere(transform.position, damageRadius);
 
         foreach (Collider collider in colliders)
@@ -35,15 +37,22 @@ public class Explosion : NetworkBehaviour
 
             if (stats != null)
             {
-                stats.CmdTakeDamage((int)damage);
+                stats.TakeDamage((int)damage);
             }
 
 
             if (collider.GetComponent<Rigidbody>())
             {
+                print(collider.gameObject.name);
                 collider.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, damageRadius);
             }
         }
-        NetworkBehaviour.Destroy(gameObject, 1);
+
+        Invoke("Destroy", 1);
+    }
+
+    public void Destroy()
+    {
+        base.Despawn(gameObject);
     }
 }

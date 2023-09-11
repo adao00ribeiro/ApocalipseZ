@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: DataParticlesExplosion
   m_EditorClassIdentifier: 
   Name: Explosion
-  Particles: {fileID: 19842296, guid: a0040bf7072bc2f4e82d887d50a9c5e2, type: 3}
+  Particles: {fileID: 198917022394846920, guid: e1b08032bec16ba4eb1ae23cbd572664,
+    type: 3}

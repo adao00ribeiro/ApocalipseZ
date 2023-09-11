@@ -15,7 +15,7 @@ MonoBehaviour:
   GuidId: 61886d9d-b0bd-4d5d-9c9d-b90e5bad0176
   Name: GRENADE
   Type: 5
-  fireRate: 1
+  fireRate: 2
   spread: 0
   recoil: {x: 0, y: 0, z: 0}
   MuzzleFlashParticlesFX: {fileID: 0}

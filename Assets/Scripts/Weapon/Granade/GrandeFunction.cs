@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class GrandeFunction : MonoBehaviour
 {
+    public GameObject PrefabGranade;
+    public Transform muzzle;
     public void ThrowGrenade(){
-        print("foi");
+         IProjectile go = Instantiate(PrefabGranade, muzzle.position, Quaternion.identity).GetComponent<IProjectile>();
+            go.Initialize(muzzle.forward, 0);
     }
 }

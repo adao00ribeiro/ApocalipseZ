@@ -47,7 +47,7 @@ namespace DarkTreeFPS
 
         public GameObject grenadePrefab;
 
-        public enum FireMode { automatic, single}
+        public enum FireMode { automatic, single }
         [Header("Fire mode")]
         public FireMode fireMode;
 
@@ -211,8 +211,8 @@ namespace DarkTreeFPS
                 meleeHitFX = weaponSetting.meleeHitFX;
             }
 
-    }
-        
+        }
+
         private void Start()
         {
             GetWeaponSettings();
@@ -286,7 +286,7 @@ namespace DarkTreeFPS
         {
             movementSpreadFactor = controller.GetVelocityMagnitude();
 
-            if (Input.GetKey(input.Fire)  && !PlayerStats.isPlayerDead && weaponType != WeaponType.Pistol && !InventoryManager.showInventory && fireMode == FireMode.automatic)  //Statement to restrict auto-fire for pistol weapon type. Riffle and others are automatic
+            if (Input.GetKey(input.Fire) && !PlayerStats.isPlayerDead && weaponType != WeaponType.Pistol && !InventoryManager.showInventory && fireMode == FireMode.automatic)  //Statement to restrict auto-fire for pistol weapon type. Riffle and others are automatic
             {
                 Fire();
             }
@@ -294,7 +294,7 @@ namespace DarkTreeFPS
             {
                 Fire();
             }
-            
+
             if (weaponType != WeaponType.Melee && weaponType != WeaponType.Grenade)
             {
                 //Reloading consists of two stages ReloadBegin and ReloadEnd  
@@ -305,29 +305,29 @@ namespace DarkTreeFPS
                     if (!reloading && !controller.isClimbing)
                         ReloadBegin();
                 }
-                
-                    if (Input.GetKey(input.Aim))
-                    {
-                        setAim = true;
-                        sway.xSwayAmount = sway.xSwayAmount*0.3f;
-                        sway.ySwayAmount = sway.ySwayAmount*0.3f;
 
-                        if (weaponManager.UseNonPhysicalReticle)
-                            staticReticle.SetActive(false);
-                        else
-                            dynamicReticle.gameObject.SetActive(false);
-                    }
+                if (Input.GetKey(input.Aim))
+                {
+                    setAim = true;
+                    sway.xSwayAmount = sway.xSwayAmount * 0.3f;
+                    sway.ySwayAmount = sway.ySwayAmount * 0.3f;
+
+                    if (weaponManager.UseNonPhysicalReticle)
+                        staticReticle.SetActive(false);
                     else
-                    {
-                        setAim = false;
-                        sway.xSwayAmount = sway.startX;
-                        sway.ySwayAmount = sway.startY;
-                        if (weaponManager.UseNonPhysicalReticle)
-                            staticReticle.SetActive(true);
-                        else
-                            dynamicReticle.gameObject.SetActive(true);
-                    }
-                
+                        dynamicReticle.gameObject.SetActive(false);
+                }
+                else
+                {
+                    setAim = false;
+                    sway.xSwayAmount = sway.startX;
+                    sway.ySwayAmount = sway.startY;
+                    if (weaponManager.UseNonPhysicalReticle)
+                        staticReticle.SetActive(true);
+                    else
+                        dynamicReticle.gameObject.SetActive(true);
+                }
+
 
                 SetAim();
                 UpdateAmmoText();
@@ -338,7 +338,7 @@ namespace DarkTreeFPS
 
             FireModeSwitch();
         }
-        
+
         public void FireMobile()
         {
             Fire();
@@ -360,7 +360,7 @@ namespace DarkTreeFPS
                         currentAmmo -= 1;
 
                         PlayFX();
-                        
+
                         //Getting random damage from minimum and maximum damage.
                         calculatedDamage = Random.Range(damageMin, damageMax);
 
@@ -395,7 +395,7 @@ namespace DarkTreeFPS
                 }
 
             }
-            else if(weaponType == WeaponType.Grenade && !isThrowingGrenade)
+            else if (weaponType == WeaponType.Grenade && !isThrowingGrenade)
             {
                 animator.SetTrigger("Throw");
                 isThrowingGrenade = true;
@@ -579,14 +579,14 @@ namespace DarkTreeFPS
                 }
             }*/
 
-                reloading = false;
-                canShot = true;
+            reloading = false;
+            canShot = true;
 
-                if (setAim && useAnimator)
-                {
-                    animator.SetBool("Aim", true);
-                }
-            
+            if (setAim && useAnimator)
+            {
+                animator.SetBool("Aim", true);
+            }
+
         }
 
         #region Decal, projectiles, shot FX, hitFX managers
@@ -897,14 +897,14 @@ namespace DarkTreeFPS
                 dynamicReticle.transform.position = screenCenter;
             }
         }
-        
+
         private void FireModeSwitch()
         {
-            if(Input.GetKeyDown(input.FiremodeAuto))
+            if (Input.GetKeyDown(input.FiremodeAuto))
             {
                 fireMode = FireMode.automatic;
             }
-            if(Input.GetKeyDown(input.FiremodeSingle))
+            if (Input.GetKeyDown(input.FiremodeSingle))
             {
                 fireMode = FireMode.single;
             }
@@ -917,7 +917,7 @@ namespace DarkTreeFPS
 
             char mode = new char();
 
-            if(fireMode == FireMode.single)
+            if (fireMode == FireMode.single)
             {
                 mode = '1';
             }

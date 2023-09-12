@@ -152,9 +152,9 @@ namespace ApocalipseZ
         }
         private void SpawnProjectile(Vector3 position, Vector3 direction, float passedTime)
         {
-             if (weaponSetting.Type == WeaponType.Grenade)
-                {
-                        return;
+            if (weaponSetting.Type == WeaponType.Grenade)
+            {
+                return;
             }
             IProjectile go = Instantiate(PrefabProjectile, position, muzzleFlashTransform.rotation).GetComponent<IProjectile>();
             go.Initialize(direction, passedTime);
@@ -209,16 +209,22 @@ namespace ApocalipseZ
 
                 if (useAnimator)
                 {
+                    Animator.SetBool("Reloading", true);
                     Animator.SetBool("Aim", false);
                     Animator.Play("Reload");
                 }
 
                 audioSource.PlayOneShot(reloadSFX);
 
-                Invoke("ReloadEnd", reloadAnimationDuration);
+                StartCoroutine(ReloadCycle(reloadAnimationDuration));
             }
             else
                 return;
+        }
+        IEnumerator ReloadCycle(float timerCicle)
+        {
+            yield return new WaitForSeconds(timerCicle);
+            ReloadEnd();
         }
         public int CalculateTotalAmmo()
         {
@@ -256,7 +262,7 @@ namespace ApocalipseZ
 
             reloading = false;
             canShot = true;
-
+            Animator.SetBool("Reloading", false);
             if (setAim && useAnimator)
             {
                 Animator.SetBool("Aim", true);

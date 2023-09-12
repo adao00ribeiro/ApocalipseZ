@@ -19,8 +19,8 @@ MonoBehaviour:
   spread: 0
   recoil: {x: 0, y: 0, z: 0}
   MuzzleFlashParticlesFX: {fileID: 0}
-  shotSFX: ScarShot
-  reloadingSFX: ScarReload
+  shotSFX: ShotgunFire
+  reloadingSFX: ShotgunReload
   emptySFX: Empty
   shell: {fileID: 0}
   shellsPoolSize: 0

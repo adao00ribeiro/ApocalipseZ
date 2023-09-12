@@ -15,7 +15,7 @@ MonoBehaviour:
   GuidId: f8cbd85f-52c9-4bfe-9d94-bbbe1576ebb7
   Name: RPG
   Type: 0
-  fireRate: 0
+  fireRate: 3
   spread: 0
   recoil: {x: 0, y: 0, z: 0}
   MuzzleFlashParticlesFX: {fileID: 0}

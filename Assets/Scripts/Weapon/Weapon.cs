@@ -156,7 +156,7 @@ namespace ApocalipseZ
                 {
                         return;
             }
-            IProjectile go = Instantiate(PrefabProjectile, position, Quaternion.identity).GetComponent<IProjectile>();
+            IProjectile go = Instantiate(PrefabProjectile, position, muzzleFlashTransform.rotation).GetComponent<IProjectile>();
             go.Initialize(direction, passedTime);
 
         }

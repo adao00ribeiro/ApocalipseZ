@@ -33,11 +33,13 @@ public class SpawObjectsManager : MonoBehaviour
 
         foreach (var item in ListPointItems)
         {
+            /*
             GameController.Instance.TimerManager.Add(() =>
             {
                 Spawn(item.GetPrefab(), item.transform.position);
                 Destroy(item.gameObject);
             }, Random.Range(1, 20));
+            */
         }
     }
     public void Spawn(GameObject prefab, Vector3 pointSpawn)

@@ -12,7 +12,5 @@ public interface IStats
     public void AddHydratation(int points);
     public void TakeDamage(int damage);
 
-    public void CmdTakeDamage(int damage, NetworkConnection sender = null);
-
     float GetDamage();
 }

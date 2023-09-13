@@ -1,18 +1,21 @@
-
 using System;
 using System.Collections.Generic;
+using ApocalipseZ;
 using FishNet.Managing.Scened;
 using FishNet.Object;
 using GameKit.Utilities.Types;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using Random = UnityEngine.Random;
 public class ServerSceneNetworkManager : NetworkBehaviour
 {
         [SerializeField, Scene]
         private List<string> ListScenes = new List<string>();
-
-        public override void OnStartServer()
+        void Start(){
+           
+        }
+    
+    public override void OnStartServer()
         {
             foreach (string item in ListScenes)
             {
@@ -24,9 +27,14 @@ public class ServerSceneNetworkManager : NetworkBehaviour
                         AutomaticallyUnload = false
                     },
                 };
-
                 base.SceneManager.LoadConnectionScenes(sld);
             }
+             GameController.Instance.TimerManager.Add(() =>
+            {
+                GameController.Instance.SpawObjectsManager.InitSpaw();
+              //  Destroy(item.gameObject);
+            },20);
+          
         }
 
     public void UpdateSceneList()

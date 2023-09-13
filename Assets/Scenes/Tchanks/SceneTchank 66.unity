@@ -125,12 +125,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &153113277 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2330737526212483842, guid: 9152427a8aeb2e5459de6cc38a8b3308,
-    type: 3}
-  m_PrefabInstance: {fileID: 1557633889}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &193228090
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -196,25 +190,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9030590096886287961, guid: 14a79c8e63b65c049a1c2636d6178f38,
         type: 3}
-      propertyPath: _scenePathHash
-      value: 952082934
-      objectReference: {fileID: 0}
-    - target: {fileID: 9030590096886287961, guid: 14a79c8e63b65c049a1c2636d6178f38,
-        type: 3}
       propertyPath: <SceneId>k__BackingField
-      value: 4089165068502199884
+      value: 16464324439815881199
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14a79c8e63b65c049a1c2636d6178f38, type: 3}
---- !u!4 &586017523 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1525228957769561044, guid: 9152427a8aeb2e5459de6cc38a8b3308,
-    type: 3}
-  m_PrefabInstance: {fileID: 1557633889}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &640234302 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2938870276224911535, guid: 9152427a8aeb2e5459de6cc38a8b3308,
@@ -249,12 +232,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4175831326919835478, guid: 35004f51827b4024d8fb0f75a47adf22, type: 3}
---- !u!4 &831056265 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1212449506970438569, guid: 9152427a8aeb2e5459de6cc38a8b3308,
-    type: 3}
-  m_PrefabInstance: {fileID: 1557633889}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &947216731
 GameObject:
   m_ObjectHideFlags: 0
@@ -420,12 +397,6 @@ Transform:
   - {fileID: 2109225015}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1065125932 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1229206208990219995, guid: 9152427a8aeb2e5459de6cc38a8b3308,
-    type: 3}
-  m_PrefabInstance: {fileID: 1557633889}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1070250839
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -710,16 +681,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017eefbbd77b1a649a9cc2571f095191, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Wings:
-  - {fileID: 1065125932}
-  - {fileID: 586017523}
-  - {fileID: 153113277}
-  - {fileID: 831056265}
-  speed: 20
-  pointEnd: {fileID: 2009016621}
-  maxDistanceDelta: 0.3
-  PrefabCube: {fileID: 947216731}
-  spawCube: 0
 --- !u!1 &2009016620
 GameObject:
   m_ObjectHideFlags: 0

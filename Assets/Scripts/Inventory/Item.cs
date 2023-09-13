@@ -25,21 +25,7 @@ namespace ApocalipseZ
         {
             Ammo = dataItem.Ammo;
         }
-
-        void Start()
-        {
-            if (!IsServerSpaw && base.IsServer)
-            {
-                NetworkBehaviour.Destroy(gameObject, 30);
-            }
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
+       
         public void SetAmmo(int _ammo)
         {
             Ammo = _ammo;

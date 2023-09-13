@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 6594048608201658853}
   - component: {fileID: 6594048608201658851}
   - component: {fileID: 6594048608201658850}
-  - component: {fileID: 3818938888008180921}
+  - component: {fileID: 8341459741945500841}
+  - component: {fileID: 1298058476418477914}
   m_Layer: 0
   m_Name: RPG
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_LocalScale: {x: 200, y: 200, z: 200}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6594048609170016116}
@@ -84,7 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3818938888008180921
+--- !u!64 &8341459741945500841
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,6 +107,27 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 6430157885437550921, guid: df70bf11866e90f49ab0754f0f28654a, type: 3}
+--- !u!65 &1298058476418477914
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6594048608201658852}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.00027481053, y: 0.0015623446, z: 0.0007608031}
+  m_Center: {x: 0.000007724361, y: -0.0016608525, z: -0.0006793893}
 --- !u!1 &6594048609170016072
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,7 +317,7 @@ MonoBehaviour:
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   SerializedTransformProperties:
-    Position: {x: -1.5038412, y: 1.026, z: 2.6954873}
+    Position: {x: 271.6352, y: 571.441, z: 201.7432}
     Rotation: {x: 0, y: 0, z: 0, w: 1}
     LocalScale: {x: 1, y: 1, z: 1}
   _isNetworked: 1
@@ -303,8 +325,8 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 6
+  <PrefabId>k__BackingField: 19
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 1772421895
+  _scenePathHash: 3833399256
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 7649300363047786882

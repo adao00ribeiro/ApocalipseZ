@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 public class PlayerSpawPointsManager : MonoBehaviour
@@ -11,7 +9,7 @@ public class PlayerSpawPointsManager : MonoBehaviour
 
     internal Vector3 GetPointSpaw()
     {
-        GameObject point = SpawPoints[Random.Range(0, SpawPoints.Count )];
+        GameObject point = SpawPoints[Random.Range(0, SpawPoints.Count)];
         return point.transform.position;
     }
 

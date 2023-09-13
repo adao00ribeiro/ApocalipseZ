@@ -20,12 +20,13 @@ namespace ApocalipseZ
         [SerializeField] UiFastItems UiFastItems;
         [SerializeField] UiFpsScopeCursorReticles UiFpsScopeCursorReticles;
         [SerializeField] UiPlayerStats UiPlayerStats;
+        [SerializeField] UiDeadStats UiDeadStats;
         [SerializeField] MotionBlur motionBlur;
         [SerializeField] Volume volume;
         PlayerStats stats;
         FirstPersonCamera FirstPersonCamera;
 
-       
+
         private void Awake()
         {
             InputManager = GameController.Instance.InputManager;
@@ -59,7 +60,7 @@ namespace ApocalipseZ
                 ActiveMotionBlur(IsInventoryOpen);
             }
         }
-  
+
         public void ActiveMotionBlur(bool active)
         {
             FirstPersonCamera.ActiveCursor(active);
@@ -85,7 +86,12 @@ namespace ApocalipseZ
 
         internal UiPrimaryAndSecondWeapons GetUiPrimaryandSecundaryWeapons()
         {
-             return UiPrimaryAndSecondWeapons;
+            return UiPrimaryAndSecondWeapons;
+        }
+
+        internal UiDeadStats GetUiDeadStats()
+        {
+            return UiDeadStats;
         }
 
         private InputManager InputManager;

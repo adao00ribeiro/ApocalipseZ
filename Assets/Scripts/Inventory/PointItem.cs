@@ -9,6 +9,16 @@ namespace ApocalipseZ
     {
         public ItemType type;
 
+
+        public void OnEnable()
+        {
+            GameController.Instance.SpawObjectsManager.Add(this);
+        }
+
+        public void OnDisable()
+        {
+            GameController.Instance.SpawObjectsManager.Remove(this);
+        }
         private void Start()
         {
             if (type == ItemType.none)
@@ -22,7 +32,7 @@ namespace ApocalipseZ
 
         public GameObject GetPrefab()
         {
-          
+
             DataItem objeto = GameController.Instance.DataManager.GetDataItemWeapon();
             /*
             ScriptableItem[]items;

@@ -30,7 +30,7 @@ public class TimerManager : MonoBehaviour
 
         });
     }
-    private void Update()
+    void Update()
     {
         if (events.Count == 0)
             return;

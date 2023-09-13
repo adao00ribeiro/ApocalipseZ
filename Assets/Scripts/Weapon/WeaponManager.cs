@@ -15,8 +15,6 @@ namespace ApocalipseZ
 
         UiPrimaryAndSecondWeapons UiPrimaryAndSecondWeapons;
 
-        [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(SetAmmoNetwork))]
-        public int AmmoNetwork;
         public Weapon activeSlot;
 
         [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(SetPrimaryWeapon))]
@@ -31,17 +29,12 @@ namespace ApocalipseZ
         [SerializeField] private Transform swayTransform;
         private InputManager InputManager;
         public static bool IsChekInventory;
-        public void SetAmmoNetwork(int oldSlot, int newSlot, bool asServer)
-        {
-            AmmoNetwork = newSlot;
 
-        }
         private void Awake()
         {
             InputManager = GameController.Instance.InputManager;
 
         }
-
 
         void Start()
         {
@@ -57,7 +50,7 @@ namespace ApocalipseZ
         // Update is called once per frame
         void Update()
         {
-            if (!IsOwner)
+            if (!IsOwner || fpsplayer.GetPlayerStats().IsDead())
             {
                 return;
             }
@@ -86,7 +79,6 @@ namespace ApocalipseZ
                 {
                     //  RpcFire(base.Owner);
                 }
-                AmmoNetwork = activeSlot.CurrentAmmo;
 
             }
             if (InputManager.GetReload())
@@ -123,7 +115,6 @@ namespace ApocalipseZ
             {
                 RpcFire(base.Owner);
             }
-            AmmoNetwork = activeSlot.CurrentAmmo;
         }
         [TargetRpc]
         public void RpcFire(NetworkConnection conn)

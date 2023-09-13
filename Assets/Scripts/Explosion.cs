@@ -48,7 +48,7 @@ public class Explosion : NetworkBehaviour
             }
         }
 
-        Invoke("Destroy", 1);
+        Invoke("Destroy", 2);
     }
 
     public void Destroy()

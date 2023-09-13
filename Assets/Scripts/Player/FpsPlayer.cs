@@ -12,6 +12,7 @@ using TMPro;
 using FishNet.Object.Prediction;
 using FishNet;
 using FishNet.Managing.Timing;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 
 namespace ApocalipseZ
 {
@@ -79,7 +80,6 @@ namespace ApocalipseZ
 
         [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(CharacterChanged))]
         public string CharacterName = "";
-
         MoveData md = new();
         ReconcileData rd = new();
         //MoveData for client simulation
@@ -125,15 +125,42 @@ namespace ApocalipseZ
         {
             if (base.IsOwner)
             {
+                Animation();
+                if (PlayerStats.Disable)
+                {
+                    return;
+                }
+                if (PlayerStats.IsDead())
+                {
+                    Moviment.DisableCharacterController();
+                    FirstPersonCamera.CameraDeath();
+                    //   AnimatorController.Play("BlendDeath");
+                    AnimatorWeaponHolderController.SetBool("HideWeapon", true);
+                    CmdRespawn();
+                    return;
+                }
                 InteractObjects.UpdateInteract();
-
                 if (InputManager.GetLanterna())
                 {
                     Lanterna.enabled = !Lanterna.enabled;
                 }
-                Animation();
+
             }
         }
+        [ServerRpc]
+        private void CmdRespawn()
+        {
+
+            GameController.Instance.TimerManager.Add(() =>
+            {
+                transform.position = GameController.Instance.PlayerSpawPoints.GetPointSpaw();
+                PlayerStats.AddHealth(200);
+                PlayerStats.AddHydratation(100);
+                PlayerStats.AddSatiety(100);
+                TargetRespaw(base.Owner);
+            }, 5);
+        }
+
         public override void OnStopNetwork()
         {
             base.OnStopNetwork();
@@ -146,11 +173,12 @@ namespace ApocalipseZ
         }
         private void LateUpdate()
         {
-            if (base.IsOwner)
+            if (!base.IsOwner || PlayerStats.IsDead())
             {
-                FirstPersonCamera.UpdateCamera();
-            }
+                return;
 
+            }
+            FirstPersonCamera.UpdateCamera();
         }
 
         private void TimeManager_OnTick()
@@ -276,13 +304,15 @@ namespace ApocalipseZ
 
 
         }
-        [ObserversRpc]
-        public void TargetRespaw()
+        [TargetRpc]
+        public void TargetRespaw(NetworkConnection conn)
         {
-            //transform.position = Game.Instance.GetPointSpaw();
-            AnimatorController.Play("Walk");
+
+            //   AnimatorController.Play("Walk");
             FirstPersonCamera.CameraAlive();
             Moviment.EnableCharacterController();
+            AnimatorWeaponHolderController.SetBool("HideWeapon", false);
+
         }
 
         [ServerRpc]

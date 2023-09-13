@@ -58,32 +58,34 @@ namespace ApocalipseZ
         }
         public void GravityJumpUpdate(bool IsJump, float delta)
         {
-           CheckGround();
-          
-           if( IsGrounded){
-      
-            if (PlayerVelocity.y < 0)
+            CheckGround();
+
+            if (IsGrounded)
             {
-                PlayerVelocity.y = -2f;
-            }
-           
-            if (IsJump)
-            {
-                PlayerVelocity.y = Mathf.Sqrt(jumpSpeed * -2.0f * Physics.gravity.y);
-            }
+
+                if (PlayerVelocity.y < 0)
+                {
+                    PlayerVelocity.y = -2f;
+                }
+
+                if (IsJump)
+                {
+                    PlayerVelocity.y = Mathf.Sqrt(jumpSpeed * -2.0f * Physics.gravity.y);
+                }
             }
 
-            if (PlayerVelocity.y < _terminalVelocity){
-            PlayerVelocity.y += Physics.gravity.y * delta;
+            if (PlayerVelocity.y < _terminalVelocity)
+            {
+                PlayerVelocity.y += Physics.gravity.y * delta;
             }
-         
-          
+
+
         }
         public float GroundedRadius = 0.28f;
         public float GroundedOffset = -0.14f;
         public LayerMask GroundLayers;
-        
-      
+
+
         public void CheckGround()
         {
             // set sphere position, with offset
@@ -94,19 +96,22 @@ namespace ApocalipseZ
         }
         public void Move(MoveData md, float delta)
         {
-         
+            if (!CharacterController.enabled)
+            {
+                return;
+            }
             Vector3 moveDirection = Vector3.zero;
             moveDirection = new Vector3(md.Horizontal, 0, md.Forward);
             currentSpeed = Walk;
             currentSpeed = md.IsRun ? Run : currentSpeed;
             currentSpeed = md.IsCrouch ? crouchSpeed : currentSpeed;
             //SetCrouchHeight();
-           transform.localRotation = Quaternion.Euler(0, md.RotationX, 0);
-            CharacterController.Move(transform.TransformDirection(moveDirection) * currentSpeed * delta +   new Vector3(0.0f, PlayerVelocity.y , 0.0f) * delta);
+            transform.localRotation = Quaternion.Euler(0, md.RotationX, 0);
+            CharacterController.Move(transform.TransformDirection(moveDirection) * currentSpeed * delta + new Vector3(0.0f, PlayerVelocity.y, 0.0f) * delta);
 
         }
-     
-       
+
+
         public void SetCrouchHeight()
         {
             CharacterController.height = InputManager.GetCrouch() ? CrouchHeight : 1.8f;
@@ -125,8 +130,9 @@ namespace ApocalipseZ
         {
             return IsGrounded;
         }
-          public void SetIsGround(bool isgrounded){
-                IsGrounded = isgrounded;
+        public void SetIsGround(bool isgrounded)
+        {
+            IsGrounded = isgrounded;
         }
         public bool CheckIsRun()
         {

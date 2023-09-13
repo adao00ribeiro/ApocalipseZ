@@ -29,9 +29,6 @@ namespace ApocalipseZ
         public float satietySubstractionRate = 5f;
         public int hungerDamage = 1;
         private float satietyTimer;
-
-        FpsPlayer player;
-
         public bool Disable;
         private void OnSetHealth(int oldHealth, int newHealth, bool asServer)
         {
@@ -54,10 +51,7 @@ namespace ApocalipseZ
 
             OnAlteredStats?.Invoke();
         }
-        private void Start()
-        {
-            player = GetComponent<FpsPlayer>();
-        }
+
         void Update()
         {
             if (base.IsServer)
@@ -94,29 +88,18 @@ namespace ApocalipseZ
                 {
                     satiety = 100;
                 }
-            }
-            if (!base.IsOwner || Disable)
-            {
-                return;
-            }
 
-            if (IsDead())
-            {
-                CmdPlayerDeath();
-                Disable = true;
-
-            }
-            if (transform.position.y < -11.1 && !IsDead())
-            {
-                CmdTakeDamage(200);
+                if (transform.position.y < -11.1 && !IsDead())
+                {
+                    TakeDamage(200);
+                }
+                if (IsDead())
+                {
+                    Disable = true;
+                }
             }
         }
 
-        [ServerRpc(RequireOwnership = false)]
-        public void CmdTakeDamage(int damage, NetworkConnection sender = null)
-        {
-            TakeDamage(damage);
-        }
         public bool IsDead()
         {
             return health <= 0;
@@ -142,30 +125,10 @@ namespace ApocalipseZ
             }
             OnAlteredStats?.Invoke();
         }
-        private void PlayerDeath()
-        {
-            player.DroppAllItems();
-            StartCoroutine(Respawn());
-        }
-        private IEnumerator Respawn()
-        {
-            yield return new WaitForSeconds(5f);
-            AddHealth(200);
-            AddHydratation(100);
-            AddSatiety(100);
-            GetComponent<FpsPlayer>().TargetRespaw();
-            yield break;
-        }
-        [ServerRpc(RequireOwnership = false)]
-        public void CmdPlayerDeath(NetworkConnection sender = null)
-        {
-            PlayerDeath();
-            // sender.identity.GetComponent<FpsPlayer>().GetWeaponManager().TargetDesEquipWeapon(opponentIdentity.connectionToClient);
-        }
 
         public float GetDamage()
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         public void AddSatiety(int points)

@@ -14,7 +14,7 @@ namespace ApocalipseZ
         //privados 
         GameObject SpawPoint;
         private FpsPlayer fpsPlayer;
-       [SerializeField] private CanvasFpsPlayer canvasFpsPlayer;
+        [SerializeField] private CanvasFpsPlayer canvasFpsPlayer;
         private DataManager dataManager;
         private SceneManager _sceneManager;
         private InputManager Input;
@@ -23,6 +23,8 @@ namespace ApocalipseZ
         private HitFXManager hitfxManager;
         private DecalFxManager decalfxManager;
         private PlayerSpawPointsManager playerSpawPoints;
+
+        private SpawObjectsManager spawObjectsManager;
         // Start is called before the first frame update
         void Awake()
         {
@@ -202,6 +204,18 @@ namespace ApocalipseZ
                     playerSpawPoints = transform.GetComponentInChildren<PlayerSpawPointsManager>();
                 }
                 return playerSpawPoints;
+            }
+        }
+
+        public SpawObjectsManager SpawObjectsManager
+        {
+            get
+            {
+                if (spawObjectsManager == null)
+                {
+                    spawObjectsManager = transform.GetComponentInChildren<SpawObjectsManager>();
+                }
+                return spawObjectsManager;
             }
         }
     }

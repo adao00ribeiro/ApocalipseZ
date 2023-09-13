@@ -3,48 +3,53 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-public class SceneManager : MonoBehaviour
+
+
+namespace ApocalipseZ
 {
-    public GameObject gameobject;
-    private float Progress;
-
-    private void Start()
+    public class SceneManager : MonoBehaviour
     {
-        gameobject = this.gameObject;
-        DontDestroyOnLoad(gameObject);
-    }
-    public void CarregarCena(string nameScene)
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(nameScene);
-    }
-    public void CarregarCenaAsync(string nameScene)
-    {
-        //chama tele de loading
-        StartCoroutine(LoadLevelWithBar(nameScene));
+        public GameObject gameobject;
+        private float Progress;
 
-    }
-
-    IEnumerator LoadLevelWithBar(string nameScene)
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Loading");
-
-        yield return new WaitForSecondsRealtime(3);
-        AsyncOperation async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(nameScene, LoadSceneMode.Single);
-
-        Progress = 0;
-        while (!async.isDone)
+        private void Start()
         {
-            Progress = Mathf.Clamp01(async.progress / .9f);
-            yield return null;
+            gameobject = this.gameObject;
+            DontDestroyOnLoad(gameObject);
+        }
+        public void CarregarCena(string nameScene)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(nameScene);
+        }
+        public void CarregarCenaAsync(string nameScene)
+        {
+            //chama tele de loading
+            StartCoroutine(LoadLevelWithBar(nameScene));
+
         }
 
-    }
-    public void Destroy()
-    {
-        Destroy(gameObject);
-    }
-    public float PegarProgresso()
-    {
-        return Progress;
+        IEnumerator LoadLevelWithBar(string nameScene)
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Loading");
+
+            yield return new WaitForSecondsRealtime(3);
+            AsyncOperation async = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(nameScene, LoadSceneMode.Single);
+
+            Progress = 0;
+            while (!async.isDone)
+            {
+                Progress = Mathf.Clamp01(async.progress / .9f);
+                yield return null;
+            }
+
+        }
+        public void Destroy()
+        {
+            Destroy(gameObject);
+        }
+        public float PegarProgresso()
+        {
+            return Progress;
+        }
     }
 }

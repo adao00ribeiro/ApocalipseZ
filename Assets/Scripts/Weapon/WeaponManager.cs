@@ -36,7 +36,6 @@ namespace ApocalipseZ
 
         }
 
-
         void Start()
         {
             UiPrimaryAndSecondWeapons = GameController.Instance.CanvasFpsPlayer.GetUiPrimaryandSecundaryWeapons();

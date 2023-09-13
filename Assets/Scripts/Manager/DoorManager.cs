@@ -91,11 +91,4 @@ public class DoorManager : NetworkBehaviour
         }
     }
 
-    private void OnGUI()
-    {
-        if (GUILayout.Button("Generate Nodes"))
-        {
-
-        }
-    }
 }

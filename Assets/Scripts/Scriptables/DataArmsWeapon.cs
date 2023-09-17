@@ -7,7 +7,7 @@ public enum WeaponType { SMG, SniperRiffle, Pistol, Shotgun, Melee, Grenade }
 [CreateAssetMenu(fileName = "DataArmsWeapon", menuName = "Data/ArmsWeapon", order = 0)]
 public class DataArmsWeapon : ScriptableObject
 {
-    public string GuidId;
+    public string GuidId =System.Guid.NewGuid().ToString();
     public string Name;
     public WeaponType Type;
 

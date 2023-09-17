@@ -9,12 +9,12 @@ namespace ApocalipseZ
 
         private void Update ( )
         {
-            //transform.localRotation = Quaternion.Slerp ( transform.localRotation , Quaternion.Euler ( Vector3.zero ) , Time.deltaTime * recoilReleaseSpeed );
+           transform.localRotation = Quaternion.Slerp ( transform.localRotation , Quaternion.Euler ( Vector3.zero ) , Time.deltaTime * recoilReleaseSpeed );
         }
 
         public void AddRecoil ( Vector3 recoil )
         {
-            transform.localRotation *= Quaternion.Euler ( recoil );
+            transform.localRotation *= Quaternion.Euler ( new Vector3(Random.Range(0,recoil.x),Random.Range(0,recoil.y),0) );
         }
     }
 }

@@ -92,10 +92,10 @@ namespace ApocalipseZ
             Moviment = GetComponent<Moviment>();
             WeaponManager = GetComponent<WeaponManager>();
             FastItemsManager = GetComponent<FastItemsManager>();
-            InteractObjects = transform.Find("Camera & Recoil").GetComponent<InteractObjects>();
-            AnimatorWeaponHolderController = transform.Find("Camera & Recoil/Weapon holder").GetComponent<Animator>();
+            InteractObjects = transform.Find("Recoil/Camera & Recoil").GetComponent<InteractObjects>();
+            AnimatorWeaponHolderController = transform.Find("Recoil/Camera & Recoil/Weapon holder").GetComponent<Animator>();
             PlayerStats = GetComponent<PlayerStats>();
-            FirstPersonCamera = transform.Find("Camera & Recoil").GetComponent<FirstPersonCamera>();
+            FirstPersonCamera = transform.Find("Recoil/Camera & Recoil").GetComponent<FirstPersonCamera>();
             WeaponManager.SetFpsPlayer(this);
         }
 
@@ -153,7 +153,7 @@ namespace ApocalipseZ
 
             GameController.Instance.TimerManager.Add(() =>
             {
-                transform.position = GameController.Instance.PlayerSpawPoints.GetPointSpaw();
+                transform.position = GameController.Instance.PlayerSpawPoints.GetPointSpaw().position;
                 PlayerStats.AddHealth(200);
                 PlayerStats.AddHydratation(100);
                 PlayerStats.AddSatiety(100);
@@ -164,6 +164,7 @@ namespace ApocalipseZ
         public override void OnStopNetwork()
         {
             base.OnStopNetwork();
+
             if (base.TimeManager != null)
             {
                 base.TimeManager.OnTick -= TimeManager_OnTick;
@@ -176,8 +177,8 @@ namespace ApocalipseZ
             if (!base.IsOwner || PlayerStats.IsDead())
             {
                 return;
-
             }
+            
             FirstPersonCamera.UpdateCamera();
         }
 
@@ -261,6 +262,7 @@ namespace ApocalipseZ
             {
                 GameObject go = Instantiate(cha.PrefabCharacter, transform.GetChild(0).transform);
                 meshteste = go.GetComponent<MeshRenderer>();
+                AnimatorController = go.GetComponent<Animator>();
             }
         }
         void PlayerColorChanged(Color32 _, Color32 newPlayerColor, bool asServer)

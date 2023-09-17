@@ -5463,6 +5463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2a5a01df2dfd734483082323ecaf171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  npcanimator: {fileID: 9100000, guid: 34aca8dcc945d5943aa1fc67e1e18142, type: 2}
   model: {fileID: 0}
 --- !u!1 &832079631
 GameObject:
@@ -12128,22 +12129,22 @@ PrefabInstance:
     - target: {fileID: 530042628798148604, guid: 3b98df484016f6e44a2ccff585162b15,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 530042628798148604, guid: 3b98df484016f6e44a2ccff585162b15,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 530042628798148604, guid: 3b98df484016f6e44a2ccff585162b15,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 530042628798148604, guid: 3b98df484016f6e44a2ccff585162b15,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 530042628798148604, guid: 3b98df484016f6e44a2ccff585162b15,
         type: 3}
@@ -12153,7 +12154,7 @@ PrefabInstance:
     - target: {fileID: 530042628798148604, guid: 3b98df484016f6e44a2ccff585162b15,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 530042628798148604, guid: 3b98df484016f6e44a2ccff585162b15,
         type: 3}

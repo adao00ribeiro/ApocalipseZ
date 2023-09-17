@@ -43,7 +43,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2335271598795343197}
-  - {fileID: 5942569850056434711}
+  - {fileID: 1451104888863242380}
   - {fileID: 1549122937860334517}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -63,7 +63,7 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 5475215427857851610}
   _networkObjectCache: {fileID: 5475215427857851610}
   Inventory: {fileID: 0}
-  FirstPersonCamera: {fileID: 0}
+  FirstPersonCamera: {fileID: 1220553701735399051}
   isClimbing: 1
   AnimatorController: {fileID: 0}
   AnimatorWeaponHolderController: {fileID: 0}
@@ -327,6 +327,7 @@ MonoBehaviour:
   satietySubstractionRate: 5
   hungerDamage: 1
   Disable: 0
+  deadStatsManager: {fileID: 0}
 --- !u!114 &3021545437228286260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -601,6 +602,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 121012257842986407}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5108637444616293938
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1451104888863242380}
+  - component: {fileID: 8280545129723266862}
+  m_Layer: 0
+  m_Name: Recoil
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1451104888863242380
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5108637444616293938}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.069, y: 1.9, z: 0.258}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5942569850056434711}
+  m_Father: {fileID: 121012257842986407}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8280545129723266862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5108637444616293938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a5694ab5cf7645488dc1cd4b969f882, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  recoilReleaseSpeed: 2
 --- !u!1 &5352438610731628808
 GameObject:
   m_ObjectHideFlags: 0
@@ -763,7 +810,6 @@ GameObject:
   - component: {fileID: 1813739627539288570}
   - component: {fileID: 5848965281907431914}
   - component: {fileID: 2456212870532269192}
-  - component: {fileID: 5068552736017267001}
   - component: {fileID: 1629216202878965669}
   - component: {fileID: 6529681271485998780}
   - component: {fileID: 1784801442499097836}
@@ -783,14 +829,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7138003721380281350}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.069, y: 1.9, z: 0.258}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4468933592972273737}
   - {fileID: 4935525046818109466}
-  m_Father: {fileID: 121012257842986407}
+  m_Father: {fileID: 1451104888863242380}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1220553701735399051
 MonoBehaviour:
@@ -855,19 +901,6 @@ MonoBehaviour:
   iterations: 4
   blurSpread: 0.849
   blurShader: {fileID: 4800000, guid: 57e6deea7c2924e22a5138e2b70bb4dc, type: 3}
---- !u!114 &5068552736017267001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7138003721380281350}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a5694ab5cf7645488dc1cd4b969f882, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  recoilReleaseSpeed: 2
 --- !u!95 &1629216202878965669
 Animator:
   serializedVersion: 5

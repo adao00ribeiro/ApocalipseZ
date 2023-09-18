@@ -49,7 +49,7 @@ namespace ApocalipseZ
             }
             return temp;
         }
-          internal DataItem GetDataItemWeapon()
+        internal DataItem GetDataItemWeapon()
         {
 
             List<DataItem> listWeapons = new List<DataItem>();
@@ -61,8 +61,8 @@ namespace ApocalipseZ
                 }
             }
 
-            
-            return listWeapons[Random.Range(0,listWeapons.Count-1)];
+
+            return listWeapons[Random.Range(0, listWeapons.Count - 1)];
         }
         internal DataItem GetDataItem(string Name)
         {

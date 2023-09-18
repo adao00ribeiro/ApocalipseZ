@@ -21,7 +21,7 @@ MonoBehaviour:
   MuzzleFlashParticlesFX: {fileID: 0}
   shotSFX: Swoosh
   reloadingSFX: 
-  emptySFX: 
+  emptySFX: Empty
   shell: {fileID: 0}
   shellsPoolSize: 0
   shellEjectingForce: 0

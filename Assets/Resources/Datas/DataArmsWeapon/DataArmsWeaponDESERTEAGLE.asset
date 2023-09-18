@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GuidId: ba289a14-e62d-47b6-8cf7-9c9fce20cd6f
   Name: DESERTEAGLE
-  Type: 0
+  Type: 2
   fireRate: 0.2
   spread: 0
   recoil: {x: 0, y: 0, z: 0}

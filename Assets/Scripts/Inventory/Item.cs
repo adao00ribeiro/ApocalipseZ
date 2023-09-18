@@ -21,11 +21,12 @@ namespace ApocalipseZ
         {
             transform.position += Vector3.up * 2;
         }
-        private void Awake()
+        private void Start()
         {
+            dataItem = GameController.Instance.DataManager.GetDataItem(this.name);
             Ammo = dataItem.Ammo;
         }
-       
+
         public void SetAmmo(int _ammo)
         {
             Ammo = _ammo;
@@ -88,7 +89,7 @@ namespace ApocalipseZ
         [ServerRpc(RequireOwnership = false)]
         public void CmdInteract(NetworkConnection sender = null)
         {
-           PlayerController playerController =  sender.FirstObject.GetComponent<PlayerController>();
+            PlayerController playerController = sender.FirstObject.GetComponent<PlayerController>();
             OnInteract(playerController.GetPlayer());
         }
 

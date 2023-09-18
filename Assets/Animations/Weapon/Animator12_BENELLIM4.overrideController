@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Animator12_BENELLIM4
+  m_Controller: {fileID: 9100000, guid: e45fc1dc61571d342ab1c59d9115bee7, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: -623603649343465320, guid: 8a83753c1142faa4f9588583d8315acc,
+      type: 3}
+    m_OverrideClip: {fileID: -5690459343722641686, guid: 7c097f70cc314b44abcb0cf4ad51044b,
+      type: 3}
+  - m_OriginalClip: {fileID: 3442375224454065722, guid: 8a83753c1142faa4f9588583d8315acc,
+      type: 3}
+    m_OverrideClip: {fileID: -5240527706446850885, guid: 7c097f70cc314b44abcb0cf4ad51044b,
+      type: 3}
+  - m_OriginalClip: {fileID: 1960417143212532453, guid: 8a83753c1142faa4f9588583d8315acc,
+      type: 3}
+    m_OverrideClip: {fileID: 6094325900094094634, guid: 7c097f70cc314b44abcb0cf4ad51044b,
+      type: 3}
+  - m_OriginalClip: {fileID: 7609185015558613273, guid: 8a83753c1142faa4f9588583d8315acc,
+      type: 3}
+    m_OverrideClip: {fileID: 6387870665775730119, guid: 7c097f70cc314b44abcb0cf4ad51044b,
+      type: 3}

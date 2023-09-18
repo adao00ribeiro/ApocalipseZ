@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 369638753032092811}
   - component: {fileID: 8961735658581599883}
   m_Layer: 6
-  m_Name: PrefabGrenade
+  m_Name: PrefabGRENADE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -552,7 +552,7 @@ MonoBehaviour:
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 10589018412317925922
+  <AssetPathHash>k__BackingField: 15690662796072939938
 --- !u!114 &8961735658581599883
 MonoBehaviour:
   m_ObjectHideFlags: 0

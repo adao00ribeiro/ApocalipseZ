@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8240843856643256346}
   - component: {fileID: 1348199900636071049}
   m_Layer: 6
-  m_Name: PrefabGlock
+  m_Name: PrefabGLOCK
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -226,7 +226,7 @@ MonoBehaviour:
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 18022631452059869850
+  <AssetPathHash>k__BackingField: 4917814731164920794
 --- !u!114 &1348199900636071049
 MonoBehaviour:
   m_ObjectHideFlags: 0

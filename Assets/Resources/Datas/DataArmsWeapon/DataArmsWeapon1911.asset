@@ -15,9 +15,9 @@ MonoBehaviour:
   GuidId: 5723ffee-aa65-4af9-842d-737301980a7d
   Name: 1911
   Type: 2
-  fireRate: 1
+  fireRate: 0.26
   spread: 0
-  recoil: {x: 0, y: 0, z: 0}
+  recoil: {x: -1, y: 1, z: 0}
   MuzzleFlashParticlesFX: {fileID: 0}
   shotSFX: ScarShot
   reloadingSFX: ScarReload

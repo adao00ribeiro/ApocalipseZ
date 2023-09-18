@@ -336,7 +336,8 @@ PrefabInstance:
       value: Yasmim1Pessoa1911
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 65702495048144492, guid: 10a242c76396d9747b62430bb12fdf01, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 10a242c76396d9747b62430bb12fdf01,
         type: 3}

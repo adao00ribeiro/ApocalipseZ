@@ -336,7 +336,8 @@ PrefabInstance:
       value: ArmsP250
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 65702495048144492, guid: 254501e82b8f7434e955de0f824e73a1, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 254501e82b8f7434e955de0f824e73a1,
         type: 3}

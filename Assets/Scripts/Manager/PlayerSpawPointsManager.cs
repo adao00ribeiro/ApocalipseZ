@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 public class PlayerSpawPointsManager : MonoBehaviour
@@ -9,10 +7,10 @@ public class PlayerSpawPointsManager : MonoBehaviour
 
     // Start is called before the first frame update
 
-    internal Vector3 GetPointSpaw()
+    internal Transform GetPointSpaw()
     {
-        GameObject point = SpawPoints[Random.Range(0, SpawPoints.Count )];
-        return point.transform.position;
+        GameObject point = SpawPoints[Random.Range(0, SpawPoints.Count)];
+        return point.transform;
     }
 
     internal void Add(GameObject gameObject)

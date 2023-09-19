@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac9d719bfb36b3d46a6aeef9c780660e, type: 3}
+  m_Name: DataCharacterYasmin
+  m_EditorClassIdentifier: 
+  Name: Cube
+  PrefabCharacter: {fileID: 7976913702392388145, guid: b480f0405685e344788bd5c826de93a8,
+    type: 3}

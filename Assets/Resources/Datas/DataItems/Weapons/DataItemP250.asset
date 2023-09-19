@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3742dce09f6e0b24eb2edf491c25b974, type: 3}
+  m_Name: DataItemP250
+  m_EditorClassIdentifier: 
+  GuidId: fde0dcf8-94af-4ce5-b280-600eed7e27ed
+  Type: 1
+  Name: P250
+  isStackable: 0
+  Thumbnail: {fileID: 21300000, guid: 39a050e6afcfb604dad1bc296983a3af, type: 3}
+  Description: NONE
+  maxStacksize: 1
+  Ammo: 30
+  addHealth: 0
+  addSatiety: 0
+  addHydratation: 0
+  Durability: 100
+  Prefab: {fileID: 7086186773877032381, guid: 88818b3b1b6bf6346b0062944dc93f18, type: 3}

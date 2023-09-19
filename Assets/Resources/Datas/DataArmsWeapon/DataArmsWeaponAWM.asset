@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8748e0b602a81d45bb02bee722cd4bd, type: 3}
+  m_Name: DataArmsWeaponAWM
+  m_EditorClassIdentifier: 
+  GuidId: 0d76108a-efba-4157-b4f0-bdb54addea6c
+  Name: AWM
+  Type: 1
+  fireRate: 2
+  spread: 0
+  recoil: {x: -2, y: 5, z: 0}
+  MuzzleFlashParticlesFX: {fileID: 0}
+  shotSFX: M82A1Shot
+  reloadingSFX: M82A1Realod
+  emptySFX: Empty
+  shell: {fileID: 0}
+  shellsPoolSize: 0
+  shellEjectingForce: 0
+  canUseScope: 1
+  scopeFOV: 15
+  scopeSensitivityX: 0.5
+  scopeSensitivityY: 0.5
+  meleeAttackDistance: 0
+  meleeAttackRate: 0
+  meleeDamagePoints: 0
+  meleeRigidbodyHitForce: 0
+  meleeHitTime: 0
+  meleeHitFX: 
+  bulletInitialVelocity: 0
+  airResistanceForce: 0
+  projectile: Bullet
+  PrefabArmsWeapon: {fileID: 2271651885792713846, guid: d19d1de9cf786fa4485e7f31d4cde360,
+    type: 3}

@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3742dce09f6e0b24eb2edf491c25b974, type: 3}
-  m_Name: DataItemGlock
+  m_Name: DataItemGLOCK
   m_EditorClassIdentifier: 
   GuidId: 697174dd-bc7d-4a83-994c-91121621e4f2
   Type: 1
   Name: GLOCK
-  isStackable: 1
-  Thumbnail: {fileID: 21300000, guid: 86d3619f2dcbb734e8a54de0a71cffa4, type: 3}
+  isStackable: 0
+  Thumbnail: {fileID: 21300000, guid: 7f840ad7585822a49892d56a4d2d80f1, type: 3}
   Description: ARMA TOP
-  maxStacksize: 4
+  maxStacksize: 1
   Ammo: 30
   addHealth: 0
   addSatiety: 0

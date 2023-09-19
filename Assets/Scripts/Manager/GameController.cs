@@ -25,6 +25,8 @@ namespace ApocalipseZ
         private PlayerSpawPointsManager playerSpawPoints;
 
         private SpawObjectsManager spawObjectsManager;
+
+
         // Start is called before the first frame update
         void Awake()
         {
@@ -218,5 +220,7 @@ namespace ApocalipseZ
                 return spawObjectsManager;
             }
         }
+
+
     }
 }

@@ -9,7 +9,8 @@ namespace ApocalipseZ
     [RequireComponent(typeof(AudioSource))]
     public class Weapon : NetworkBehaviour, IWeapon
     {
-        [SerializeField] private DataArmsWeapon weaponSetting;
+
+        private DataArmsWeapon weaponSetting;
         public DataArmsWeapon WeaponSetting { get => weaponSetting; }
         [SerializeField] private string weaponName;
         public string WeaponName { get => weaponName; }

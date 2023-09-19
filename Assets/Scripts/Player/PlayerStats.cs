@@ -30,6 +30,12 @@ namespace ApocalipseZ
         public int hungerDamage = 1;
         private float satietyTimer;
         public bool Disable;
+
+        public DeadStatsManager deadStatsManager;
+        void Start()
+        {
+            deadStatsManager = GameObject.FindAnyObjectByType<DeadStatsManager>();
+        }
         private void OnSetHealth(int oldHealth, int newHealth, bool asServer)
         {
             health = newHealth;
@@ -56,6 +62,10 @@ namespace ApocalipseZ
         {
             if (base.IsServer)
             {
+                if (Disable)
+                {
+                    return;
+                }
                 if (Time.time > satietyTimer + satietySubstractionRate)
                 {
                     if (satiety <= 0)
@@ -95,6 +105,9 @@ namespace ApocalipseZ
                 }
                 if (IsDead())
                 {
+
+                    deadStatsManager.ObserveViewUiDeadStats(base.Owner.ClientId.ToString());
+                    deadStatsManager.TargewtViewSeFudeo(base.Owner);
                     Disable = true;
                 }
             }

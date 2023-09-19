@@ -19,7 +19,7 @@ MonoBehaviour:
   Thumbnail: {fileID: 21300038, guid: 5acb27b603af6d44ea6113c4b7b15385, type: 3}
   Description: KNIFE
   maxStacksize: 1
-  Ammo: 0
+  Ammo: 30
   addHealth: 0
   addSatiety: 0
   addHydratation: 0

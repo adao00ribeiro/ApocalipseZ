@@ -39,8 +39,8 @@ public class PlayerController : NetworkBehaviour
     public void CmdSpawPlayer(NetworkConnection sender = null)
     {
         PlayerSpawPointsManager playerspaw = GameController.Instance.PlayerSpawPoints;
-        Vector3 novo = playerspaw.GetPointSpaw();
-        NetworkBehaviour go = Instantiate(PrefabPlayer, novo, Quaternion.identity);
+        Transform novo = playerspaw.GetPointSpaw();
+        NetworkBehaviour go = Instantiate(PrefabPlayer, novo.position, Quaternion.identity);
         player = go.GetComponent<FpsPlayer>();
         go.transform.SetParent(this.transform);
         base.Spawn(go.gameObject, sender);

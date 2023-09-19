@@ -39,8 +39,8 @@ namespace ApocalipseZ
         void Start()
         {
             UiPrimaryAndSecondWeapons = GameController.Instance.CanvasFpsPlayer.GetUiPrimaryandSecundaryWeapons();
-            swayTransform = transform.Find("Camera & Recoil/Weapon holder/Sway").transform;
-            weaponHolderAnimator = transform.Find("Camera & Recoil/Weapon holder").GetComponent<Animator>();
+            swayTransform = transform.Find("Recoil/Camera & Recoil/Weapon holder/Sway").transform;
+            weaponHolderAnimator = transform.Find("Recoil/Camera & Recoil/Weapon holder").GetComponent<Animator>();
 
         }
         public void SetFpsPlayer(IFpsPlayer fps)
@@ -158,6 +158,7 @@ namespace ApocalipseZ
         public void TargetRpcSlotChange(NetworkConnection target, GameObject weapon, Transform sway)
         {
             activeSlot = weapon.GetComponent<Weapon>();
+           
         }
         [ObserversRpc]
         public void ObserverRpcSlotChange(GameObject weapon)
@@ -167,6 +168,8 @@ namespace ApocalipseZ
             activeSlot.transform.SetParent(swayTransform);
             activeSlot.transform.localPosition = Vector3.zero;
             activeSlot.transform.localRotation = quaternion.identity;
+            PersonalizeArmsWeapon personalize = weapon.GetComponent<PersonalizeArmsWeapon>();
+            personalize.ActiveArms("Yasmim");
         }
         private void SelecionaWeapon()
         {

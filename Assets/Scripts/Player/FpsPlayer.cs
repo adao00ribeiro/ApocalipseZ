@@ -178,7 +178,7 @@ namespace ApocalipseZ
             {
                 return;
             }
-            
+
             FirstPersonCamera.UpdateCamera();
         }
 
@@ -297,6 +297,11 @@ namespace ApocalipseZ
             }
         }
         */
+            if (asServer)
+            {
+                return;
+
+            }
             SpawCharacter(newPlayerColor);
 
         }

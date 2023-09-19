@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac9d719bfb36b3d46a6aeef9c780660e, type: 3}
+  m_Name: DataCharacterRecruta
+  m_EditorClassIdentifier: 
+  Name: Recruta
+  PrefabCharacter: {fileID: 6009934511979596054, guid: b14393831a4f56c4fb65cfaa873ccb36,
+    type: 3}

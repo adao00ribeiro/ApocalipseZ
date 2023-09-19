@@ -187,7 +187,7 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 3838664356980836669}
   _networkObjectCache: {fileID: 3838664356980836669}
-  dataItem: {fileID: 11400000, guid: 63c548d1420106840a3c2f370e5b3719, type: 2}
+  dataItem: {fileID: 0}
   dropQuantity: 1
   IsServerSpaw: 0
 --- !u!135 &7167323984264401321
@@ -297,7 +297,7 @@ MonoBehaviour:
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   SerializedTransformProperties:
-    Position: {x: 0, y: 4.22, z: 0}
+    Position: {x: 270.7616, y: 571.358, z: 201.78552}
     Rotation: {x: 0, y: 0, z: 0, w: 1}
     LocalScale: {x: 1, y: 1, z: 1}
   _isNetworked: 1
@@ -307,7 +307,7 @@ MonoBehaviour:
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 8
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 952082934
+  _scenePathHash: 3833399256
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 8861250164943965976
 --- !u!1 &7944055541284540063

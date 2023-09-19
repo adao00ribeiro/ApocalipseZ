@@ -15,7 +15,7 @@ MonoBehaviour:
   GuidId: f35faa72-78ef-4fd3-acfb-f63f6dc5af91
   Name: P250
   Type: 0
-  fireRate: 0
+  fireRate: 0.5
   spread: 0
   recoil: {x: 0, y: 0, z: 0}
   MuzzleFlashParticlesFX: {fileID: 0}

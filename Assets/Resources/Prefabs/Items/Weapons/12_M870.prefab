@@ -269,7 +269,7 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 5532486585327156343}
   _networkObjectCache: {fileID: 5532486585327156343}
-  dataItem: {fileID: 11400000, guid: d3291736bb45b1a43a210d94aa937a33, type: 2}
+  dataItem: {fileID: 0}
   dropQuantity: 1
   IsServerSpaw: 0
 --- !u!135 &2415334554076666824
@@ -389,6 +389,6 @@ MonoBehaviour:
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 8
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 0
+  _scenePathHash: 3833399256
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 10638076771532082386

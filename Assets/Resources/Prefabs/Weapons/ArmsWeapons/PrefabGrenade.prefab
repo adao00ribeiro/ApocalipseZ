@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 369638753032092811}
   - component: {fileID: 8961735658581599883}
   m_Layer: 6
-  m_Name: PrefabGRENADE
+  m_Name: PrefabGrenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -375,7 +375,6 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 0}
   _networkObjectCache: {fileID: 369638753032092811}
-  weaponSetting: {fileID: 11400000, guid: b60eb9a1577f090419704f2386f94922, type: 2}
   weaponName: GRENADE
   muzzleFlashTransform: {fileID: 1176262535331951240}
   shellTransform: {fileID: 0}
@@ -552,7 +551,7 @@ MonoBehaviour:
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 15690662796072939938
+  <AssetPathHash>k__BackingField: 10589018412317925922
 --- !u!114 &8961735658581599883
 MonoBehaviour:
   m_ObjectHideFlags: 0

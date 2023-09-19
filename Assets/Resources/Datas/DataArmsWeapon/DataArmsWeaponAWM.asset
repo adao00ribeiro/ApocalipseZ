@@ -15,7 +15,7 @@ MonoBehaviour:
   GuidId: 0d76108a-efba-4157-b4f0-bdb54addea6c
   Name: AWM
   Type: 1
-  fireRate: 1
+  fireRate: 2
   spread: 0
   recoil: {x: -2, y: 5, z: 0}
   MuzzleFlashParticlesFX: {fileID: 0}

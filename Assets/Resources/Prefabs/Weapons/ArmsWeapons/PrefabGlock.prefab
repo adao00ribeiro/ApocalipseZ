@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8240843856643256346}
   - component: {fileID: 1348199900636071049}
   m_Layer: 6
-  m_Name: PrefabGLOCK
+  m_Name: PrefabGlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,7 +51,6 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 0}
   _networkObjectCache: {fileID: 8240843856643256346}
-  weaponSetting: {fileID: 11400000, guid: a69847d70c4aaa944ab6774edad5520b, type: 2}
   weaponName: GLOCK
   muzzleFlashTransform: {fileID: 4599534150138972090}
   shellTransform: {fileID: 0}
@@ -226,7 +225,7 @@ MonoBehaviour:
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
-  <AssetPathHash>k__BackingField: 4917814731164920794
+  <AssetPathHash>k__BackingField: 18022631452059869850
 --- !u!114 &1348199900636071049
 MonoBehaviour:
   m_ObjectHideFlags: 0

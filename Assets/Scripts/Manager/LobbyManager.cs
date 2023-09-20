@@ -1,10 +1,9 @@
-using UnityEngine;
 using ApocalipseZ;
-using UnityEditor.Animations;
+using UnityEngine;
 public class LobbyManager : MonoBehaviour
 {
     /// <summary>
-    public AnimatorController npcanimator;
+  //  public Animator npcanimator;
     public GameObject model;
 
     public void SpawCharacter(string nameCharacter)
@@ -18,7 +17,7 @@ public class LobbyManager : MonoBehaviour
         {
                 Transform point = GameController.Instance.PlayerSpawPoints.GetPointSpaw();
                 model = Instantiate(cha.PrefabCharacter ,point.position,point.rotation);
-                model.GetComponent<Animator>().runtimeAnimatorController = npcanimator;
+              //  model.GetComponent<Animator>().runtimeAnimatorController = npcanimator.runtimeAnimatorController;
         }
     }
 

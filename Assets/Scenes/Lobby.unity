@@ -5195,7 +5195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2a5a01df2dfd734483082323ecaf171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcanimator: {fileID: 9100000, guid: 34aca8dcc945d5943aa1fc67e1e18142, type: 2}
   model: {fileID: 0}
 --- !u!1 &853880667
 GameObject:
@@ -10659,8 +10658,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 235490533}
   m_HandleRect: {fileID: 235490532}
   m_Direction: 2
-  m_Value: -0.051282052
-  m_Size: 0.9999972
+  m_Value: -349363.28
+  m_Size: 0.99999714
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -10957,7 +10956,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00018473038, y: 0.0024045813}
+  m_AnchoredPosition: {x: -0.00018473038, y: 852.94}
   m_SizeDelta: {x: 0, y: 852.94}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1601059623
@@ -13109,6 +13108,7 @@ MonoBehaviour:
   _updateHostVisibility: 1
   _defaultConditions:
   - {fileID: 11400000, guid: 37bd3d466aaa29b4da784cddaaa365ea, type: 2}
+  - {fileID: 11400000, guid: 2033f54fd2794464bae08fa5a55c8996, type: 2}
 --- !u!1 &2128308855
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,16 +21,21 @@ namespace ApocalipseZ
         {
             transform.position += Vector3.up * 2;
         }
-        public override void OnStartNetwork(){
-            base.OnStartNetwork();
+
+        private void Start()
+        {
             dataItem = GameController.Instance.DataManager.GetDataItem(this.name);
             Ammo = dataItem.Ammo;
         }
-        private void Start()
+        public override void OnStartClient()
         {
-           
+            base.OnStartClient();
+            if (base.IsServer)
+            {
+                return;
+            }
+            Destroy(GetComponent<Rigidbody>());
         }
-
         public void SetAmmo(int _ammo)
         {
             Ammo = _ammo;

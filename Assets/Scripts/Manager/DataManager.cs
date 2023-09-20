@@ -69,7 +69,7 @@ namespace ApocalipseZ
             DataItem temp = null;
             foreach (DataItem item in ListItems)
             {
-                if (item.Name == Name)
+                if (Name.Contains(item.Name))
                 {
                     temp = item;
                 }

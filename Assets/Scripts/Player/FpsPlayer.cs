@@ -13,6 +13,7 @@ using FishNet.Object.Prediction;
 using FishNet;
 using FishNet.Managing.Timing;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using FishNet.Component.Animating;
 
 namespace ApocalipseZ
 {
@@ -82,12 +83,14 @@ namespace ApocalipseZ
         public string CharacterName = "";
         MoveData md = new();
         ReconcileData rd = new();
+
+        private NetworkAnimator networkAnimator;
         //MoveData for client simulation
 
         // Start is called before the first frame update
         private void Awake()
         {
-
+            networkAnimator = GetComponent<NetworkAnimator>();
             Inventory = GetComponent<Inventory>();
             Moviment = GetComponent<Moviment>();
             WeaponManager = GetComponent<WeaponManager>();
@@ -107,7 +110,31 @@ namespace ApocalipseZ
             base.TimeManager.OnPostTick += TimeManager_OnPostTick;
 
         }
+        public override void OnStopNetwork()
+        {
+            base.OnStopNetwork();
 
+            if (base.TimeManager != null)
+            {
+                base.TimeManager.OnTick -= TimeManager_OnTick;
+
+                base.TimeManager.OnPostTick -= TimeManager_OnPostTick;
+            }
+        }
+        private void LateUpdate()
+        {
+            if (!base.IsOwner || PlayerStats.IsDead())
+            {
+                return;
+            }
+
+            FirstPersonCamera.UpdateCamera();
+        }
+
+        private void TimeManager_OnTick()
+        {
+            Move(BuildMoveData());
+        }
         private void TimeManager_OnPostTick()
         {
 
@@ -161,31 +188,7 @@ namespace ApocalipseZ
             }, 5);
         }
 
-        public override void OnStopNetwork()
-        {
-            base.OnStopNetwork();
 
-            if (base.TimeManager != null)
-            {
-                base.TimeManager.OnTick -= TimeManager_OnTick;
-
-                base.TimeManager.OnPostTick -= TimeManager_OnPostTick;
-            }
-        }
-        private void LateUpdate()
-        {
-            if (!base.IsOwner || PlayerStats.IsDead())
-            {
-                return;
-            }
-
-            FirstPersonCamera.UpdateCamera();
-        }
-
-        private void TimeManager_OnTick()
-        {
-            Move(BuildMoveData());
-        }
         private MoveData BuildMoveData()
         {
             if (!base.IsOwner)
@@ -263,6 +266,7 @@ namespace ApocalipseZ
                 GameObject go = Instantiate(cha.PrefabCharacter, transform.GetChild(0).transform);
                 meshteste = go.GetComponent<MeshRenderer>();
                 AnimatorController = go.GetComponent<Animator>();
+                networkAnimator.SetAnimator(AnimatorController);
             }
         }
         void PlayerColorChanged(Color32 _, Color32 newPlayerColor, bool asServer)

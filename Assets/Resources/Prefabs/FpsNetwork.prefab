@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 5475215427857851610}
   - component: {fileID: 6955809048429089047}
   - component: {fileID: 2410501142877222310}
+  - component: {fileID: 8912443657321989260}
   m_Layer: 3
   m_Name: FpsNetwork
   m_TagString: Player
@@ -520,6 +521,27 @@ MonoBehaviour:
   _componentIndexCache: 7
   _addedNetworkObject: {fileID: 5475215427857851610}
   _networkObjectCache: {fileID: 5475215427857851610}
+--- !u!114 &8912443657321989260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121012257842986411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 5475215427857851610}
+  _networkObjectCache: {fileID: 0}
+  IgnoredParameters: []
+  _animator: {fileID: 0}
+  _smoothFloats: 1
+  _interpolation: 2
+  _clientAuthoritative: 1
+  _sendToOwner: 0
 --- !u!1 &3861114035474953729
 GameObject:
   m_ObjectHideFlags: 0

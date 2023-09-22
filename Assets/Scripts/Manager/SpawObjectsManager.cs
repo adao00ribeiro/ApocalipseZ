@@ -22,7 +22,7 @@ public struct ConnectMessage : IBroadcast
 }
 public class SpawObjectsManager : MonoBehaviour
 {
-    [SerializeField ]private List<PointItem> ListPointItems = new List<PointItem>();
+    [SerializeField] private List<PointItem> ListPointItems = new List<PointItem>();
     private float timeSpaw;
     private void Start()
     {
@@ -31,28 +31,28 @@ public class SpawObjectsManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-         
+
     }
 
-   
 
-    public void InitSpaw(){
+    public void InitSpaw()
+    {
         foreach (var item in ListPointItems)
         {
             GameController.Instance.TimerManager.Add(() =>
             {
-                Spawn(item.GetPrefab(), item.transform.position);
-              //  Destroy(item.gameObject);
+                Spawn(item.GetPrefab(), item.transform);
+                //  Destroy(item.gameObject);
             }, Random.Range(1, 20));
         }
     }
-    public void Spawn(GameObject prefab, Vector3 pointSpawn)
+    public void Spawn(GameObject prefab, Transform pointSpawn)
     {
         if (prefab == null)
         {
             return;
         }
-        GameObject treeGo = Instantiate(prefab, pointSpawn, Quaternion.identity);
+        GameObject treeGo = Instantiate(prefab, pointSpawn.position, pointSpawn.rotation);
         treeGo.GetComponent<Item>().IsServerSpaw = true;
         InstanceFinder.ServerManager.Spawn(treeGo);
     }
@@ -63,6 +63,6 @@ public class SpawObjectsManager : MonoBehaviour
 
     internal void Remove(PointItem pointItem)
     {
-          ListPointItems.Remove(pointItem);
+        ListPointItems.Remove(pointItem);
     }
 }

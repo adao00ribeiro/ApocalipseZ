@@ -13,6 +13,7 @@ using FishNet.Object.Prediction;
 using FishNet;
 using FishNet.Managing.Timing;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using FishNet.Component.Animating;
 
 namespace ApocalipseZ
 {
@@ -82,12 +83,14 @@ namespace ApocalipseZ
         public string CharacterName = "";
         MoveData md = new();
         ReconcileData rd = new();
+
+        private NetworkAnimator networkAnimator;
         //MoveData for client simulation
 
         // Start is called before the first frame update
         private void Awake()
         {
-
+            networkAnimator = GetComponent<NetworkAnimator>();
             Inventory = GetComponent<Inventory>();
             Moviment = GetComponent<Moviment>();
             WeaponManager = GetComponent<WeaponManager>();
@@ -107,60 +110,6 @@ namespace ApocalipseZ
             base.TimeManager.OnPostTick += TimeManager_OnPostTick;
 
         }
-
-        private void TimeManager_OnPostTick()
-        {
-
-            if (IsServer)
-            {
-                rd.Position = transform.position;
-                rd.Rotation = transform.rotation;
-                rd.VerticalVelocity = Moviment.PlayerVelocity.y;
-                rd.Grounded = Moviment.isGrounded();
-                Reconciliation(rd);
-            }
-
-        }
-        private void TimeManager_OnUpdate()
-        {
-            if (base.IsOwner)
-            {
-                Animation();
-                if (PlayerStats.Disable)
-                {
-                    return;
-                }
-                if (PlayerStats.IsDead())
-                {
-                    Moviment.DisableCharacterController();
-                    FirstPersonCamera.CameraDeath();
-                    //   AnimatorController.Play("BlendDeath");
-                    AnimatorWeaponHolderController.SetBool("HideWeapon", true);
-                    CmdRespawn();
-                    return;
-                }
-                InteractObjects.UpdateInteract();
-                if (InputManager.GetLanterna())
-                {
-                    Lanterna.enabled = !Lanterna.enabled;
-                }
-
-            }
-        }
-        [ServerRpc]
-        private void CmdRespawn()
-        {
-
-            GameController.Instance.TimerManager.Add(() =>
-            {
-                transform.position = GameController.Instance.PlayerSpawPoints.GetPointSpaw().position;
-                PlayerStats.AddHealth(200);
-                PlayerStats.AddHydratation(100);
-                PlayerStats.AddSatiety(100);
-                TargetRespaw(base.Owner);
-            }, 5);
-        }
-
         public override void OnStopNetwork()
         {
             base.OnStopNetwork();
@@ -178,7 +127,6 @@ namespace ApocalipseZ
             {
                 return;
             }
-            
             FirstPersonCamera.UpdateCamera();
         }
 
@@ -186,6 +134,55 @@ namespace ApocalipseZ
         {
             Move(BuildMoveData());
         }
+        private void TimeManager_OnPostTick()
+        {
+
+            if (IsServer)
+            {
+                rd.Position = transform.position;
+                rd.Rotation = transform.rotation;
+                rd.VerticalVelocity = Moviment.PlayerVelocity.y;
+                rd.Grounded = Moviment.isGrounded();
+                Reconciliation(rd);
+            }
+
+        }
+        private void TimeManager_OnUpdate()
+        {
+
+            if (!base.IsOwner)
+            {
+
+                return;
+            }
+            if (PlayerStats.Disable)
+            {
+                return;
+            }
+            Animation();
+
+            InteractObjects.UpdateInteract();
+            if (InputManager.GetLanterna())
+            {
+                Lanterna.enabled = !Lanterna.enabled;
+            }
+        }
+        [ServerRpc]
+        private void CmdRespawn()
+        {
+
+            GameController.Instance.TimerManager.Add(() =>
+            {
+                transform.position = GameController.Instance.PlayerSpawPoints.GetPointSpaw().position;
+                PlayerStats.AddHealth(200);
+                PlayerStats.AddHydratation(100);
+                PlayerStats.AddSatiety(100);
+
+                TargetRespaw(base.Owner);
+            }, 5);
+        }
+
+
         private MoveData BuildMoveData()
         {
             if (!base.IsOwner)
@@ -231,9 +228,13 @@ namespace ApocalipseZ
 
             if (base.IsOwner)
             {
+
                 FirstPersonCamera.tag = "MainCamera";
                 FirstPersonCamera.GetComponent<Camera>().enabled = true;
                 FirstPersonCamera.ActiveCursor(false);
+                CanvasFpsPlayer CanvasFpsPlayer = GameObject.FindObjectOfType<CanvasFpsPlayer>();
+                CanvasFpsPlayer.SetFirtPersonCamera(FirstPersonCamera);
+                CanvasFpsPlayer.SetPlayerStats(PlayerStats);
                 CmdSpawCharacter(PlayerPrefs.GetString("NamePlayer"));
             }
             else
@@ -241,11 +242,8 @@ namespace ApocalipseZ
                 FirstPersonCamera.RemoveAudioListener();
             }
 
-
             Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-            CanvasFpsPlayer CanvasFpsPlayer = GameObject.FindObjectOfType<CanvasFpsPlayer>();
-            CanvasFpsPlayer.SetFirtPersonCamera(FirstPersonCamera);
-            CanvasFpsPlayer.SetPlayerStats(PlayerStats);
+
 
             CmdSetupPlayer("player", color);
         }
@@ -263,6 +261,20 @@ namespace ApocalipseZ
                 GameObject go = Instantiate(cha.PrefabCharacter, transform.GetChild(0).transform);
                 meshteste = go.GetComponent<MeshRenderer>();
                 AnimatorController = go.GetComponent<Animator>();
+                networkAnimator.SetAnimator(AnimatorController);
+                if (base.IsOwner)
+                {
+                    FpsPlayer.SetLayerRecursively(go, 8);
+                }
+            }
+
+
+        }
+        public static void SetLayerRecursively(GameObject go, int layerNumber)
+        {
+            foreach (Transform trans in go.GetComponentsInChildren<Transform>(true))
+            {
+                trans.gameObject.layer = layerNumber;
             }
         }
         void PlayerColorChanged(Color32 _, Color32 newPlayerColor, bool asServer)
@@ -297,6 +309,11 @@ namespace ApocalipseZ
             }
         }
         */
+            if (asServer)
+            {
+                return;
+
+            }
             SpawCharacter(newPlayerColor);
 
         }
@@ -310,11 +327,12 @@ namespace ApocalipseZ
         public void TargetRespaw(NetworkConnection conn)
         {
 
-            //   AnimatorController.Play("Walk");
+            AnimatorController.Play("Walk");
             FirstPersonCamera.CameraAlive();
             Moviment.EnableCharacterController();
             AnimatorWeaponHolderController.SetBool("HideWeapon", false);
-
+            AnimatorController.SetBool("IsDead", false);
+            PlayerStats.Disable = false;
         }
 
         [ServerRpc]
@@ -357,17 +375,23 @@ namespace ApocalipseZ
             {
                 return;
             }
+            if (PlayerStats.IsDead())
+            {
+                Moviment.DisableCharacterController();
+                FirstPersonCamera.CameraDeath();
+                AnimatorController.SetFloat("SelectDeath", InputManager.GetCrouch() ? 0 : Random.Range(1, 5));
+                AnimatorController.SetBool("IsDead", true);
+                AnimatorWeaponHolderController.SetBool("HideWeapon", true);
+                CmdRespawn();
+                PlayerStats.Disable = true;
+                return;
+            }
             //animatorcontroller
             AnimatorController.SetFloat("Horizontal", InputManager.GetMoviment().x);
             AnimatorController.SetFloat("Vertical", InputManager.GetMoviment().y);
             AnimatorController.SetBool("IsJump", !Moviment.isGrounded());
             AnimatorController.SetBool("IsRun", Moviment.CheckMovement() && InputManager.GetRun());
             AnimatorController.SetBool("IsCrouch", InputManager.GetCrouch());
-
-            if (!PlayerStats.IsDead())
-            {
-                AnimatorController.SetFloat("SelectDeath", InputManager.GetCrouch() ? 0 : Random.Range(1, 5));
-            }
 
             AnimatorWeaponHolderController.SetBool("Walk", Moviment.CheckMovement() && Moviment.isGrounded() && !PlayerStats.IsDead());
             AnimatorWeaponHolderController.SetBool("Run", Moviment.CheckMovement() && InputManager.GetRun() && Moviment.isGrounded() && !PlayerStats.IsDead());

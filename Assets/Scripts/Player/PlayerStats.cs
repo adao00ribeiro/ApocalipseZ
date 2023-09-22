@@ -39,10 +39,6 @@ namespace ApocalipseZ
         private void OnSetHealth(int oldHealth, int newHealth, bool asServer)
         {
             health = newHealth;
-            if (health > 0)
-            {
-                Disable = false;
-            }
             OnAlteredStats?.Invoke();
         }
         private void OnSetHydratation(int oldHydratation, int newHydratation, bool asServer)
@@ -105,10 +101,8 @@ namespace ApocalipseZ
                 }
                 if (IsDead())
                 {
-
                     deadStatsManager.ObserveViewUiDeadStats(base.Owner.ClientId.ToString());
                     deadStatsManager.TargewtViewSeFudeo(base.Owner);
-                    Disable = true;
                 }
             }
         }
@@ -120,6 +114,7 @@ namespace ApocalipseZ
 
         public void AddHealth(int life)
         {
+            Disable = false;
             health += life;
 
             if (health > 100)

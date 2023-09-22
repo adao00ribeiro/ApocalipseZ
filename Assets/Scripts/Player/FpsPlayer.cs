@@ -127,7 +127,6 @@ namespace ApocalipseZ
             {
                 return;
             }
-
             FirstPersonCamera.UpdateCamera();
         }
 
@@ -152,16 +151,16 @@ namespace ApocalipseZ
         {
             if (base.IsOwner)
             {
-                Animation();
+            
                 if (PlayerStats.Disable)
                 {
                     return;
                 }
+                    Animation();
                 if (PlayerStats.IsDead())
                 {
                     Moviment.DisableCharacterController();
                     FirstPersonCamera.CameraDeath();
-                    //   AnimatorController.Play("BlendDeath");
                     AnimatorWeaponHolderController.SetBool("HideWeapon", true);
                     CmdRespawn();
                     return;
@@ -237,6 +236,9 @@ namespace ApocalipseZ
                 FirstPersonCamera.tag = "MainCamera";
                 FirstPersonCamera.GetComponent<Camera>().enabled = true;
                 FirstPersonCamera.ActiveCursor(false);
+                CanvasFpsPlayer CanvasFpsPlayer = GameObject.FindObjectOfType<CanvasFpsPlayer>();
+                CanvasFpsPlayer.SetFirtPersonCamera(FirstPersonCamera);
+                CanvasFpsPlayer.SetPlayerStats(PlayerStats);
                 CmdSpawCharacter(PlayerPrefs.GetString("NamePlayer"));
             }
             else
@@ -244,11 +246,8 @@ namespace ApocalipseZ
                 FirstPersonCamera.RemoveAudioListener();
             }
 
-
             Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
-            CanvasFpsPlayer CanvasFpsPlayer = GameObject.FindObjectOfType<CanvasFpsPlayer>();
-            CanvasFpsPlayer.SetFirtPersonCamera(FirstPersonCamera);
-            CanvasFpsPlayer.SetPlayerStats(PlayerStats);
+
 
             CmdSetupPlayer("player", color);
         }
@@ -319,7 +318,7 @@ namespace ApocalipseZ
         public void TargetRespaw(NetworkConnection conn)
         {
 
-            //   AnimatorController.Play("Walk");
+            AnimatorController.Play("Walk");
             FirstPersonCamera.CameraAlive();
             Moviment.EnableCharacterController();
             AnimatorWeaponHolderController.SetBool("HideWeapon", false);
@@ -373,9 +372,10 @@ namespace ApocalipseZ
             AnimatorController.SetBool("IsRun", Moviment.CheckMovement() && InputManager.GetRun());
             AnimatorController.SetBool("IsCrouch", InputManager.GetCrouch());
 
-            if (!PlayerStats.IsDead())
+            if (PlayerStats.IsDead())
             {
                 AnimatorController.SetFloat("SelectDeath", InputManager.GetCrouch() ? 0 : Random.Range(1, 5));
+                AnimatorController.SetTrigger("IsDeath");
             }
 
             AnimatorWeaponHolderController.SetBool("Walk", Moviment.CheckMovement() && Moviment.isGrounded() && !PlayerStats.IsDead());

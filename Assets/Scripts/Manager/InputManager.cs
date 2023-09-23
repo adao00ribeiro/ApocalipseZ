@@ -60,14 +60,7 @@ namespace ApocalipseZ
         }
         public bool GetCrouch()
         {
-
-            if (playerControls.Player.Crouch.ReadValue<float>() == 0)
-            {
-                return false;
-            }
-
-            return true;
-
+            return playerControls.Player.Crouch.WasPressedThisFrame();
         }
         public bool GetReload()
         {

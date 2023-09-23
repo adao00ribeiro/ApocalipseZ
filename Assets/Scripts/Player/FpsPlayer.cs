@@ -260,6 +260,7 @@ namespace ApocalipseZ
             {
                 GameObject go = Instantiate(cha.PrefabCharacter, transform.GetChild(0).transform);
                 meshteste = go.GetComponent<MeshRenderer>();
+                Moviment.SetMesh(go.transform);
                 AnimatorController = go.GetComponent<Animator>();
                 networkAnimator.SetAnimator(AnimatorController);
                 if (base.IsOwner)

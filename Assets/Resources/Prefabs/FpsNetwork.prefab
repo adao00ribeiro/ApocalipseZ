@@ -272,11 +272,16 @@ MonoBehaviour:
   CrouchHeight: 0.7
   IsGrounded: 0
   PlayerVelocity: {x: 0, y: 0, z: 0}
+  mesh: {fileID: 0}
   GroundedRadius: 0.28
   GroundedOffset: -0.14
   GroundLayers:
     serializedVersion: 2
     m_Bits: 65
+  standingHeight: 1.8
+  timeToCrouch: 0.25
+  crochingCenter: {x: 0, y: 0.5, z: 0}
+  standingCenter: {x: 0, y: 1, z: 0}
 --- !u!114 &7433572165634752114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,7 +462,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 31
+  <PrefabId>k__BackingField: 39
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0

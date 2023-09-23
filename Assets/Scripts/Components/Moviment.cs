@@ -94,6 +94,7 @@ namespace ApocalipseZ
             IsGrounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers,
                 QueryTriggerInteraction.Ignore);
         }
+
         public void Move(MoveData md, float delta)
         {
             if (!CharacterController.enabled)
@@ -105,15 +106,30 @@ namespace ApocalipseZ
             currentSpeed = Walk;
             currentSpeed = md.IsRun ? Run : currentSpeed;
             currentSpeed = md.IsCrouch ? crouchSpeed : currentSpeed;
+          
             if (md.IsCrouch && !duringCrouchAnimation && CharacterController.isGrounded)
             {
-                StartCoroutine(CrouchStand());
+                if (!isCrouchButtonDown)
+                {
+                    isCrouchButtonDown = true;
+                    StartCoroutine(CrouchStand());
+                }
             }
+            else
+            {
+                if (isCrouchButtonDown && IsCrouching)
+                {
+                    isCrouchButtonDown = false;
+                    StartCoroutine(CrouchStand());
+                }
+            }
+         
+
             transform.localRotation = Quaternion.Euler(0, md.RotationX, 0);
             CharacterController.Move(transform.TransformDirection(moveDirection) * currentSpeed * delta + new Vector3(0.0f, PlayerVelocity.y, 0.0f) * delta);
 
         }
-
+        public bool isCrouchButtonDown  = false;
         [SerializeField] private float standingHeight;
         [SerializeField] private float timeToCrouch;
         [SerializeField] private Vector3 crochingCenter;
@@ -122,16 +138,16 @@ namespace ApocalipseZ
         [SerializeField] private bool IsCrouching;
 
         [SerializeField] private bool duringCrouchAnimation;
+
         private IEnumerator CrouchStand()
         {
+
             duringCrouchAnimation = true;
             float timeElapsed = 0;
             float targetHeight = IsCrouching ? standingHeight : CrouchHeight;
             float currentHeight = CharacterController.height;
             Vector3 targetCenter = IsCrouching ? standingCenter : crochingCenter;
             Vector3 currentCenter = CharacterController.center;
-
-
             while (timeElapsed < timeToCrouch)
             {
                 CharacterController.height = Mathf.Lerp(currentHeight, targetHeight, timeElapsed / timeToCrouch);

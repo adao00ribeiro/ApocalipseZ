@@ -64,13 +64,7 @@ namespace ApocalipseZ
             {
                 DataAudio audioPickup = GameController.Instance.DataManager.GetDataAudio("Pickup");
                 GameController.Instance.SoundManager.PlayOneShot(transform.position, audioPickup.Audio);
-                if (IsServerSpaw)
-                {
-                    GameController.Instance.TimerManager.Add(() =>
-                    {
-                        // SpawObjects.Spawn(ScriptableManager.Instance.GetPrefab(dataItem.sitem.Type), point);
-                    }, 4);
-                }
+                GameController.Instance.SpawObjectsManager.SpawTimeObject();
                 NetworkBehaviour.Destroy(gameObject);
             }
         }

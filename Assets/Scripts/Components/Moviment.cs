@@ -19,7 +19,7 @@ namespace ApocalipseZ
         public Vector3 PlayerVelocity;
 
         private float currentSpeed;
-        private Transform mesh;
+        [SerializeField] private Transform mesh;
 
         private CharacterController CharacterController;
 
@@ -94,6 +94,7 @@ namespace ApocalipseZ
             IsGrounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers,
                 QueryTriggerInteraction.Ignore);
         }
+
         public void Move(MoveData md, float delta)
         {
             if (!CharacterController.enabled)
@@ -105,19 +106,66 @@ namespace ApocalipseZ
             currentSpeed = Walk;
             currentSpeed = md.IsRun ? Run : currentSpeed;
             currentSpeed = md.IsCrouch ? crouchSpeed : currentSpeed;
-            //SetCrouchHeight();
+          
+            if (md.IsCrouch && !duringCrouchAnimation && CharacterController.isGrounded)
+            {
+                if (!isCrouchButtonDown)
+                {
+                    isCrouchButtonDown = true;
+                    StartCoroutine(CrouchStand());
+                }
+            }
+            else
+            {
+                if (isCrouchButtonDown && IsCrouching)
+                {
+                    isCrouchButtonDown = false;
+                    StartCoroutine(CrouchStand());
+                }
+            }
+         
+
             transform.localRotation = Quaternion.Euler(0, md.RotationX, 0);
             CharacterController.Move(transform.TransformDirection(moveDirection) * currentSpeed * delta + new Vector3(0.0f, PlayerVelocity.y, 0.0f) * delta);
 
         }
+        public bool isCrouchButtonDown  = false;
+        [SerializeField] private float standingHeight;
+        [SerializeField] private float timeToCrouch;
+        [SerializeField] private Vector3 crochingCenter;
+        [SerializeField] private Vector3 standingCenter;
 
+        [SerializeField] private bool IsCrouching;
 
-        public void SetCrouchHeight()
+        [SerializeField] private bool duringCrouchAnimation;
+
+        private IEnumerator CrouchStand()
         {
-            CharacterController.height = InputManager.GetCrouch() ? CrouchHeight : 1.8f;
-            mesh.localPosition = InputManager.GetCrouch() ? new Vector3(0, 0.4f, 0) : new Vector3(0, 0, 0);
 
+            duringCrouchAnimation = true;
+            float timeElapsed = 0;
+            float targetHeight = IsCrouching ? standingHeight : CrouchHeight;
+            float currentHeight = CharacterController.height;
+            Vector3 targetCenter = IsCrouching ? standingCenter : crochingCenter;
+            Vector3 currentCenter = CharacterController.center;
+            while (timeElapsed < timeToCrouch)
+            {
+                CharacterController.height = Mathf.Lerp(currentHeight, targetHeight, timeElapsed / timeToCrouch);
+                CharacterController.center = Vector3.Lerp(currentCenter, targetCenter, timeElapsed / timeToCrouch);
+                timeElapsed += Time.deltaTime;
+                yield return null;
+            }
+            CharacterController.height = targetHeight;
+            CharacterController.center = targetCenter;
+            IsCrouching = !IsCrouching;
+            duringCrouchAnimation = false;
         }
+        public void SetMesh(Transform _mesh)
+        {
+            mesh = _mesh;
+        }
+
+
         public bool CheckMovement()
         {
             if (InputManager.GetMoviment().x > 0 || InputManager.GetMoviment().x < 0 || InputManager.GetMoviment().y > 0 || InputManager.GetMoviment().y < 0)

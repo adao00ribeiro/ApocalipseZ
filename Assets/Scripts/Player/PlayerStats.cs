@@ -56,7 +56,7 @@ namespace ApocalipseZ
 
         void Update()
         {
-            if (base.IsServer)
+            if (base.IsServer )
             {
                 if (Disable)
                 {
@@ -105,6 +105,7 @@ namespace ApocalipseZ
                     deadStatsManager.TargewtViewSeFudeo(base.Owner);
                 }
             }
+
         }
 
         public bool IsDead()

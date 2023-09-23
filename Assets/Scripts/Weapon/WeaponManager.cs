@@ -158,11 +158,12 @@ namespace ApocalipseZ
         public void TargetRpcSlotChange(NetworkConnection target, GameObject weapon, Transform sway)
         {
             activeSlot = weapon.GetComponent<Weapon>();
-           
+
         }
         [ObserversRpc]
         public void ObserverRpcSlotChange(GameObject weapon)
         {
+
             activeSlot = weapon.GetComponent<Weapon>();
             activeSlot.Cam = fpsplayer.GetFirstPersonCamera();
             activeSlot.transform.SetParent(swayTransform);
@@ -170,6 +171,10 @@ namespace ApocalipseZ
             activeSlot.transform.localRotation = quaternion.identity;
             PersonalizeArmsWeapon personalize = weapon.GetComponent<PersonalizeArmsWeapon>();
             personalize.ActiveArms("Yasmim");
+            if (!base.IsOwner)
+            {
+                FpsPlayer.SetLayerRecursively(weapon, 8);
+            }
         }
         private void SelecionaWeapon()
         {

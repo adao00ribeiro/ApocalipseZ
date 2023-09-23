@@ -113,9 +113,20 @@ namespace ApocalipseZ
                     currentAmmo -= 1;
                     PlayFX();
                     muzzleFlashTransform.LookAt(Cam.transform.position + Cam.transform.forward * 3000);
-                    SpawnProjectile(muzzleFlashTransform.position, muzzleFlashTransform.forward, 0f);
+
+                    if (!base.IsHost)
+                    {
+
+                        SpawnProjectile(muzzleFlashTransform.position, muzzleFlashTransform.forward, 0f);
+                    }
+
                     //calculatedDamage = Random.Range ( damageMin , damageMax );
+
+
                     CmdFire(muzzleFlashTransform.position, muzzleFlashTransform.forward, base.TimeManager.Tick);
+
+
+
                     // ProjectilesManager ( );
                     recoilComponent.AddRecoil(weaponSetting.recoil);
                     //Calculating when next fire call allowed
@@ -180,8 +191,11 @@ namespace ApocalipseZ
              * to punish other players because a laggy client is firing. */
             passedTime = Mathf.Min(MAX_PASSED_TIME / 2f, passedTime);
 
+
             //Spawn on the server.
             SpawnProjectile(position, direction, passedTime);
+
+
             //Tell other clients to spawn the projectile.
             ObserversFire(position, direction, tick);
         }
@@ -193,8 +207,11 @@ namespace ApocalipseZ
             float passedTime = (float)base.TimeManager.TimePassed(tick, false);
             passedTime = Mathf.Min(MAX_PASSED_TIME, passedTime);
 
-            //Spawn the projectile locally.
-            SpawnProjectile(position, direction, passedTime);
+            if (!base.IsHost)
+            {
+                //Spawn the projectile locally.
+                SpawnProjectile(position, direction, passedTime);
+            }
         }
         public void ReloadBegin()
         {

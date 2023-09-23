@@ -67,7 +67,16 @@ namespace ApocalipseZ
             }
 
             return true;
-
+        }
+          public bool GetCrouchPressed()
+        {
+            return playerControls.Player.Crouch.WasPressedThisFrame();
+           
+        }
+         public bool GetCrouchReleased()
+        {
+            return playerControls.Player.Crouch.WasReleasedThisFrame();
+           
         }
         public bool GetReload()
         {

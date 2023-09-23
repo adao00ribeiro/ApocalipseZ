@@ -33,7 +33,17 @@ public class SpawObjectsManager : MonoBehaviour
         }
 
     }
+    
+    public void SpawTimeObject(){
 
+            int randnumber = Random.Range(0 ,ListPointItems.Count  - 1);
+            GameController.Instance.TimerManager.Add(() =>
+            {
+                Spawn(ListPointItems[randnumber].GetPrefab(), ListPointItems[randnumber].transform);
+                //  Destroy(item.gameObject);
+            }, Random.Range(1, 20));
+      
+    }
 
     public void InitSpaw()
     {

@@ -15,9 +15,9 @@ MonoBehaviour:
   GuidId: 1213a7d4-e539-4b5d-b8b9-0967a76c2e3b
   Name: SCAR
   Type: 0
-  fireRate: 0.1
+  fireRate: 0.15
   spread: 0
-  recoil: {x: 0, y: 0, z: 0}
+  recoil: {x: 1, y: -2, z: 0}
   MuzzleFlashParticlesFX: {fileID: 0}
   shotSFX: ScarShot
   reloadingSFX: ScarReload

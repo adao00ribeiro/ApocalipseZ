@@ -3,7 +3,37 @@ guid: d2bc1cf4b785b5b4991912aafe70e4f0
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat_AKM
+    second: {fileID: 2100000, guid: fcae4d098fe89514ebacd7e6e9a69898, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat_CorpoYasmim
+    second: {fileID: 2100000, guid: a3b4f24341338ba44aca0f9fd1643af6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat_JaquetaF01
+    second: {fileID: 2100000, guid: 5fbd4e16aff76cf448b3978228d5e666, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat_MadeiradoAKM
+    second: {fileID: 2100000, guid: 745c27ed6dfc8644a9693dc7ace3ac57, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat_Municoes_7,62x39_AK
+    second: {fileID: 2100000, guid: ceac6a735a772b444a42e56d39b75e9c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: arms
+    second: {fileID: 2100000, guid: 642f23b14a7f79242a38d9e1b5bbf938, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

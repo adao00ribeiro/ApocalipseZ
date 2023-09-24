@@ -37,6 +37,6 @@ MonoBehaviour:
   meleeHitFX: 
   bulletInitialVelocity: 0
   airResistanceForce: 0
-  projectile: Bullet
+  projectile: BarretiBullet
   PrefabArmsWeapon: {fileID: 2271651885792713846, guid: d19d1de9cf786fa4485e7f31d4cde360,
     type: 3}

@@ -9,16 +9,17 @@ namespace ApocalipseZ
     {
         [SerializeField] private DataManager DataManager;
 
-        [HideInInspector]
-        public ParticleSystem objConcreteHitFX;
-        [HideInInspector]
-        public ParticleSystem objWoodHitFX;
-        [HideInInspector]
-        public ParticleSystem objDirtHitFX;
-        [HideInInspector]
-        public ParticleSystem objMetalHitFX;
-        [HideInInspector]
-        public ParticleSystem objBloodHitFX;
+
+        private ParticleSystem objconcreteHitFX;
+
+        private ParticleSystem objwoodHitFX;
+
+        private ParticleSystem objdirtHitFX;
+
+        private ParticleSystem objmetalHitFX;
+
+        private ParticleSystem objbloodHitFX;
+
 
         [Header("Melee sounds")]
         public AudioClip impactSound;
@@ -32,12 +33,6 @@ namespace ApocalipseZ
 
             DataManager = GameController.Instance.DataManager;
             ricochetSource = GetComponent<AudioSource>();
-
-            objConcreteHitFX = Instantiate(DataManager.GetDataParticles("Concrete").Particles);
-            objWoodHitFX = Instantiate(DataManager.GetDataParticles("Wood").Particles);
-            objDirtHitFX = Instantiate(DataManager.GetDataParticles("Dirt").Particles);
-            objMetalHitFX = Instantiate(DataManager.GetDataParticles("Metal").Particles);
-            objBloodHitFX = Instantiate(DataManager.GetDataParticles("Blood").Particles);
         }
 
 
@@ -97,6 +92,61 @@ namespace ApocalipseZ
         {
             // RicochetSFX();
             HitParticlesFXManager(hit);
+        }
+        public ParticleSystem objConcreteHitFX
+        {
+            get
+            {
+                if (objconcreteHitFX == null)
+                {
+                    objconcreteHitFX = Instantiate(DataManager.GetDataParticles("Concrete").Particles);
+                }
+                return objconcreteHitFX;
+            }
+        }
+        public ParticleSystem objWoodHitFX
+        {
+            get
+            {
+                if (objwoodHitFX == null)
+                {
+                    objwoodHitFX = Instantiate(DataManager.GetDataParticles("Wood").Particles);
+                }
+                return objwoodHitFX;
+            }
+        }
+        public ParticleSystem objDirtHitFX
+        {
+            get
+            {
+                if (objdirtHitFX == null)
+                {
+                    objdirtHitFX = Instantiate(DataManager.GetDataParticles("Dirt").Particles);
+                }
+                return objdirtHitFX;
+            }
+        }
+        public ParticleSystem objMetalHitFX
+        {
+            get
+            {
+                if (objmetalHitFX == null)
+                {
+                    objmetalHitFX = Instantiate(DataManager.GetDataParticles("Metal").Particles);
+                }
+                return objmetalHitFX;
+            }
+        }
+        public ParticleSystem objBloodHitFX
+        {
+            get
+            {
+                if (objbloodHitFX == null)
+                {
+                    objbloodHitFX = Instantiate(DataManager.GetDataParticles("Blood").Particles);
+                }
+                return objbloodHitFX;
+            }
         }
 
     }

@@ -12,6 +12,8 @@ TagManager:
   - noCollider
   - SpawPlayer
   - ChatWindow
+  - Concrete
+  - Wood
   layers:
   - Default
   - TransparentFX

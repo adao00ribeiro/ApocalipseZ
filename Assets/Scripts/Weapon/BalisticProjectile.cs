@@ -44,7 +44,7 @@ namespace ApocalipseZ
             RaycastHit hit;
             if (Physics.Linecast(lastPosition, transform.position, out hit))
             {
-                //HitFXManager.Instance.ApplyFX ( hit );
+               GameController.Instance.HitFXManager.ApplyFX ( hit );
                 IStats stat = hit.collider.GetComponent<IStats>();
                 if (stat != null)
                 {

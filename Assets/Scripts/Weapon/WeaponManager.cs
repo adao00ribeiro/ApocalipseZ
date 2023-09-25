@@ -17,13 +17,12 @@ namespace ApocalipseZ
 
         public Weapon activeSlot;
 
-        [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(SetPrimaryWeapon))]
-        public SlotInventoryTemp PrimaryWeapon;
-        public SlotInventoryTemp SecundaryWeapon;
+        public Weapon[] twoWeapon = new Weapon[2];
+
 
         [Tooltip("Animator that contain pickup animation")]
         public Animator weaponHolderAnimator;
-        IFpsPlayer fpsplayer;
+        [SerializeField] FpsPlayer fpsplayer;
         //Transform where weapons will dropped on Drop()
         private Transform playerTransform;
         [SerializeField] private Transform swayTransform;
@@ -35,7 +34,14 @@ namespace ApocalipseZ
             InputManager = GameController.Instance.InputManager;
 
         }
-
+        private void OnValidate()
+        {
+            // Certifique-se de que o tamanho do array não seja maior que o valor máximo.
+            if (twoWeapon.Length > 2)
+            {
+                System.Array.Resize(ref twoWeapon, 2);
+            }
+        }
         void Start()
         {
             UiPrimaryAndSecondWeapons = GameController.Instance.CanvasFpsPlayer.GetUiPrimaryandSecundaryWeapons();
@@ -43,7 +49,7 @@ namespace ApocalipseZ
             weaponHolderAnimator = transform.Find("Recoil/Camera & Recoil/Weapon holder").GetComponent<Animator>();
 
         }
-        public void SetFpsPlayer(IFpsPlayer fps)
+        public void SetFpsPlayer(FpsPlayer fps)
         {
             fpsplayer = fps;
         }
@@ -59,11 +65,11 @@ namespace ApocalipseZ
             {
                 IsChekInventory = false;
             }
-            if (InputManager.GetAlpha1())
+            if (InputManager.GetAlpha1() && !InputManager.GetFire())
             {
                 CmdSlotChange(0);
             }
-            else if (InputManager.GetAlpha2())
+            else if (InputManager.GetAlpha2() && !InputManager.GetFire())
             {
                 CmdSlotChange(1);
             }
@@ -71,7 +77,6 @@ namespace ApocalipseZ
             {
                 return;
             }
-
 
             if (InputManager.GetFire() && !fpsplayer.GetMoviment().CheckIsRun() && !CanvasFpsPlayer.IsInventoryOpen)
             {
@@ -126,55 +131,51 @@ namespace ApocalipseZ
         [ServerRpc]
         public void CmdSlotChange(int currentSlot)
         {
-            DataArmsWeapon tempArms = null;
-            int ammo = 0;
-            if (currentSlot == 0)
+
+            if (activeSlot == twoWeapon[currentSlot])
             {
-                DesEquipWeapon();
-                tempArms = GameController.Instance.DataManager.GetArmsWeapon(PrimaryWeapon.Name);
-                ammo = PrimaryWeapon.Ammo;
-            }
-            else
-            {
-                DesEquipWeapon();
-                tempArms = GameController.Instance.DataManager.GetArmsWeapon(SecundaryWeapon.Name);
-                ammo = SecundaryWeapon.Ammo;
-            }
-            if (tempArms == null)
-            {
-                print("aki");
+                print("ja esta equipada");
                 return;
             }
-            activeSlot = Instantiate(tempArms.PrefabArmsWeapon, swayTransform).GetComponent<Weapon>();
+            if (activeSlot != null)
+            {
+                if (activeSlot.reloading)
+                {
+                    return;
+                }
+            }
+            if (twoWeapon[currentSlot] == null)
+            {
+                return;
+            }
+            DesEquipWeapon();
+            activeSlot = twoWeapon[currentSlot];
             activeSlot.Cam = fpsplayer.GetFirstPersonCamera();
-            activeSlot.CurrentAmmo = ammo;
-            activeSlot.gameObject.SetActive(true);
-            base.Spawn(activeSlot.gameObject);
-            weaponHolderAnimator.Play("Unhide");
-            ObserverRpcSlotChange(activeSlot.gameObject);
-        }
-
-        [TargetRpc]
-        public void TargetRpcSlotChange(NetworkConnection target, GameObject weapon, Transform sway)
-        {
-            activeSlot = weapon.GetComponent<Weapon>();
-
-        }
-        [ObserversRpc]
-        public void ObserverRpcSlotChange(GameObject weapon)
-        {
-
-            activeSlot = weapon.GetComponent<Weapon>();
-            activeSlot.Cam = fpsplayer.GetFirstPersonCamera();
-            activeSlot.transform.SetParent(swayTransform);
             activeSlot.transform.localPosition = Vector3.zero;
             activeSlot.transform.localRotation = quaternion.identity;
-            PersonalizeArmsWeapon personalize = weapon.GetComponent<PersonalizeArmsWeapon>();
+            activeSlot.transform.GetChild(0).gameObject.SetActive(true);
+            weaponHolderAnimator.Play("Unhide");
+            ObserverRpcSlotChange(currentSlot);
+        }
+
+        [ObserversRpc]
+        public void ObserverRpcSlotChange(int currentSlot)
+        {
+
+            DesEquipWeapon();
+            activeSlot = twoWeapon[currentSlot];
+            activeSlot.Cam = fpsplayer.GetFirstPersonCamera();
+            activeSlot.transform.localPosition = Vector3.zero;
+            activeSlot.transform.localRotation = quaternion.identity;
+            activeSlot.transform.GetChild(0).gameObject.SetActive(true);
+            weaponHolderAnimator.Play("Unhide");
+            PersonalizeArmsWeapon personalize = activeSlot.GetComponent<PersonalizeArmsWeapon>();
             personalize.ActiveArms("Yasmim");
             if (!base.IsOwner)
             {
-                FpsPlayer.SetLayerRecursively(weapon, 8);
+                FpsPlayer.SetLayerRecursively(activeSlot.gameObject, 8);
             }
+            weaponHolderAnimator.Play("Unhide");
         }
         private void SelecionaWeapon()
         {
@@ -231,42 +232,55 @@ namespace ApocalipseZ
         }
         */
 
+        [ServerRpc]
+        public void CmdDropWeapon(NetworkConnection sender = null)
+        {
 
+
+        }
         public void DesEquipWeapon()
         {
             if (activeSlot != null)
             {
                 weaponHolderAnimator.Play("Hide");
-                base.Despawn(activeSlot.gameObject);
+                activeSlot.transform.GetChild(0).gameObject.SetActive(false);
                 activeSlot = null;
             }
-
         }
 
         public IWeapon GetActiveWeapon()
         {
             return activeSlot;
         }
-        public void SetPrimaryWeapon(SlotInventoryTemp oldSlot, SlotInventoryTemp newSlot, bool asServer)
-        {
 
-            PrimaryWeapon = newSlot;
-            UiPrimaryAndSecondWeapons.UpdatePrimaryWeapon(newSlot);
-        }
 
         [ServerRpc]
         public void CmdAddWeaponRemoveInventory(int slotenter, int SlotSelecionado)
         {
             SlotInventoryTemp slot = fpsplayer.GetInventory().GetSlot(SlotSelecionado);
-            if (slotenter == 0)
+            DataArmsWeapon armsWeapon = GameController.Instance.DataManager.GetArmsWeapon(slot.Name);
+            if (armsWeapon == null)
             {
-                PrimaryWeapon = slot;
+                return;
             }
-            else
-            {
-                SecundaryWeapon = slot;
-            }
+            Weapon tempWeapon = Instantiate(armsWeapon.PrefabArmsWeapon, swayTransform).GetComponent<Weapon>();
+            tempWeapon.transform.localPosition = Vector3.zero;
+            tempWeapon.transform.localRotation = quaternion.identity;
+            tempWeapon.Cam = fpsplayer.GetFirstPersonCamera();
+            tempWeapon.transform.GetChild(0).gameObject.SetActive(false);
+            base.Spawn(tempWeapon.gameObject);
+            twoWeapon[slotenter] = tempWeapon;
             fpsplayer.GetInventory().RemoveItem(slot);
+            ObserverAddWeaponRemoveInventory(slotenter, tempWeapon.gameObject);
+        }
+        [ObserversRpc]
+        public void ObserverAddWeaponRemoveInventory(int slotenter, GameObject weapon)
+        {
+            weapon.transform.SetParent(swayTransform);
+            weapon.transform.localPosition = Vector3.zero;
+            weapon.transform.localRotation = quaternion.identity;
+            weapon.transform.GetChild(0).gameObject.SetActive(false);
+            twoWeapon[slotenter] = weapon.GetComponent<Weapon>();
         }
         [ServerRpc]
         internal void CmdMove(int slotIndex1, int slotIndex2)

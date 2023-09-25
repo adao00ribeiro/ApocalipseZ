@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using FishNet;
 using FishNet.Object;
+using FishNet.Object.Synchronizing;
 using GameKit.Utilities.ObjectPooling.Examples;
 using UnityEngine;
 namespace ApocalipseZ
@@ -33,12 +34,12 @@ namespace ApocalipseZ
         [Tooltip("Should weapon reload when ammo is 0")]
         public bool autoReload = true;
 
-        [Header("Ammo")]
+
         [Tooltip("Ammo count in weapon magazine")]
+
 
         [SerializeField] private int currentAmmo = 30;
         public int CurrentAmmo { get => currentAmmo; set => currentAmmo = value; }
-
 
         [Tooltip("Max weapon ammo capacity")]
         public int maxAmmo = 30;
@@ -49,7 +50,7 @@ namespace ApocalipseZ
         [Header("Fire mode")]
         public FireMode fireMode;
 
-        [SerializeField] private Animator Animator;
+        [SerializeField] private Animator animator;
         [SerializeField] private Sway sway;
         [SerializeField] private Recoil recoilComponent;
         [SerializeField] private AudioSource audioSource;
@@ -63,8 +64,9 @@ namespace ApocalipseZ
 
         private float nextFireTime;
 
-        [HideInInspector]
-        public bool reloading = false;
+
+        [field: SyncVar]
+        public bool reloading { get; [ServerRpc] set; }
         [HideInInspector]
         public bool canShot = true;
 
@@ -73,14 +75,6 @@ namespace ApocalipseZ
 
         public bool isThrowingGrenade;
 
-        public void setCurrent(int oldcurrent, int newcurrent)
-        {
-            currentAmmo = newcurrent;
-        }
-        private void OnValidate()
-        {
-
-        }
 
         // Start is called before the first frame update
         void Start()
@@ -91,12 +85,8 @@ namespace ApocalipseZ
             shotSFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.shotSFX).Audio;
             reloadSFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.reloadingSFX).Audio;
             emptySFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.emptySFX).Audio;
-
             recoilComponent = GameObject.FindObjectOfType<Recoil>();
             audioSource = GetComponent<AudioSource>();
-            if (GetComponentInChildren<Animator>())
-                Animator = GetComponentInChildren<Animator>();
-
             temp_MuzzleFlashParticlesFX = Instantiate(DataParticles.Particles, muzzleFlashTransform);
         }
         // Update is called once per frame
@@ -146,22 +136,11 @@ namespace ApocalipseZ
                     return false;
                 }
             }
+            Animator.SetBool("Shot", false);
             return false;
         }
         private const float MAX_PASSED_TIME = 0.3f;
-        private void ClientFire()
-        {
-            Vector3 position = transform.position;
-            Vector3 direction = transform.forward;
 
-            /* Spawn locally with 0f passed time.
-             * Since this is the firing client
-             * they do not need to accelerate/catch up
-             * the projectile. */
-            SpawnProjectile(position, direction, 0f);
-            //Ask server to also fire passing in current Tick.
-            CmdFire(position, direction, base.TimeManager.Tick);
-        }
         private void SpawnProjectile(Vector3 position, Vector3 direction, float passedTime)
         {
             if (weaponSetting.Type == WeaponType.Grenade)
@@ -213,6 +192,12 @@ namespace ApocalipseZ
                 SpawnProjectile(position, direction, passedTime);
             }
         }
+        [ServerRpc]
+        public void CmdReloadBegin()
+        {
+            ReloadBegin();
+
+        }
         public void ReloadBegin()
         {
             if (reloading)
@@ -229,7 +214,7 @@ namespace ApocalipseZ
                 {
                     Animator.SetBool("Reloading", true);
                     Animator.SetBool("Aim", false);
-                    Animator.Play("Reload");
+                    Animator.SetBool("Reload", true);
                 }
 
                 audioSource.PlayOneShot(reloadSFX);
@@ -281,6 +266,7 @@ namespace ApocalipseZ
             reloading = false;
             canShot = true;
             Animator.SetBool("Reloading", false);
+            Animator.SetBool("Reload", false);
             if (setAim && useAnimator)
             {
                 Animator.SetBool("Aim", true);
@@ -302,11 +288,13 @@ namespace ApocalipseZ
             }
             if (setAim)
             {
+                Animator.SetLayerWeight(1, 1);
                 Sway.AmountX = Sway.AmountX * 0.3f;
                 Sway.AmountY = Sway.AmountY * 0.3f;
             }
             else
             {
+                Animator.SetLayerWeight(1, Mathf.Lerp(0, 1, Time.deltaTime * 0.5f));
                 Sway.AmountX = Sway.startX;
                 Sway.AmountY = Sway.startY;
             }
@@ -321,18 +309,7 @@ namespace ApocalipseZ
                 setAim = false;
             }
         }
-        /*
-        public void ThrowGrenade()
-        {
 
-            var obj = Instantiate(weaponSetting.grenadePrefab, muzzleFlashTransform.position, Quaternion.identity);
-            //obj.transform.position = transform.position + transform.forward * 0.3f;
-            obj.GetComponent<Rigidbody>().AddForce(transform.forward * weaponSetting.throwForce);
-            isThrowingGrenade = false;
-            // inventory.RemoveItem ( "Grenade" , true );
-            // weaponManager.UnhideWeaponAfterGrenadeDrop ( );
-        }
-*/
         public void PlayFX()
         {
             if (useAnimator)
@@ -343,7 +320,7 @@ namespace ApocalipseZ
                 }
                 else
                 {
-                    Animator.Play("Shot");
+                    Animator.SetBool("Shot", true);
                     temp_MuzzleFlashParticlesFX.time = 0;
                     temp_MuzzleFlashParticlesFX.Play();
                 }
@@ -357,8 +334,17 @@ namespace ApocalipseZ
         {
             return weaponSetting;
         }
-
-
+        public Animator Animator
+        {
+            get
+            {
+                if (animator == null)
+                {
+                    animator = GetComponentInChildren<Animator>();
+                }
+                return animator;
+            }
+        }
         public Sway Sway
         {
             get

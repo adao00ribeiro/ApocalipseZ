@@ -211,6 +211,7 @@ MonoBehaviour:
   <PredictedSpawn>k__BackingField: {fileID: 0}
   _networkBehaviours:
   - {fileID: 2573776881666971413}
+  - {fileID: 453679811651587664}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   SerializedTransformProperties:
@@ -254,9 +255,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 1
   _addedNetworkObject: {fileID: 7564494577556385352}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 7564494577556385352}
   IgnoredParameters: []
   _animator: {fileID: 9138313413031620028}
   _smoothFloats: 1

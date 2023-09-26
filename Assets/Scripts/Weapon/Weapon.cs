@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using FishNet;
+using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using GameKit.Utilities.ObjectPooling.Examples;
@@ -33,14 +34,11 @@ namespace ApocalipseZ
 
         [Tooltip("Should weapon reload when ammo is 0")]
         public bool autoReload = true;
-
-
         [Tooltip("Ammo count in weapon magazine")]
 
-
+        [SyncVar]
         [SerializeField] private int currentAmmo = 30;
         public int CurrentAmmo { get => currentAmmo; set => currentAmmo = value; }
-
         [Tooltip("Max weapon ammo capacity")]
         public int maxAmmo = 30;
         public int currentClip = 120;
@@ -64,9 +62,8 @@ namespace ApocalipseZ
 
         private float nextFireTime;
 
-
-        [field: SyncVar]
-        public bool reloading { get; [ServerRpc] set; }
+        [SyncVar]
+        public bool reloading = false;
         [HideInInspector]
         public bool canShot = true;
 
@@ -90,33 +87,35 @@ namespace ApocalipseZ
             temp_MuzzleFlashParticlesFX = Instantiate(DataParticles.Particles, muzzleFlashTransform);
         }
         // Update is called once per frame
+        [ServerRpc(RequireOwnership = false)]
+        public void CmdFire(NetworkConnection conn = null)
+        {
+            if (Fire())
+            {
+                TargetFire(conn);
+            }
 
-
+        }
+        [TargetRpc]
+        public void TargetFire(NetworkConnection conn)
+        {
+            PlayFX();
+            recoilComponent.AddRecoil(weaponSetting.recoil);
+            CmdSpawBullet(muzzleFlashTransform.position, muzzleFlashTransform.forward, base.TimeManager.Tick );
+            
+        }
         public bool Fire()
         {
-
             if (Time.time > nextFireTime && !reloading && canShot /*&& !controller.isClimbing*/ ) //Allow fire statement
             {
 
                 if (currentAmmo > 0)
                 {
                     currentAmmo -= 1;
-                    PlayFX();
+                    //PlayFX();
                     muzzleFlashTransform.LookAt(Cam.transform.position + Cam.transform.forward * 3000);
-
-                    if (!base.IsHost)
-                    {
-
-                        SpawnProjectile(muzzleFlashTransform.position, muzzleFlashTransform.forward, 0f);
-                    }
-
                     //calculatedDamage = Random.Range ( damageMin , damageMax );
-
-
-                    CmdFire(muzzleFlashTransform.position, muzzleFlashTransform.forward, base.TimeManager.Tick);
-
-
-
+                    //  CmdSpawBullet(muzzleFlashTransform.position, muzzleFlashTransform.forward, base.TimeManager.Tick);
                     // ProjectilesManager ( );
                     recoilComponent.AddRecoil(weaponSetting.recoil);
                     //Calculating when next fire call allowed
@@ -136,7 +135,7 @@ namespace ApocalipseZ
                     return false;
                 }
             }
-            Animator.SetBool("Shot", false);
+
             return false;
         }
         private const float MAX_PASSED_TIME = 0.3f;
@@ -152,7 +151,7 @@ namespace ApocalipseZ
 
         }
         [ServerRpc(RequireOwnership = false)]
-        private void CmdFire(Vector3 position, Vector3 direction, uint tick)
+        private void CmdSpawBullet(Vector3 position, Vector3 direction, uint tick,NetworkConnection conn = null)
         {
 
             /* You may want to validate position and direction here.
@@ -178,7 +177,7 @@ namespace ApocalipseZ
             //Tell other clients to spawn the projectile.
             ObserversFire(position, direction, tick);
         }
-        [ObserversRpc(ExcludeOwner = true)]
+        [ObserversRpc]
         private void ObserversFire(Vector3 position, Vector3 direction, uint tick)
         {
 
@@ -192,7 +191,7 @@ namespace ApocalipseZ
                 SpawnProjectile(position, direction, passedTime);
             }
         }
-        [ServerRpc]
+        [ServerRpc(RequireOwnership = false)]
         public void CmdReloadBegin()
         {
             ReloadBegin();
@@ -227,6 +226,7 @@ namespace ApocalipseZ
         IEnumerator ReloadCycle(float timerCicle)
         {
             yield return new WaitForSeconds(timerCicle);
+            print(timerCicle);
             ReloadEnd();
         }
         public int CalculateTotalAmmo()
@@ -320,9 +320,10 @@ namespace ApocalipseZ
                 }
                 else
                 {
-                    Animator.SetBool("Shot", true);
+                    Animator.SetTrigger("Shot");
                     temp_MuzzleFlashParticlesFX.time = 0;
                     temp_MuzzleFlashParticlesFX.Play();
+
                 }
             }
 

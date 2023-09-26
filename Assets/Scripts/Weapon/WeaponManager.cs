@@ -77,18 +77,13 @@ namespace ApocalipseZ
             {
                 return;
             }
-
             if (InputManager.GetFire() && !fpsplayer.GetMoviment().CheckIsRun() && !CanvasFpsPlayer.IsInventoryOpen)
             {
-                if (activeSlot.Fire())
-                {
-                    //  RpcFire(base.Owner);
-                }
-
+                activeSlot.CmdFire();
             }
             if (InputManager.GetReload())
             {
-                activeSlot.ReloadBegin();
+                activeSlot.CmdReloadBegin();
 
             }
             if (InputManager.GetAim() && !fpsplayer.GetMoviment().CheckIsRun())
@@ -105,7 +100,7 @@ namespace ApocalipseZ
 
             if (InputManager.GetDropWeapon())
             {
-                DropWeapon();
+                CmdDropWeapon();
             }
 
             // if (Input.GetKeyDown(KeyCode.H))
@@ -113,20 +108,6 @@ namespace ApocalipseZ
             //     DropAllWeapons();
             // }
         }
-        [ServerRpc]
-        public void CmdFire()
-        {
-            if (activeSlot.Fire())
-            {
-                RpcFire(base.Owner);
-            }
-        }
-        [TargetRpc]
-        public void RpcFire(NetworkConnection conn)
-        {
-            activeSlot.PlayFX();
-        }
-
 
         [ServerRpc]
         public void CmdSlotChange(int currentSlot)
@@ -163,6 +144,8 @@ namespace ApocalipseZ
         {
 
             DesEquipWeapon();
+
+
             activeSlot = twoWeapon[currentSlot];
             activeSlot.Cam = fpsplayer.GetFirstPersonCamera();
             activeSlot.transform.localPosition = Vector3.zero;
@@ -235,8 +218,17 @@ namespace ApocalipseZ
         [ServerRpc]
         public void CmdDropWeapon(NetworkConnection sender = null)
         {
-
-
+            //procurar o item 
+            DataItem tempWeapon = GameController.Instance.DataManager.GetDataItemWeaponByName(activeSlot.WeaponName);
+            if (tempWeapon == null)
+            {
+                return;
+            }
+            GameObject dropItemTemp = Instantiate(tempWeapon.Prefab);
+            dropItemTemp.GetComponent<Item>().SetAmmo(activeSlot.CurrentAmmo);
+            dropItemTemp.transform.position = fpsplayer.GetFirstPersonCamera().transform.position + fpsplayer.GetFirstPersonCamera().transform.forward * 0.5f;
+            base.Spawn(dropItemTemp);
+            base.Despawn(activeSlot.gameObject);
         }
         public void DesEquipWeapon()
         {

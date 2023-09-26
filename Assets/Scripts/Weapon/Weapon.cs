@@ -1,17 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
-using FishNet;
 using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
-using GameKit.Utilities.ObjectPooling.Examples;
+using FishNet.Transporting;
 using UnityEngine;
 namespace ApocalipseZ
 {
     [RequireComponent(typeof(AudioSource))]
     public class Weapon : NetworkBehaviour, IWeapon
     {
-
         private DataArmsWeapon weaponSetting;
         public DataArmsWeapon WeaponSetting { get => weaponSetting; }
         [SerializeField] private string weaponName;
@@ -47,7 +44,6 @@ namespace ApocalipseZ
         public enum FireMode { automatic, single }
         [Header("Fire mode")]
         public FireMode fireMode;
-
         [SerializeField] private Animator animator;
         [SerializeField] private Sway sway;
         [SerializeField] private Recoil recoilComponent;
@@ -59,9 +55,7 @@ namespace ApocalipseZ
         //prefabs
         public FirstPersonCamera Cam;
         [SerializeField] private GameObject PrefabProjectile;
-
         private float nextFireTime;
-
         [SyncVar]
         public bool reloading = false;
         [HideInInspector]
@@ -69,10 +63,10 @@ namespace ApocalipseZ
 
         [SerializeField] private bool setAim = false;
         public bool SetAim { get => setAim; }
-
         public bool isThrowingGrenade;
 
-
+        [SyncVar]
+        public Vector2 recoil;
         // Start is called before the first frame update
         void Start()
         {
@@ -86,10 +80,19 @@ namespace ApocalipseZ
             audioSource = GetComponent<AudioSource>();
             temp_MuzzleFlashParticlesFX = Instantiate(DataParticles.Particles, muzzleFlashTransform);
         }
+        public void RecoilChange(Vector2 _, Vector2 newRecoil, bool asServer)
+        {
+            recoil = newRecoil;
+        }
         // Update is called once per frame
         [ServerRpc(RequireOwnership = false)]
         public void CmdFire(NetworkConnection conn = null)
         {
+
+            float x = Random.Range(weaponSetting.recoil.recolDown.x, weaponSetting.recoil.recolTop.x);
+            float y = Random.Range(weaponSetting.recoil.recolDown.y, weaponSetting.recoil.recolTop.y);
+            recoil = new Vector2(x, y);
+
             if (Fire())
             {
                 TargetFire(conn);
@@ -100,9 +103,9 @@ namespace ApocalipseZ
         public void TargetFire(NetworkConnection conn)
         {
             PlayFX();
-            recoilComponent.AddRecoil(weaponSetting.recoil);
-            CmdSpawBullet(muzzleFlashTransform.position, muzzleFlashTransform.forward, base.TimeManager.Tick );
-            
+            recoilComponent.AddRecoil(recoil);
+            CmdSpawBullet(muzzleFlashTransform.position, muzzleFlashTransform.forward, base.TimeManager.Tick);
+
         }
         public bool Fire()
         {
@@ -117,7 +120,7 @@ namespace ApocalipseZ
                     //calculatedDamage = Random.Range ( damageMin , damageMax );
                     //  CmdSpawBullet(muzzleFlashTransform.position, muzzleFlashTransform.forward, base.TimeManager.Tick);
                     // ProjectilesManager ( );
-                    recoilComponent.AddRecoil(weaponSetting.recoil);
+                    recoilComponent.AddRecoil(recoil);
                     //Calculating when next fire call allowed
                     nextFireTime = Time.time + weaponSetting.fireRate;
                     return true;
@@ -151,7 +154,7 @@ namespace ApocalipseZ
 
         }
         [ServerRpc(RequireOwnership = false)]
-        private void CmdSpawBullet(Vector3 position, Vector3 direction, uint tick,NetworkConnection conn = null)
+        private void CmdSpawBullet(Vector3 position, Vector3 direction, uint tick, NetworkConnection conn = null)
         {
 
             /* You may want to validate position and direction here.
@@ -245,24 +248,18 @@ namespace ApocalipseZ
         }
         void ReloadEnd()
         {
-
             var neededAmmo = maxAmmo - currentAmmo;
-
             if (currentClip >= neededAmmo)
             {
                 currentClip -= neededAmmo;
                 currentAmmo += neededAmmo;
-
-
             }
             else if (currentClip < neededAmmo)
             {
                 currentAmmo += currentClip;
                 neededAmmo -= currentClip;
                 currentClip = 0;
-
             }
-
             reloading = false;
             canShot = true;
             Animator.SetBool("Reloading", false);

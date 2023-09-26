@@ -7,6 +7,7 @@ using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using FishNet.Transporting;
 using Unity.Mathematics;
+using System;
 
 namespace ApocalipseZ
 {
@@ -16,10 +17,7 @@ namespace ApocalipseZ
         UiPrimaryAndSecondWeapons UiPrimaryAndSecondWeapons;
 
         public Weapon activeSlot;
-
         public Weapon[] twoWeapon = new Weapon[2];
-
-
         [Tooltip("Animator that contain pickup animation")]
         public Animator weaponHolderAnimator;
         [SerializeField] FpsPlayer fpsplayer;
@@ -28,7 +26,7 @@ namespace ApocalipseZ
         [SerializeField] private Transform swayTransform;
         private InputManager InputManager;
         public static bool IsChekInventory;
-
+        [SerializeField] private bool loadingWeapon;
         private void Awake()
         {
             InputManager = GameController.Instance.InputManager;
@@ -65,11 +63,11 @@ namespace ApocalipseZ
             {
                 IsChekInventory = false;
             }
-            if (InputManager.GetAlpha1() && !InputManager.GetFire())
+            if (InputManager.GetAlpha1() && !InputManager.GetFire() && !loadingWeapon)
             {
                 CmdSlotChange(0);
             }
-            else if (InputManager.GetAlpha2() && !InputManager.GetFire())
+            else if (InputManager.GetAlpha2() && !InputManager.GetFire() && !loadingWeapon)
             {
                 CmdSlotChange(1);
             }
@@ -77,7 +75,7 @@ namespace ApocalipseZ
             {
                 return;
             }
-            if (InputManager.GetFire() && !fpsplayer.GetMoviment().CheckIsRun() && !CanvasFpsPlayer.IsInventoryOpen)
+            if (InputManager.GetFire() && !loadingWeapon && !fpsplayer.GetMoviment().CheckIsRun() && !CanvasFpsPlayer.IsInventoryOpen)
             {
                 activeSlot.CmdFire();
             }
@@ -115,7 +113,6 @@ namespace ApocalipseZ
 
             if (activeSlot == twoWeapon[currentSlot])
             {
-                print("ja esta equipada");
                 return;
             }
             if (activeSlot != null)
@@ -129,36 +126,48 @@ namespace ApocalipseZ
             {
                 return;
             }
-            DesEquipWeapon();
-            activeSlot = twoWeapon[currentSlot];
-            activeSlot.Cam = fpsplayer.GetFirstPersonCamera();
-            activeSlot.transform.localPosition = Vector3.zero;
-            activeSlot.transform.localRotation = quaternion.identity;
-            activeSlot.transform.GetChild(0).gameObject.SetActive(true);
-            weaponHolderAnimator.Play("Unhide");
+
+            StartCoroutine(Hide(currentSlot));
+
             ObserverRpcSlotChange(currentSlot);
         }
 
         [ObserversRpc]
         public void ObserverRpcSlotChange(int currentSlot)
         {
+            if (base.IsHost)
+            {
+                return;
+            }
 
-            DesEquipWeapon();
+            StartCoroutine(Hide(currentSlot));
+        }
 
-
+        private IEnumerator Hide(int currentSlot)
+        {
+            loadingWeapon = true;
+            weaponHolderAnimator.SetBool("HideWeapon", true);
+            yield return new WaitForSeconds(0.4f);
+            if (activeSlot != null)
+            {
+                activeSlot.transform.GetChild(0).gameObject.SetActive(false);
+                activeSlot = null;
+            }
             activeSlot = twoWeapon[currentSlot];
             activeSlot.Cam = fpsplayer.GetFirstPersonCamera();
             activeSlot.transform.localPosition = Vector3.zero;
             activeSlot.transform.localRotation = quaternion.identity;
             activeSlot.transform.GetChild(0).gameObject.SetActive(true);
-            weaponHolderAnimator.Play("Unhide");
+            yield return new WaitForSeconds(0.1f);
+            weaponHolderAnimator.SetBool("HideWeapon", false);
             PersonalizeArmsWeapon personalize = activeSlot.GetComponent<PersonalizeArmsWeapon>();
             personalize.ActiveArms("Yasmim");
             if (!base.IsOwner)
             {
                 FpsPlayer.SetLayerRecursively(activeSlot.gameObject, 8);
             }
-            weaponHolderAnimator.Play("Unhide");
+            yield return new WaitForSeconds(0.2f);
+            loadingWeapon = false;
         }
         private void SelecionaWeapon()
         {
@@ -167,15 +176,7 @@ namespace ApocalipseZ
                 return;
             }
         }
-        private void DropWeapon()
-        {
-            if (activeSlot != null)
-            {
-                //CmdDropWeapon(container.GetSlotContainer(switchSlotIndex).GetSlotTemp());
-                weaponHolderAnimator.Play("Unhide");
-                DesEquipWeapon();
-            }
-        }
+
         /*
         public void DropAllWeapons ( )
         {
@@ -218,27 +219,9 @@ namespace ApocalipseZ
         [ServerRpc]
         public void CmdDropWeapon(NetworkConnection sender = null)
         {
-            //procurar o item 
-            DataItem tempWeapon = GameController.Instance.DataManager.GetDataItemWeaponByName(activeSlot.WeaponName);
-            if (tempWeapon == null)
-            {
-                return;
-            }
-            GameObject dropItemTemp = Instantiate(tempWeapon.Prefab);
-            dropItemTemp.GetComponent<Item>().SetAmmo(activeSlot.CurrentAmmo);
-            dropItemTemp.transform.position = fpsplayer.GetFirstPersonCamera().transform.position + fpsplayer.GetFirstPersonCamera().transform.forward * 0.5f;
-            base.Spawn(dropItemTemp);
-            base.Despawn(activeSlot.gameObject);
+            DropWeapons(activeSlot);
         }
-        public void DesEquipWeapon()
-        {
-            if (activeSlot != null)
-            {
-                weaponHolderAnimator.Play("Hide");
-                activeSlot.transform.GetChild(0).gameObject.SetActive(false);
-                activeSlot = null;
-            }
-        }
+
 
         public IWeapon GetActiveWeapon()
         {
@@ -278,6 +261,32 @@ namespace ApocalipseZ
         internal void CmdMove(int slotIndex1, int slotIndex2)
         {
 
+        }
+
+        internal void DropAllWeapons()
+        {
+            foreach (var item in twoWeapon)
+            {
+                if (item != null)
+                {
+                    DropWeapons(item);
+                }
+            }
+        }
+
+        private void DropWeapons(Weapon weapon)
+        {
+            //procurar o item 
+            DataItem tempWeapon = GameController.Instance.DataManager.GetDataItemWeaponByName(weapon.WeaponName);
+            if (tempWeapon == null)
+            {
+                return;
+            }
+            GameObject dropItemTemp = Instantiate(tempWeapon.Prefab);
+            dropItemTemp.GetComponent<Item>().SetAmmo(activeSlot.CurrentAmmo);
+            dropItemTemp.transform.position = fpsplayer.GetFirstPersonCamera().transform.position + fpsplayer.GetFirstPersonCamera().transform.forward * 0.5f;
+            base.Spawn(dropItemTemp);
+            base.Despawn(weapon.gameObject);
         }
     }
 

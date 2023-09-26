@@ -3,7 +3,42 @@ guid: 1bd54870c3c7bd3469fab485f94b5dd8
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat_CarregadorP90
+    second: {fileID: 2100000, guid: d5ae89bdc8e0eb94885a90e566837c76, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat_CorpoYasmim
+    second: {fileID: 2100000, guid: a3b4f24341338ba44aca0f9fd1643af6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat_JaquetaF01
+    second: {fileID: 2100000, guid: 5fbd4e16aff76cf448b3978228d5e666, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat_Lente01
+    second: {fileID: 2100000, guid: ac02ed80b9194494d8725c843f18d94e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat_Mira01
+    second: {fileID: 2100000, guid: e75ba0addc013cf428d5f073a9d8cf7b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Mat_P90
+    second: {fileID: 2100000, guid: d96054509c316924196e1347e94e4c36, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: arms
+    second: {fileID: 2100000, guid: 642f23b14a7f79242a38d9e1b5bbf938, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

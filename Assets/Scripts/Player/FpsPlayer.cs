@@ -335,13 +335,7 @@ namespace ApocalipseZ
         [ServerRpc]
         public void CmdDropAllItems(NetworkConnection sender = null)
         {
-
-
-            // IContainer containerInventory = fpstemp.GetInventory();
-            // IContainer containerFastItems = fpstemp.GetFastItems();
-            //
-            // containerWeapon.TargetGetContainer(opponentIdentity.connectionToClient, TypeContainer.WEAPONS, containerWeapon.GetContainerTemp());
-
+            WeaponManager.DropAllWeapons();
         }
 
 

@@ -6,25 +6,19 @@ namespace ApocalipseZ
 {
     public class DecalFxManager : MonoBehaviour
     {
-        private DataDecals DataDecals;
-
-
         private GameObject[] decals;
-
         [Header("Decals")]
-
         [Range(1, 200)]
         [Tooltip("Pool size for each type of decals. For example, if pool size is 10, concrete, wood, dirt, metal decals will have 10 their instances after start")]
         public int decalsPoolSizeForEachType;
 
-        [HideInInspector]
-        public GameObject[] concreteDecal_pool;
-        [HideInInspector]
-        public GameObject[] woodDecal_pool;
-        [HideInInspector]
-        public GameObject[] dirtDecal_pool;
-        [HideInInspector]
-        public GameObject[] metalDecal_pool;
+        private GameObject[] concretedecal_pool;
+
+        private GameObject[] wooddecal_pool;
+
+        private GameObject[] dirtdecal_pool;
+
+        private GameObject[] metaldecal_pool;
 
         private int decalIndex_wood = 0;
         private int decalIndex_concrete = 0;
@@ -32,55 +26,6 @@ namespace ApocalipseZ
         private int decalIndex_metal = 0;
         // Start is called before the first frame update
 
-        /*
-        void Start()
-        {
-            DataDecals = GameController.Instance.DataDecals;
-            DecalsPool();
-        }
-        public void DecalsPool()
-        {
-            concreteDecal_pool = new GameObject[decalsPoolSizeForEachType];
-            var decalsParentObject_concrete = new GameObject("decalsPool_concrete");
-
-            for (int i = 0; i < decalsPoolSizeForEachType; i++)
-            {
-                concreteDecal_pool[i] = Instantiate(DataDecals.GetDecal("Concrete"));
-                concreteDecal_pool[i].SetActive(false);
-                concreteDecal_pool[i].transform.parent = decalsParentObject_concrete.transform;
-            }
-
-            woodDecal_pool = new GameObject[decalsPoolSizeForEachType];
-            var decalsParentObject_wood = new GameObject("decalsPool_wood");
-
-            for (int i = 0; i < decalsPoolSizeForEachType; i++)
-            {
-                woodDecal_pool[i] = Instantiate(DataDecals.GetDecal("Wood"));
-                woodDecal_pool[i].SetActive(false);
-                woodDecal_pool[i].transform.parent = decalsParentObject_wood.transform;
-            }
-
-            dirtDecal_pool = new GameObject[decalsPoolSizeForEachType];
-            var decalsParentObject_dirt = new GameObject("decalsPool_dirt");
-
-            for (int i = 0; i < decalsPoolSizeForEachType; i++)
-            {
-                dirtDecal_pool[i] = Instantiate(DataDecals.GetDecal("Dirt"));
-                dirtDecal_pool[i].SetActive(false);
-                dirtDecal_pool[i].transform.parent = decalsParentObject_dirt.transform;
-            }
-
-            metalDecal_pool = new GameObject[decalsPoolSizeForEachType];
-            var decalsParentObject_metal = new GameObject("decalsPool_metal");
-
-            for (int i = 0; i < decalsPoolSizeForEachType; i++)
-            {
-                metalDecal_pool[i] = Instantiate(DataDecals.GetDecal("Metal"));
-                metalDecal_pool[i].SetActive(false);
-                metalDecal_pool[i].transform.parent = decalsParentObject_metal.transform;
-            }
-
-        }
         internal void ApplyFX(RaycastHit hit, bool applyParent)
         {
             if (hit.collider.CompareTag("Concrete"))
@@ -164,6 +109,86 @@ namespace ApocalipseZ
             }
 
         }
-        */
+
+        private GameObject[] concreteDecal_pool
+        {
+            get
+            {
+                if (concretedecal_pool == null)
+                {
+                    concretedecal_pool = new GameObject[decalsPoolSizeForEachType];
+                    var decalsParentObject_concrete = new GameObject("decalsPool_concrete");
+
+                    for (int i = 0; i < decalsPoolSizeForEachType; i++)
+                    {
+                        concreteDecal_pool[i] = Instantiate(GameController.Instance.DataManager.GetDecal("Concrete").Decal);
+                        concreteDecal_pool[i].SetActive(false);
+                        concreteDecal_pool[i].transform.parent = decalsParentObject_concrete.transform;
+                    }
+                }
+                return concretedecal_pool;
+            }
+        }
+
+        private GameObject[] woodDecal_pool
+        {
+            get
+            {
+                if (wooddecal_pool == null)
+                {
+                    wooddecal_pool = new GameObject[decalsPoolSizeForEachType];
+                    var decalsParentObject_wood = new GameObject("decalsPool_wood");
+
+                    for (int i = 0; i < decalsPoolSizeForEachType; i++)
+                    {
+                        woodDecal_pool[i] = Instantiate(GameController.Instance.DataManager.GetDecal("Wood").Decal);
+                        woodDecal_pool[i].SetActive(false);
+                        woodDecal_pool[i].transform.parent = decalsParentObject_wood.transform;
+                    }
+                }
+                return wooddecal_pool;
+            }
+        }
+
+        private GameObject[] dirtDecal_pool
+        {
+            get
+            {
+                if (dirtdecal_pool == null)
+                {
+                    dirtdecal_pool = new GameObject[decalsPoolSizeForEachType];
+                    var decalsParentObject_dirt = new GameObject("decalsPool_dirt");
+
+                    for (int i = 0; i < decalsPoolSizeForEachType; i++)
+                    {
+                        dirtDecal_pool[i] = Instantiate(GameController.Instance.DataManager.GetDecal("Dirt").Decal);
+                        dirtDecal_pool[i].SetActive(false);
+                        dirtDecal_pool[i].transform.parent = decalsParentObject_dirt.transform;
+                    }
+                }
+                return dirtdecal_pool;
+            }
+        }
+
+        private GameObject[] metalDecal_pool
+        {
+            get
+            {
+                if (metaldecal_pool == null)
+                {
+                    metaldecal_pool = new GameObject[decalsPoolSizeForEachType];
+                    var decalsParentObject_metal = new GameObject("decalsPool_metal");
+
+                    for (int i = 0; i < decalsPoolSizeForEachType; i++)
+                    {
+                        metalDecal_pool[i] = Instantiate(GameController.Instance.DataManager.GetDecal("Metal").Decal);
+                        metalDecal_pool[i].SetActive(false);
+                        metalDecal_pool[i].transform.parent = decalsParentObject_metal.transform;
+                    }
+                }
+                return metaldecal_pool;
+            }
+        }
+
     }
 }

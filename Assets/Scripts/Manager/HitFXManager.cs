@@ -9,7 +9,6 @@ namespace ApocalipseZ
     {
         [SerializeField] private DataManager DataManager;
 
-
         private ParticleSystem objconcreteHitFX;
 
         private ParticleSystem objwoodHitFX;
@@ -90,7 +89,7 @@ namespace ApocalipseZ
         }
         internal void ApplyFX(RaycastHit hit)
         {
-            // RicochetSFX();
+            RicochetSFX();
             HitParticlesFXManager(hit);
         }
         public ParticleSystem objConcreteHitFX

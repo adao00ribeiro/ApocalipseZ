@@ -8,7 +8,6 @@ public interface IFpsPlayer
 {
     Moviment GetMoviment();
     PlayerStats GetPlayerStats();
-    void CmdSpawBullet(SpawBulletTransform spawBulletTransform, NetworkConnection networkConnectionToClient);
     FirstPersonCamera GetFirstPersonCamera();
     WeaponManager GetWeaponManager();
     Inventory GetInventory();

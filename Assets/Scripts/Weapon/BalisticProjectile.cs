@@ -23,10 +23,11 @@ namespace ApocalipseZ
 
         private float _passedTime = 0f;
 
+        private float timeStart;
 
         private void OnEnable()
         {
-
+            timeStart = Time.time;
             lastPosition = transform.position;
         }
 
@@ -39,18 +40,19 @@ namespace ApocalipseZ
 
         private void Update()
         {
-           
+
             time += Time.deltaTime;
             RaycastHit hit;
             if (Physics.Linecast(lastPosition, transform.position, out hit))
             {
-               GameController.Instance.HitFXManager.ApplyFX ( hit );
+                GameController.Instance.HitFXManager.ApplyFX(hit);
+                GameController.Instance.DecalFxManager.ApplyFX(hit, false);
                 IStats stat = hit.collider.GetComponent<IStats>();
                 if (stat != null)
                 {
                     stat.TakeDamage(Random.Range(damageMinimum, damageMaximum));
                 }
-               
+                print(Time.time - timeStart);
                 Destroy(gameObject);
             }
             lastPosition = transform.position;

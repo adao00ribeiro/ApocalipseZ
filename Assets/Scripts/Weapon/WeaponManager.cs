@@ -8,6 +8,7 @@ using FishNet.Object.Synchronizing;
 using FishNet.Transporting;
 using Unity.Mathematics;
 using System;
+using Unity.VisualScripting;
 
 namespace ApocalipseZ
 {
@@ -232,6 +233,18 @@ namespace ApocalipseZ
         [ServerRpc]
         public void CmdAddWeaponRemoveInventory(int slotenter, int SlotSelecionado)
         {
+            if (twoWeapon[slotenter] != null)
+            {
+                DataItem itemWeaponTemp = GameController.Instance.DataManager.GetDataItemWeaponByName(twoWeapon[slotenter].WeaponName);
+                SlotInventoryTemp slotTemp = new SlotInventoryTemp();
+                slotTemp.Name = itemWeaponTemp.Name;
+                slotTemp.guidid = itemWeaponTemp.GuidId;
+                slotTemp.Ammo = twoWeapon[slotenter].CurrentAmmo;
+                slotTemp.Quantity = 1;
+                fpsplayer.GetInventory().AddItem(slotTemp);
+                base.Despawn(twoWeapon[slotenter].gameObject);
+            }
+
             SlotInventoryTemp slot = fpsplayer.GetInventory().GetSlot(SlotSelecionado);
             DataArmsWeapon armsWeapon = GameController.Instance.DataManager.GetArmsWeapon(slot.Name);
             if (armsWeapon == null)

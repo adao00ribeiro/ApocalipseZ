@@ -56,7 +56,7 @@ namespace ApocalipseZ
 
         void Update()
         {
-            if (base.IsServer )
+            if (base.IsServer)
             {
                 if (Disable)
                 {

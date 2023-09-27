@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6127573536557798506}
   - component: {fileID: 8240843856643256346}
   - component: {fileID: 1348199900636071049}
+  - component: {fileID: -2703883849451635379}
   m_Layer: 6
   m_Name: PrefabGlock
   m_TagString: Untagged
@@ -49,7 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 0}
+  _addedNetworkObject: {fileID: 8240843856643256346}
   _networkObjectCache: {fileID: 8240843856643256346}
   weaponName: GLOCK
   muzzleFlashTransform: {fileID: 4599534150138972090}
@@ -63,7 +64,7 @@ MonoBehaviour:
   currentClip: 120
   MaxClip: 120
   fireMode: 0
-  Animator: {fileID: 0}
+  animator: {fileID: 0}
   sway: {fileID: 0}
   recoilComponent: {fileID: 0}
   audioSource: {fileID: 6127573536557798506}
@@ -77,6 +78,7 @@ MonoBehaviour:
   canShot: 1
   setAim: 0
   isThrowingGrenade: 0
+  recoil: {x: 0, y: 0}
 --- !u!82 &6127573536557798506
 AudioSource:
   m_ObjectHideFlags: 0
@@ -210,6 +212,7 @@ MonoBehaviour:
   <PredictedSpawn>k__BackingField: {fileID: 0}
   _networkBehaviours:
   - {fileID: -782594293168286482}
+  - {fileID: -2703883849451635379}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   SerializedTransformProperties:
@@ -221,7 +224,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 0
+  <PrefabId>k__BackingField: 57
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
@@ -241,6 +244,27 @@ MonoBehaviour:
   Arms:
   - {fileID: 1695581693282122685}
   - {fileID: 5809023413344938922}
+--- !u!114 &-2703883849451635379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3327914950093933453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 1
+  _addedNetworkObject: {fileID: 8240843856643256346}
+  _networkObjectCache: {fileID: 8240843856643256346}
+  IgnoredParameters: []
+  _animator: {fileID: 3507589855574089045}
+  _smoothFloats: 1
+  _interpolation: 2
+  _clientAuthoritative: 1
+  _sendToOwner: 0
 --- !u!1 &8205577710641774201
 GameObject:
   m_ObjectHideFlags: 0

@@ -1652,6 +1652,7 @@ GameObject:
   - component: {fileID: 8581081085808639424}
   - component: {fileID: 7564494577556385352}
   - component: {fileID: 7924407908574088878}
+  - component: {fileID: 9194648124663679661}
   m_Layer: 6
   m_Name: PrefabAK47
   m_TagString: Untagged
@@ -1688,9 +1689,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 0}
+  _addedNetworkObject: {fileID: 7564494577556385352}
   _networkObjectCache: {fileID: 7564494577556385352}
-  weaponSetting: {fileID: 11400000, guid: 04850ef7bd4a28e45975f67360d5762f, type: 2}
   weaponName: AK47
   muzzleFlashTransform: {fileID: 2013562121623717857}
   shellTransform: {fileID: 0}
@@ -1703,7 +1703,7 @@ MonoBehaviour:
   currentClip: 120
   MaxClip: 120
   fireMode: 0
-  Animator: {fileID: 0}
+  animator: {fileID: 0}
   sway: {fileID: 0}
   recoilComponent: {fileID: 0}
   audioSource: {fileID: 0}
@@ -1717,6 +1717,7 @@ MonoBehaviour:
   canShot: 1
   setAim: 0
   isThrowingGrenade: 0
+  recoil: {x: 0, y: 0}
 --- !u!82 &8581081085808639424
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1881,6 +1882,27 @@ MonoBehaviour:
   Arms:
   - {fileID: 7712468381426053369}
   - {fileID: 6073064074163617532}
+--- !u!114 &9194648124663679661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3921184682229974682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 7564494577556385352}
+  _networkObjectCache: {fileID: 0}
+  IgnoredParameters: []
+  _animator: {fileID: 5265952900611059838}
+  _smoothFloats: 1
+  _interpolation: 2
+  _clientAuthoritative: 1
+  _sendToOwner: 0
 --- !u!1 &4117546482210953056
 GameObject:
   m_ObjectHideFlags: 0

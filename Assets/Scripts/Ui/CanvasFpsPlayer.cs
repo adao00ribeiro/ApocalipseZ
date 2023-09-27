@@ -82,6 +82,7 @@ namespace ApocalipseZ
         internal void SetPlayerStats(PlayerStats playerStats)
         {
             stats = playerStats;
+            UiPlayerStats.SetFpsPlayer(playerStats.gameObject.GetComponent<FpsPlayer>());
         }
 
         internal UiPrimaryAndSecondWeapons GetUiPrimaryandSecundaryWeapons()

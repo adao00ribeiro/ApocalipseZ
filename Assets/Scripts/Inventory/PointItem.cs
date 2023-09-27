@@ -34,6 +34,7 @@ namespace ApocalipseZ
         {
 
             DataItem objeto = GameController.Instance.DataManager.GetDataItemWeapon();
+    
             /*
             ScriptableItem[]items;
 

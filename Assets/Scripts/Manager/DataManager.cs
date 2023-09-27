@@ -15,6 +15,7 @@ namespace ApocalipseZ
         [SerializeField] private DataBullet[] ListBullets;
         [SerializeField] private DataAudio[] ListAudios;
         [SerializeField] private DataParticles[] ListParticles;
+        [SerializeField] private DataDecals[] ListDecals;
         [SerializeField] private ScriptableTextureSounds ScriptableTextureSounds;
         void Start()
         {
@@ -24,6 +25,7 @@ namespace ApocalipseZ
             ListBullets = Resources.LoadAll<DataBullet>("Datas/DataBullets");
             ListAudios = Resources.LoadAll<DataAudio>("Datas/DataAudios");
             ListParticles = Resources.LoadAll<DataParticles>("Datas/DataParticles");
+            ListDecals = Resources.LoadAll<DataDecals>("Datas/DataDecals");
         }
         internal DataArmsWeapon GetArmsWeaponById(string guidId)
         {
@@ -49,14 +51,14 @@ namespace ApocalipseZ
             }
             return temp;
         }
-         internal DataItem GetDataItemWeaponByName(string name)
+        internal DataItem GetDataItemWeaponByName(string name)
         {
             DataItem temp = null;
             foreach (DataItem item in ListItems)
             {
                 if (item.Name.Contains(name))
                 {
-                   temp = item;
+                    temp = item;
                 }
             }
             return temp;
@@ -148,6 +150,18 @@ namespace ApocalipseZ
                 }
             }
             return temp;
+        }
+        internal DataDecals GetDecal(string name)
+        {
+            DataDecals tempDecal = null;
+            foreach (var item in ListDecals)
+            {
+                if (item.Name.Contains(name))
+                {
+                    tempDecal = item;
+                }
+            }
+            return tempDecal;
         }
 
         internal ScriptableTextureSounds GetScriptableTextureSounds()

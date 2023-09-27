@@ -344,13 +344,7 @@ namespace ApocalipseZ
         {
             playerColor = _col;
         }
-        [ObserversRpc]
-        internal void RpcSpawBullet(SpawBulletTransform spawbulettransform)
-        {
-            //Instantiate(ScriptableManager.Instance.GetBullet(spawbulettransform.NameBullet), spawbulettransform.Position, spawbulettransform.Rotation);
-            // NetworkServer.Spawn ( Instantiate ( ScriptableManager.bullet , spawbulettransform.Position , spawbulettransform.Rotation ));
-            //print ("posicao:" +  spawbulettransform.Position + "rotacao" + spawbulettransform.Rotation);
-        }
+
 
         public override void OnStopClient()
         {
@@ -433,11 +427,6 @@ namespace ApocalipseZ
 
 
         #region command
-        [ServerRpc]
-        public void CmdSpawBullet(SpawBulletTransform spawbulettransform, NetworkConnection sender = null)
-        {
-
-        }
 
         public Inventory GetInventory()
         {

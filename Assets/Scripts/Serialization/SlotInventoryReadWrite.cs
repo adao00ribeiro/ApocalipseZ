@@ -40,14 +40,14 @@ public struct SlotInventoryTemp
 }
 public static class SlotInventoryReadWrite
 {
-    public static void WriteStringTest(this Writer writer, SlotInventoryTemp value)
+    public static void WriteSlotInventory(this Writer writer, SlotInventoryTemp value)
     {
         writer.WriteString(value.Name);
         writer.WriteString(value.guidid);
         writer.WriteInt32(value.Ammo);
         writer.WriteInt32(value.Quantity);
     }
-    public static SlotInventoryTemp ReadStringTest(this Reader reader)
+    public static SlotInventoryTemp ReadSlotInventory(this Reader reader)
     {
 
         return new SlotInventoryTemp(reader.ReadString(), reader.ReadString(), reader.ReadInt32(), reader.ReadInt32());

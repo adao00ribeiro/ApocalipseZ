@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8581081085808639424}
   - component: {fileID: 7564494577556385352}
   - component: {fileID: 7924407908574088878}
+  - component: {fileID: -886932317349623977}
   m_Layer: 6
   m_Name: PrefabP90
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3921184682229974682}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.2, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -77,6 +78,7 @@ MonoBehaviour:
   canShot: 1
   setAim: 0
   isThrowingGrenade: 0
+  recoil: {x: 0, y: 0}
 --- !u!82 &8581081085808639424
 AudioSource:
   m_ObjectHideFlags: 0
@@ -210,10 +212,11 @@ MonoBehaviour:
   <PredictedSpawn>k__BackingField: {fileID: 0}
   _networkBehaviours:
   - {fileID: 2573776881666971413}
+  - {fileID: -886932317349623977}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   SerializedTransformProperties:
-    Position: {x: 0, y: 5.2, z: 0}
+    Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0, w: 1}
     LocalScale: {x: 1, y: 1, z: 1}
   _isNetworked: 1
@@ -241,6 +244,27 @@ MonoBehaviour:
   Arms:
   - {fileID: 5287536844475578056}
   - {fileID: 1043493896197760735}
+--- !u!114 &-886932317349623977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3921184682229974682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 1
+  _addedNetworkObject: {fileID: 7564494577556385352}
+  _networkObjectCache: {fileID: 7564494577556385352}
+  IgnoredParameters: []
+  _animator: {fileID: 6153741167438508454}
+  _smoothFloats: 1
+  _interpolation: 2
+  _clientAuthoritative: 1
+  _sendToOwner: 0
 --- !u!1 &9057802709003168496
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +290,7 @@ Transform:
   m_GameObject: {fileID: 9057802709003168496}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.10779999, y: 0.20100006, z: 0.36600006}
+  m_LocalPosition: {x: 0.1052, y: 0.1488, z: -0.3017}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

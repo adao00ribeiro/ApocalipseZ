@@ -40,15 +40,14 @@ namespace ApocalipseZ
             {
                 return;
             }
-
-            StartCoroutine(HitFX());
-
+            if (HealthSlider.value != stats.health)
+            {
+                StartCoroutine(HitFX());
+            }
             HealthSlider.value = stats.health;
             HealthText.text = stats.health.ToString();
-
             HydratationSlider.value = stats.hydratation;
             HydratationText.text = stats.hydratation.ToString();
-
             SatietySlider.value = stats.satiety;
             SatietySliderText.text = stats.satiety.ToString();
         }
@@ -76,6 +75,7 @@ namespace ApocalipseZ
 
         IEnumerator HitFX()
         {
+            DamageScreen.color = new Color(DamageScreen.color.r, DamageScreen.color.g, DamageScreen.color.b, 1);
             float alpha = DamageScreen.color.a;
             while (DamageScreen.color.a > 0)
             {

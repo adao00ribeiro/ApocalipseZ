@@ -604,6 +604,7 @@ GameObject:
   - component: {fileID: 2933317094578959052}
   - component: {fileID: 6621863346645708408}
   - component: {fileID: 3141304072233916513}
+  - component: {fileID: 911568514158886891}
   m_Layer: 6
   m_Name: PrefabBARRETI
   m_TagString: Untagged
@@ -641,9 +642,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 0}
+  _addedNetworkObject: {fileID: 3141304072233916513}
   _networkObjectCache: {fileID: 3141304072233916513}
-  weaponSetting: {fileID: 11400000, guid: d03f0b185b9908b4e9793602f404d700, type: 2}
   weaponName: BARRETI
   muzzleFlashTransform: {fileID: 697648257932343423}
   shellTransform: {fileID: 0}
@@ -656,7 +656,7 @@ MonoBehaviour:
   currentClip: 120
   MaxClip: 120
   fireMode: 0
-  Animator: {fileID: 4605378493693366339}
+  animator: {fileID: 0}
   sway: {fileID: 0}
   recoilComponent: {fileID: 0}
   audioSource: {fileID: 0}
@@ -670,6 +670,7 @@ MonoBehaviour:
   canShot: 1
   setAim: 0
   isThrowingGrenade: 0
+  recoil: {x: 0, y: 0}
 --- !u!82 &6621863346645708408
 AudioSource:
   m_ObjectHideFlags: 0
@@ -819,6 +820,27 @@ MonoBehaviour:
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 1619154218787871106
+--- !u!114 &911568514158886891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2271651885792713846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 3141304072233916513}
+  _networkObjectCache: {fileID: 0}
+  IgnoredParameters: []
+  _animator: {fileID: 4605378493693366339}
+  _smoothFloats: 1
+  _interpolation: 2
+  _clientAuthoritative: 1
+  _sendToOwner: 0
 --- !u!1 &2356527799931104842
 GameObject:
   m_ObjectHideFlags: 0

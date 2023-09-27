@@ -2843,6 +2843,7 @@ GameObject:
   - component: {fileID: 4841580225679841999}
   - component: {fileID: 8912490322008024797}
   - component: {fileID: 5887756173718382252}
+  - component: {fileID: 3444661900675162073}
   m_Layer: 6
   m_Name: PrefabDESERTEAGLE
   m_TagString: Untagged
@@ -2879,9 +2880,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _componentIndexCache: 0
-  _addedNetworkObject: {fileID: 0}
+  _addedNetworkObject: {fileID: 8912490322008024797}
   _networkObjectCache: {fileID: 8912490322008024797}
-  weaponSetting: {fileID: 11400000, guid: bf880356075c2914680b417412707c39, type: 2}
   weaponName: DESERTEAGLE
   muzzleFlashTransform: {fileID: 5639520775918011830}
   shellTransform: {fileID: 0}
@@ -2894,7 +2894,7 @@ MonoBehaviour:
   currentClip: 120
   MaxClip: 120
   fireMode: 0
-  Animator: {fileID: 0}
+  animator: {fileID: 0}
   sway: {fileID: 0}
   recoilComponent: {fileID: 0}
   audioSource: {fileID: 0}
@@ -2908,6 +2908,7 @@ MonoBehaviour:
   canShot: 1
   setAim: 0
   isThrowingGrenade: 0
+  recoil: {x: 0, y: 0}
 --- !u!82 &4841580225679841999
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3041,6 +3042,7 @@ MonoBehaviour:
   <PredictedSpawn>k__BackingField: {fileID: 0}
   _networkBehaviours:
   - {fileID: 4953962958911937847}
+  - {fileID: 3444661900675162073}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   SerializedTransformProperties:
@@ -3052,7 +3054,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 16
+  <PrefabId>k__BackingField: 47
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
@@ -3072,6 +3074,27 @@ MonoBehaviour:
   Arms:
   - {fileID: 6576971971927363046}
   - {fileID: 382310996227850215}
+--- !u!114 &3444661900675162073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6980962201273613714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 1
+  _addedNetworkObject: {fileID: 8912490322008024797}
+  _networkObjectCache: {fileID: 8912490322008024797}
+  IgnoredParameters: []
+  _animator: {fileID: 6506228994668378841}
+  _smoothFloats: 1
+  _interpolation: 2
+  _clientAuthoritative: 1
+  _sendToOwner: 0
 --- !u!1 &7116934680514021427
 GameObject:
   m_ObjectHideFlags: 0

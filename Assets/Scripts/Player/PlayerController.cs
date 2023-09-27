@@ -54,6 +54,7 @@ public class PlayerController : NetworkBehaviour
         if (base.IsOwner)
         {
             GameController.Instance.CanvasFpsPlayer.gameObject.transform.SetParent(player.transform);
+            GameController.Instance.CanvasFpsPlayer.SetPlayerStats(player.GetComponent<PlayerStats>());
         }
     }
     public FpsPlayer GetPlayer()

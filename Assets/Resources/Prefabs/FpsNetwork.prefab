@@ -278,10 +278,13 @@ MonoBehaviour:
   GroundLayers:
     serializedVersion: 2
     m_Bits: 65
+  isCrouchButtonDown: 0
   standingHeight: 1.8
   timeToCrouch: 0.25
   crochingCenter: {x: 0, y: 0.5, z: 0}
   standingCenter: {x: 0, y: 1, z: 0}
+  IsCrouching: 0
+  duringCrouchAnimation: 0
 --- !u!114 &7433572165634752114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,16 +301,10 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 5475215427857851610}
   _networkObjectCache: {fileID: 5475215427857851610}
   activeSlot: {fileID: 0}
-  PrimaryWeapon:
-    Name: 
-    guidid: 
-    Ammo: 0
-    Quantity: 0
-  SecundaryWeapon:
-    Name: 
-    guidid: 
-    Ammo: 0
-    Quantity: 0
+  twoWeapon:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   weaponHolderAnimator: {fileID: 0}
   swayTransform: {fileID: 0}
 --- !u!114 &7180609406773086949

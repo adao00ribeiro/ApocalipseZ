@@ -152,7 +152,6 @@ namespace ApocalipseZ
 
             if (!base.IsOwner)
             {
-
                 return;
             }
             if (PlayerStats.Disable)
@@ -177,7 +176,6 @@ namespace ApocalipseZ
                 PlayerStats.AddHealth(200);
                 PlayerStats.AddHydratation(100);
                 PlayerStats.AddSatiety(100);
-
                 TargetRespaw(base.Owner);
             }, 5);
         }
@@ -228,7 +226,6 @@ namespace ApocalipseZ
 
             if (base.IsOwner)
             {
-
                 FirstPersonCamera.tag = "MainCamera";
                 FirstPersonCamera.GetComponent<Camera>().enabled = true;
                 FirstPersonCamera.ActiveCursor(false);
@@ -318,10 +315,9 @@ namespace ApocalipseZ
             SpawCharacter(newPlayerColor);
 
         }
-        [Server]
+        [ServerRpc]
         public void DroppAllItems()
         {
-
 
         }
         [TargetRpc]
@@ -339,13 +335,7 @@ namespace ApocalipseZ
         [ServerRpc]
         public void CmdDropAllItems(NetworkConnection sender = null)
         {
-
-
-            // IContainer containerInventory = fpstemp.GetInventory();
-            // IContainer containerFastItems = fpstemp.GetFastItems();
-            //
-            // containerWeapon.TargetGetContainer(opponentIdentity.connectionToClient, TypeContainer.WEAPONS, containerWeapon.GetContainerTemp());
-
+            WeaponManager.DropAllWeapons();
         }
 
 
@@ -383,7 +373,9 @@ namespace ApocalipseZ
                 AnimatorController.SetFloat("SelectDeath", InputManager.GetCrouch() ? 0 : Random.Range(1, 5));
                 AnimatorController.SetBool("IsDead", true);
                 AnimatorWeaponHolderController.SetBool("HideWeapon", true);
+                CmdDropAllItems();
                 CmdRespawn();
+
                 PlayerStats.Disable = true;
                 return;
             }

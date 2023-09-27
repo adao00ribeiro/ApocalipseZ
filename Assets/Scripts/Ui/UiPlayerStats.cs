@@ -9,18 +9,14 @@ namespace ApocalipseZ
     {
         [SerializeField] private Slider HealthSlider;
         [SerializeField] private Text HealthText;
-
+        [SerializeField] private Image DamageScreen;
+        float damageScreenFadeSpeed = 1.4f;
         [SerializeField] private Slider HydratationSlider;
         [SerializeField] private Text HydratationText;
-
         [SerializeField] private Slider SatietySlider;
         [SerializeField] private Text SatietySliderText;
-
-
-
         [SerializeField] private Text WeaponText;
         [SerializeField] private Text AmmoText;
-
         IFpsPlayer player;
         [SerializeField] PlayerStats stats;
         [SerializeField] WeaponManager WeaponManager;
@@ -44,6 +40,9 @@ namespace ApocalipseZ
             {
                 return;
             }
+
+            StartCoroutine(HitFX());
+
             HealthSlider.value = stats.health;
             HealthText.text = stats.health.ToString();
 
@@ -73,6 +72,18 @@ namespace ApocalipseZ
             stats = player.GetPlayerStats();
             stats.OnAlteredStats += OnUpdateHealth; ;
             // WeaponManager.OnActiveWeapon += OnActiveSlot; ;
+        }
+
+        IEnumerator HitFX()
+        {
+            float alpha = DamageScreen.color.a;
+            while (DamageScreen.color.a > 0)
+            {
+                alpha -= damageScreenFadeSpeed * Time.deltaTime;
+                Color temp = new Color(DamageScreen.color.r, DamageScreen.color.g, DamageScreen.color.b, alpha);
+                DamageScreen.color = temp;
+                yield return new WaitForEndOfFrame();
+            }
         }
     }
 }

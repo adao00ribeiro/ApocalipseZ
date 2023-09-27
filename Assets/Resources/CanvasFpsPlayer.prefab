@@ -5619,7 +5619,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 0}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -12335,6 +12335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HealthSlider: {fileID: 0}
   HealthText: {fileID: 0}
+  DamageScreen: {fileID: 3760665601928724767}
   HydratationSlider: {fileID: 0}
   HydratationText: {fileID: 0}
   SatietySlider: {fileID: 0}

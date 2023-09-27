@@ -7,14 +7,14 @@ namespace ApocalipseZ
     {
         public float recoilReleaseSpeed = 2f;
 
-        private void Update ( )
+        private void Update()
         {
-           transform.localRotation = Quaternion.Slerp ( transform.localRotation , Quaternion.Euler ( Vector3.zero ) , Time.deltaTime * recoilReleaseSpeed );
+            transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(Vector3.zero), Time.deltaTime * recoilReleaseSpeed);
         }
 
-        public void AddRecoil ( Vector3 recoil )
+        public void AddRecoil(Vector2 recoil)
         {
-            transform.localRotation *= Quaternion.Euler ( new Vector3(Random.Range(0,recoil.x),Random.Range(0,recoil.y),0) );
+            transform.localRotation *= Quaternion.Euler(new Vector3(Random.Range(0, recoil.x), Random.Range(0, recoil.y), 0));
         }
     }
 }

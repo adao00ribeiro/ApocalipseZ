@@ -7,16 +7,14 @@ public enum WeaponType { SMG, SniperRiffle, Pistol, Shotgun, Melee, Grenade }
 [CreateAssetMenu(fileName = "DataArmsWeapon", menuName = "Data/ArmsWeapon", order = 0)]
 public class DataArmsWeapon : ScriptableObject
 {
-    public string GuidId =System.Guid.NewGuid().ToString();
+    public string GuidId = System.Guid.NewGuid().ToString();
     public string Name;
     public WeaponType Type;
 
     [Header("Weapon stats", order = 0)]
     public float fireRate;
-
     public float spread;
-
-    public Vector3 recoil;
+    public ContantsRecoil recoil;
     public ParticleSystem MuzzleFlashParticlesFX;
     public string shotSFX, reloadingSFX, emptySFX;
     public GameObject shell;
@@ -52,7 +50,17 @@ public class DataArmsWeapon : ScriptableObject
     [Tooltip("Max amount of projectiles which being created on Start()")]
     public GameObject PrefabArmsWeapon;
 
-    public DataArmsWeapon(){
-           this.GuidId = System.Guid.NewGuid().ToString();
+    public DataArmsWeapon()
+    {
+        this.GuidId = System.Guid.NewGuid().ToString();
     }
 }
+
+[System.Serializable]
+public struct ContantsRecoil
+{
+    public Vector2 recolTop;
+    public Vector2 recolDown;
+}
+
+

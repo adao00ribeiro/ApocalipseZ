@@ -1,15 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
-using FishNet;
+using FishNet.Connection;
 using FishNet.Object;
-using GameKit.Utilities.ObjectPooling.Examples;
+using FishNet.Object.Synchronizing;
+using FishNet.Transporting;
 using UnityEngine;
 namespace ApocalipseZ
 {
     [RequireComponent(typeof(AudioSource))]
     public class Weapon : NetworkBehaviour, IWeapon
     {
-
         private DataArmsWeapon weaponSetting;
         public DataArmsWeapon WeaponSetting { get => weaponSetting; }
         [SerializeField] private string weaponName;
@@ -32,14 +31,11 @@ namespace ApocalipseZ
 
         [Tooltip("Should weapon reload when ammo is 0")]
         public bool autoReload = true;
-
-        [Header("Ammo")]
         [Tooltip("Ammo count in weapon magazine")]
 
+        [SyncVar]
         [SerializeField] private int currentAmmo = 30;
         public int CurrentAmmo { get => currentAmmo; set => currentAmmo = value; }
-
-
         [Tooltip("Max weapon ammo capacity")]
         public int maxAmmo = 30;
         public int currentClip = 120;
@@ -48,8 +44,7 @@ namespace ApocalipseZ
         public enum FireMode { automatic, single }
         [Header("Fire mode")]
         public FireMode fireMode;
-
-        [SerializeField] private Animator Animator;
+        [SerializeField] private Animator animator;
         [SerializeField] private Sway sway;
         [SerializeField] private Recoil recoilComponent;
         [SerializeField] private AudioSource audioSource;
@@ -60,28 +55,18 @@ namespace ApocalipseZ
         //prefabs
         public FirstPersonCamera Cam;
         [SerializeField] private GameObject PrefabProjectile;
-
         private float nextFireTime;
-
-        [HideInInspector]
+        [SyncVar]
         public bool reloading = false;
         [HideInInspector]
         public bool canShot = true;
 
         [SerializeField] private bool setAim = false;
         public bool SetAim { get => setAim; }
-
         public bool isThrowingGrenade;
 
-        public void setCurrent(int oldcurrent, int newcurrent)
-        {
-            currentAmmo = newcurrent;
-        }
-        private void OnValidate()
-        {
-
-        }
-
+        [SyncVar]
+        public Vector2 recoil;
         // Start is called before the first frame update
         void Start()
         {
@@ -91,44 +76,51 @@ namespace ApocalipseZ
             shotSFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.shotSFX).Audio;
             reloadSFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.reloadingSFX).Audio;
             emptySFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.emptySFX).Audio;
-
             recoilComponent = GameObject.FindObjectOfType<Recoil>();
             audioSource = GetComponent<AudioSource>();
-            if (GetComponentInChildren<Animator>())
-                Animator = GetComponentInChildren<Animator>();
-
             temp_MuzzleFlashParticlesFX = Instantiate(DataParticles.Particles, muzzleFlashTransform);
         }
+        public void RecoilChange(Vector2 _, Vector2 newRecoil, bool asServer)
+        {
+            recoil = newRecoil;
+        }
         // Update is called once per frame
-
-
-        public bool Fire()
+        [ServerRpc(RequireOwnership = false)]
+        public void CmdFire(NetworkConnection conn = null)
         {
 
+            float x = Random.Range(weaponSetting.recoil.recolDown.x, weaponSetting.recoil.recolTop.x);
+            float y = Random.Range(weaponSetting.recoil.recolDown.y, weaponSetting.recoil.recolTop.y);
+            recoil = new Vector2(x, y);
+
+            if (Fire())
+            {
+                TargetFire(conn);
+            }
+
+        }
+        [TargetRpc]
+        public void TargetFire(NetworkConnection conn)
+        {
+            PlayFX();
+            recoilComponent.AddRecoil(recoil);
+            CmdSpawBullet(muzzleFlashTransform.position, muzzleFlashTransform.forward, base.TimeManager.Tick);
+
+        }
+        public bool Fire()
+        {
             if (Time.time > nextFireTime && !reloading && canShot /*&& !controller.isClimbing*/ ) //Allow fire statement
             {
 
                 if (currentAmmo > 0)
                 {
                     currentAmmo -= 1;
-                    PlayFX();
+                    //PlayFX();
                     muzzleFlashTransform.LookAt(Cam.transform.position + Cam.transform.forward * 3000);
-
-                    if (!base.IsHost)
-                    {
-
-                        SpawnProjectile(muzzleFlashTransform.position, muzzleFlashTransform.forward, 0f);
-                    }
-
                     //calculatedDamage = Random.Range ( damageMin , damageMax );
-
-
-                    CmdFire(muzzleFlashTransform.position, muzzleFlashTransform.forward, base.TimeManager.Tick);
-
-
-
+                    //  CmdSpawBullet(muzzleFlashTransform.position, muzzleFlashTransform.forward, base.TimeManager.Tick);
                     // ProjectilesManager ( );
-                    recoilComponent.AddRecoil(weaponSetting.recoil);
+                    recoilComponent.AddRecoil(recoil);
                     //Calculating when next fire call allowed
                     nextFireTime = Time.time + weaponSetting.fireRate;
                     return true;
@@ -146,22 +138,11 @@ namespace ApocalipseZ
                     return false;
                 }
             }
+
             return false;
         }
         private const float MAX_PASSED_TIME = 0.3f;
-        private void ClientFire()
-        {
-            Vector3 position = transform.position;
-            Vector3 direction = transform.forward;
 
-            /* Spawn locally with 0f passed time.
-             * Since this is the firing client
-             * they do not need to accelerate/catch up
-             * the projectile. */
-            SpawnProjectile(position, direction, 0f);
-            //Ask server to also fire passing in current Tick.
-            CmdFire(position, direction, base.TimeManager.Tick);
-        }
         private void SpawnProjectile(Vector3 position, Vector3 direction, float passedTime)
         {
             if (weaponSetting.Type == WeaponType.Grenade)
@@ -173,7 +154,7 @@ namespace ApocalipseZ
 
         }
         [ServerRpc(RequireOwnership = false)]
-        private void CmdFire(Vector3 position, Vector3 direction, uint tick)
+        private void CmdSpawBullet(Vector3 position, Vector3 direction, uint tick, NetworkConnection conn = null)
         {
 
             /* You may want to validate position and direction here.
@@ -199,7 +180,7 @@ namespace ApocalipseZ
             //Tell other clients to spawn the projectile.
             ObserversFire(position, direction, tick);
         }
-        [ObserversRpc(ExcludeOwner = true)]
+        [ObserversRpc]
         private void ObserversFire(Vector3 position, Vector3 direction, uint tick)
         {
 
@@ -212,6 +193,12 @@ namespace ApocalipseZ
                 //Spawn the projectile locally.
                 SpawnProjectile(position, direction, passedTime);
             }
+        }
+        [ServerRpc(RequireOwnership = false)]
+        public void CmdReloadBegin()
+        {
+            ReloadBegin();
+
         }
         public void ReloadBegin()
         {
@@ -229,7 +216,7 @@ namespace ApocalipseZ
                 {
                     Animator.SetBool("Reloading", true);
                     Animator.SetBool("Aim", false);
-                    Animator.Play("Reload");
+                    Animator.SetBool("Reload", true);
                 }
 
                 audioSource.PlayOneShot(reloadSFX);
@@ -242,6 +229,7 @@ namespace ApocalipseZ
         IEnumerator ReloadCycle(float timerCicle)
         {
             yield return new WaitForSeconds(timerCicle);
+            print(timerCicle);
             ReloadEnd();
         }
         public int CalculateTotalAmmo()
@@ -260,27 +248,22 @@ namespace ApocalipseZ
         }
         void ReloadEnd()
         {
-
             var neededAmmo = maxAmmo - currentAmmo;
-
             if (currentClip >= neededAmmo)
             {
                 currentClip -= neededAmmo;
                 currentAmmo += neededAmmo;
-
-
             }
             else if (currentClip < neededAmmo)
             {
                 currentAmmo += currentClip;
                 neededAmmo -= currentClip;
                 currentClip = 0;
-
             }
-
             reloading = false;
             canShot = true;
             Animator.SetBool("Reloading", false);
+            Animator.SetBool("Reload", false);
             if (setAim && useAnimator)
             {
                 Animator.SetBool("Aim", true);
@@ -302,11 +285,13 @@ namespace ApocalipseZ
             }
             if (setAim)
             {
+                Animator.SetLayerWeight(1, 1);
                 Sway.AmountX = Sway.AmountX * 0.3f;
                 Sway.AmountY = Sway.AmountY * 0.3f;
             }
             else
             {
+                Animator.SetLayerWeight(1, Mathf.Lerp(0, 1, Time.deltaTime * 0.5f));
                 Sway.AmountX = Sway.startX;
                 Sway.AmountY = Sway.startY;
             }
@@ -321,18 +306,7 @@ namespace ApocalipseZ
                 setAim = false;
             }
         }
-        /*
-        public void ThrowGrenade()
-        {
 
-            var obj = Instantiate(weaponSetting.grenadePrefab, muzzleFlashTransform.position, Quaternion.identity);
-            //obj.transform.position = transform.position + transform.forward * 0.3f;
-            obj.GetComponent<Rigidbody>().AddForce(transform.forward * weaponSetting.throwForce);
-            isThrowingGrenade = false;
-            // inventory.RemoveItem ( "Grenade" , true );
-            // weaponManager.UnhideWeaponAfterGrenadeDrop ( );
-        }
-*/
         public void PlayFX()
         {
             if (useAnimator)
@@ -343,9 +317,10 @@ namespace ApocalipseZ
                 }
                 else
                 {
-                    Animator.Play("Shot");
+                    Animator.SetTrigger("Shot");
                     temp_MuzzleFlashParticlesFX.time = 0;
                     temp_MuzzleFlashParticlesFX.Play();
+
                 }
             }
 
@@ -357,8 +332,17 @@ namespace ApocalipseZ
         {
             return weaponSetting;
         }
-
-
+        public Animator Animator
+        {
+            get
+            {
+                if (animator == null)
+                {
+                    animator = GetComponentInChildren<Animator>();
+                }
+                return animator;
+            }
+        }
         public Sway Sway
         {
             get

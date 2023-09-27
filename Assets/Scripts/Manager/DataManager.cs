@@ -49,6 +49,18 @@ namespace ApocalipseZ
             }
             return temp;
         }
+         internal DataItem GetDataItemWeaponByName(string name)
+        {
+            DataItem temp = null;
+            foreach (DataItem item in ListItems)
+            {
+                if (item.Name.Contains(name))
+                {
+                   temp = item;
+                }
+            }
+            return temp;
+        }
         internal DataItem GetDataItemWeapon()
         {
 
@@ -60,7 +72,6 @@ namespace ApocalipseZ
                     listWeapons.Add(item);
                 }
             }
-
 
             return listWeapons[Random.Range(0, listWeapons.Count - 1)];
         }

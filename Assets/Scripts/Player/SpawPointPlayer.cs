@@ -15,7 +15,6 @@ public class SpawPointPlayer : MonoBehaviour
     {
         GameController.Instance.PlayerSpawPoints.Add(this.gameObject);
     }
-
     public void OnDisable()
     {
         GameController.Instance.PlayerSpawPoints.Remove(this.gameObject);

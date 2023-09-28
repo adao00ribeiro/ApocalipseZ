@@ -121,9 +121,9 @@ namespace ApocalipseZ
 
                     for (int i = 0; i < decalsPoolSizeForEachType; i++)
                     {
-                        concreteDecal_pool[i] = Instantiate(GameController.Instance.DataManager.GetDecal("Concrete").Decal);
-                        concreteDecal_pool[i].SetActive(false);
-                        concreteDecal_pool[i].transform.parent = decalsParentObject_concrete.transform;
+                        concretedecal_pool[i] = Instantiate(GameController.Instance.DataManager.GetDecal("Concrete").Decal);
+                        concretedecal_pool[i].SetActive(false);
+                        concretedecal_pool[i].transform.parent = decalsParentObject_concrete.transform;
                     }
                 }
                 return concretedecal_pool;
@@ -141,9 +141,9 @@ namespace ApocalipseZ
 
                     for (int i = 0; i < decalsPoolSizeForEachType; i++)
                     {
-                        woodDecal_pool[i] = Instantiate(GameController.Instance.DataManager.GetDecal("Wood").Decal);
-                        woodDecal_pool[i].SetActive(false);
-                        woodDecal_pool[i].transform.parent = decalsParentObject_wood.transform;
+                        wooddecal_pool[i] = Instantiate(GameController.Instance.DataManager.GetDecal("Wood").Decal);
+                        wooddecal_pool[i].SetActive(false);
+                        wooddecal_pool[i].transform.parent = decalsParentObject_wood.transform;
                     }
                 }
                 return wooddecal_pool;
@@ -161,9 +161,9 @@ namespace ApocalipseZ
 
                     for (int i = 0; i < decalsPoolSizeForEachType; i++)
                     {
-                        dirtDecal_pool[i] = Instantiate(GameController.Instance.DataManager.GetDecal("Dirt").Decal);
-                        dirtDecal_pool[i].SetActive(false);
-                        dirtDecal_pool[i].transform.parent = decalsParentObject_dirt.transform;
+                        dirtdecal_pool[i] = Instantiate(GameController.Instance.DataManager.GetDecal("Dirt").Decal);
+                        dirtdecal_pool[i].SetActive(false);
+                        dirtdecal_pool[i].transform.parent = decalsParentObject_dirt.transform;
                     }
                 }
                 return dirtdecal_pool;
@@ -181,9 +181,9 @@ namespace ApocalipseZ
 
                     for (int i = 0; i < decalsPoolSizeForEachType; i++)
                     {
-                        metalDecal_pool[i] = Instantiate(GameController.Instance.DataManager.GetDecal("Metal").Decal);
-                        metalDecal_pool[i].SetActive(false);
-                        metalDecal_pool[i].transform.parent = decalsParentObject_metal.transform;
+                        metaldecal_pool[i] = Instantiate(GameController.Instance.DataManager.GetDecal("Metal").Decal);
+                        metaldecal_pool[i].SetActive(false);
+                        metaldecal_pool[i].transform.parent = decalsParentObject_metal.transform;
                     }
                 }
                 return metaldecal_pool;

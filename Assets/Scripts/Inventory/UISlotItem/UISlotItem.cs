@@ -156,6 +156,7 @@ namespace ApocalipseZ
         public void SetImage(Sprite image)
         {
             Image.sprite = image;
+            Image.color = new Color(255, 255, 255, 255);
             if (image == null)
             {
                 Image.color = Color.clear;

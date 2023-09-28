@@ -17,7 +17,9 @@ MonoBehaviour:
   Type: 4
   fireRate: 0
   spread: 0
-  recoil: {x: 0, y: 0, z: 0}
+  recoil:
+    recolTop: {x: 1, y: 1}
+    recolDown: {x: -1, y: -1}
   MuzzleFlashParticlesFX: {fileID: 0}
   shotSFX: Swoosh
   reloadingSFX: 

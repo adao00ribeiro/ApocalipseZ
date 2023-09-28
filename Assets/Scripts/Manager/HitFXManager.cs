@@ -46,6 +46,7 @@ namespace ApocalipseZ
             {
                 objWoodHitFX.Stop();
                 objWoodHitFX.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                transform.position =  new Vector3(hit.point.x, hit.point.y, hit.point.z);
                 objWoodHitFX.transform.LookAt(Camera.main.transform.position);
                 objWoodHitFX.Play(true);
             }
@@ -54,6 +55,7 @@ namespace ApocalipseZ
 
                 objConcreteHitFX.Stop();
                 objConcreteHitFX.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                 transform.position =  new Vector3(hit.point.x, hit.point.y, hit.point.z);
                 objConcreteHitFX.transform.LookAt(Camera.main.transform.position);
                 objConcreteHitFX.Play(true);
             }
@@ -61,6 +63,7 @@ namespace ApocalipseZ
             {
                 objDirtHitFX.Stop();
                 objDirtHitFX.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                 transform.position =  new Vector3(hit.point.x, hit.point.y, hit.point.z);
                 objDirtHitFX.transform.LookAt(Camera.main.transform.position);
                 objDirtHitFX.Play(true);
             }
@@ -68,6 +71,7 @@ namespace ApocalipseZ
             {
                 objMetalHitFX.Stop();
                 objMetalHitFX.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                 transform.position =  new Vector3(hit.point.x, hit.point.y, hit.point.z);
                 objMetalHitFX.transform.LookAt(Camera.main.transform.position);
                 objMetalHitFX.Play(true);
             }
@@ -75,6 +79,7 @@ namespace ApocalipseZ
             {
                 objBloodHitFX.Stop();
                 objBloodHitFX.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                 transform.position =  new Vector3(hit.point.x, hit.point.y, hit.point.z);
                 objBloodHitFX.transform.LookAt(Camera.main.transform.position);
                 objBloodHitFX.Play(true);
             }
@@ -82,6 +87,7 @@ namespace ApocalipseZ
             {
                 objConcreteHitFX.Stop();
                 objConcreteHitFX.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+                 transform.position =  new Vector3(hit.point.x, hit.point.y, hit.point.z);
                 objConcreteHitFX.transform.LookAt(Camera.main.transform.position);
                 objConcreteHitFX.Play(true);
             }

@@ -57,7 +57,9 @@ namespace ApocalipseZ
         private void PlayTerrain(Terrain terrain)
         {
             GetTerrainData Terrain = terrain.gameObject.GetComponent<GetTerrainData>();
-
+            if(terrain == null){
+                    return;
+            }
             foreach (TextureType type in scriptableTextureSounds.TextureType)
             {
                 foreach (Texture tex in type.textures)
@@ -100,7 +102,7 @@ namespace ApocalipseZ
                 {
                     if (timeStep == 0)
                     {
-                        PlaySound();
+                     //   PlaySound();
                     }
                     timeStep += Time.deltaTime;
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UnityEditor.Rendering;
+using UnityEngine;
 
 namespace ApocalipseZ
 {
@@ -23,8 +24,13 @@ namespace ApocalipseZ
         Animator animator;
         public LayerMask defaultLayer;
 
+
+        public Vector3 positionCrouch;
+        public Vector3 InitialPosition;
+        public float speedPosition;
         private void Start()
         {
+            InitialPosition = transform.parent.localPosition;
             animator = GetComponent<Animator>();
             defaultLayer = GetComponent<Camera>().cullingMask;
         }
@@ -33,6 +39,17 @@ namespace ApocalipseZ
             lockCursor = active;
             Cursor.visible = active;
             Cursor.lockState = active ? CursorLockMode.None : CursorLockMode.Locked;
+        }
+        void Update()
+        {
+            if (GameController.Instance.InputManager.GetCrouch())
+            {
+                transform.parent.localPosition = Vector3.Lerp(transform.parent.localPosition, positionCrouch, speedPosition * Time.deltaTime);
+            }
+            else
+            {
+                transform.parent.localPosition = Vector3.Lerp(transform.parent.localPosition, InitialPosition, speedPosition * Time.deltaTime);
+            }
         }
         public void UpdateCamera()
         {

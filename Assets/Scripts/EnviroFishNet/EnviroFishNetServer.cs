@@ -15,8 +15,13 @@ public class EnviroFishNetServer : NetworkBehaviour
     [SyncVar] private int networkYears;
 
     public bool isHeadless = true;
+    public Canvas CanvasEnviroConfig;
 
-
+    public override void OnStartClient ( )
+    {
+        base.OnStartClient ( );
+        CanvasEnviroConfig.enabled = false;
+    }
     public override void OnStartServer()
     {
         base.OnStartServer();

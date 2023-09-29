@@ -9,11 +9,11 @@ namespace ApocalipseZ
     {
 
         [Header("Prefab Managers")]
-
+        public string characterName;
         [SerializeField] private GameObject[] ObjectsManager;
         //privados 
         GameObject SpawPoint;
-        private FpsPlayer fpsPlayer;
+
         [SerializeField] private CanvasFpsPlayer canvasFpsPlayer;
         private DataManager dataManager;
         private SceneManager _sceneManager;

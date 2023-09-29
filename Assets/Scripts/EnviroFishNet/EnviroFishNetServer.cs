@@ -16,7 +16,13 @@ public class EnviroFishNetServer : NetworkBehaviour
 
     public bool isHeadless = true;
 
+    public Canvas EnviroConfig;
 
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        Destroy(EnviroConfig.gameObject);
+    }
     public override void OnStartServer()
     {
         base.OnStartServer();
@@ -36,6 +42,7 @@ public class EnviroFishNetServer : NetworkBehaviour
             SendWeatherToClient(type, zone);
         };
     }
+
     public void Start()
     {
         if (!base.IsServer)

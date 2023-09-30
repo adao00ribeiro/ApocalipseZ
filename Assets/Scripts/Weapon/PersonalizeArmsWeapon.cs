@@ -6,8 +6,6 @@ public class PersonalizeArmsWeapon : MonoBehaviour
 {
     public GameObject[] Arms;
 
-
-
     public void ActiveArms(string name)
     {
         DisableAllArms();

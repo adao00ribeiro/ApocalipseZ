@@ -37,7 +37,7 @@ public class ChatUI : NetworkBehaviour
     {
         print(sender.FirstObject);
         if (!connNames.ContainsKey(sender))
-            connNames.Add(sender, sender.FirstObject.GetComponent<PlayerController>().playerName);
+            connNames.Add(sender, sender.FirstObject.GetComponent<PlayerController>().PlayerName);
 
         if (!string.IsNullOrWhiteSpace(message))
             RpcReceive(connNames[sender], message.Trim());

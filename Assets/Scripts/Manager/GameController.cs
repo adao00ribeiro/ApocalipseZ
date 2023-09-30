@@ -9,6 +9,7 @@ namespace ApocalipseZ
     {
 
         [Header("Prefab Managers")]
+        public string playerName;
         public string characterName;
         [SerializeField] private GameObject[] ObjectsManager;
         //privados 
@@ -30,6 +31,7 @@ namespace ApocalipseZ
         // Start is called before the first frame update
         void Awake()
         {
+            characterName = "Yasmin";
             if (_instance != null && _instance != this)
             {
                 Destroy(this.gameObject);
@@ -100,6 +102,8 @@ namespace ApocalipseZ
                 }
         */
         private static GameController _instance;
+
+
         public static GameController Instance
         {
             get

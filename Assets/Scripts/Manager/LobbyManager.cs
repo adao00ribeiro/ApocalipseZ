@@ -26,5 +26,8 @@ public class LobbyManager : MonoBehaviour
         GameController.Instance.characterName = name;
         SpawCharacter(name);
     }
-
+    public void SetPlayerName(string playerName)
+    {
+        GameController.Instance.playerName = playerName;
+    }
 }

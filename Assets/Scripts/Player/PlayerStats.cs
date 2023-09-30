@@ -101,7 +101,8 @@ namespace ApocalipseZ
                 }
                 if (IsDead())
                 {
-                    deadStatsManager.ObserveViewUiDeadStats(base.Owner.ClientId.ToString());
+                    PlayerController playerController = transform.parent.GetComponent<PlayerController>();
+                    deadStatsManager.ObserveViewUiDeadStats(playerController.PlayerName);
                     deadStatsManager.TargewtViewSeFudeo(base.Owner);
                 }
             }

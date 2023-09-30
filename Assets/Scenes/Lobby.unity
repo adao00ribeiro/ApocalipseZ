@@ -6523,7 +6523,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.41078433, y: 0.87033105}
   m_AnchorMax: {x: 0.588, y: 0.92378205}
-  m_AnchoredPosition: {x: 1, y: -3.2000122}
+  m_AnchoredPosition: {x: 1, y: -3.1999512}
   m_SizeDelta: {x: -2, y: -1.8800125}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &919198753
@@ -14087,7 +14087,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -50.664917}
+  m_AnchoredPosition: {x: 0, y: -50.664795}
   m_SizeDelta: {x: 0, y: -101.33007}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1622081081
@@ -16122,7 +16122,7 @@ MonoBehaviour:
   _unreliableMTU: 1023
   _ipv4BindAddress: 
   _ipv6BindAddress: 
-  _port: 7778
+  _port: 7777
   _maximumClients: 4095
   _clientAddress: localhost
   _timeout: 15

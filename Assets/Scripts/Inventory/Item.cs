@@ -17,6 +17,9 @@ namespace ApocalipseZ
         [SerializeField] private int dropQuantity;
 
         public bool IsServerSpaw = false;
+
+        [SerializeField] private Material Outiline;
+
         private void OnEnable()
         {
             transform.position += Vector3.up * 2;
@@ -26,6 +29,8 @@ namespace ApocalipseZ
         {
             dataItem = GameController.Instance.DataManager.GetDataItem(this.name);
             Ammo = dataItem.Ammo;
+            Outiline = Resources.Load<Material>("MatOutiline");
+
         }
         public override void OnStartClient()
         {
@@ -42,7 +47,21 @@ namespace ApocalipseZ
         }
         public void EndFocus()
         {
-            print("end focus");
+            foreach (Transform item in transform)
+            {
+                MeshRenderer renderer = item.GetComponent<MeshRenderer>();
+                Material[] materials = renderer.materials;
+               
+                // Adicionar o novo material à lista
+                // Por exemplo, se 'newMaterial' é o material que você deseja adicionar:
+                Material[] newMaterials = new Material[materials.Length - 1];
+               for (int i = 0; i < materials.Length - 1; i++)
+               {
+                newMaterials[i] = materials[i];
+               }
+                // Atribuir a nova lista de materiais de volta ao MeshRenderer
+                renderer.materials = newMaterials;
+            }
         }
 
         public string GetTitle()
@@ -71,11 +90,26 @@ namespace ApocalipseZ
 
         public void StartFocus()
         {
-            print("StartFocus");
+
+            foreach (Transform item in transform)
+            {
+                MeshRenderer renderer = item.GetComponent<MeshRenderer>();
+                Material[] materials = renderer.materials;
+
+                // Adicionar o novo material à lista
+                // Por exemplo, se 'newMaterial' é o material que você deseja adicionar:
+                Material[] newMaterials = new Material[materials.Length + 1];
+                materials.CopyTo(newMaterials, 0);
+                newMaterials[materials.Length] = Outiline;
+
+                // Atribuir a nova lista de materiais de volta ao MeshRenderer
+                renderer.materials = newMaterials;
+            }
         }
 
         private void OnTriggerEnter(Collider other)
         {
+
             if (other.CompareTag("noCollider"))
             {
                 StartFocus();
@@ -100,5 +134,7 @@ namespace ApocalipseZ
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

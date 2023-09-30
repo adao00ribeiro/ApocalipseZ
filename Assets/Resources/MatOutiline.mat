@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: New Material
+  m_Name: MatOutiline
   m_Shader: {fileID: -6465566751694194690, guid: 7ca06bdc8fee8f740b56950893101b2c,
     type: 3}
   m_Parent: {fileID: 0}
@@ -104,9 +104,9 @@ Material:
     m_Ints: []
     m_Floats:
     - Boolean_14e403f8403748ddb6071708eb9876f0: 1
-    - Vector1_1: 0.01
+    - Vector1_1: 1
     - Vector1_16028fdea9e8434ba64d9becc02319dd: 1
-    - Vector1_2: 0.01
+    - Vector1_2: 1
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _Blend: 0
@@ -139,7 +139,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_388f977f8bd24193b5907c02a71631e7: {r: 0.027451038, g: 0, b: 1, a: 0}
+    - Color_388f977f8bd24193b5907c02a71631e7: {r: 0, g: 38.17949, b: 44.060986, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

@@ -232,7 +232,7 @@ namespace ApocalipseZ
                 CanvasFpsPlayer CanvasFpsPlayer = GameObject.FindObjectOfType<CanvasFpsPlayer>();
                 CanvasFpsPlayer.SetFirtPersonCamera(FirstPersonCamera);
                 CanvasFpsPlayer.SetPlayerStats(PlayerStats);
-                CmdSpawCharacter(PlayerPrefs.GetString("NamePlayer"));
+                CmdSpawCharacter(GameController.Instance.characterName);
             }
             else
             {

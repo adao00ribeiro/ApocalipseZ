@@ -10,7 +10,7 @@ using UnityEngine;
 public class PlayerController : NetworkBehaviour
 {
     [SyncVar]
-    public string playerName;
+    public string PlayerName;
     private FpsPlayer player;
     [SerializeField] private NetworkBehaviour PrefabPlayer;
     // Start is called before the first frame update
@@ -20,7 +20,7 @@ public class PlayerController : NetworkBehaviour
     {
         base.OnStartServer();
         currentSCENE_NAME = this.gameObject.scene.name;
-        //playerName = (string)connectionToClient.authenticationData;
+
     }
     public override void OnStartClient()
     {
@@ -28,13 +28,17 @@ public class PlayerController : NetworkBehaviour
 
         if (base.IsOwner)
         {
-            ChatUI.localPlayerName = playerName;
+            //ChatUI.localPlayerName = playerName;
             CmdSpawPlayer();
-
+            CmdSetPlayerName(GameController.Instance.playerName);
         }
 
     }
-
+    [ServerRpc]
+    public void CmdSetPlayerName(string playerName)
+    {
+        PlayerName = playerName;
+    }
     [ServerRpc]
     public void CmdSpawPlayer(NetworkConnection sender = null)
     {

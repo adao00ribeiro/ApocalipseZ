@@ -11,6 +11,7 @@ namespace ApocalipseZ
         [Tooltip("The distance within which you can pick up item")]
         public float distance = 1.5f;
 
+        private GameObject previousHitObject;
         [SerializeField] private IInteract interact;
         [SerializeField] UiFpsScopeCursorReticles PUiFpsScopeCursorReticles;
         public UiFpsScopeCursorReticles UiFpsScopeCursorReticles
@@ -49,10 +50,26 @@ namespace ApocalipseZ
             if (Physics.Raycast(transform.position, transform.forward, out hit, distance, layer))
             {
                 interact = hit.collider.gameObject.GetComponent<IInteract>();
-
                 if (interact != null)
                 {
-                    print("interact");
+                    if (previousHitObject != hit.collider.gameObject)
+                    {
+                        // O objeto mudou desde o último quadro, então chama o método ExitTrigger
+                        if (previousHitObject != null)
+                        {
+                            IInteract previousInteract = previousHitObject.GetComponent<IInteract>();
+                            if (previousInteract != null)
+                            {
+                                previousInteract.EndFocus();
+                            }
+                        }
+
+                        // Atualiza o objeto anterior para o objeto atual
+                        previousHitObject = hit.collider.gameObject;
+
+                        // Chama o método EnterTrigger
+                        interact.StartFocus();
+                    }
                     // UiFpsScopeCursorReticles.EnableCursor ( );
                     // UiFpsScopeCursorReticles.SetUseText ( interact.GetTitle ( ) );
                     if (InputManager.GetUse())
@@ -65,6 +82,18 @@ namespace ApocalipseZ
                 }
                 else
                 {
+                    // Não foi detectada uma colisão
+                    if (previousHitObject != null)
+                    {
+                        IInteract previousInteract = previousHitObject.GetComponent<IInteract>();
+                        if (previousInteract != null)
+                        {
+                            previousInteract.EndFocus();
+                        }
+
+                        // Reseta o objeto anterior
+                        previousHitObject = null;
+                    }
                     //  UiFpsScopeCursorReticles.DisableCursor ( );
                     // UiFpsScopeCursorReticles.SetUseText ( "" );
                 }
@@ -80,6 +109,18 @@ namespace ApocalipseZ
             }
             else
             {
+                // Não foi detectada uma colisão
+                if (previousHitObject != null)
+                {
+                    IInteract previousInteract = previousHitObject.GetComponent<IInteract>();
+                    if (previousInteract != null)
+                    {
+                        previousInteract.EndFocus();
+                    }
+
+                    // Reseta o objeto anterior
+                    previousHitObject = null;
+                }
                 //UiFpsScopeCursorReticles.DisableCursor( );
                 //UiFpsScopeCursorReticles.SetUseText ("");
             }

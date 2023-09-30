@@ -23,8 +23,11 @@ public class LobbyManager : MonoBehaviour
 
     public void SelectCharacter(string name)
     {
-        PlayerPrefs.SetString("NamePlayer", name);
+        GameController.Instance.characterName = name;
         SpawCharacter(name);
     }
-
+    public void SetPlayerName(string playerName)
+    {
+        GameController.Instance.playerName = playerName;
+    }
 }

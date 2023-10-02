@@ -8,7 +8,7 @@ namespace ApocalipseZ
     [RequireComponent(typeof(Rigidbody))]
     public class Grenade : NetworkBehaviour, IProjectile
     {
-
+        private int damage;
         public float throwForce;
         public float explosionTimer;
         public float explosionForce;
@@ -35,15 +35,17 @@ namespace ApocalipseZ
         }
         void OnEnable()
         {
-            if (base.IsServer)
+            if (base.IsClient)
             {
-                StartCoroutine(Timer(explosionTimer));
+                return;
             }
+            StartCoroutine(Timer(explosionTimer));
+
 
         }
-        public void Initialize(Vector3 direction, float passedTime)
+        public void Initialize(Vector3 direction, float passedTime, int _damage)
         {
-
+            damage = _damage;
             _direction = direction;
             _passedTime = passedTime;
             rd.AddForce(_direction * throwForce);
@@ -59,6 +61,7 @@ namespace ApocalipseZ
             effects_temp = Instantiate(explosionEffects);
             effects_temp.transform.position = transform.position;
             effects_temp.transform.rotation = transform.rotation;
+            effects_temp.GetComponent<Explosion>().damage = damage;
             effects_temp.GetComponent<Explosion>().EnableExplosion();
             base.Spawn(effects_temp);
             base.Despawn(gameObject);

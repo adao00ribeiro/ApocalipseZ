@@ -15,6 +15,7 @@ MonoBehaviour:
   GuidId: 5723ffee-aa65-4af9-842d-737301980a7d
   Name: 1911
   Type: 2
+  Damage: 20
   fireRate: 0.192
   spread: 0
   recoil:

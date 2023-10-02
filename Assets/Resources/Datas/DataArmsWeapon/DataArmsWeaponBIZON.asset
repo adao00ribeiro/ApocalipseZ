@@ -15,11 +15,11 @@ MonoBehaviour:
   GuidId: 9f565452-0bc1-4f95-8468-18bc62d01079
   Name: BIZON
   Type: 0
-  fireRate: 0.14
+  fireRate: 0.0825
   spread: 0
   recoil:
-    recolTop: {x: 1.5, y: 1.5}
-    recolDown: {x: -1, y: -1}
+    recolTop: {x: -2.5, y: -1.85}
+    recolDown: {x: 0, y: 1.85}
   MuzzleFlashParticlesFX: {fileID: 0}
   shotSFX: ScarShot
   reloadingSFX: ScarReload

@@ -12,7 +12,6 @@ namespace ApocalipseZ
         public float distance = 1.5f;
 
         private GameObject previousHitObject;
-        [SerializeField] private IInteract interact;
         [SerializeField] UiFpsScopeCursorReticles PUiFpsScopeCursorReticles;
         public UiFpsScopeCursorReticles UiFpsScopeCursorReticles
         {
@@ -20,10 +19,12 @@ namespace ApocalipseZ
             {
                 if (PUiFpsScopeCursorReticles == null)
                 {
-                    PUiFpsScopeCursorReticles = GameObject.FindObjectOfType<UiFpsScopeCursorReticles>();
+                    PUiFpsScopeCursorReticles = GameController.Instance.CanvasFpsPlayer.GetUiFpsScopeCursorReticles();
+                    PUiFpsScopeCursorReticles.Init();
                 }
                 return PUiFpsScopeCursorReticles;
             }
+
         }
         public LayerMask layer;
         private InputManager PInputManager;
@@ -49,8 +50,8 @@ namespace ApocalipseZ
 
             if (Physics.Raycast(transform.position, transform.forward, out hit, distance, layer))
             {
-                interact = hit.collider.gameObject.GetComponent<IInteract>();
-                if (interact != null)
+
+                if (hit.collider.gameObject.TryGetComponent<IInteract>(out IInteract interact))
                 {
                     if (previousHitObject != hit.collider.gameObject)
                     {
@@ -63,20 +64,18 @@ namespace ApocalipseZ
                                 previousInteract.EndFocus();
                             }
                         }
-
                         // Atualiza o objeto anterior para o objeto atual
                         previousHitObject = hit.collider.gameObject;
-
                         // Chama o método EnterTrigger
                         interact.StartFocus();
                     }
-                    // UiFpsScopeCursorReticles.EnableCursor ( );
-                    // UiFpsScopeCursorReticles.SetUseText ( interact.GetTitle ( ) );
+                    UiFpsScopeCursorReticles.EnableCursor();
+                    UiFpsScopeCursorReticles.SetUseText(interact.GetTitle());
                     if (InputManager.GetUse())
                     {
                         interact.CmdInteract();
                         interact = null;
-                        //UiFpsScopeCursorReticles.SetUseText ( "" );
+                        UiFpsScopeCursorReticles.SetUseText("");
                     }
 
                 }
@@ -94,8 +93,8 @@ namespace ApocalipseZ
                         // Reseta o objeto anterior
                         previousHitObject = null;
                     }
-                    //  UiFpsScopeCursorReticles.DisableCursor ( );
-                    // UiFpsScopeCursorReticles.SetUseText ( "" );
+                    UiFpsScopeCursorReticles.DisableCursor();
+                    UiFpsScopeCursorReticles.SetUseText("");
                 }
                 RotationOjects door = hit.collider.gameObject.GetComponent<RotationOjects>();
 
@@ -121,8 +120,8 @@ namespace ApocalipseZ
                     // Reseta o objeto anterior
                     previousHitObject = null;
                 }
-                //UiFpsScopeCursorReticles.DisableCursor( );
-                //UiFpsScopeCursorReticles.SetUseText ("");
+                UiFpsScopeCursorReticles.DisableCursor();
+                UiFpsScopeCursorReticles.SetUseText("");
             }
         }
 

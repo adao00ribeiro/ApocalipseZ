@@ -9,13 +9,13 @@ public class GrandeFunction : MonoBehaviour
     public Transform muzzle;
     public void ThrowGrenade()
     {
-        
+
         if (InstanceFinder.NetworkManager.IsServer)
         {
             IProjectile go = Instantiate(PrefabGranade, muzzle.position, Quaternion.identity).GetComponent<IProjectile>();
-            go.Initialize(muzzle.forward, 0);
+            go.Initialize(muzzle.forward, 0, 50);
             InstanceFinder.ServerManager.Spawn(go.gameobject);
         }
- 
+
     }
 }

@@ -15,11 +15,12 @@ MonoBehaviour:
   GuidId: 1b679e8a-506b-4231-83f7-b2bdb9b176f8
   Name: AKM
   Type: 0
-  fireRate: 0.10365
+  Damage: 0
+  fireRate: 0.1
   spread: 0
   recoil:
-    recolTop: {x: -3, y: -2.4}
-    recolDown: {x: 0, y: 2.4}
+    recolTop: {x: -2.8, y: -2.2}
+    recolDown: {x: 0, y: 2.2}
   MuzzleFlashParticlesFX: {fileID: 0}
   shotSFX: ScarShot
   reloadingSFX: ScarReload

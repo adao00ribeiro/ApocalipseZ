@@ -16,7 +16,7 @@ MonoBehaviour:
   Type: 1
   Name: SCAR
   isStackable: 0
-  Thumbnail: {fileID: 21300000, guid: 9f55b3ee9a20f7a4fb39951ca32460c2, type: 3}
+  Thumbnail: {fileID: 21300000, guid: 1a04a73dd398c0b45bdc816f80d2a3f3, type: 3}
   Description: NONE
   maxStacksize: 1
   Ammo: 30

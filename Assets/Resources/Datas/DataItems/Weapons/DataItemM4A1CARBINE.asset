@@ -15,7 +15,7 @@ MonoBehaviour:
   GuidId: 91b7f637-b737-46ea-97db-35d43d99deff
   Type: 1
   Name: CARBINE
-  isStackable: 1
+  isStackable: 0
   Thumbnail: {fileID: 21300000, guid: 2efbdc3fc71ad0046a943c4c0aa85ca7, type: 3}
   Description: NONE
   maxStacksize: 1

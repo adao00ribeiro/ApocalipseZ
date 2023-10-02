@@ -15,6 +15,7 @@ MonoBehaviour:
   GuidId: 61886d9d-b0bd-4d5d-9c9d-b90e5bad0176
   Name: GRENADE
   Type: 5
+  Damage: 80
   fireRate: 2
   spread: 0
   recoil:

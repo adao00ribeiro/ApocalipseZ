@@ -15,6 +15,7 @@ MonoBehaviour:
   GuidId: c4a42e5e-335a-4ef1-ba3c-8aeafc8be71f
   Name: 12_M870
   Type: 3
+  Damage: 22
   fireRate: 1
   spread: 0
   recoil:

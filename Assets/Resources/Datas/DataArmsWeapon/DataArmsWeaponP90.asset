@@ -15,6 +15,7 @@ MonoBehaviour:
   GuidId: c4e3cfd1-399d-4214-a709-fcbb57d86cf5
   Name: P90
   Type: 0
+  Damage: 27
   fireRate: 0.07
   spread: 0
   recoil:

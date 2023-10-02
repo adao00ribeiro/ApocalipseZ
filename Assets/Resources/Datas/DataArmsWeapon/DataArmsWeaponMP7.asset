@@ -15,6 +15,7 @@ MonoBehaviour:
   GuidId: 4c3e0e61-deed-49d8-baf5-68b66ac414a1
   Name: MP7
   Type: 0
+  Damage: 26
   fireRate: 0.07
   spread: 0
   recoil:

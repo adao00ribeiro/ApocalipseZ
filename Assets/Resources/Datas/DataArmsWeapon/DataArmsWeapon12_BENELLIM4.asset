@@ -15,6 +15,7 @@ MonoBehaviour:
   GuidId: d41d18d0-91b2-485e-aaa4-957e6f9a21b3
   Name: 12_BENELLIM4
   Type: 3
+  Damage: 11
   fireRate: 1
   spread: 0
   recoil:

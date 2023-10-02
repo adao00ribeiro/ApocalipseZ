@@ -646,7 +646,7 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 3141304072233916513}
   _networkObjectCache: {fileID: 3141304072233916513}
   weaponName: BARRETI
-  muzzleFlashTransform: {fileID: 697648257932343423}
+  MuzzleList: {fileID: 0}
   shellTransform: {fileID: 0}
   bulletTransform: {fileID: 0}
   useAnimator: 1
@@ -883,11 +883,11 @@ Transform:
   m_GameObject: {fileID: 2356527799931104842}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.053, y: 0.1036, z: 0.3635}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1126451167503622080}
+  m_Father: {fileID: 8318162629567631443}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2567014287460448846
 GameObject:
@@ -1618,7 +1618,7 @@ Transform:
   - {fileID: 2895290047391756769}
   - {fileID: 2079236829042480228}
   - {fileID: 2818458124519063009}
-  - {fileID: 697648257932343423}
+  - {fileID: 8318162629567631443}
   m_Father: {fileID: 3016811976770956901}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &4605378493693366339
@@ -3275,6 +3275,38 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6768887524401203147}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &9093214759906261592
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8318162629567631443}
+  m_Layer: 6
+  m_Name: MuzzleList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8318162629567631443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9093214759906261592}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.053, y: 0.1036, z: 0.3635}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 697648257932343423}
+  m_Father: {fileID: 1126451167503622080}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9127776483537156186
 GameObject:

@@ -17,7 +17,7 @@ namespace ApocalipseZ
 
         [Header("Transforms Objects Spaws")]
         [Tooltip("Transform to instantiate particle system shot fx")]
-        public Transform muzzleFlashTransform;
+        public Transform MuzzleList;
         [Tooltip("Transform to eject shell after shot")]
         public Transform shellTransform;
         [Tooltip("Transform to instantiate bullet on shot")]
@@ -76,23 +76,20 @@ namespace ApocalipseZ
             shotSFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.shotSFX).Audio;
             reloadSFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.reloadingSFX).Audio;
             emptySFX = GameController.Instance.DataManager.GetDataAudio(weaponSetting.emptySFX).Audio;
-            recoilComponent = GameObject.FindObjectOfType<Recoil>();
             audioSource = GetComponent<AudioSource>();
-            temp_MuzzleFlashParticlesFX = Instantiate(DataParticles.Particles, muzzleFlashTransform);
+            MuzzleList = transform.Find("Arms/MuzzleList");
+            temp_MuzzleFlashParticlesFX = Instantiate(DataParticles.Particles, MuzzleList.GetChild(0));
+             animator = GetComponentInChildren<Animator>();
+               sway = transform.GetComponentInParent<Sway>();
         }
         public void RecoilChange(Vector2 _, Vector2 newRecoil, bool asServer)
         {
-            recoil = newRecoil;
+            recoilComponent.AddRecoil(newRecoil);
         }
         // Update is called once per frame
         [ServerRpc(RequireOwnership = false)]
         public void CmdFire(NetworkConnection conn = null)
         {
-
-            float x = Random.Range(weaponSetting.recoil.recolDown.x, weaponSetting.recoil.recolTop.x);
-            float y = Random.Range(weaponSetting.recoil.recolDown.y, weaponSetting.recoil.recolTop.y);
-            recoil = new Vector2(x, y);
-
             if (Fire())
             {
                 TargetFire(conn);
@@ -102,9 +99,16 @@ namespace ApocalipseZ
         [TargetRpc]
         public void TargetFire(NetworkConnection conn)
         {
-            PlayFX();
-            recoilComponent.AddRecoil(recoil);
-            CmdSpawBullet(muzzleFlashTransform.position, muzzleFlashTransform.forward, base.TimeManager.Tick);
+          
+            if (weaponSetting.Type == WeaponType.Grenade)
+            {
+                return;
+            }
+              PlayFX();
+            foreach (Transform item in MuzzleList)
+            {
+                CmdSpawBullet(item.position, item.forward, base.TimeManager.Tick);
+            }
 
         }
         public bool Fire()
@@ -116,11 +120,15 @@ namespace ApocalipseZ
                 {
                     currentAmmo -= 1;
                     //PlayFX();
-                    muzzleFlashTransform.LookAt(Cam.transform.position + Cam.transform.forward * 3000);
+                    MuzzleList.GetChild(0).LookAt(Cam.transform.position + Cam.transform.forward * 3000);
                     //calculatedDamage = Random.Range ( damageMin , damageMax );
                     //  CmdSpawBullet(muzzleFlashTransform.position, muzzleFlashTransform.forward, base.TimeManager.Tick);
                     // ProjectilesManager ( );
-                    recoilComponent.AddRecoil(recoil);
+            if (weaponSetting.Type == WeaponType.Grenade)
+            {
+                PlayFX();
+            }
+              
                     //Calculating when next fire call allowed
                     nextFireTime = Time.time + weaponSetting.fireRate;
                     return true;
@@ -149,7 +157,7 @@ namespace ApocalipseZ
             {
                 return;
             }
-            IProjectile go = Instantiate(PrefabProjectile, position, muzzleFlashTransform.rotation).GetComponent<IProjectile>();
+            IProjectile go = Instantiate(PrefabProjectile, position, Quaternion.identity).GetComponent<IProjectile>();
             go.Initialize(direction, passedTime);
 
         }
@@ -176,7 +184,10 @@ namespace ApocalipseZ
             //Spawn on the server.
             SpawnProjectile(position, direction, passedTime);
 
-
+            float x = Random.Range(weaponSetting.recoil.recolDown.x, weaponSetting.recoil.recolTop.x);
+            float y = Random.Range(weaponSetting.recoil.recolDown.y, weaponSetting.recoil.recolTop.y);
+            recoil = new Vector2(x, y);
+            recoilComponent.AddRecoil(recoil);
             //Tell other clients to spawn the projectile.
             ObserversFire(position, direction, tick);
         }
@@ -229,7 +240,6 @@ namespace ApocalipseZ
         IEnumerator ReloadCycle(float timerCicle)
         {
             yield return new WaitForSeconds(timerCicle);
-            print(timerCicle);
             ReloadEnd();
         }
         public int CalculateTotalAmmo()
@@ -327,6 +337,10 @@ namespace ApocalipseZ
             audioSource.Stop();
             audioSource.PlayOneShot(shotSFX);
 
+        }
+        public void SetRecoilComponent(Recoil recoil)
+        {
+            recoilComponent = recoil;
         }
         public DataArmsWeapon GetScriptableWeapon()
         {

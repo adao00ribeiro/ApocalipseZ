@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2388433839660171231
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8849984687976854471}
+  m_Layer: 6
+  m_Name: MuzzleList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8849984687976854471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2388433839660171231}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.10519999, y: 0.1488, z: -0.3017}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2013562121623717857}
+  m_Father: {fileID: 3837967493675095504}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3921184682229974682
 GameObject:
   m_ObjectHideFlags: 0
@@ -53,7 +85,7 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 7564494577556385352}
   _networkObjectCache: {fileID: 7564494577556385352}
   weaponName: P90
-  muzzleFlashTransform: {fileID: 2013562121623717857}
+  MuzzleList: {fileID: 0}
   shellTransform: {fileID: 0}
   bulletTransform: {fileID: 0}
   useAnimator: 1
@@ -290,11 +322,11 @@ Transform:
   m_GameObject: {fileID: 9057802709003168496}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1052, y: 0.1488, z: -0.3017}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3837967493675095504}
+  m_Father: {fileID: 8849984687976854471}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3659608336979817019
 PrefabInstance:
@@ -357,7 +389,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1bd54870c3c7bd3469fab485f94b5dd8,
         type: 3}
       propertyPath: m_Name
-      value: Yasmim1PessoaP90
+      value: Arms
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -366,7 +398,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1bd54870c3c7bd3469fab485f94b5dd8,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2013562121623717857}
+      addedObject: {fileID: 8849984687976854471}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1bd54870c3c7bd3469fab485f94b5dd8,
         type: 3}

@@ -766,6 +766,38 @@ Transform:
   - {fileID: 1146201681743761132}
   m_Father: {fileID: 7138631709832188011}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2354367783063042932
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 180845086340324772}
+  m_Layer: 6
+  m_Name: MuzzleList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &180845086340324772
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2354367783063042932}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.10779999, y: 0.20100006, z: 0.36600006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2013562121623717857}
+  m_Father: {fileID: 8310581331083739708}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2438008858534779056
 GameObject:
   m_ObjectHideFlags: 0
@@ -1434,7 +1466,7 @@ GameObject:
   - component: {fileID: 8310581331083739708}
   - component: {fileID: 5265952900611059838}
   m_Layer: 0
-  m_Name: ArmsAK47
+  m_Name: Arms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1457,7 +1489,7 @@ Transform:
   - {fileID: 667582442684987811}
   - {fileID: 6124202892913921970}
   - {fileID: 8021628333613118431}
-  - {fileID: 2013562121623717857}
+  - {fileID: 180845086340324772}
   m_Father: {fileID: 5231137219094774753}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5265952900611059838
@@ -1692,7 +1724,7 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 7564494577556385352}
   _networkObjectCache: {fileID: 7564494577556385352}
   weaponName: AK47
-  muzzleFlashTransform: {fileID: 2013562121623717857}
+  MuzzleList: {fileID: 0}
   shellTransform: {fileID: 0}
   bulletTransform: {fileID: 0}
   useAnimator: 1
@@ -1851,6 +1883,7 @@ MonoBehaviour:
   <PredictedSpawn>k__BackingField: {fileID: 0}
   _networkBehaviours:
   - {fileID: 2573776881666971413}
+  - {fileID: 9194648124663679661}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   SerializedTransformProperties:
@@ -1894,9 +1927,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8cac635f24954048aad3a6ff9110beb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 1
   _addedNetworkObject: {fileID: 7564494577556385352}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 7564494577556385352}
   IgnoredParameters: []
   _animator: {fileID: 5265952900611059838}
   _smoothFloats: 1
@@ -3908,11 +3941,11 @@ Transform:
   m_GameObject: {fileID: 9057802709003168496}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1078, y: 0.201, z: 0.366}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8310581331083739708}
+  m_Father: {fileID: 180845086340324772}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9177226205390349828
 GameObject:

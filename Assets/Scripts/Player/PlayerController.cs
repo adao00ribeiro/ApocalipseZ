@@ -54,11 +54,12 @@ public class PlayerController : NetworkBehaviour
     public void ObserverSpawPlayer(GameObject player)
     {
         player.transform.SetParent(this.transform);
-
         if (base.IsOwner)
         {
             GameController.Instance.CanvasFpsPlayer.gameObject.transform.SetParent(player.transform);
             GameController.Instance.CanvasFpsPlayer.SetPlayerStats(player.GetComponent<PlayerStats>());
+        }else{
+             player.tag = "Flash";
         }
     }
     public FpsPlayer GetPlayer()

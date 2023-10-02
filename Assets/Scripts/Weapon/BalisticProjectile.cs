@@ -24,6 +24,7 @@ namespace ApocalipseZ
         private float _passedTime = 0f;
 
         private float timeStart;
+        
 
         private void OnEnable()
         {

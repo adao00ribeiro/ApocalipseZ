@@ -711,7 +711,7 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 7015509672543965081}
   _networkObjectCache: {fileID: 7015509672543965081}
   weaponName: M4A1
-  muzzleFlashTransform: {fileID: 5773644967049741839}
+  MuzzleList: {fileID: 0}
   shellTransform: {fileID: 0}
   bulletTransform: {fileID: 0}
   useAnimator: 1
@@ -2536,7 +2536,7 @@ GameObject:
   - component: {fileID: 2822415280253733495}
   - component: {fileID: 8268326925037025333}
   m_Layer: 0
-  m_Name: ArmsM4A1
+  m_Name: Arms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2559,7 +2559,7 @@ Transform:
   - {fileID: 6788271384942971714}
   - {fileID: 475488585907021254}
   - {fileID: 249032979094872534}
-  - {fileID: 5773644967049741839}
+  - {fileID: 5048697591611730359}
   m_Father: {fileID: 4074624875252370438}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8268326925037025333
@@ -3215,6 +3215,38 @@ Transform:
   - {fileID: 7590337832062064314}
   m_Father: {fileID: 2707071230238760596}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6761641191723007321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5048697591611730359}
+  m_Layer: 6
+  m_Name: MuzzleList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5048697591611730359
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6761641191723007321}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.09189999, y: 0.17109996, z: 0.3826}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5773644967049741839}
+  m_Father: {fileID: 2822415280253733495}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6798215160105169186
 GameObject:
   m_ObjectHideFlags: 0
@@ -3464,11 +3496,11 @@ Transform:
   m_GameObject: {fileID: 7096771981338050828}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0919, y: 0.1711, z: 0.3826}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2822415280253733495}
+  m_Father: {fileID: 5048697591611730359}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7236917426591939061
 GameObject:

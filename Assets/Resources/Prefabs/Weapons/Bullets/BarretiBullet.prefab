@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 591db98265cdaab4a8c226fe64f58d90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialVelocity: 1000
+  initialVelocity: 1100
   airResistance: 0.1
   damageMinimum: 90
   damageMaximum: 100

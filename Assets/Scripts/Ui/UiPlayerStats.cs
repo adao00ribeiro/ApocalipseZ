@@ -75,7 +75,7 @@ namespace ApocalipseZ
 
         IEnumerator HitFX()
         {
-            DamageScreen.color = new Color(DamageScreen.color.r, DamageScreen.color.g, DamageScreen.color.b, 1);
+            DamageScreen.color = new Color(DamageScreen.color.r, DamageScreen.color.g, DamageScreen.color.b, 0.4f);
             float alpha = DamageScreen.color.a;
             while (DamageScreen.color.a > 0)
             {

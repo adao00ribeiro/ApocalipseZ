@@ -377,7 +377,7 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 369638753032092811}
   _networkObjectCache: {fileID: 369638753032092811}
   weaponName: GRENADE
-  muzzleFlashTransform: {fileID: 1176262535331951240}
+  MuzzleList: {fileID: 0}
   shellTransform: {fileID: 0}
   bulletTransform: {fileID: 0}
   useAnimator: 1
@@ -712,12 +712,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1176722171332393912}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.178, y: 0.28, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7545925948418334342}
+  m_Father: {fileID: 3624697403699572057}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1177446637963347119
 GameObject:
@@ -2045,7 +2045,7 @@ GameObject:
   - component: {fileID: 800583575375942855}
   - component: {fileID: 837065128224806394}
   m_Layer: 6
-  m_Name: ArmsGrenade
+  m_Name: Arms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2067,7 +2067,7 @@ Transform:
   - {fileID: 8641861011134751937}
   - {fileID: 881145902198309279}
   - {fileID: 8145414035635655605}
-  - {fileID: 1176262535331951240}
+  - {fileID: 3624697403699572057}
   m_Father: {fileID: 4288460648779288623}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &800583575375942855
@@ -2497,6 +2497,38 @@ Transform:
   m_Children:
   - {fileID: 7179736340162919478}
   m_Father: {fileID: 3300193671208213577}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6571304737541750177
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3624697403699572057}
+  m_Layer: 6
+  m_Name: MuzzleList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3624697403699572057
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6571304737541750177}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.178, y: 0.28, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1176262535331951240}
+  m_Father: {fileID: 7545925948418334342}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6874601230028239685
 GameObject:

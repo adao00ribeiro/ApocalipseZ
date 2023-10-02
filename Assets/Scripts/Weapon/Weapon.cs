@@ -1,4 +1,5 @@
 using System.Collections;
+using FishNet.Component.Animating;
 using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
@@ -44,6 +45,7 @@ namespace ApocalipseZ
         public enum FireMode { automatic, single }
         [Header("Fire mode")]
         public FireMode fireMode;
+        [SerializeField] private NetworkAnimator networkAnimator;
         [SerializeField] private Animator animator;
         [SerializeField] private Sway sway;
         [SerializeField] private Recoil recoilComponent;
@@ -79,8 +81,10 @@ namespace ApocalipseZ
             audioSource = GetComponent<AudioSource>();
             MuzzleList = transform.Find("Arms/MuzzleList");
             temp_MuzzleFlashParticlesFX = Instantiate(DataParticles.Particles, MuzzleList.GetChild(0));
-             animator = GetComponentInChildren<Animator>();
-               sway = transform.GetComponentInParent<Sway>();
+            animator = GetComponentInChildren<Animator>();
+            networkAnimator = GetComponent<NetworkAnimator>();
+            sway = transform.GetComponentInParent<Sway>();
+
         }
         public void RecoilChange(Vector2 _, Vector2 newRecoil, bool asServer)
         {
@@ -99,12 +103,12 @@ namespace ApocalipseZ
         [TargetRpc]
         public void TargetFire(NetworkConnection conn)
         {
-          
+
             if (weaponSetting.Type == WeaponType.Grenade)
             {
                 return;
             }
-              PlayFX();
+            PlayFX();
             foreach (Transform item in MuzzleList)
             {
                 CmdSpawBullet(item.position, item.forward, base.TimeManager.Tick);
@@ -124,11 +128,11 @@ namespace ApocalipseZ
                     //calculatedDamage = Random.Range ( damageMin , damageMax );
                     //  CmdSpawBullet(muzzleFlashTransform.position, muzzleFlashTransform.forward, base.TimeManager.Tick);
                     // ProjectilesManager ( );
-            if (weaponSetting.Type == WeaponType.Grenade)
-            {
-                PlayFX();
-            }
-              
+                    if (weaponSetting.Type == WeaponType.Grenade)
+                    {
+                        PlayFX();
+                    }
+
                     //Calculating when next fire call allowed
                     nextFireTime = Time.time + weaponSetting.fireRate;
                     return true;
@@ -324,6 +328,7 @@ namespace ApocalipseZ
                 if (weaponSetting.Type == WeaponType.Grenade)
                 {
                     Animator.SetTrigger("Throw");
+                    networkAnimator.SetTrigger("Throw");
                 }
                 else
                 {

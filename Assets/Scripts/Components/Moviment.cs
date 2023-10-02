@@ -22,15 +22,44 @@ namespace ApocalipseZ
         [SerializeField] private Transform mesh;
 
         private CharacterController CharacterController;
-
+        private PlayerStats stats;
         private InputManager InputManager;
         private SoundStep SoundStep;
-
-
         Transform CameraTransform;
 
 
+        [Header("Crouch")]
+        public bool isCrouchButtonDown = false;
+        [SerializeField] private float standingHeight;
+        [SerializeField] private float timeToCrouch;
+        [SerializeField] private Vector3 crochingCenter;
+        [SerializeField] private Vector3 standingCenter;
 
+        [SerializeField] private bool IsCrouching;
+
+        [SerializeField] private bool duringCrouchAnimation;
+
+
+
+
+        //falldamage
+        bool wasGrounded;
+        bool wasFalling;
+
+        float startOffall;
+
+        public float minimumFall = 2f;
+        bool IsFalling
+        {
+            get
+            {
+                return !IsGrounded && CharacterController.velocity.y < 0;
+            }
+        }
+        //groundcheck
+        public float GroundedRadius = 0.28f;
+        public float GroundedOffset = -0.14f;
+        public LayerMask GroundLayers;
         private void Awake()
         {
             InputManager = GameController.Instance.InputManager;
@@ -39,6 +68,7 @@ namespace ApocalipseZ
             CameraTransform = transform.Find("Camera & Recoil");
             SoundStep = GetComponent<SoundStep>();
             currentSpeed = Walk;
+            stats = GetComponent<PlayerStats>();
         }
 
         public void EnableCharacterController()
@@ -56,10 +86,27 @@ namespace ApocalipseZ
             SoundStep.SetIsGround(isGrounded());
             SoundStep.SetIsMoviment(CheckMovement());
         }
+
         public void GravityJumpUpdate(bool IsJump, float delta)
         {
             CheckGround();
+            if (!wasFalling && IsFalling)
+            {
+                startOffall = transform.position.y;
+            }
+            if (!wasGrounded && IsGrounded)
+            {
+                float fallDistance = startOffall - transform.position.y;
 
+                if (fallDistance > minimumFall)
+                {
+
+                    stats.TakeDamage((int)fallDistance);
+                }
+
+            }
+            wasGrounded = IsGrounded;
+            wasFalling = IsFalling;
             if (IsGrounded)
             {
 
@@ -81,9 +128,7 @@ namespace ApocalipseZ
 
 
         }
-        public float GroundedRadius = 0.28f;
-        public float GroundedOffset = -0.14f;
-        public LayerMask GroundLayers;
+
 
 
         public void CheckGround()
@@ -106,7 +151,7 @@ namespace ApocalipseZ
             currentSpeed = Walk;
             currentSpeed = md.IsRun ? Run : currentSpeed;
             currentSpeed = md.IsCrouch ? crouchSpeed : currentSpeed;
-          
+
             if (md.IsCrouch && !duringCrouchAnimation && CharacterController.isGrounded)
             {
                 if (!isCrouchButtonDown)
@@ -123,21 +168,12 @@ namespace ApocalipseZ
                     StartCoroutine(CrouchStand());
                 }
             }
-         
+
 
             transform.localRotation = Quaternion.Euler(0, md.RotationX, 0);
             CharacterController.Move(transform.TransformDirection(moveDirection) * currentSpeed * delta + new Vector3(0.0f, PlayerVelocity.y, 0.0f) * delta);
 
         }
-        public bool isCrouchButtonDown  = false;
-        [SerializeField] private float standingHeight;
-        [SerializeField] private float timeToCrouch;
-        [SerializeField] private Vector3 crochingCenter;
-        [SerializeField] private Vector3 standingCenter;
-
-        [SerializeField] private bool IsCrouching;
-
-        [SerializeField] private bool duringCrouchAnimation;
 
         private IEnumerator CrouchStand()
         {

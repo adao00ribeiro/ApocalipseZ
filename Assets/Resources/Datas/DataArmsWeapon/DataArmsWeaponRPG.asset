@@ -15,11 +15,11 @@ MonoBehaviour:
   GuidId: f8cbd85f-52c9-4bfe-9d94-bbbe1576ebb7
   Name: RPG
   Type: 0
-  fireRate: 3
+  fireRate: 6
   spread: 0
   recoil:
-    recolTop: {x: 0, y: 25}
-    recolDown: {x: -50, y: 0}
+    recolTop: {x: -50, y: -10}
+    recolDown: {x: 0, y: 10}
   MuzzleFlashParticlesFX: {fileID: 0}
   shotSFX: ScarShot
   reloadingSFX: ScarReload

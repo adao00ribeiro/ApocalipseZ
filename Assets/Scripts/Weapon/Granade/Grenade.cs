@@ -27,12 +27,23 @@ namespace ApocalipseZ
         {
             rd = GetComponent<Rigidbody>();
         }
+
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+            Destroy(GetComponent<Rigidbody>());
+        }
         void OnEnable()
         {
-            StartCoroutine(Timer(explosionTimer));
+            if (base.IsServer)
+            {
+                StartCoroutine(Timer(explosionTimer));
+            }
+
         }
         public void Initialize(Vector3 direction, float passedTime)
         {
+
             _direction = direction;
             _passedTime = passedTime;
             rd.AddForce(_direction * throwForce);
@@ -50,7 +61,7 @@ namespace ApocalipseZ
             effects_temp.transform.rotation = transform.rotation;
             effects_temp.GetComponent<Explosion>().EnableExplosion();
             base.Spawn(effects_temp);
-            Destroy(gameObject);
+            base.Despawn(gameObject);
         }
 
     }

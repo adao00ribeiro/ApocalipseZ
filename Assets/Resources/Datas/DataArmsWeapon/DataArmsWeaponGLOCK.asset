@@ -15,11 +15,11 @@ MonoBehaviour:
   GuidId: 3acd0ca3-c621-44c3-b3e5-8a9aafaae549
   Name: GLOCK
   Type: 2
-  fireRate: 0.5
+  fireRate: 0.06
   spread: 0
   recoil:
-    recolTop: {x: 1, y: 1}
-    recolDown: {x: -1, y: -1}
+    recolTop: {x: -5, y: -1.5}
+    recolDown: {x: 0, y: 1.5}
   MuzzleFlashParticlesFX: {fileID: 0}
   shotSFX: ScarShot
   reloadingSFX: ScarReload

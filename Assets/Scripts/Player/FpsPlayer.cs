@@ -18,6 +18,8 @@ using FishNet.Component.Animating;
 namespace ApocalipseZ
 {
     //adicionar e conter components
+
+    [System.Serializable]
     public struct MoveData : IReplicateData
     {
         public bool Jump;
@@ -83,7 +85,6 @@ namespace ApocalipseZ
         public string CharacterName = "";
         MoveData md = new();
         ReconcileData rd = new();
-
         private NetworkAnimator networkAnimator;
         //MoveData for client simulation
 

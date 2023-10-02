@@ -14,21 +14,25 @@ namespace ApocalipseZ
 {
     public class PlayerStats : NetworkBehaviour, IStats
     {
-
-
         public event Action OnAlteredStats;
+
         [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(OnSetHealth))]
         public int health;
+
         [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(OnSetHydratation))]
         public int hydratation = 100;
+
         public float hydratationSubstractionRate = 3f;
         public int thirstDamage = 1;
         private float hydratationTimer;
+
         [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(OnSetSatiety))]
         public int satiety = 100;
+
         public float satietySubstractionRate = 5f;
         public int hungerDamage = 1;
         private float satietyTimer;
+        public float stamina;
         public bool Disable;
 
         public DeadStatsManager deadStatsManager;
@@ -53,7 +57,12 @@ namespace ApocalipseZ
 
             OnAlteredStats?.Invoke();
         }
+        private void OnStaminaChange(int oldStamina, int newStamina, bool asServer)
+        {
+            stamina = newStamina;
 
+            OnAlteredStats?.Invoke();
+        }
         void Update()
         {
             if (base.IsServer)

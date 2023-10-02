@@ -574,7 +574,7 @@ MonoBehaviour:
   _smoothFloats: 1
   _interpolation: 2
   _clientAuthoritative: 1
-  _sendToOwner: 0
+  _sendToOwner: 1
 --- !u!114 &1568087789243070408
 MonoBehaviour:
   m_ObjectHideFlags: 0

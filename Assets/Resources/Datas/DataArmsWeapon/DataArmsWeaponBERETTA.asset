@@ -15,11 +15,11 @@ MonoBehaviour:
   GuidId: ca6c0a39-22a0-4b83-bd01-14fcf0852002
   Name: BERETTA
   Type: 2
-  fireRate: 0.26
+  fireRate: 0.192
   spread: 0
   recoil:
-    recolTop: {x: 1, y: 1}
-    recolDown: {x: -1, y: -1}
+    recolTop: {x: -3, y: -1.5}
+    recolDown: {x: 0, y: 1.5}
   MuzzleFlashParticlesFX: {fileID: 0}
   shotSFX: ScarShot
   reloadingSFX: ScarReload

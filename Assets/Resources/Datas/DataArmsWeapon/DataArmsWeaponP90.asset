@@ -15,11 +15,11 @@ MonoBehaviour:
   GuidId: c4e3cfd1-399d-4214-a709-fcbb57d86cf5
   Name: P90
   Type: 0
-  fireRate: 0.1
+  fireRate: 0.07
   spread: 0
   recoil:
-    recolTop: {x: 1, y: 1}
-    recolDown: {x: -1, y: -1}
+    recolTop: {x: -2, y: -1}
+    recolDown: {x: 0, y: 1}
   MuzzleFlashParticlesFX: {fileID: 0}
   shotSFX: ScarShot
   reloadingSFX: ScarReload

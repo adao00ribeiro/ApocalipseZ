@@ -15,6 +15,7 @@ MonoBehaviour:
   GuidId: 3dcfc6c7-91c5-4bf5-b672-41541b6a11de
   Name: BARRETI
   Type: 1
+  Damage: 140
   fireRate: 0.5
   spread: 0
   recoil:

@@ -15,7 +15,7 @@ MonoBehaviour:
   GuidId: f35faa72-78ef-4fd3-acfb-f63f6dc5af91
   Name: P250
   Type: 0
-  Damage: 0
+  Damage: 26
   fireRate: 0.125
   spread: 0
   recoil:

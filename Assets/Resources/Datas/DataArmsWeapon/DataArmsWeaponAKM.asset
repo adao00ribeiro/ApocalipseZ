@@ -15,7 +15,7 @@ MonoBehaviour:
   GuidId: 1b679e8a-506b-4231-83f7-b2bdb9b176f8
   Name: AKM
   Type: 0
-  Damage: 0
+  Damage: 65
   fireRate: 0.1
   spread: 0
   recoil:

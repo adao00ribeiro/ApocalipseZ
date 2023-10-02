@@ -15,6 +15,7 @@ MonoBehaviour:
   GuidId: 9f565452-0bc1-4f95-8468-18bc62d01079
   Name: BIZON
   Type: 0
+  Damage: 30
   fireRate: 0.0825
   spread: 0
   recoil:

@@ -15,6 +15,7 @@ MonoBehaviour:
   GuidId: 0740b871-7f68-4463-b9e5-d753f1b9a652
   Name: CARBINE
   Type: 0
+  Damage: 55
   fireRate: 0.2
   spread: 0
   recoil:

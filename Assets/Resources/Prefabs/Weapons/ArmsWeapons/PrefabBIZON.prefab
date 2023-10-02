@@ -64,6 +64,7 @@ MonoBehaviour:
   currentClip: 120
   MaxClip: 120
   fireMode: 0
+  networkAnimator: {fileID: 0}
   animator: {fileID: 0}
   sway: {fileID: 0}
   recoilComponent: {fileID: 0}
@@ -275,7 +276,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5590434261856103467}
   m_Layer: 6
-  m_Name: MuzzleList
+  m_Name: Muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -306,7 +307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2013562121623717857}
   m_Layer: 6
-  m_Name: Muzzle flash transform
+  m_Name: MuzzleList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

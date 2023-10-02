@@ -12,6 +12,7 @@ public class DataArmsWeapon : ScriptableObject
     public WeaponType Type;
 
     [Header("Weapon stats", order = 0)]
+    public int Damage;
     public float fireRate;
     public float spread;
     public ContantsRecoil recoil;

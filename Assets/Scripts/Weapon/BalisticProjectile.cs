@@ -15,16 +15,15 @@ namespace ApocalipseZ
         private float time;
         private float livingTime = 5f;
         Vector3 lastPosition;
-        [Tooltip("Maximal and minimal damage ammounts to apply on target")]
-        public int damageMinimum;
-        public int damageMaximum;
 
+        [Tooltip("Maximal and minimal damage ammounts to apply on target")]
+        [SerializeField] private int damage;
         private Vector3 _direction;
 
         private float _passedTime = 0f;
 
         private float timeStart;
-        
+
 
         private void OnEnable()
         {
@@ -32,10 +31,11 @@ namespace ApocalipseZ
             lastPosition = transform.position;
         }
 
-        public void Initialize(Vector3 direction, float passedTime)
+        public void Initialize(Vector3 direction, float passedTime, int _damage)
         {
             _direction = direction;
             _passedTime = passedTime;
+            damage = _damage;
         }
 
 
@@ -51,7 +51,7 @@ namespace ApocalipseZ
                 IStats stat = hit.collider.GetComponent<IStats>();
                 if (stat != null)
                 {
-                    stat.TakeDamage(Random.Range(damageMinimum, damageMaximum));
+                    stat.TakeDamage(damage);
                 }
                 print(Time.time - timeStart);
                 Destroy(gameObject);

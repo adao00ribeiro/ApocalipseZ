@@ -51,14 +51,14 @@ namespace ApocalipseZ
             {
                 MeshRenderer renderer = item.GetComponent<MeshRenderer>();
                 Material[] materials = renderer.materials;
-               
+
                 // Adicionar o novo material à lista
                 // Por exemplo, se 'newMaterial' é o material que você deseja adicionar:
                 Material[] newMaterials = new Material[materials.Length - 1];
-               for (int i = 0; i < materials.Length - 1; i++)
-               {
-                newMaterials[i] = materials[i];
-               }
+                for (int i = 0; i < materials.Length - 1; i++)
+                {
+                    newMaterials[i] = materials[i];
+                }
                 // Atribuir a nova lista de materiais de volta ao MeshRenderer
                 renderer.materials = newMaterials;
             }
@@ -66,7 +66,7 @@ namespace ApocalipseZ
 
         public string GetTitle()
         {
-            return dataItem.name;
+            return dataItem.Name;
         }
 
 

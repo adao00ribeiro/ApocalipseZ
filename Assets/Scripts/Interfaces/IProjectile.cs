@@ -6,5 +6,5 @@ public interface IProjectile
 {
     GameObject gameobject { get; }
 
-    void Initialize(Vector3 direction, float passedTime);
+    void Initialize(Vector3 direction, float passedTime, int damage);
 }

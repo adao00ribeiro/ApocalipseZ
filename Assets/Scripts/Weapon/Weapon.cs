@@ -3,8 +3,11 @@ using FishNet.Component.Animating;
 using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
-using FishNet.Transporting;
 using UnityEngine;
+
+
+
+
 namespace ApocalipseZ
 {
     [RequireComponent(typeof(AudioSource))]
@@ -162,7 +165,7 @@ namespace ApocalipseZ
                 return;
             }
             IProjectile go = Instantiate(PrefabProjectile, position, Quaternion.identity).GetComponent<IProjectile>();
-            go.Initialize(direction, passedTime);
+            go.Initialize(direction, passedTime, weaponSetting.Damage);
 
         }
         [ServerRpc(RequireOwnership = false)]

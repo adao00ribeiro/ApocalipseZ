@@ -97,6 +97,7 @@ namespace ApocalipseZ
             WeaponManager = GetComponent<WeaponManager>();
             FastItemsManager = GetComponent<FastItemsManager>();
             InteractObjects = transform.Find("Recoil/Camera & Recoil").GetComponent<InteractObjects>();
+
             AnimatorWeaponHolderController = transform.Find("Recoil/Camera & Recoil/Weapon holder").GetComponent<Animator>();
             PlayerStats = GetComponent<PlayerStats>();
             FirstPersonCamera = transform.Find("Recoil/Camera & Recoil").GetComponent<FirstPersonCamera>();

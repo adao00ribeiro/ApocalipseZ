@@ -7,10 +7,12 @@ using UnityEngine;
 namespace ApocalipseZ
 {
 
-    public class RocketProjectile : MonoBehaviour , IProjectile
+    public class RocketProjectile : MonoBehaviour, IProjectile
     {
         public GameObject PrefabEffectExplosion;
 
+
+        [SerializeField] private int damage;
         public float initialVelocity = 5;
         [HideInInspector]
         public float airResistance = 0.1f;
@@ -23,17 +25,19 @@ namespace ApocalipseZ
 
         public GameObject gameobject => throw new System.NotImplementedException();
 
-          private Vector3 _direction;
-     private float _passedTime = 0f;
+        private Vector3 _direction;
+        private float _passedTime = 0f;
         private void OnEnable()
         {
-           // GetComponent<Rigidbody>().AddForce(transform.forward * initialVelocity);
+            // GetComponent<Rigidbody>().AddForce(transform.forward * initialVelocity);
             lastPosition = transform.position;
         }
-        public void Initialize(Vector3 direction, float passedTime)
+        public void Initialize(Vector3 direction, float passedTime, int _damage)
         {
             _direction = direction;
             _passedTime = passedTime;
+
+            damage = _damage;
         }
 
         private void Update()
@@ -47,7 +51,7 @@ namespace ApocalipseZ
                 PlayerStats stat = hit.collider.GetComponent<PlayerStats>();
                 if (stat)
                 {
-                    stat.TakeDamage(100);
+                    stat.TakeDamage(damage);
                 }
                 Explosion ex = Instantiate(PrefabEffectExplosion, transform.position, Quaternion.identity).GetComponent<Explosion>();
                 ex.EnableExplosion();
@@ -60,14 +64,14 @@ namespace ApocalipseZ
 
             if (time > livingTime)
             {
-                  Explosion ex = Instantiate(PrefabEffectExplosion, transform.position, Quaternion.identity).GetComponent<Explosion>();
+                Explosion ex = Instantiate(PrefabEffectExplosion, transform.position, Quaternion.identity).GetComponent<Explosion>();
                 ex.EnableExplosion();
-                   InstanceFinder.ServerManager.Spawn(ex.gameObject);
-               Destroy(gameObject);
+                InstanceFinder.ServerManager.Spawn(ex.gameObject);
+                Destroy(gameObject);
             }
-             Move();
+            Move();
         }
-    private void Move()
+        private void Move()
         {
             //Frame delta, nothing unusual here.
             float delta = Time.deltaTime;
@@ -111,7 +115,7 @@ namespace ApocalipseZ
             transform.position = Vector3.zero;
         }
 
-       
+
     }
 
 }

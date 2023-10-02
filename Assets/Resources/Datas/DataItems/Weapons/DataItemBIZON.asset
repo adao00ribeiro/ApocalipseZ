@@ -15,7 +15,7 @@ MonoBehaviour:
   GuidId: 25496385-a979-44d2-8b75-d830f08d6faf
   Type: 1
   Name: BIZON
-  isStackable: 1
+  isStackable: 0
   Thumbnail: {fileID: 21300000, guid: 230bf983d618d7a46a59f45292729dc3, type: 3}
   Description: NONE
   maxStacksize: 1

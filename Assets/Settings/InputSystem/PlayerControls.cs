@@ -517,7 +517,7 @@ namespace ApocalipseZ
                 {
                     ""name"": """",
                     ""id"": ""2443db26-425b-4cf5-938d-57eba0452e66"",
-                    ""path"": ""<Keyboard>/i"",
+                    ""path"": ""<Keyboard>/b"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -550,7 +550,7 @@ namespace ApocalipseZ
                 {
                     ""name"": """",
                     ""id"": ""a112d5f7-151e-4fa5-bbd3-e1f69477ee20"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -577,28 +577,6 @@ namespace ApocalipseZ
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Drop Weapon"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""05540a31-20f9-452c-ac99-f7a61b4168aa"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Lean Left"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""cf18263f-a4af-4287-8df3-d70173a0808d"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Lean Right"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -715,7 +693,7 @@ namespace ApocalipseZ
                 {
                     ""name"": """",
                     ""id"": ""15f0b4ef-6a0f-44a3-bf26-6451bd16a1ba"",
-                    ""path"": ""<Keyboard>/c"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",

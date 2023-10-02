@@ -39,6 +39,6 @@ MonoBehaviour:
   meleeHitFX: 
   bulletInitialVelocity: 0
   airResistanceForce: 0
-  projectile: Bullet
+  projectile: ShotGunBullet
   PrefabArmsWeapon: {fileID: 3921184682229974682, guid: 830efedda7748c740bc20449ebd23c14,
     type: 3}

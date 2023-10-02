@@ -28,6 +28,9 @@ namespace ApocalipseZ
 
         internal void ApplyFX(RaycastHit hit, bool applyParent)
         {
+            if(hit.collider.CompareTag("Flesh")|| hit.collider.CompareTag("Player")){
+                return;
+            }
             if (hit.collider.CompareTag("Concrete"))
             {
                 concreteDecal_pool[decalIndex_concrete].SetActive(true);

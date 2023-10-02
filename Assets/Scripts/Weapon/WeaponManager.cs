@@ -25,6 +25,7 @@ namespace ApocalipseZ
         //Transform where weapons will dropped on Drop()
         private Transform playerTransform;
         [SerializeField] private Transform swayTransform;
+        [SerializeField] private Recoil recoilComponent;
         private InputManager InputManager;
         public static bool IsChekInventory;
         [SerializeField] private bool loadingWeapon;
@@ -46,7 +47,7 @@ namespace ApocalipseZ
             UiPrimaryAndSecondWeapons = GameController.Instance.CanvasFpsPlayer.GetUiPrimaryandSecundaryWeapons();
             swayTransform = transform.Find("Recoil/Camera & Recoil/Weapon holder/Sway").transform;
             weaponHolderAnimator = transform.Find("Recoil/Camera & Recoil/Weapon holder").GetComponent<Animator>();
-
+            recoilComponent = transform.Find("Recoil").GetComponent<Recoil>();
         }
         public void SetFpsPlayer(FpsPlayer fps)
         {
@@ -252,6 +253,7 @@ namespace ApocalipseZ
                 return;
             }
             Weapon tempWeapon = Instantiate(armsWeapon.PrefabArmsWeapon, swayTransform).GetComponent<Weapon>();
+            tempWeapon.SetRecoilComponent(RecoilComponent);
             tempWeapon.transform.localPosition = Vector3.zero;
             tempWeapon.transform.localRotation = quaternion.identity;
             tempWeapon.Cam = fpsplayer.GetFirstPersonCamera();
@@ -300,6 +302,17 @@ namespace ApocalipseZ
             dropItemTemp.transform.position = fpsplayer.GetFirstPersonCamera().transform.position + fpsplayer.GetFirstPersonCamera().transform.forward * 0.5f;
             base.Spawn(dropItemTemp);
             base.Despawn(weapon.gameObject);
+        }
+        public Recoil RecoilComponent
+        {
+            get
+            {
+                if (recoilComponent == null)
+                {
+                    recoilComponent = transform.Find("Recoil").GetComponent<Recoil>();
+                }
+                return recoilComponent;
+            }
         }
     }
 

@@ -29,7 +29,6 @@ namespace ApocalipseZ
         }
         void OnEnable()
         {
-
             StartCoroutine(Timer(explosionTimer));
         }
         public void Initialize(Vector3 direction, float passedTime)

@@ -15,7 +15,7 @@ MonoBehaviour:
   GuidId: 9d68e4de-03b3-4879-9ac1-6fba36ed2351
   Name: AK47
   Type: 0
-  fireRate: 0.2
+  fireRate: 0.10365
   spread: 0
   recoil:
     recolTop: {x: 1, y: 1}

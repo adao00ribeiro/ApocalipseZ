@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5625685935815007922}
   - component: {fileID: 5636142017641168484}
   - component: {fileID: 5709839867885333530}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Gun bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,10 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 591db98265cdaab4a8c226fe64f58d90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialVelocity: 1000
+  initialVelocity: 2000
   airResistance: 0.1
-  damageMinimum: 10
-  damageMaximum: 50
+  damageMinimum: 33
+  damageMaximum: 80
 --- !u!54 &5666812211747530082
 Rigidbody:
   m_ObjectHideFlags: 0

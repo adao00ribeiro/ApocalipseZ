@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5669476043857683648}
   - component: {fileID: -5697807726941712511}
   - component: {fileID: 5820536122359426242}
+  - component: {fileID: 7812253532048517734}
   m_Layer: 7
   m_Name: GRENADAEXPLOSION
   m_TagString: Untagged
@@ -50,9 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7718a9cbf572eb469f79c89e8a84285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 0
   _addedNetworkObject: {fileID: 5820536122359426242}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 5820536122359426242}
   throwForce: 700
   explosionTimer: 3
   explosionForce: 20
@@ -144,7 +145,9 @@ MonoBehaviour:
     InterpolationIncreaseStep: 2
   <ComponentIndex>k__BackingField: 0
   <PredictedSpawn>k__BackingField: {fileID: 0}
-  _networkBehaviours: []
+  _networkBehaviours:
+  - {fileID: 7401991065440942714}
+  - {fileID: 7812253532048517734}
   <ParentNetworkObject>k__BackingField: {fileID: 0}
   <ChildNetworkObjects>k__BackingField: []
   SerializedTransformProperties:
@@ -156,11 +159,56 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 0
+  <PrefabId>k__BackingField: 3
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 995262076751158101
+--- !u!114 &7812253532048517734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808119780353337631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2836e36774ca1c4bbbee976e17b649c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _componentIndexCache: 1
+  _addedNetworkObject: {fileID: 5820536122359426242}
+  _networkObjectCache: {fileID: 5820536122359426242}
+  _componentConfiguration: 2
+  _synchronizeParent: 0
+  _packing:
+    Position: 1
+    Rotation: 1
+    Scale: 0
+  _interpolation: 2
+  _extrapolation: 2
+  _enableTeleport: 0
+  _teleportThreshold: 1
+  _scaleThreshold: 1
+  _clientAuthoritative: 1
+  _sendToOwner: 1
+  _enableNetworkLod: 1
+  _interval: 1
+  _synchronizePosition: 1
+  _positionSnapping:
+    X: 0
+    Y: 0
+    Z: 0
+  _synchronizeRotation: 1
+  _rotationSnapping:
+    X: 0
+    Y: 0
+    Z: 0
+  _synchronizeScale: 1
+  _scaleSnapping:
+    X: 0
+    Y: 0
+    Z: 0
 --- !u!1 &1214107958350685790
 GameObject:
   m_ObjectHideFlags: 0

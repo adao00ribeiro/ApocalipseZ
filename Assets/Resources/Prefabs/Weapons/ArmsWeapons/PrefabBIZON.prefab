@@ -53,7 +53,7 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 7564494577556385352}
   _networkObjectCache: {fileID: 7564494577556385352}
   weaponName: BIZON
-  muzzleFlashTransform: {fileID: 2013562121623717857}
+  MuzzleList: {fileID: 0}
   shellTransform: {fileID: 0}
   bulletTransform: {fileID: 0}
   useAnimator: 1
@@ -265,6 +265,37 @@ MonoBehaviour:
   _interpolation: 2
   _clientAuthoritative: 1
   _sendToOwner: 0
+--- !u!1 &4607837026499625838
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5590434261856103467}
+  m_Layer: 6
+  m_Name: MuzzleList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5590434261856103467
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4607837026499625838}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2013562121623717857}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9057802709003168496
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,7 +324,8 @@ Transform:
   m_LocalPosition: {x: 0.10779999, y: 0.20100021, z: 0.108}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5590434261856103467}
   m_Father: {fileID: 4351103575610872126}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4316841922590848725
@@ -357,7 +389,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f0442060eade08740abde46876a2b145,
         type: 3}
       propertyPath: m_Name
-      value: Yasmim1PessoaBizon
+      value: Arms
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

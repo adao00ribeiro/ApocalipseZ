@@ -44,10 +44,6 @@ namespace ApocalipseZ
         public int maxAmmo = 30;
         public int currentClip = 120;
         public int MaxClip = 120;
-
-        public enum FireMode { automatic, single }
-        [Header("Fire mode")]
-        public FireMode fireMode;
         [SerializeField] private NetworkAnimator networkAnimator;
         [SerializeField] private Animator animator;
         [SerializeField] private Sway sway;
@@ -69,7 +65,7 @@ namespace ApocalipseZ
         [SerializeField] private bool setAim = false;
         public bool SetAim { get => setAim; }
         public bool isThrowingGrenade;
-
+        public bool IsFire;
         [SyncVar]
         public Vector2 recoil;
         // Start is called before the first frame update
@@ -97,6 +93,7 @@ namespace ApocalipseZ
         [ServerRpc(RequireOwnership = false)]
         public void CmdFire(NetworkConnection conn = null)
         {
+
             if (Fire())
             {
                 TargetFire(conn);
@@ -112,6 +109,8 @@ namespace ApocalipseZ
                 return;
             }
             PlayFX();
+            recoilComponent.AddRecoil(recoil);
+            IsFire = true;
             foreach (Transform item in MuzzleList)
             {
                 CmdSpawBullet(item.position, item.forward, base.TimeManager.Tick);

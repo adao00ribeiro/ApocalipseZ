@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8748e0b602a81d45bb02bee722cd4bd, type: 3}
   m_Name: DataArmsWeaponM4A1
   m_EditorClassIdentifier: 
-  GuidId: 77379bb6-d533-421a-860d-6bb2dc10a958
+  GuidId: 0740b871-7f68-4463-b9e5-d753f1b9a652
   Name: M4A1
   Type: 0
-  fireRate: 0.15
+  fireMode: 0
+  Damage: 55
+  fireRate: 0.101
   spread: 0
   recoil:
     recolTop: {x: -2, y: -1.5}
@@ -40,5 +42,5 @@ MonoBehaviour:
   bulletInitialVelocity: 0
   airResistanceForce: 0
   projectile: Bullet
-  PrefabArmsWeapon: {fileID: 1872763360101503043, guid: 2eb2f9b6dd899b047884bd3c2bda6d11,
+  PrefabArmsWeapon: {fileID: 1872763360101503043, guid: 1ec38c5e93dabfb45b0ed936d7b86782,
     type: 3}

@@ -24,28 +24,28 @@ namespace ApocalipseZ
         {
             get
             {
-                if ( PInputManager == null )
+                if (PInputManager == null)
                 {
                     PInputManager = GameController.Instance.InputManager;
                 }
                 return PInputManager;
             }
         }
-        void Start ( )
+        void Start()
         {
             localPos = transform.localPosition;
             startX = AmountX;
             startY = AmountY;
         }
 
-        void Update ( )
+        void Update()
         {
 
-            if (CanvasFpsPlayer.IsInventoryOpen)
+            if (PlayerController.IsInventoryOpen)
             {
                 return;
             }
-            float fx = new float() , fy = new float();
+            float fx = new float(), fy = new float();
 
             //Sway coefficient got from mouse input multyplied on swayAmmount for each axis
 
@@ -54,23 +54,23 @@ namespace ApocalipseZ
 
 
 
-            if ( fx > MaxX )
+            if (fx > MaxX)
                 fx = MaxX;
 
-            if ( fx < -MaxX )
+            if (fx < -MaxX)
                 fx = -MaxX;
 
-            if ( fy > MaxY )
+            if (fy > MaxY)
                 fy = MaxY;
 
-            if ( fy < -MaxY )
+            if (fy < -MaxY)
                 fy = -MaxY;
 
             //Calculating sway vector 
             Vector3 swayVector = new Vector3(localPos.x + fx, localPos.y + fy, localPos.z);
 
             //Applying sway Vector to object local position
-            transform.localPosition = Vector3.Lerp ( transform.localPosition , swayVector , Time.deltaTime * smooth );
+            transform.localPosition = Vector3.Lerp(transform.localPosition, swayVector, Time.deltaTime * smooth);
         }
 
     }

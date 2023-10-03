@@ -29,7 +29,6 @@ namespace ApocalipseZ
         private void Awake()
         {
             TextQuantidade.text = "";
-
             SetImage(null);
         }
 

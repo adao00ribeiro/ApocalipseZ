@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3742dce09f6e0b24eb2edf491c25b974, type: 3}
   m_Name: DataItemM4A1
   m_EditorClassIdentifier: 
-  GuidId: 1a9ebabf-92dc-4a8b-ae95-780d5faddf09
+  GuidId: 91b7f637-b737-46ea-97db-35d43d99deff
   Type: 1
   Name: M4A1
   isStackable: 0
@@ -24,4 +24,4 @@ MonoBehaviour:
   addSatiety: 0
   addHydratation: 0
   Durability: 100
-  Prefab: {fileID: 5273078992747792979, guid: 121ad0e574cca08469bb2d30567b9678, type: 3}
+  Prefab: {fileID: 5273078992747792979, guid: 69d0a07d665c65b41a3ab235acc48bde, type: 3}

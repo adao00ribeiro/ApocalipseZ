@@ -13,9 +13,7 @@ namespace ApocalipseZ
         public string characterName;
         [SerializeField] private GameObject[] ObjectsManager;
         //privados 
-        GameObject SpawPoint;
-
-        [SerializeField] private CanvasFpsPlayer canvasFpsPlayer;
+        public PlayerController playerController;
         private DataManager dataManager;
         private SceneManager _sceneManager;
         private InputManager Input;
@@ -24,7 +22,6 @@ namespace ApocalipseZ
         private HitFXManager hitfxManager;
         private DecalFxManager decalfxManager;
         private PlayerSpawPointsManager playerSpawPoints;
-
         private SpawObjectsManager spawObjectsManager;
 
 
@@ -113,17 +110,6 @@ namespace ApocalipseZ
             }
         }
 
-        public CanvasFpsPlayer CanvasFpsPlayer
-        {
-            get
-            {
-                if (canvasFpsPlayer == null)
-                {
-                    canvasFpsPlayer = GameObject.FindObjectOfType<CanvasFpsPlayer>();
-                }
-                return canvasFpsPlayer;
-            }
-        }
         public DataManager DataManager
         {
             get

@@ -1,15 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
-using System;
 using ApocalipseZ;
+using System;
 
 public class Inventory : NetworkBehaviour
 {
-    private UiInventory uiInventory;
-
+    public event Action<int, SlotInventoryTemp> OnUpdateInventory;
     [SyncObject]
     public readonly SyncList<SlotInventoryTemp> inventory = new SyncList<SlotInventoryTemp>();
     public List<ListItemsInspector> ListInspector = new List<ListItemsInspector>();
@@ -20,12 +18,13 @@ public class Inventory : NetworkBehaviour
     {
 
     }
-    void FixedUpdate(){
-     ListInspector.Clear();
-      for (int i = 0; i < inventory.Count; i++)
-      {
-            ListInspector.Add(new ListItemsInspector(i,inventory[i].Name , inventory[i].Ammo));
-      }
+    void FixedUpdate()
+    {
+        ListInspector.Clear();
+        for (int i = 0; i < inventory.Count; i++)
+        {
+            ListInspector.Add(new ListItemsInspector(i, inventory[i].Name, inventory[i].Ammo));
+        }
     }
     void StartInventory()
     {
@@ -37,20 +36,16 @@ public class Inventory : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
-         StartInventory();
+        StartInventory();
     }
     public override void OnStartClient()
     {
 
         base.OnStartClient();
-        if(base.IsOwner){
-            
-        uiInventory = GameController.Instance.CanvasFpsPlayer.GetUiInventory();
-        uiInventory.SetInventory(this);
-        uiInventory.SetWeaponManager(GetComponent<WeaponManager>());
-        uiInventory.AddSlots();
-        inventory.OnChange += OnInventoryUpdated;
-          }
+        if (base.IsOwner)
+        {
+            inventory.OnChange += OnInventoryUpdated;
+        }
 
     }
 
@@ -113,23 +108,28 @@ public class Inventory : NetworkBehaviour
             case SyncListOperation.Add:
                 // index is where it was added into the list
                 // newItem is the new item
-                uiInventory.UpdateSlot(index, newItem);
+                //uiInventory.UpdateSlot(index, newItem);
+                OnUpdateInventory?.Invoke(index, newItem);
                 break;
             case SyncListOperation.Insert:
                 // index is where it was inserted into the list
                 // newItem is the new item
-                uiInventory.UpdateSlot(index, newItem);
+                // uiInventory.UpdateSlot(index, newItem);
+                OnUpdateInventory?.Invoke(index, newItem);
                 break;
             case SyncListOperation.RemoveAt:
                 // index is where it was removed from the list
                 // oldItem is the item that was removed
-                uiInventory.UpdateSlot(index, newItem);
+                // uiInventory.UpdateSlot(index, newItem);
+                OnUpdateInventory?.Invoke(index, newItem);
                 break;
             case SyncListOperation.Set:
+
                 // index is of the item that was changed
                 // oldItem is the previous value for the item at the index
                 // newItem is the new value for the item at the index
-                uiInventory.UpdateSlot(index, newItem);
+                //uiInventory.UpdateSlot(index, newItem);
+                OnUpdateInventory?.Invoke(index, newItem);
                 break;
             case SyncListOperation.Clear:
                 // list got cleared
@@ -138,10 +138,7 @@ public class Inventory : NetworkBehaviour
                 break;
         }
     }
-    public void SetUiInventory(UiInventory _uiinventory)
-    {
-        uiInventory = _uiinventory;
-    }
+
     internal int GetMaxSlots()
     {
         return maxSlot;

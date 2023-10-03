@@ -15,6 +15,7 @@ MonoBehaviour:
   GuidId: ca6c0a39-22a0-4b83-bd01-14fcf0852002
   Name: BERETTA
   Type: 2
+  fireMode: 1
   Damage: 40
   fireRate: 0.192
   spread: 0

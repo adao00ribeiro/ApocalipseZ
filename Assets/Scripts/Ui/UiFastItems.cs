@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace ApocalipseZ
 {
-    public class UiFastItems : MonoBehaviour
+    public class UiFastItems : UIAbstract
     {
         public List<UISlotItem> FastSlot = new List<UISlotItem>();
         IFpsPlayer player;

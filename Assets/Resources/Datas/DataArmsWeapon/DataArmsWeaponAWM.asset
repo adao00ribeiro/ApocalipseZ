@@ -15,6 +15,7 @@ MonoBehaviour:
   GuidId: 0d76108a-efba-4157-b4f0-bdb54addea6c
   Name: AWM
   Type: 1
+  fireMode: 1
   Damage: 170
   fireRate: 2
   spread: 0

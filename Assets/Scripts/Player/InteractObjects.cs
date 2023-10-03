@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,38 +9,15 @@ namespace ApocalipseZ
 
     public class InteractObjects : MonoBehaviour, IInteractObjects
     {
+
+        public event Action<bool> OnEnableCursor;
+        public event Action<string> OnNameObjectInteract;
+
         [Tooltip("The distance within which you can pick up item")]
         public float distance = 1.5f;
 
         private GameObject previousHitObject;
-        [SerializeField] UiFpsScopeCursorReticles PUiFpsScopeCursorReticles;
-        public UiFpsScopeCursorReticles UiFpsScopeCursorReticles
-        {
-            get
-            {
-                if (PUiFpsScopeCursorReticles == null)
-                {
-                    PUiFpsScopeCursorReticles = GameController.Instance.CanvasFpsPlayer.GetUiFpsScopeCursorReticles();
-                    PUiFpsScopeCursorReticles.Init();
-                }
-                return PUiFpsScopeCursorReticles;
-            }
-
-        }
         public LayerMask layer;
-        private InputManager PInputManager;
-        public InputManager InputManager
-        {
-            get
-            {
-                if (PInputManager == null)
-                {
-                    PInputManager = GameController.Instance.InputManager;
-                }
-                return PInputManager;
-            }
-        }
-
 
         // Update is called once per frame
         public void UpdateInteract()
@@ -69,13 +47,13 @@ namespace ApocalipseZ
                         // Chama o método EnterTrigger
                         interact.StartFocus();
                     }
-                    UiFpsScopeCursorReticles.EnableCursor();
-                    UiFpsScopeCursorReticles.SetUseText(interact.GetTitle());
-                    if (InputManager.GetUse())
+                    OnEnableCursor?.Invoke(true);
+                    OnNameObjectInteract?.Invoke(interact.GetTitle());
+                    if (GameController.Instance.InputManager.GetUse())
                     {
                         interact.CmdInteract();
                         interact = null;
-                        UiFpsScopeCursorReticles.SetUseText("");
+                        OnNameObjectInteract?.Invoke("");
                     }
 
                 }
@@ -93,14 +71,14 @@ namespace ApocalipseZ
                         // Reseta o objeto anterior
                         previousHitObject = null;
                     }
-                    UiFpsScopeCursorReticles.DisableCursor();
-                    UiFpsScopeCursorReticles.SetUseText("");
+                    OnEnableCursor?.Invoke(false);
+                    OnNameObjectInteract?.Invoke("");
                 }
                 RotationOjects door = hit.collider.gameObject.GetComponent<RotationOjects>();
 
                 if (door != null)
                 {
-                    if (InputManager.GetUse())
+                    if (GameController.Instance.InputManager.GetUse())
                     {
                         door.OnInteract();
                     }
@@ -120,8 +98,8 @@ namespace ApocalipseZ
                     // Reseta o objeto anterior
                     previousHitObject = null;
                 }
-                UiFpsScopeCursorReticles.DisableCursor();
-                UiFpsScopeCursorReticles.SetUseText("");
+                OnEnableCursor?.Invoke(false);
+                OnNameObjectInteract?.Invoke("");
             }
         }
 

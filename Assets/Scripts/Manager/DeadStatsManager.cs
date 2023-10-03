@@ -11,11 +11,11 @@ public class DeadStatsManager : NetworkBehaviour
     [ObserversRpc]
     public void ObserveViewUiDeadStats(string name)
     {
-        GameController.Instance.CanvasFpsPlayer.GetUiDeadStats().ActiveText(name);
+        GameController.Instance.playerController.UiDeadStats.ActiveText(name);
     }
     [TargetRpc]
     public void TargewtViewSeFudeo(NetworkConnection conn)
     {
-        GameController.Instance.CanvasFpsPlayer.GetUiDeadStats().ActiveFadeImage();
+        GameController.Instance.playerController.UiDeadStats.ActiveFadeImage();
     }
 }

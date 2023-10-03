@@ -1,21 +1,16 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 using FishNet.Connection;
 using FishNet.Object;
-using FishNet.Object.Synchronizing;
-using FishNet.Transporting;
 using Unity.Mathematics;
 using System;
-using Unity.VisualScripting;
 
 namespace ApocalipseZ
 {
     public class WeaponManager : NetworkBehaviour
     {
-
-        UiPrimaryAndSecondWeapons UiPrimaryAndSecondWeapons;
+        public event Action<Weapon> OnPrimaryWeapon;
+        public event Action<Weapon> OnSecondWeapon;
 
         public Weapon activeSlot;
         public Weapon[] twoWeapon = new Weapon[2];
@@ -29,6 +24,8 @@ namespace ApocalipseZ
         private InputManager InputManager;
         public static bool IsChekInventory;
         [SerializeField] private bool loadingWeapon;
+
+
         private void Awake()
         {
             InputManager = GameController.Instance.InputManager;
@@ -44,7 +41,6 @@ namespace ApocalipseZ
         }
         void Start()
         {
-            UiPrimaryAndSecondWeapons = GameController.Instance.CanvasFpsPlayer.GetUiPrimaryandSecundaryWeapons();
             swayTransform = transform.Find("Recoil/Camera & Recoil/Weapon holder/Sway").transform;
             weaponHolderAnimator = transform.Find("Recoil/Camera & Recoil/Weapon holder").GetComponent<Animator>();
             recoilComponent = transform.Find("Recoil").GetComponent<Recoil>();
@@ -77,10 +73,22 @@ namespace ApocalipseZ
             {
                 return;
             }
-            if (InputManager.GetFire() && !loadingWeapon && !fpsplayer.GetMoviment().CheckIsRun() && !CanvasFpsPlayer.IsInventoryOpen)
+            if (activeSlot.WeaponSetting.fireMode == FireMode.automatic)
             {
-                activeSlot.CmdFire();
+                if (InputManager.GetFire() && !loadingWeapon && !fpsplayer.GetMoviment().CheckIsRun() && !PlayerController.IsInventoryOpen)
+                {
+                    activeSlot.CmdFire();
+                }
+
             }
+            else
+            {
+                if (InputManager.GetFireDown() && !loadingWeapon && !fpsplayer.GetMoviment().CheckIsRun() && !PlayerController.IsInventoryOpen)
+                {
+                    activeSlot.CmdFire();
+                }
+            }
+
             if (InputManager.GetReload())
             {
                 activeSlot.CmdReloadBegin();
@@ -88,7 +96,6 @@ namespace ApocalipseZ
             }
             if (InputManager.GetAim() && !fpsplayer.GetMoviment().CheckIsRun())
             {
-
                 activeSlot.Aim(true);
                 weaponHolderAnimator.SetBool("Walk", false);
                 weaponHolderAnimator.SetBool("Run", false);
@@ -170,13 +177,6 @@ namespace ApocalipseZ
             }
             yield return new WaitForSeconds(0.2f);
             loadingWeapon = false;
-        }
-        private void SelecionaWeapon()
-        {
-            if (CanvasFpsPlayer.IsInventoryOpen)
-            {
-                return;
-            }
         }
 
         /*
@@ -266,10 +266,20 @@ namespace ApocalipseZ
         [ObserversRpc]
         public void ObserverAddWeaponRemoveInventory(int slotenter, GameObject weapon)
         {
+
+            if (slotenter == 0)
+            {
+                OnPrimaryWeapon?.Invoke(weapon.GetComponent<Weapon>());
+            }
+            else
+            {
+                OnSecondWeapon?.Invoke(weapon.GetComponent<Weapon>());
+            }
             weapon.transform.SetParent(swayTransform);
             weapon.transform.localPosition = Vector3.zero;
             weapon.transform.localRotation = quaternion.identity;
             weapon.transform.GetChild(0).gameObject.SetActive(false);
+            weapon.GetComponent<Weapon>().SetRecoilComponent(RecoilComponent);
             twoWeapon[slotenter] = weapon.GetComponent<Weapon>();
         }
         [ServerRpc]

@@ -15,6 +15,7 @@ MonoBehaviour:
   GuidId: ba289a14-e62d-47b6-8cf7-9c9fce20cd6f
   Name: DESERTEAGLE
   Type: 2
+  fireMode: 1
   Damage: 44
   fireRate: 0.192
   spread: 0

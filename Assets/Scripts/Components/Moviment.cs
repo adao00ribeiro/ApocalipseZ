@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -221,6 +222,11 @@ namespace ApocalipseZ
         public bool CheckIsRun()
         {
             return InputManager.GetRun();
+        }
+
+        public CharacterController GetCharacterController()
+        {
+            return CharacterController;
         }
     }
 }

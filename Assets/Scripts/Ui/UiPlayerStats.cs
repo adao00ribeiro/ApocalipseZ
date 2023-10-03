@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 namespace ApocalipseZ
 {
-    public class UiPlayerStats : MonoBehaviour
+    public class UiPlayerStats : UIAbstract
     {
         [SerializeField] private Slider HealthSlider;
         [SerializeField] private Text HealthText;

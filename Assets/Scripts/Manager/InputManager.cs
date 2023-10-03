@@ -68,15 +68,15 @@ namespace ApocalipseZ
 
             return true;
         }
-          public bool GetCrouchPressed()
+        public bool GetCrouchPressed()
         {
             return playerControls.Player.Crouch.WasPressedThisFrame();
-           
+
         }
-         public bool GetCrouchReleased()
+        public bool GetCrouchReleased()
         {
             return playerControls.Player.Crouch.WasReleasedThisFrame();
-           
+
         }
         public bool GetReload()
         {
@@ -94,7 +94,10 @@ namespace ApocalipseZ
             }
 
             return true;
-
+        }
+        public bool GetFireDown()
+        {
+            return playerControls.Player.Fire.triggered;
         }
         public bool GetFireModeSingle()
         {

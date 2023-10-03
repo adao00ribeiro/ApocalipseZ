@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UiDeadStats : MonoBehaviour
+public class UiDeadStats : UIAbstract
 {
     public Text textDead;
     public RawImage ImageSeFudeo;

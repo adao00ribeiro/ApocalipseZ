@@ -231,9 +231,6 @@ namespace ApocalipseZ
                 FirstPersonCamera.tag = "MainCamera";
                 FirstPersonCamera.GetComponent<Camera>().enabled = true;
                 FirstPersonCamera.ActiveCursor(false);
-                CanvasFpsPlayer CanvasFpsPlayer = GameObject.FindObjectOfType<CanvasFpsPlayer>();
-                CanvasFpsPlayer.SetFirtPersonCamera(FirstPersonCamera);
-                CanvasFpsPlayer.SetPlayerStats(PlayerStats);
                 CmdSpawCharacter(GameController.Instance.characterName);
             }
             else
@@ -402,6 +399,11 @@ namespace ApocalipseZ
         public WeaponManager GetWeaponManager()
         {
             return WeaponManager;
+        }
+
+        public IInteractObjects GetInteractObjects()
+        {
+            return InteractObjects;
         }
         public PlayerStats GetPlayerStats()
         {

@@ -4,27 +4,39 @@ using System.Collections.Generic;
 using UnityEngine;
 namespace ApocalipseZ
 {
-    public class UiPrimaryAndSecondWeapons : MonoBehaviour
+    public class UiPrimaryAndSecondWeapons : UIAbstract
     {
         [SerializeField] private UISlotItem UiPrimaryWeapon;
         [SerializeField] private UISlotItem UiSecondWeapon;
+        WeaponManager weaponManager;
+        public WeaponManager WeaponManager
+        {
+            get
+            {
+                if (weaponManager == null)
+                {
+                    weaponManager = GameController.Instance.playerController.GetPlayer().GetWeaponManager();
+                }
+                return weaponManager;
+            }
 
-        IFpsPlayer player;
+        }
 
         private void Awake()
         {
             UiPrimaryWeapon = transform.Find("Container/Primary Weapon Slot").GetComponent<UISlotItem>();
             UiSecondWeapon = transform.Find("Container/Second Weapon Slot").GetComponent<UISlotItem>();
-            UiPrimaryWeapon.HUD = transform.parent;
-            UiSecondWeapon.HUD = transform.parent;
-            UpdatePrimaryWeapon(new SlotInventoryTemp());
+            WeaponManager.OnPrimaryWeapon += UpdatePrimaryWeapon; ;
+            WeaponManager.OnSecondWeapon += UpdateSecondWeapon; ;
         }
-
-        public void UpdatePrimaryWeapon( SlotInventoryTemp newItem)
+        private void FixedUpdate()
         {
-           
-            DataItem dataItem = GameController.Instance.DataManager.GetDataItemById(newItem.guidid);
-             
+
+        }
+        public void UpdatePrimaryWeapon(Weapon newItem)
+        {
+            DataItem dataItem = GameController.Instance.DataManager.GetDataItemWeaponByName(newItem.WeaponName);
+
             if (dataItem == null)
             {
                 UiPrimaryWeapon.SetIsEmpty(true);
@@ -33,21 +45,16 @@ namespace ApocalipseZ
             }
             else
             {
-            
+
                 UiPrimaryWeapon.SetIsEmpty(false);
                 UiPrimaryWeapon.SetImage(dataItem.Thumbnail);
                 UiPrimaryWeapon.SetTextQuantidade("1");
             }
         }
-        public void UpdateSecundaryWeapon(SlotInventoryTemp newItem)
+        public void UpdateSecondWeapon(Weapon newItem)
         {
-            if(newItem.Compare(new SlotInventoryTemp())){
-                UiSecondWeapon.SetIsEmpty(true);
-                UiSecondWeapon.SetImage(null);
-                UiSecondWeapon.SetTextQuantidade("");
-                return;
-            }
-            DataItem dataItem = GameController.Instance.DataManager.GetDataItem(newItem.guidid);
+
+            DataItem dataItem = GameController.Instance.DataManager.GetDataItemWeaponByName(newItem.WeaponName);
             if (dataItem == null)
             {
                 UiSecondWeapon.SetIsEmpty(true);

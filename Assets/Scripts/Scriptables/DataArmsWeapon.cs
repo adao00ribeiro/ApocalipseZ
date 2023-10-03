@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public enum WeaponType { SMG, SniperRiffle, Pistol, Shotgun, Melee, Grenade }
-
+public enum FireMode { automatic, single }
 [System.Serializable]
 [CreateAssetMenu(fileName = "DataArmsWeapon", menuName = "Data/ArmsWeapon", order = 0)]
 public class DataArmsWeapon : ScriptableObject
@@ -11,6 +11,8 @@ public class DataArmsWeapon : ScriptableObject
     public string Name;
     public WeaponType Type;
 
+    [Header("Fire mode")]
+    public FireMode fireMode;
     [Header("Weapon stats", order = 0)]
     public int Damage;
     public float fireRate;

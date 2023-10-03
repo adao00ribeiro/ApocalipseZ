@@ -1,29 +1,30 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ApocalipseZ
 {
-    public class UiInventory : MonoBehaviour
+    public class UiInventory : UIAbstract
     {
         public UISlotItem PrefabSlot;
         [SerializeField] private List<UISlotItem> UIItems = new List<UISlotItem>();
         private Transform slotPanel;
-        Inventory inventory;
-        WeaponManager weaponManager;
+        private FpsPlayer player;
         void Awake()
         {
             slotPanel = transform.Find("SlotPanel").transform;
+            AddSlots();
 
         }
-        public void SetInventory(Inventory _inventory)
+        void Start()
         {
-            inventory = _inventory;
+            player.GetInventory().OnUpdateInventory += UpdateSlot; ;
         }
-        public void SetWeaponManager(WeaponManager _weaponmanager)
+        void OnDisable()
         {
-            weaponManager = _weaponmanager;
+            player.GetInventory().OnUpdateInventory -= UpdateSlot; ;
         }
         public void AddSlots()
         {
@@ -32,13 +33,13 @@ namespace ApocalipseZ
                 Destroy(item.gameObject);
             }
             UIItems.Clear();
-            for (int i = 0; i < inventory.GetMaxSlots(); i++)
+            for (int i = 0; i < Player.GetInventory().GetMaxSlots(); i++)
             {
                 UISlotItem instance = Instantiate(PrefabSlot, slotPanel);
                 instance.HUD = transform.parent;
                 instance.SetSlotIndex(i);
-                instance.SetInventory(inventory);
-                instance.SetWeaponManager(weaponManager);
+                instance.SetInventory(Player.GetInventory());
+                instance.SetWeaponManager(Player.GetWeaponManager());
                 UIItems.Add(instance);
             }
         }
@@ -55,7 +56,7 @@ namespace ApocalipseZ
         }
         internal void UpdateSlot(int index, SlotInventoryTemp newItem)
         {
-         
+
             DataItem dataItem = GameController.Instance.DataManager.GetDataItemById(newItem.guidid);
             if (dataItem == null)
             {
@@ -69,8 +70,19 @@ namespace ApocalipseZ
                 UIItems[index].SetImage(dataItem.Thumbnail);
                 UIItems[index].SetTextQuantidade(newItem.Quantity.ToString());
             }
+        }
 
 
+        public FpsPlayer Player
+        {
+            get
+            {
+                if (player == null)
+                {
+                    player = GameController.Instance.playerController.GetPlayer();
+                }
+                return player;
+            }
         }
     }
 }

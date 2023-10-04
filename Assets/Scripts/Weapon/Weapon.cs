@@ -53,6 +53,9 @@ namespace ApocalipseZ
         [SerializeField] private AudioClip shotSFX;
         [SerializeField] private AudioClip reloadSFX;
         [SerializeField] private AudioClip emptySFX;
+
+
+        public SetRenderTextureScope SetRenderTextureScope;
         //prefabs
         public FirstPersonCamera Cam;
         [SerializeField] private GameObject PrefabProjectile;
@@ -83,7 +86,10 @@ namespace ApocalipseZ
             animator = GetComponentInChildren<Animator>();
             networkAnimator = GetComponent<NetworkAnimator>();
             sway = transform.GetComponentInParent<Sway>();
-
+            if (weaponSetting.Type == WeaponType.SniperRiffle)
+            {
+                SetRenderTextureScope.UpdateScope();
+            }
         }
         public void RecoilChange(Vector2 _, Vector2 newRecoil, bool asServer)
         {

@@ -63,7 +63,7 @@ MonoBehaviour:
   maxAmmo: 5
   currentClip: 120
   MaxClip: 120
-  fireMode: 0
+  networkAnimator: {fileID: 0}
   animator: {fileID: 0}
   sway: {fileID: 0}
   recoilComponent: {fileID: 0}
@@ -72,12 +72,14 @@ MonoBehaviour:
   shotSFX: {fileID: 0}
   reloadSFX: {fileID: 0}
   emptySFX: {fileID: 0}
+  SetRenderTextureScope: {fileID: 3063376822837286652}
   Cam: {fileID: 0}
   PrefabProjectile: {fileID: 0}
   reloading: 0
   canShot: 1
   setAim: 0
   isThrowingGrenade: 0
+  IsFire: 0
   recoil: {x: 0, y: 0}
 --- !u!82 &6621863346645708408
 AudioSource:
@@ -600,6 +602,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7077379058004275989}
+    - targetCorrespondingSourceObject: {fileID: -2657176051650229609, guid: 5e9fa71d16602b547a481bfd959bdadd,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3063376822837286652}
   m_SourcePrefab: {fileID: 100100000, guid: 5e9fa71d16602b547a481bfd959bdadd, type: 3}
 --- !u!1 &392767430212852509 stripped
 GameObject:
@@ -607,6 +613,25 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 9141167324283461614}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2721338876846429561 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2657176051650229609, guid: 5e9fa71d16602b547a481bfd959bdadd,
+    type: 3}
+  m_PrefabInstance: {fileID: 9141167324283461614}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3063376822837286652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2721338876846429561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58dc0f435cea48d44b4641cf34e9b898, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 7161391422044498615}
 --- !u!1 &4785432429664422666 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4849613397792484124, guid: 5e9fa71d16602b547a481bfd959bdadd,

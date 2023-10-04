@@ -20,8 +20,8 @@ MonoBehaviour:
   fireRate: 6
   spread: 0
   recoil:
-    recolTop: {x: -50, y: -10}
-    recolDown: {x: 0, y: 10}
+    recolTop: {x: 0, y: 0}
+    recolDown: {x: 0, y: 0}
   MuzzleFlashParticlesFX: {fileID: 0}
   shotSFX: ScarShot
   reloadingSFX: ScarReload

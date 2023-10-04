@@ -86,7 +86,7 @@ namespace ApocalipseZ
             animator = GetComponentInChildren<Animator>();
             networkAnimator = GetComponent<NetworkAnimator>();
             sway = transform.GetComponentInParent<Sway>();
-            if (weaponSetting.Type == WeaponType.SniperRiffle)
+            if (weaponSetting.canUseScope)
             {
                 SetRenderTextureScope.UpdateScope();
             }
@@ -117,7 +117,7 @@ namespace ApocalipseZ
             PlayFX();
             foreach (Transform item in MuzzleList)
             {
-                CmdSpawBullet(item.position, item.forward, base.TimeManager.Tick);
+                CmdSpawBullet(item.position, item.rotation, base.TimeManager.Tick);
             }
             recoilComponent.AddRecoil(recoil);
             IsFire = true;
@@ -161,18 +161,18 @@ namespace ApocalipseZ
         }
         private const float MAX_PASSED_TIME = 0.3f;
 
-        private void SpawnProjectile(Vector3 position, Vector3 direction, float passedTime)
+        private void SpawnProjectile(Vector3 position, Quaternion rotation, float passedTime)
         {
             if (weaponSetting.Type == WeaponType.Grenade)
             {
                 return;
             }
-            IProjectile go = Instantiate(PrefabProjectile, position, Quaternion.identity).GetComponent<IProjectile>();
-            go.Initialize(direction, passedTime, weaponSetting.Damage);
+            IProjectile go = Instantiate(PrefabProjectile, position, rotation).GetComponent<IProjectile>();
+            go.Initialize(passedTime, weaponSetting.Damage);
 
         }
         [ServerRpc(RequireOwnership = false)]
-        private void CmdSpawBullet(Vector3 position, Vector3 direction, uint tick, NetworkConnection conn = null)
+        private void CmdSpawBullet(Vector3 position, Quaternion rotation, uint tick, NetworkConnection conn = null)
         {
 
             /* You may want to validate position and direction here.
@@ -192,17 +192,17 @@ namespace ApocalipseZ
 
 
             //Spawn on the server.
-            SpawnProjectile(position, direction, passedTime);
+            SpawnProjectile(position, rotation, passedTime);
 
             float x = Random.Range(weaponSetting.recoil.recolDown.x, weaponSetting.recoil.recolTop.x);
             float y = Random.Range(weaponSetting.recoil.recolDown.y, weaponSetting.recoil.recolTop.y);
             recoil = new Vector2(x, y);
             recoilComponent.AddRecoil(recoil);
             //Tell other clients to spawn the projectile.
-            ObserversFire(position, direction, tick);
+            ObserversFire(position, rotation, tick);
         }
         [ObserversRpc]
-        private void ObserversFire(Vector3 position, Vector3 direction, uint tick)
+        private void ObserversFire(Vector3 position, Quaternion rotation, uint tick)
         {
 
             //Like on server get the time passed and cap it. Note the false for allow negative values.
@@ -212,7 +212,7 @@ namespace ApocalipseZ
             if (!base.IsHost)
             {
                 //Spawn the projectile locally.
-                SpawnProjectile(position, direction, passedTime);
+                SpawnProjectile(position, rotation, passedTime);
             }
         }
         [ServerRpc(RequireOwnership = false)]

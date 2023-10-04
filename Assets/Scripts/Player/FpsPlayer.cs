@@ -101,7 +101,7 @@ namespace ApocalipseZ
             PlayerStats = GetComponent<PlayerStats>();
             FirstPersonCamera = transform.Find("Recoil/Camera & Recoil").GetComponent<FirstPersonCamera>();
             WeaponManager.SetFpsPlayer(this);
-           
+
         }
 
         public override void OnStartNetwork()
@@ -296,7 +296,7 @@ namespace ApocalipseZ
             SpawCharacter(newPlayerColor);
 
         }
-        
+
         public void DroppAllItems()
         {
             WeaponManager.DropAllWeapons();
@@ -342,7 +342,7 @@ namespace ApocalipseZ
                 AnimatorController.SetFloat("SelectDeath", InputManager.GetCrouch() ? 0 : Random.Range(1, 5));
                 AnimatorController.SetBool("IsDead", true);
                 AnimatorWeaponHolderController.SetBool("HideWeapon", true);
-              
+
                 return;
             }
             //animatorcontroller

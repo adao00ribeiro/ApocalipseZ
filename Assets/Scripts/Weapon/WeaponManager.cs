@@ -9,6 +9,7 @@ namespace ApocalipseZ
 {
     public class WeaponManager : NetworkBehaviour
     {
+
         public event Action<Weapon> OnPrimaryWeapon;
         public event Action<Weapon> OnSecondWeapon;
 
@@ -167,6 +168,7 @@ namespace ApocalipseZ
             activeSlot.transform.localPosition = Vector3.zero;
             activeSlot.transform.localRotation = quaternion.identity;
             activeSlot.transform.GetChild(0).gameObject.SetActive(true);
+
             yield return new WaitForSeconds(0.1f);
             weaponHolderAnimator.SetBool("HideWeapon", false);
             PersonalizeArmsWeapon personalize = activeSlot.GetComponent<PersonalizeArmsWeapon>();

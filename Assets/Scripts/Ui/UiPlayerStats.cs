@@ -17,9 +17,7 @@ namespace ApocalipseZ
         [SerializeField] private Text SatietySliderText;
         [SerializeField] private Text WeaponText;
         [SerializeField] private Text AmmoText;
-        IFpsPlayer player;
-        [SerializeField] PlayerStats stats;
-        [SerializeField] WeaponManager WeaponManager;
+        WeaponManager weaponManager;
         private void Awake()
         {
             HealthSlider = transform.Find("HealthSlider").GetComponent<Slider>();
@@ -34,22 +32,42 @@ namespace ApocalipseZ
             WeaponText = transform.Find("InfoPanel/WeaponText").GetComponent<Text>();
             AmmoText = transform.Find("InfoPanel/AmmoText").GetComponent<Text>();
         }
-        public void OnUpdateHealth()
+        void Start()
         {
-            if (player == null)
+            PlayerStats stats = GameController.Instance.playerController.GetPlayer().GetPlayerStats();
+            weaponManager = GameController.Instance.playerController.GetPlayer().GetWeaponManager();
+            stats.OnAlteredHealth += OnUpdateHealth; ;
+            stats.OnAlteredHydratation += OnUpdateHydratation; ;
+            stats.OnAlteredSatiety += OnUpdateSatiety; ;
+
+        }
+        void FixedUpdate()
+        {
+            if (weaponManager.activeSlot != null)
             {
-                return;
+                OnActiveSlot(weaponManager.activeSlot);
             }
-            if (HealthSlider.value != stats.health)
+        }
+        public void OnUpdateHealth(int health)
+        {
+
+            if (HealthSlider.value != health)
             {
                 StartCoroutine(HitFX());
             }
-            HealthSlider.value = stats.health;
-            HealthText.text = stats.health.ToString();
-            HydratationSlider.value = stats.hydratation;
-            HydratationText.text = stats.hydratation.ToString();
-            SatietySlider.value = stats.satiety;
-            SatietySliderText.text = stats.satiety.ToString();
+            HealthSlider.value = health;
+            HealthText.text = health.ToString();
+        }
+        public void OnUpdateHydratation(int hydratation)
+        {
+            HydratationSlider.value = hydratation;
+            HydratationText.text = hydratation.ToString();
+        }
+        public void OnUpdateSatiety(int satiety)
+        {
+
+            SatietySlider.value = satiety;
+            SatietySliderText.text = satiety.ToString();
         }
         public void OnActiveSlot(Weapon weapon)
         {
@@ -64,14 +82,7 @@ namespace ApocalipseZ
                 AmmoText.text = " ";
             }
         }
-        public void SetFpsPlayer(IFpsPlayer _player)
-        {
-            player = _player;
-            WeaponManager = _player.GetWeaponManager();
-            stats = player.GetPlayerStats();
-            stats.OnAlteredStats += OnUpdateHealth; ;
-            // WeaponManager.OnActiveWeapon += OnActiveSlot; ;
-        }
+
 
         IEnumerator HitFX()
         {

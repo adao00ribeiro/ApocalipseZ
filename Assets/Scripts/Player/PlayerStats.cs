@@ -15,7 +15,9 @@ namespace ApocalipseZ
 {
     public class PlayerStats : NetworkBehaviour, IStats
     {
-        public event Action OnAlteredStats;
+        public event Action<int> OnAlteredHealth;
+        public event Action<int> OnAlteredHydratation;
+        public event Action<int> OnAlteredSatiety;
 
         [SyncVar(Channel = Channel.Unreliable, OnChange = nameof(OnSetHealth))]
         public int health;
@@ -46,25 +48,25 @@ namespace ApocalipseZ
         private void OnSetHealth(int oldHealth, int newHealth, bool asServer)
         {
             health = newHealth;
-            OnAlteredStats?.Invoke();
+            OnAlteredHealth?.Invoke(newHealth);
         }
         private void OnSetHydratation(int oldHydratation, int newHydratation, bool asServer)
         {
             hydratation = newHydratation;
 
-            OnAlteredStats?.Invoke();
+            OnAlteredHydratation?.Invoke(newHydratation);
         }
         private void OnSetSatiety(int oldSatiety, int newSatiety, bool asServer)
         {
             satiety = newSatiety;
 
-            OnAlteredStats?.Invoke();
+            OnAlteredSatiety?.Invoke(newSatiety);
         }
         private void OnStaminaChange(int oldStamina, int newStamina, bool asServer)
         {
             stamina = newStamina;
 
-            OnAlteredStats?.Invoke();
+            // OnAlteredStats?.Invoke();
         }
 
         void Update()
@@ -83,14 +85,14 @@ namespace ApocalipseZ
                     playerController.GetPlayer().GetMoviment().DisableCharacterController();
                     playerController.GetPlayer().DroppAllItems();
                     GameController.Instance.TimerManager.Add(() =>
-                                    {       
-                                           playerController.GetPlayer().GetMoviment().EnableCharacterController();
-                        transform.position = GameController.Instance.PlayerSpawPoints.GetPointSpaw().position;
-                            AddHealth(200);
-                        AddHydratation(100);
-                        AddSatiety(100);
-                        playerController.GetPlayer().TargetRespaw(base.Owner);
-                             }, 5);
+                                    {
+                                        playerController.GetPlayer().GetMoviment().EnableCharacterController();
+                                        transform.position = GameController.Instance.PlayerSpawPoints.GetPointSpaw().position;
+                                        AddHealth(200);
+                                        AddHydratation(100);
+                                        AddSatiety(100);
+                                        playerController.GetPlayer().TargetRespaw(base.Owner);
+                                    }, 5);
 
                     Disable = true;
                     return;
@@ -138,8 +140,8 @@ namespace ApocalipseZ
             {
                 if (IsDead())
                 {
-                PlayerController playerController = transform.parent.GetComponent<PlayerController>();
-                playerController.GetPlayer().GetFirstPersonCamera().CameraDeath();
+                    PlayerController playerController = transform.parent.GetComponent<PlayerController>();
+                    playerController.GetPlayer().GetFirstPersonCamera().CameraDeath();
                 }
             }
 
@@ -159,7 +161,7 @@ namespace ApocalipseZ
             {
                 health = 100;
             }
-            OnAlteredStats?.Invoke();
+
         }
         public void TakeDamage(int damage)
         {
@@ -169,7 +171,6 @@ namespace ApocalipseZ
             {
                 health = 0;
             }
-            OnAlteredStats?.Invoke();
         }
 
         public float GetDamage()

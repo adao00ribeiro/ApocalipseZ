@@ -12,8 +12,8 @@ public class GrandeFunction : MonoBehaviour
 
         if (InstanceFinder.NetworkManager.IsServer)
         {
-            IProjectile go = Instantiate(PrefabGranade, muzzle.position, Quaternion.identity).GetComponent<IProjectile>();
-            go.Initialize(muzzle.forward, 0, 50);
+            IProjectile go = Instantiate(PrefabGranade, muzzle.position, muzzle.rotation).GetComponent<IProjectile>();
+            go.Initialize(0, 50);
             InstanceFinder.ServerManager.Spawn(go.gameobject);
         }
 

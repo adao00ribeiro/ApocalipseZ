@@ -4961,6 +4961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PrefabEffectExplosion: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664,
     type: 3}
+  damage: 0
   initialVelocity: 80
   airResistance: 0.1
 --- !u!54 &220726774451514510

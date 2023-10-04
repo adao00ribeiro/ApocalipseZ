@@ -17,7 +17,6 @@ namespace ApocalipseZ
 
         GameObject effects_temp;
         [SerializeField] private Rigidbody rd;
-        private Vector3 _direction;
 
         private float _passedTime = 0f;
 
@@ -43,12 +42,12 @@ namespace ApocalipseZ
 
 
         }
-        public void Initialize(Vector3 direction, float passedTime, int _damage)
+        public void Initialize(float passedTime, int _damage)
         {
             damage = _damage;
-            _direction = direction;
+
             _passedTime = passedTime;
-            rd.AddForce(_direction * throwForce);
+            rd.AddForce(transform.forward * throwForce);
         }
         IEnumerator Timer(float explosionTimer)
         {

@@ -23,7 +23,7 @@ namespace ApocalipseZ
 
         Vector3 lastPosition;
 
-        public GameObject gameobject => throw new System.NotImplementedException();
+        public GameObject gameobject => this.gameobject;
 
         private Vector3 _direction;
         private float _passedTime = 0f;
@@ -32,11 +32,10 @@ namespace ApocalipseZ
             // GetComponent<Rigidbody>().AddForce(transform.forward * initialVelocity);
             lastPosition = transform.position;
         }
-        public void Initialize(Vector3 direction, float passedTime, int _damage)
+        public void Initialize(float passedTime, int _damage)
         {
-            _direction = direction;
-            _passedTime = passedTime;
 
+            _passedTime = passedTime;
             damage = _damage;
         }
 
@@ -65,7 +64,7 @@ namespace ApocalipseZ
 
             if (time > livingTime)
             {
-                Explosion ex = Instantiate(PrefabEffectExplosion, transform.position, Quaternion.identity).GetComponent<Explosion>();
+                Explosion ex = Instantiate(PrefabEffectExplosion, lastPosition, Quaternion.identity).GetComponent<Explosion>();
                 ex.EnableExplosion();
                 InstanceFinder.ServerManager.Spawn(ex.gameObject);
                 Destroy(gameObject);
@@ -108,7 +107,7 @@ namespace ApocalipseZ
             }
 
             //Move the projectile using moverate, delta, and passed time delta.
-            transform.position += _direction * (initialVelocity * (delta + passedTimeDelta));
+            transform.position += transform.forward * (initialVelocity * (delta + passedTimeDelta));
         }
 
         private void OnDisable()

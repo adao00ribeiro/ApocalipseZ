@@ -18,7 +18,6 @@ namespace ApocalipseZ
 
         [Tooltip("Maximal and minimal damage ammounts to apply on target")]
         [SerializeField] private int damage;
-        private Vector3 _direction;
 
         private float _passedTime = 0f;
 
@@ -31,9 +30,9 @@ namespace ApocalipseZ
             lastPosition = transform.position;
         }
 
-        public void Initialize(Vector3 direction, float passedTime, int _damage)
+        public void Initialize(float passedTime, int _damage)
         {
-            _direction = direction;
+
             _passedTime = passedTime;
             damage = _damage;
         }
@@ -106,7 +105,7 @@ namespace ApocalipseZ
             }
 
             //Move the projectile using moverate, delta, and passed time delta.
-            transform.position += _direction * (initialVelocity * (delta + passedTimeDelta));
+            transform.position += transform.forward * (initialVelocity * (delta + passedTimeDelta));
         }
         private void OnDisable()
         {

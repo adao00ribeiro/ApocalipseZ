@@ -2,14 +2,28 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEditor;
 using Ramdom = UnityEngine.Random;
+using ApocalipseZ;
+
 namespace ApocalipseZ
 {
+
     public class PointItem : MonoBehaviour
     {
-        public ItemType type;
+        [Header("Tipo de item")]
+        [SerializeField] public ItemType type;
 
+        [Header("Select Weapon Spaw")]
+        [SerializeField] public EWeapon WeaponSpaw;
 
+        private void OnValidate()
+        {
+            if (type == ItemType.none)
+            {
+                WeaponSpaw = EWeapon.DEFAULT;
+            }
+        }
         public void OnEnable()
         {
             GameController.Instance.SpawObjectsManager.Add(this);
@@ -32,9 +46,13 @@ namespace ApocalipseZ
 
         public GameObject GetPrefab()
         {
-
+            if (WeaponSpaw != EWeapon.DEFAULT)
+            {
+                DataItem objeto2 = GameController.Instance.DataManager.GetDataItemWeaponByName(WeaponSpaw.ToString());
+                return objeto2.Prefab;
+            }
             DataItem objeto = GameController.Instance.DataManager.GetDataItemWeapon();
-    
+
             /*
             ScriptableItem[]items;
 
@@ -55,3 +73,4 @@ namespace ApocalipseZ
 
     }
 }
+

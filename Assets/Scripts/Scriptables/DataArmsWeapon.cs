@@ -1,6 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+public enum EWeapon
+{
+    DEFAULT,
+    BENELLIM4,
+    M870,
+    P1911,
+    AK47,
+    AKM,
+    AWM,
+    BARRETI,
+    BERETTA,
+    BIZON,
+    DESERTEAGLE,
+    GLOCK,
+    GRENADE,
+    KNIFE,
+    M4A1,
+    MP7,
+    P90,
+    P250,
+    RPG,
+    SCAR
+
+}
 public enum WeaponType { SMG, SniperRiffle, Pistol, Shotgun, Melee, Grenade }
 public enum FireMode { automatic, single }
 [System.Serializable]

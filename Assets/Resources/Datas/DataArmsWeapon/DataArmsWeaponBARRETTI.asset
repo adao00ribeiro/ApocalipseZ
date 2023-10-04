@@ -15,12 +15,13 @@ MonoBehaviour:
   GuidId: 3dcfc6c7-91c5-4bf5-b672-41541b6a11de
   Name: BARRETI
   Type: 1
+  fireMode: 0
   Damage: 140
-  fireRate: 0.5
+  fireRate: 1.9
   spread: 0
   recoil:
-    recolTop: {x: 1, y: 1}
-    recolDown: {x: -1, y: -1}
+    recolTop: {x: -0.5, y: -0.5}
+    recolDown: {x: 0, y: 0.5}
   MuzzleFlashParticlesFX: {fileID: 0}
   shotSFX: M82A1Shot
   reloadingSFX: M82A1Realod

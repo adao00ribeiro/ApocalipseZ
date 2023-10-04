@@ -33,6 +33,7 @@ namespace ApocalipseZ
             InitialPosition = transform.parent.localPosition;
             animator = GetComponent<Animator>();
             defaultLayer = GetComponent<Camera>().cullingMask;
+
         }
         public void ActiveCursor(bool active)
         {
@@ -51,6 +52,7 @@ namespace ApocalipseZ
                 transform.parent.localPosition = Vector3.Lerp(transform.parent.localPosition, InitialPosition, speedPosition * Time.deltaTime);
             }
         }
+
         public void UpdateCamera()
         {
             if (lockCursor)

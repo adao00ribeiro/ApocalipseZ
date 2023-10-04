@@ -41,23 +41,28 @@ namespace ApocalipseZ
 
         private void Update()
         {
-
             time += Time.deltaTime;
+
             RaycastHit hit;
             if (Physics.Linecast(lastPosition, transform.position, out hit))
             {
-                if(InstanceFinder.IsClient){
-                GameController.Instance.HitFXManager.ApplyFX(hit);
-                GameController.Instance.DecalFxManager.ApplyFX(hit, false);
+                if (InstanceFinder.IsClient)
+                {
+                    GameController.Instance.HitFXManager.ApplyFX(hit);
+                    GameController.Instance.DecalFxManager.ApplyFX(hit, false);
                 }
+
                 IStats stat = hit.collider.GetComponent<IStats>();
                 if (stat != null)
                 {
-                    stat.TakeDamage(damage);
+                    if (InstanceFinder.IsServer)
+                    {
+                        stat.TakeDamage(damage);
+                    }
                 }
-                print(Time.time - timeStart);
                 Destroy(gameObject);
             }
+
             lastPosition = transform.position;
             if (time > livingTime)
             {

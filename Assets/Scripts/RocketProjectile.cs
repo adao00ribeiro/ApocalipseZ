@@ -42,6 +42,7 @@ namespace ApocalipseZ
 
         private void Update()
         {
+
             time += Time.deltaTime;
 
             RaycastHit hit;
@@ -69,6 +70,8 @@ namespace ApocalipseZ
                 InstanceFinder.ServerManager.Spawn(ex.gameObject);
                 Destroy(gameObject);
             }
+
+
             Move();
         }
         private void Move()

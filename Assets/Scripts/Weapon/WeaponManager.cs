@@ -297,8 +297,16 @@ namespace ApocalipseZ
                     DropWeapons(item);
                 }
             }
+            OnPrimaryWeapon?.Invoke(null);
+            OnSecondWeapon?.Invoke(null);
+            TargetDropAllWeapons(base.Owner);
         }
-
+        [TargetRpc]
+        public void TargetDropAllWeapons(NetworkConnection conn)
+        {
+            OnPrimaryWeapon?.Invoke(null);
+            OnSecondWeapon?.Invoke(null);
+        }
         private void DropWeapons(Weapon weapon)
         {
             //procurar o item 

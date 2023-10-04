@@ -97,11 +97,11 @@ namespace ApocalipseZ
             WeaponManager = GetComponent<WeaponManager>();
             FastItemsManager = GetComponent<FastItemsManager>();
             InteractObjects = transform.Find("Recoil/Camera & Recoil").GetComponent<InteractObjects>();
-
             AnimatorWeaponHolderController = transform.Find("Recoil/Camera & Recoil/Weapon holder").GetComponent<Animator>();
             PlayerStats = GetComponent<PlayerStats>();
             FirstPersonCamera = transform.Find("Recoil/Camera & Recoil").GetComponent<FirstPersonCamera>();
             WeaponManager.SetFpsPlayer(this);
+           
         }
 
         public override void OnStartNetwork()
@@ -138,7 +138,6 @@ namespace ApocalipseZ
         }
         private void TimeManager_OnPostTick()
         {
-
             if (IsServer)
             {
                 rd.Position = transform.position;
@@ -147,7 +146,6 @@ namespace ApocalipseZ
                 rd.Grounded = Moviment.isGrounded();
                 Reconciliation(rd);
             }
-
         }
         private void TimeManager_OnUpdate()
         {
@@ -161,28 +159,12 @@ namespace ApocalipseZ
                 return;
             }
             Animation();
-
             InteractObjects.UpdateInteract();
             if (InputManager.GetLanterna())
             {
                 Lanterna.enabled = !Lanterna.enabled;
             }
         }
-        [ServerRpc]
-        private void CmdRespawn()
-        {
-
-            GameController.Instance.TimerManager.Add(() =>
-            {
-                transform.position = GameController.Instance.PlayerSpawPoints.GetPointSpaw().position;
-                PlayerStats.AddHealth(200);
-                PlayerStats.AddHydratation(100);
-                PlayerStats.AddSatiety(100);
-                TargetRespaw(base.Owner);
-            }, 5);
-        }
-
-
         private MoveData BuildMoveData()
         {
             if (!base.IsOwner)
@@ -314,10 +296,10 @@ namespace ApocalipseZ
             SpawCharacter(newPlayerColor);
 
         }
-        [ServerRpc]
+        
         public void DroppAllItems()
         {
-
+            WeaponManager.DropAllWeapons();
         }
         [TargetRpc]
         public void TargetRespaw(NetworkConnection conn)
@@ -329,12 +311,6 @@ namespace ApocalipseZ
             AnimatorWeaponHolderController.SetBool("HideWeapon", false);
             AnimatorController.SetBool("IsDead", false);
             PlayerStats.Disable = false;
-        }
-
-        [ServerRpc]
-        public void CmdDropAllItems(NetworkConnection sender = null)
-        {
-            WeaponManager.DropAllWeapons();
         }
 
 
@@ -361,15 +337,12 @@ namespace ApocalipseZ
             }
             if (PlayerStats.IsDead())
             {
-                Moviment.DisableCharacterController();
-                FirstPersonCamera.CameraDeath();
+                //Moviment.DisableCharacterController();
+                //FirstPersonCamera.CameraDeath();
                 AnimatorController.SetFloat("SelectDeath", InputManager.GetCrouch() ? 0 : Random.Range(1, 5));
                 AnimatorController.SetBool("IsDead", true);
                 AnimatorWeaponHolderController.SetBool("HideWeapon", true);
-                CmdDropAllItems();
-                CmdRespawn();
-
-                PlayerStats.Disable = true;
+              
                 return;
             }
             //animatorcontroller

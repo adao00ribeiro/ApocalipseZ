@@ -109,13 +109,12 @@ namespace ApocalipseZ
                 return;
             }
             PlayFX();
-            recoilComponent.AddRecoil(recoil);
-            IsFire = true;
             foreach (Transform item in MuzzleList)
             {
                 CmdSpawBullet(item.position, item.forward, base.TimeManager.Tick);
             }
-
+            recoilComponent.AddRecoil(recoil);
+            IsFire = true;
         }
         public bool Fire()
         {
@@ -134,7 +133,6 @@ namespace ApocalipseZ
                     {
                         PlayFX();
                     }
-
                     //Calculating when next fire call allowed
                     nextFireTime = Time.time + weaponSetting.fireRate;
                     return true;

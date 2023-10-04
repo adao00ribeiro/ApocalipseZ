@@ -9,6 +9,7 @@ using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using FishNet.Transporting;
 using FishNet.Connection;
+using TMPro;
 
 namespace ApocalipseZ
 {
@@ -33,6 +34,8 @@ namespace ApocalipseZ
         public int hungerDamage = 1;
         private float satietyTimer;
         public float stamina;
+
+        [SyncVar]
         public bool Disable;
 
         public DeadStatsManager deadStatsManager;
@@ -63,12 +66,33 @@ namespace ApocalipseZ
 
             OnAlteredStats?.Invoke();
         }
+
         void Update()
         {
             if (base.IsServer)
             {
                 if (Disable)
                 {
+                    return;
+                }
+                if (IsDead())
+                {
+                    PlayerController playerController = transform.parent.GetComponent<PlayerController>();
+                    deadStatsManager.ObserveViewUiDeadStats(playerController.PlayerName);
+                    deadStatsManager.TargewtViewSeFudeo(base.Owner);
+                    playerController.GetPlayer().GetMoviment().DisableCharacterController();
+                    playerController.GetPlayer().DroppAllItems();
+                    GameController.Instance.TimerManager.Add(() =>
+                                    {       
+                                           playerController.GetPlayer().GetMoviment().EnableCharacterController();
+                        transform.position = GameController.Instance.PlayerSpawPoints.GetPointSpaw().position;
+                            AddHealth(200);
+                        AddHydratation(100);
+                        AddSatiety(100);
+                        playerController.GetPlayer().TargetRespaw(base.Owner);
+                             }, 5);
+
+                    Disable = true;
                     return;
                 }
                 if (Time.time > satietyTimer + satietySubstractionRate)
@@ -108,11 +132,14 @@ namespace ApocalipseZ
                 {
                     TakeDamage(200);
                 }
+
+            }
+            if (base.IsClient)
+            {
                 if (IsDead())
                 {
-                    PlayerController playerController = transform.parent.GetComponent<PlayerController>();
-                    deadStatsManager.ObserveViewUiDeadStats(playerController.PlayerName);
-                    deadStatsManager.TargewtViewSeFudeo(base.Owner);
+                PlayerController playerController = transform.parent.GetComponent<PlayerController>();
+                playerController.GetPlayer().GetFirstPersonCamera().CameraDeath();
                 }
             }
 

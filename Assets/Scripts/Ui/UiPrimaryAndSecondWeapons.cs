@@ -35,6 +35,18 @@ namespace ApocalipseZ
         }
         public void UpdatePrimaryWeapon(Weapon newItem)
         {
+
+            if (newItem == null)
+            {
+                UiPrimaryWeapon.SetIsEmpty(true);
+                UiPrimaryWeapon.SetImage(null);
+                UiPrimaryWeapon.SetTextQuantidade("");
+                return;
+            }
+
+
+
+
             DataItem dataItem = GameController.Instance.DataManager.GetDataItemWeaponByName(newItem.WeaponName);
 
             if (dataItem == null)
@@ -54,6 +66,13 @@ namespace ApocalipseZ
         public void UpdateSecondWeapon(Weapon newItem)
         {
 
+            if (newItem == null)
+            {
+                UiSecondWeapon.SetIsEmpty(true);
+                UiSecondWeapon.SetImage(null);
+                UiSecondWeapon.SetTextQuantidade("");
+                return;
+            }
             DataItem dataItem = GameController.Instance.DataManager.GetDataItemWeaponByName(newItem.WeaponName);
             if (dataItem == null)
             {

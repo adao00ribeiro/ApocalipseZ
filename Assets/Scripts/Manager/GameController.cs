@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using FishNet;
 using UnityEngine;
-
+using Random = UnityEngine.Random;
 namespace ApocalipseZ
 {
     public class GameController : MonoBehaviour
@@ -21,8 +22,9 @@ namespace ApocalipseZ
         private TimerManager timerManager;
         private HitFXManager hitfxManager;
         private DecalFxManager decalfxManager;
-        private PlayerSpawPointsManager playerSpawPoints;
+        [SerializeField] private List<PlayerSpawPointsManager> playerSpawPointsManagers;
         private SpawObjectsManager spawObjectsManager;
+        [SerializeField] private PVPManager pvpManager;
 
 
         // Start is called before the first frame update
@@ -62,42 +64,68 @@ namespace ApocalipseZ
             }
 
         }
+
+        internal void AddPlayerSpawPointManager(PlayerSpawPointsManager playerSpawPointsManager)
+        {
+            playerSpawPointsManagers.Add(playerSpawPointsManager);
+        }
+        internal void RemovePlayerSpawPointManager(PlayerSpawPointsManager playerSpawPointsManager)
+        {
+            playerSpawPointsManagers.Remove(playerSpawPointsManager);
+        }
+
+        internal PlayerSpawPointsManager GetPlayerSpawPointManagerRandom()
+        {
+            return playerSpawPointsManagers[Random.Range(0, playerSpawPointsManagers.Count)];
+        }
+
+        internal PlayerSpawPointsManager GetPlayerSpawPointManager(string currentScene)
+        {
+            PlayerSpawPointsManager teste = playerSpawPointsManagers.Find(x => x.currentScene == currentScene);
+            if (teste)
+            {
+                print("oppaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            }
+            return teste;
+        }
+
+
         /*
-                public void SpawPlayer(GameObject player = null)
-                {
-                    if (Player == null)
-                    {
-                        return;
-                    }
+       public void SpawPlayer(GameObject player = null)
+       {
+           if (Player == null)
+           {
+               return;
+           }
 
-                    SpawPoint = GameObject.Find("SpawPoint");
+           SpawPoint = GameObject.Find("SpawPoint");
 
-                    if (SpawPoint == null)
-                    {
-                        if (player == null)
-                        {
-                            Instantiate(Player).transform.position = transform.position;
-                        }
-                        else
-                        {
-                            player.transform.position = transform.position;
-                        }
+           if (SpawPoint == null)
+           {
+               if (player == null)
+               {
+                   Instantiate(Player).transform.position = transform.position;
+               }
+               else
+               {
+                   player.transform.position = transform.position;
+               }
 
-                    }
-                    else
-                    {
-                        if (player == null)
-                        {
-                            Instantiate(Player, SpawPoint.transform.position, SpawPoint.transform.rotation);
-                        }
-                        else
-                        {
-                            player.transform.position = SpawPoint.transform.position;
-                        }
+           }
+           else
+           {
+               if (player == null)
+               {
+                   Instantiate(Player, SpawPoint.transform.position, SpawPoint.transform.rotation);
+               }
+               else
+               {
+                   player.transform.position = SpawPoint.transform.position;
+               }
 
-                    }
-                }
-        */
+           }
+       }
+*/
         private static GameController _instance;
 
 
@@ -107,6 +135,17 @@ namespace ApocalipseZ
             {
 
                 return _instance;
+            }
+        }
+        public PVPManager PvpManager
+        {
+            get
+            {
+                return pvpManager;
+            }
+            set
+            {
+                pvpManager = value;
             }
         }
 
@@ -187,17 +226,7 @@ namespace ApocalipseZ
                 return decalfxManager;
             }
         }
-        public PlayerSpawPointsManager PlayerSpawPoints
-        {
-            get
-            {
-                if (playerSpawPoints == null)
-                {
-                    playerSpawPoints = transform.GetComponentInChildren<PlayerSpawPointsManager>();
-                }
-                return playerSpawPoints;
-            }
-        }
+
 
         public SpawObjectsManager SpawObjectsManager
         {

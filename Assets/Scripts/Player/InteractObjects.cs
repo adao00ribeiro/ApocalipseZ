@@ -26,7 +26,7 @@ namespace ApocalipseZ
             RaycastHit hit;
 
 
-            if (Physics.Raycast(transform.position, transform.forward, out hit, distance, layer))
+            if (Physics.Raycast(transform.position, transform.forward, out hit, distance, layer, QueryTriggerInteraction.Collide))
             {
 
                 if (hit.collider.gameObject.TryGetComponent<IInteract>(out IInteract interact))

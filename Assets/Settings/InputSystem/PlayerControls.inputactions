@@ -256,6 +256,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "PVPFLAG",
+                    "type": "Button",
+                    "id": "31e50df5-5c90-4a08-8e01-1abf3a018c1e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -696,6 +705,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Print",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "223472c9-444f-496e-9a85-28cbc9023136",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "PVPFLAG",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

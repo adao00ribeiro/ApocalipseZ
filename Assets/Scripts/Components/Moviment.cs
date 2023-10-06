@@ -74,6 +74,7 @@ namespace ApocalipseZ
 
         public void EnableCharacterController()
         {
+
             CharacterController.enabled = true;
         }
         public void DisableCharacterController()

@@ -280,6 +280,15 @@ namespace ApocalipseZ
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PVPFLAG"",
+                    ""type"": ""Button"",
+                    ""id"": ""31e50df5-5c90-4a08-8e01-1abf3a018c1e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -720,6 +729,17 @@ namespace ApocalipseZ
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Print"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""223472c9-444f-496e-9a85-28cbc9023136"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""PVPFLAG"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1335,6 +1355,7 @@ namespace ApocalipseZ
             m_Player_Lanterna = m_Player.FindAction("Lanterna", throwIfNotFound: true);
             m_Player_Esc = m_Player.FindAction("Esc", throwIfNotFound: true);
             m_Player_Print = m_Player.FindAction("Print", throwIfNotFound: true);
+            m_Player_PVPFLAG = m_Player.FindAction("PVPFLAG", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1436,6 +1457,7 @@ namespace ApocalipseZ
         private readonly InputAction m_Player_Lanterna;
         private readonly InputAction m_Player_Esc;
         private readonly InputAction m_Player_Print;
+        private readonly InputAction m_Player_PVPFLAG;
         public struct PlayerActions
         {
             private @PlayerControls m_Wrapper;
@@ -1468,6 +1490,7 @@ namespace ApocalipseZ
             public InputAction @Lanterna => m_Wrapper.m_Player_Lanterna;
             public InputAction @Esc => m_Wrapper.m_Player_Esc;
             public InputAction @Print => m_Wrapper.m_Player_Print;
+            public InputAction @PVPFLAG => m_Wrapper.m_Player_PVPFLAG;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1561,6 +1584,9 @@ namespace ApocalipseZ
                 @Print.started += instance.OnPrint;
                 @Print.performed += instance.OnPrint;
                 @Print.canceled += instance.OnPrint;
+                @PVPFLAG.started += instance.OnPVPFLAG;
+                @PVPFLAG.performed += instance.OnPVPFLAG;
+                @PVPFLAG.canceled += instance.OnPVPFLAG;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -1649,6 +1675,9 @@ namespace ApocalipseZ
                 @Print.started -= instance.OnPrint;
                 @Print.performed -= instance.OnPrint;
                 @Print.canceled -= instance.OnPrint;
+                @PVPFLAG.started -= instance.OnPVPFLAG;
+                @PVPFLAG.performed -= instance.OnPVPFLAG;
+                @PVPFLAG.canceled -= instance.OnPVPFLAG;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -1859,6 +1888,7 @@ namespace ApocalipseZ
             void OnLanterna(InputAction.CallbackContext context);
             void OnEsc(InputAction.CallbackContext context);
             void OnPrint(InputAction.CallbackContext context);
+            void OnPVPFLAG(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

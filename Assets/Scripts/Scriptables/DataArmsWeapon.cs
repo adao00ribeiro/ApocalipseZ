@@ -23,7 +23,8 @@ public enum EWeapon
     P90,
     P250,
     RPG,
-    SCAR
+    SCAR,
+    M16
 
 }
 public enum WeaponType { SMG, SniperRiffle, Pistol, Shotgun, Melee, Grenade }

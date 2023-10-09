@@ -49,17 +49,8 @@ namespace ApocalipseZ
 
             foreach (var item in ObjectsManager)
             {
-                if (item.GetComponent<SceneManager>())
-                {
-                    if (GameObject.FindObjectOfType<SceneManager>() == null)
-                    {
-                        Instantiate(item);
-                    }
-                }
-                else
-                {
-                    Instantiate(item, transform);
-                }
+
+                Instantiate(item, transform);
 
             }
 
@@ -79,12 +70,13 @@ namespace ApocalipseZ
             return playerSpawPointsManagers[Random.Range(0, playerSpawPointsManagers.Count)];
         }
 
-        internal PlayerSpawPointsManager GetPlayerSpawPointManager(string currentScene)
+        internal PlayerSpawPointsManager GetPlayerSpawPointManager(int currentScene)
         {
+            print(currentScene);
             PlayerSpawPointsManager teste = playerSpawPointsManagers.Find(x => x.currentScene == currentScene);
-            print(teste.currentScene);
             return teste;
         }
+
 
 
         /*

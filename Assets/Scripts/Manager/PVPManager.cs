@@ -11,10 +11,8 @@ public class PVPManager : NetworkBehaviour
 {
     [SerializeField] List<NetworkConnection> ListEspera = new List<NetworkConnection>();
     [SerializeField] private int MaxPlayerPvpFlag;
-    public List<SceneLoader> ScenesLoadedPvpFlag = new();
-    public bool SceneStack = false;
-    private int _stackedSceneHandle = 0;
 
+    public bool CreateScene;
 
     void Start()
     {
@@ -23,6 +21,16 @@ public class PVPManager : NetworkBehaviour
             InvokeRepeating("InvokeReunirPlayer", 5, 5);
         }
 
+    }
+    void Update()
+    {
+        if (CreateScene)
+        {
+
+            GameController.Instance.SceneManager.CreateFlagPvp();
+
+            CreateScene = false;
+        }
     }
     public void InvokeReunirPlayer()
     {
@@ -35,7 +43,7 @@ public class PVPManager : NetworkBehaviour
         {
             yield return new WaitForSeconds(2);
 
-            LoadScenePvpFlag();
+            AddScenePvpFlag();
 
         }
         yield return new WaitForEndOfFrame();
@@ -43,12 +51,6 @@ public class PVPManager : NetworkBehaviour
     void OnEnable()
     {
         GameController.Instance.PvpManager = this;
-    }
-
-    void Update()
-    {
-
-
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -69,7 +71,6 @@ public class PVPManager : NetworkBehaviour
         {
             grupo.Add(ListEspera[i]);
             objetos.Add(ListEspera[i].FirstObject);
-            ListEspera[i].FirstObject.GetComponent<PlayerController>().currentScene = "SceneFlagTest";
             ListEspera[i].FirstObject.GetComponent<PlayerController>().DespawnPlayer();
             ListEspera.RemoveAt(i);
         }
@@ -90,15 +91,17 @@ public class PVPManager : NetworkBehaviour
         };
         base.SceneManager.LoadConnectionScenes(grupo.ToArray(), sld);
     }
+    public void AddScenePvpFlag()
+    {
+        List<NetworkConnection> grupo = new List<NetworkConnection>();
+        for (int i = 0; i < MaxPlayerPvpFlag; i++)
+        {
+            grupo.Add(ListEspera[i]);
+            ListEspera.RemoveAt(i);
+        }
+        GameController.Instance.SceneManager.AddScenePvpFlag(grupo.ToArray(), 1);
+    }
 
-    internal void AddSceneLoaderPvpFlag(SceneLoader loader)
-    {
-        ScenesLoadedPvpFlag.Add(loader);
-    }
-    internal void RemoveSceneLoaderPvpFlag(SceneLoader loader)
-    {
-        ScenesLoadedPvpFlag.Remove(loader);
-    }
 }
 
 

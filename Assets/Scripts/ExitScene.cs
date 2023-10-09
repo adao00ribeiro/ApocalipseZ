@@ -17,7 +17,7 @@ public class ExitScene : MonoBehaviour
         PlayerController nob = other.GetComponentInParent<PlayerController>();
         if (nob != null)
         {
-            loader.LoadScene(nob.NetworkObject);
+            //  loader.LoadScene(nob.NetworkObject);
         }
     }
 }

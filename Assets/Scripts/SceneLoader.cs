@@ -13,12 +13,14 @@ namespace ApocalipseZ
 {
     public class SceneLoader : MonoBehaviour
     {
+        public PVPFLAGManager flagPvpManager;
         [SerializeField, Scene]
         public string[] ArrayScenes;
-
         List<NetworkConnection> ListConns = new List<NetworkConnection>();
         public bool SceneStack = false;
         protected int _stackedSceneHandle = 0;
+
+        public bool IsPvpScene;
         private string[,] sceneMatrix = new string[10, 8];
 
 
@@ -35,62 +37,10 @@ namespace ApocalipseZ
         }
         protected virtual void OnEnable()
         {
-            if (gameObject.scene.name == "SceneFlagTest")
+            if (flagPvpManager != null)
             {
-                GameController.Instance.PvpManager.AddSceneLoaderPvpFlag(this);
+                GameController.Instance.SceneManager.AddSceneLoaderPvpFlag(flagPvpManager);
             }
-            if (InstanceFinder.SceneManager != null)
-            {
-                InstanceFinder.SceneManager.OnClientLoadedStartScenes += SceneManager_OnClientLoadedStartScenes; ;
-                InstanceFinder.SceneManager.OnQueueStart += SceneManager_OnQueueStart;
-                InstanceFinder.SceneManager.OnQueueEnd += SceneManager_OnQueueEnd;
-                InstanceFinder.SceneManager.OnLoadStart += SceneManager_OnLoadStart;
-                InstanceFinder.SceneManager.OnUnloadStart += SceneManager_OnUnloadStart;
-                InstanceFinder.SceneManager.OnLoadPercentChange += SceneManager_OnLoadPercentChange;
-                InstanceFinder.SceneManager.OnLoadEnd += SceneManager_OnLoadEnd;
-                InstanceFinder.SceneManager.OnUnloadEnd += SceneManager_OnUnloadEnd;
-                InstanceFinder.SceneManager.OnClientPresenceChangeStart += SceneManager_OnClientPresenceChangeStart;
-                InstanceFinder.SceneManager.OnClientPresenceChangeEnd += SceneManager_OnClientPresenceChangeEnd;
-
-            }
-        }
-        private void SceneManager_OnClientLoadedStartScenes(NetworkConnection connection, bool arg2)
-        {
-
-        }
-        private void SceneManager_OnQueueStart()
-        {
-
-        }
-        private void SceneManager_OnQueueEnd()
-        {
-
-        }
-        private void SceneManager_OnUnloadEnd(SceneUnloadEndEventArgs args)
-        {
-
-        }
-
-        private void SceneManager_OnUnloadStart(SceneUnloadStartEventArgs args)
-        {
-
-        }
-
-        private void SceneManager_OnLoadStart(SceneLoadStartEventArgs args)
-        {
-
-        }
-        protected void SceneManager_OnLoadPercentChange(SceneLoadPercentEventArgs args)
-        {
-
-        }
-
-        protected void SceneManager_OnClientPresenceChangeStart(ClientPresenceChangeEventArgs obj)
-        {
-
-        }
-        protected void SceneManager_OnClientPresenceChangeEnd(ClientPresenceChangeEventArgs obj)
-        {
 
         }
         private void SceneManager_OnLoadEnd(SceneLoadEndEventArgs obj)
@@ -115,60 +65,14 @@ namespace ApocalipseZ
         }
         protected void OnDisable()
         {
-            if (gameObject.scene.name == "SceneFlagTest")
+            if (flagPvpManager != null)
             {
-                GameController.Instance.PvpManager.RemoveSceneLoaderPvpFlag(this);
+                GameController.Instance.SceneManager.RemoveSceneLoaderPvpFlag(flagPvpManager);
             }
-            if (InstanceFinder.SceneManager != null)
-            {
 
-                InstanceFinder.SceneManager.OnClientLoadedStartScenes -= SceneManager_OnClientLoadedStartScenes; ;
-                InstanceFinder.SceneManager.OnQueueStart -= SceneManager_OnQueueStart;
-                InstanceFinder.SceneManager.OnQueueEnd -= SceneManager_OnQueueEnd;
-                InstanceFinder.SceneManager.OnLoadStart -= SceneManager_OnLoadStart;
-                InstanceFinder.SceneManager.OnUnloadStart -= SceneManager_OnUnloadStart;
-                InstanceFinder.SceneManager.OnLoadPercentChange -= SceneManager_OnLoadPercentChange;
-                InstanceFinder.SceneManager.OnLoadEnd -= SceneManager_OnLoadEnd;
-                InstanceFinder.SceneManager.OnUnloadEnd -= SceneManager_OnUnloadEnd;
-                InstanceFinder.SceneManager.OnClientPresenceChangeStart -= SceneManager_OnClientPresenceChangeStart;
-                InstanceFinder.SceneManager.OnClientPresenceChangeEnd -= SceneManager_OnClientPresenceChangeEnd;
-
-            }
         }
 
 
-        public void LoadScene(NetworkObject nob)
-        {
-
-            if (!nob.Owner.IsActive)
-            {
-                return;
-            }
-            UnloadScene(nob, "CenaC");
-            List<SceneLookupData> ListSceneLook = new List<SceneLookupData>();
-            ListSceneLook.Add(new SceneLookupData(_stackedSceneHandle, "CenaC"));
-            ListSceneLook.Add(new SceneLookupData(_stackedSceneHandle, gameObject.scene.name));
-
-            foreach (var item in ArrayScenes)
-            {
-                SceneLookupData lookupData = new SceneLookupData(_stackedSceneHandle, item);
-                ListSceneLook.Add(lookupData);
-            }
-            //SceneLoadData sld = new SceneLoadData(SCENE_NAME);
-            SceneLoadData sld = new SceneLoadData(ListSceneLook.ToArray())
-            {
-                Options = new LoadOptions()
-                {
-                    AutomaticallyUnload = false,
-                    AllowStacking = false,
-                },
-                MovedNetworkObjects = new NetworkObject[] { nob },
-                ReplaceScenes = ReplaceOption.None,
-                PreferredActiveScene = ListSceneLook.ToArray()[0],
-            };
-            InstanceFinder.SceneManager.LoadConnectionScenes(nob.Owner, sld);
-
-        }
         public void UnloadScene(NetworkObject nob, string noremovecena)
         {
             List<string> removeScenes = new List<string>();
@@ -321,7 +225,9 @@ namespace ApocalipseZ
 
             if (nob != null)
             {
-                LoadScene(nob.NetworkObject);
+                GameController.Instance.SceneManager.LoadScene(
+                    nob.NetworkObject, IsPvpScene, gameObject.scene.name, _stackedSceneHandle, ArrayScenes, SceneStack, IsPvpScene
+                    );
             }
         }
         private void OnTriggerExit(Collider other)
@@ -335,6 +241,7 @@ namespace ApocalipseZ
             if (nob != null)
             {
                 // UnloadScene(nob.NetworkObject);
+                // GameController.Instance.SceneManager.UnloadScene(nob.NetworkObject);
             }
         }
     }

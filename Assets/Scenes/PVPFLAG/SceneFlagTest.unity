@@ -717,6 +717,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8697153763539400547, guid: a10c3db077686ff48bfa955dfe43e9e3,
         type: 3}
+      propertyPath: IsPvpScene
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697153763539400547, guid: a10c3db077686ff48bfa955dfe43e9e3,
+        type: 3}
+      propertyPath: SceneStack
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8697153763539400547, guid: a10c3db077686ff48bfa955dfe43e9e3,
+        type: 3}
+      propertyPath: flagPvpManager
+      value: 
+      objectReference: {fileID: 1074151636}
+    - target: {fileID: 8697153763539400547, guid: a10c3db077686ff48bfa955dfe43e9e3,
+        type: 3}
       propertyPath: ArrayScenes.Array.size
       value: 0
       objectReference: {fileID: 0}

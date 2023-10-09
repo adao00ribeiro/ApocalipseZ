@@ -84,7 +84,7 @@ namespace ApocalipseZ
                     deadStatsManager.TargewtViewSeFudeo(base.Owner);
                     playerController.GetPlayer().GetMoviment().DisableCharacterController();
                     playerController.GetPlayer().DroppAllItems();
-                    PlayerSpawPointsManager playerSpawPointManager = GameController.Instance.GetPlayerSpawPointManager(playerController.currentScene);
+                    PlayerSpawPointsManager playerSpawPointManager = GameController.Instance.GetPlayerSpawPointManager(playerController.CurrentScene);
                     playerSpawPointManager.RespawPlayer(playerController);
                     Disable = true;
                     return;

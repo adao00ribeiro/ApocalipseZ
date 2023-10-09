@@ -17,8 +17,17 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private UiFpsScopeCursorReticles uiFpsScopeCursorReticles;
     [SerializeField] private UiPlayerStats uiPlayerStats;
     [SerializeField] private UiDeadStats uiDeadStats;
+
     [SyncVar]
-    public string currentScene;
+    public int currentScene;
+    public int CurrentScene
+    {
+        get
+        {
+            return currentScene = gameObject.scene.handle;
+
+        }
+    }
     [SyncVar]
     public string PlayerName;
     [SerializeField] private FpsPlayer player;
@@ -116,7 +125,6 @@ public class PlayerController : NetworkBehaviour
         PlayerSpawPointsManager playerspaw = GameController.Instance.GetPlayerSpawPointManagerRandom();
         SpawPointPlayer point = playerspaw.GetPointSpaw();
         NetworkBehaviour go = Instantiate(PrefabPlayer, point.transform.position, Quaternion.identity);
-        currentScene = point.currentScene;
         player = go.GetComponent<FpsPlayer>();
         go.transform.SetParent(this.transform);
         base.Spawn(go.gameObject, base.Owner);
@@ -125,11 +133,10 @@ public class PlayerController : NetworkBehaviour
     public void SpawPlayerFlag()
     {
 
-        PlayerSpawPointsManager playerspaw = GameController.Instance.GetPlayerSpawPointManager(currentScene);
+        PlayerSpawPointsManager playerspaw = GameController.Instance.GetPlayerSpawPointManager(CurrentScene);
         SpawPointPlayer point = playerspaw.GetPointSpaw();
         print(point.gameObject.transform.position);
         NetworkBehaviour go = Instantiate(PrefabPlayer, point.transform.position, Quaternion.identity);
-        currentScene = point.currentScene;
         player = go.GetComponent<FpsPlayer>();
         go.transform.SetParent(this.transform);
         base.Spawn(go.gameObject, base.Owner);

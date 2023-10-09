@@ -6,10 +6,10 @@ using Random = UnityEngine.Random;
 public class PlayerSpawPointsManager : MonoBehaviour
 {
     [SerializeField] private SpawPointPlayer[] array;
-    public string currentScene;
+    public int currentScene;
     void OnEnable()
     {
-        currentScene = gameObject.scene.name;
+        currentScene = gameObject.scene.handle;
         array = GameObject.FindObjectsByType<SpawPointPlayer>(FindObjectsSortMode.None);
         GameController.Instance.AddPlayerSpawPointManager(this);
     }
@@ -26,7 +26,6 @@ public class PlayerSpawPointsManager : MonoBehaviour
          playerController.GetPlayer().GetMoviment().EnableCharacterController();
          SpawPointPlayer point = GameObject.FindAnyObjectByType<PlayerSpawPointsManager>().GetPointSpaw();
          transform.position = point.transform.position;
-         playerController.currentScene = point.currentScene;
          playerController.GetPlayer().GetPlayerStats().AddHealth(200);
          playerController.GetPlayer().GetPlayerStats().AddHydratation(100);
          playerController.GetPlayer().GetPlayerStats().AddSatiety(100);

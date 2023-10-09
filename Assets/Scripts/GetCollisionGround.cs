@@ -6,14 +6,20 @@ public class GetCollisionGround : MonoBehaviour
 {
 
     public GameObject CollisionObject;
-    public float radius = 0.5f;
-   
+    public float GroundedRadius = 0.5f;
+    public float GroundedOffset;
+    public LayerMask GroundLayers;
+
+    public Vector3 spherePosition;
     // Update is called once per frame
     void Update()
     {
         RaycastHit hit;
+        spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
+                   transform.position.z);
 
-        if ( Physics.Raycast ( transform.position + new Vector3(0,0.5f,0) , -transform.up , out hit , radius ) )
+        PhysicsScene physicsScene = gameObject.scene.GetPhysicsScene();
+        if (physicsScene.Raycast(spherePosition, -Vector3.up, out hit, GroundedRadius))
         {
             CollisionObject = hit.collider.gameObject;
         }
@@ -21,11 +27,18 @@ public class GetCollisionGround : MonoBehaviour
         {
             CollisionObject = null;
         }
-    }
 
-    private void OnDrawGizmos ( )
+    }
+    public bool IsGrounded
+    {
+        get
+        {
+            return CollisionObject ? true : false;
+        }
+    }
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine ( transform.position + new Vector3 ( 0 , 0.5f , 0 ) , transform.position -transform.up * radius);
+        Gizmos.DrawLine(spherePosition, spherePosition - transform.up * GroundedRadius);
     }
 }

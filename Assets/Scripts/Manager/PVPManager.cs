@@ -10,7 +10,6 @@ using UnityEngine.SceneManagement;
 public class PVPManager : NetworkBehaviour
 {
     [SerializeField] List<NetworkConnection> ListEspera = new List<NetworkConnection>();
-
     [SerializeField] private int MaxPlayerPvpFlag;
     public List<SceneLoader> ScenesLoadedPvpFlag = new();
     public bool SceneStack = false;
@@ -70,8 +69,8 @@ public class PVPManager : NetworkBehaviour
         {
             grupo.Add(ListEspera[i]);
             objetos.Add(ListEspera[i].FirstObject);
-            ListEspera[i].FirstObject.GetComponent<PlayerController>().GetPlayer().GetPlayerStats().TakeDamage(300);
             ListEspera[i].FirstObject.GetComponent<PlayerController>().currentScene = "SceneFlagTest";
+            ListEspera[i].FirstObject.GetComponent<PlayerController>().DespawnPlayer();
             ListEspera.RemoveAt(i);
         }
         SceneLookupData SceneLook = new SceneLookupData("SceneFlagTest");

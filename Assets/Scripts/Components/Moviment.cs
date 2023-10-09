@@ -16,7 +16,6 @@ namespace ApocalipseZ
         public float CrouchHeight = 0.5f;
         public bool IsGrounded;
 
-        private float _terminalVelocity = 53.0f;
         public Vector3 PlayerVelocity;
 
         private float currentSpeed;
@@ -41,7 +40,7 @@ namespace ApocalipseZ
         [SerializeField] private bool duringCrouchAnimation;
 
 
-
+        private GetCollisionGround GetCollisionGround;
 
         //falldamage
         bool wasGrounded;
@@ -57,12 +56,11 @@ namespace ApocalipseZ
                 return !IsGrounded && CharacterController.velocity.y < 0;
             }
         }
-        //groundcheck
-        public float GroundedRadius = 0.28f;
-        public float GroundedOffset = -0.14f;
-        public LayerMask GroundLayers;
+
+
         private void Awake()
         {
+            GetCollisionGround = GetComponent<GetCollisionGround>();
             InputManager = GameController.Instance.InputManager;
             mesh = transform.Find("Mesh/Ch35_nonPBR");
             CharacterController = GetComponent<CharacterController>();
@@ -84,6 +82,7 @@ namespace ApocalipseZ
         public void MoveTick(MoveData md, float delta)
         {
 
+
             Move(md, delta);
             SoundStep.SetIsGround(isGrounded());
             SoundStep.SetIsMoviment(CheckMovement());
@@ -91,7 +90,7 @@ namespace ApocalipseZ
 
         public void GravityJumpUpdate(bool IsJump, float delta)
         {
-            CheckGround();
+
             if (!wasFalling && IsFalling)
             {
                 startOffall = transform.position.y;
@@ -122,25 +121,17 @@ namespace ApocalipseZ
                     PlayerVelocity.y = Mathf.Sqrt(jumpSpeed * -2.0f * Physics.gravity.y);
                 }
             }
-
-            if (PlayerVelocity.y < _terminalVelocity)
+            else
             {
                 PlayerVelocity.y += Physics.gravity.y * delta;
             }
 
-
         }
 
 
 
-        public void CheckGround()
-        {
-            // set sphere position, with offset
-            Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset,
-                transform.position.z);
-            IsGrounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers,
-                QueryTriggerInteraction.Ignore);
-        }
+
+
 
         public void Move(MoveData md, float delta)
         {
@@ -214,7 +205,7 @@ namespace ApocalipseZ
         }
         public bool isGrounded()
         {
-            return IsGrounded;
+            return IsGrounded = GetCollisionGround.IsGrounded;
         }
         public void SetIsGround(bool isgrounded)
         {

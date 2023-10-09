@@ -43,6 +43,11 @@ public class PlayerController : NetworkBehaviour
     }
     void Update()
     {
+
+        if (player == null)
+        {
+            return;
+        }
         if (GameController.Instance.InputManager.GetInventory() && !player.GetPlayerStats().IsDead())
         {
             IsInventoryOpen = !IsInventoryOpen;
@@ -110,6 +115,19 @@ public class PlayerController : NetworkBehaviour
     {
         PlayerSpawPointsManager playerspaw = GameController.Instance.GetPlayerSpawPointManagerRandom();
         SpawPointPlayer point = playerspaw.GetPointSpaw();
+        NetworkBehaviour go = Instantiate(PrefabPlayer, point.transform.position, Quaternion.identity);
+        currentScene = point.currentScene;
+        player = go.GetComponent<FpsPlayer>();
+        go.transform.SetParent(this.transform);
+        base.Spawn(go.gameObject, base.Owner);
+        ObserverSpawPlayer(go.gameObject);
+    }
+    public void SpawPlayerFlag()
+    {
+
+        PlayerSpawPointsManager playerspaw = GameController.Instance.GetPlayerSpawPointManager(currentScene);
+        SpawPointPlayer point = playerspaw.GetPointSpaw();
+        print(point.gameObject.transform.position);
         NetworkBehaviour go = Instantiate(PrefabPlayer, point.transform.position, Quaternion.identity);
         currentScene = point.currentScene;
         player = go.GetComponent<FpsPlayer>();

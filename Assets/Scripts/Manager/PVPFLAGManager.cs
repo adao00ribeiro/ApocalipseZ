@@ -20,7 +20,8 @@ public class PVPFLAGManager : MonoBehaviour
     {
         if (InstanceFinder.IsServer)
         {
-            controller.GetPlayer().gameObject.transform.position = point.position;
+            controller.transform.position = point.position;
+            controller.SpawPlayerFlag();
             //   controller.GetPlayer().GetMoviment().EnableCharacterController();
             arrayPlayercontroller.Add(controller);
         }

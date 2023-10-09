@@ -56,73 +56,42 @@ namespace ApocalipseZ
         }
         private void SceneManager_OnClientLoadedStartScenes(NetworkConnection connection, bool arg2)
         {
-            if (gameObject.scene.name == "SceneFlagTest")
-            {
-                print("SceneManager_OnClientLoadedStartScenes");
-            }
+
         }
         private void SceneManager_OnQueueStart()
         {
-            if (gameObject.scene.name == "SceneFlagTest")
-            {
-                print("SceneManager_OnQueueStart");
-            }
+
         }
         private void SceneManager_OnQueueEnd()
         {
-            if (gameObject.scene.name == "SceneFlagTest")
-            {
-                print("SceneManager_OnQueueEnd");
-            }
+
         }
         private void SceneManager_OnUnloadEnd(SceneUnloadEndEventArgs args)
         {
-            if (gameObject.scene.name == "SceneFlagTest")
-            {
-                print("SceneManager_OnUnloadEnd");
-            }
+
         }
 
         private void SceneManager_OnUnloadStart(SceneUnloadStartEventArgs args)
         {
-            if (gameObject.scene.name == "SceneFlagTest")
-            {
-                print("SceneManager_OnUnloadStart");
-            }
+
         }
 
         private void SceneManager_OnLoadStart(SceneLoadStartEventArgs args)
         {
-            if (gameObject.scene.name == "SceneFlagTest")
-            {
-                print("SceneManager_OnLoadStart");
-            }
+
         }
         protected void SceneManager_OnLoadPercentChange(SceneLoadPercentEventArgs args)
         {
-            if (gameObject.scene.name == "SceneFlagTest")
-            {
-                print(args.Percent);
-            }
+
         }
 
         protected void SceneManager_OnClientPresenceChangeStart(ClientPresenceChangeEventArgs obj)
         {
-            if (gameObject.scene.name == "SceneFlagTest")
-            {
-                print(obj.Connection.FirstObject.GetComponent<PlayerController>().PlayerName);
-                // obj.Connection.FirstObject.GetComponent<PlayerController>().GetPlayer().respa = transform.position;
-                print(transform.position);
-            }
+
         }
         protected void SceneManager_OnClientPresenceChangeEnd(ClientPresenceChangeEventArgs obj)
         {
-            if (gameObject.scene.name == "SceneFlagTest")
-            {
-                print("SceneManager_OnClientPresenceChangeEnd");
-                GameObject.FindAnyObjectByType<PVPFLAGManager>().OnPlayer?.Invoke(obj.Connection.FirstObject.GetComponent<PlayerController>());
 
-            }
         }
         private void SceneManager_OnLoadEnd(SceneLoadEndEventArgs obj)
         {
@@ -153,27 +122,21 @@ namespace ApocalipseZ
             if (InstanceFinder.SceneManager != null)
             {
 
+                InstanceFinder.SceneManager.OnClientLoadedStartScenes -= SceneManager_OnClientLoadedStartScenes; ;
+                InstanceFinder.SceneManager.OnQueueStart -= SceneManager_OnQueueStart;
+                InstanceFinder.SceneManager.OnQueueEnd -= SceneManager_OnQueueEnd;
+                InstanceFinder.SceneManager.OnLoadStart -= SceneManager_OnLoadStart;
+                InstanceFinder.SceneManager.OnUnloadStart -= SceneManager_OnUnloadStart;
+                InstanceFinder.SceneManager.OnLoadPercentChange -= SceneManager_OnLoadPercentChange;
                 InstanceFinder.SceneManager.OnLoadEnd -= SceneManager_OnLoadEnd;
+                InstanceFinder.SceneManager.OnUnloadEnd -= SceneManager_OnUnloadEnd;
                 InstanceFinder.SceneManager.OnClientPresenceChangeStart -= SceneManager_OnClientPresenceChangeStart;
                 InstanceFinder.SceneManager.OnClientPresenceChangeEnd -= SceneManager_OnClientPresenceChangeEnd;
-                InstanceFinder.SceneManager.OnLoadPercentChange -= SceneManager_OnLoadPercentChange;
+
             }
         }
 
-        public void AddScene(NetworkObject nob)
-        {
 
-            SceneLookupData lookupData = new SceneLookupData(_stackedSceneHandle, gameObject.scene.name);
-            //by reference
-            SceneLoadData sld = new(lookupData);
-            sld.PreferredActiveScene = lookupData;
-            sld.MovedNetworkObjects = new NetworkObject[] { nob };
-            InstanceFinder.SceneManager.LoadConnectionScenes(nob.Owner, sld);
-
-
-            UnloadScene(nob, "");
-
-        }
         public void LoadScene(NetworkObject nob)
         {
 
@@ -251,9 +214,6 @@ namespace ApocalipseZ
 
             InstanceFinder.SceneManager.UnloadConnectionScenes(nob.Owner, sud);
         }
-
-
-
 
 
         public void GetScene()

@@ -119,7 +119,7 @@ namespace ApocalipseZ
             if (base.TimeManager != null)
             {
                 base.TimeManager.OnTick -= TimeManager_OnTick;
-
+                base.TimeManager.OnUpdate -= TimeManager_OnUpdate;
                 base.TimeManager.OnPostTick -= TimeManager_OnPostTick;
             }
         }

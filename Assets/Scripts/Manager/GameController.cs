@@ -82,10 +82,7 @@ namespace ApocalipseZ
         internal PlayerSpawPointsManager GetPlayerSpawPointManager(string currentScene)
         {
             PlayerSpawPointsManager teste = playerSpawPointsManagers.Find(x => x.currentScene == currentScene);
-            if (teste)
-            {
-                print("oppaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            }
+            print(teste.currentScene);
             return teste;
         }
 

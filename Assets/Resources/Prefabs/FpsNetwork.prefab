@@ -281,11 +281,6 @@ MonoBehaviour:
   IsCrouching: 0
   duringCrouchAnimation: 0
   minimumFall: 2
-  GroundedRadius: 0.28
-  GroundedOffset: -0.14
-  GroundLayers:
-    serializedVersion: 2
-    m_Bits: 65
 --- !u!114 &7433572165634752114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,7 +365,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CollisionObject: {fileID: 0}
-  radius: 0.5
+  GroundedRadius: 0.5
+  GroundedOffset: -0.5
+  GroundLayers:
+    serializedVersion: 2
+    m_Bits: 65
+  spherePosition: {x: 0, y: 0, z: 0}
 --- !u!114 &286196919920158639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,7 +463,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 39
+  <PrefabId>k__BackingField: 45
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
@@ -914,7 +914,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distance: 2
-  PUiFpsScopeCursorReticles: {fileID: 0}
   layer:
     serializedVersion: 2
     m_Bits: 1729

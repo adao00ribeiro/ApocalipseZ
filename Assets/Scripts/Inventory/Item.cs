@@ -39,7 +39,7 @@ namespace ApocalipseZ
             {
                 return;
             }
-            Destroy(GetComponent<Rigidbody>());
+            // Destroy(GetComponent<Rigidbody>());
         }
         public void SetAmmo(int _ammo)
         {

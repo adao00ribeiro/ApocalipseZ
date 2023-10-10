@@ -61,7 +61,10 @@ public class PhysicsSceneSync : NetworkBehaviour
          * scenes you can cache the physics scenes
          * rather than look them up each time. */
         if (_synchronizePhysics)
+        {
             gameObject.scene.GetPhysicsScene().Simulate(delta);
+            print("Simulando");
+        }
         if (_synchronizePhysics2D)
             gameObject.scene.GetPhysicsScene2D().Simulate(delta);
     }

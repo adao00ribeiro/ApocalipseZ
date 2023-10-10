@@ -86,6 +86,7 @@ namespace ApocalipseZ
         MoveData md = new();
         ReconcileData rd = new();
         private NetworkAnimator networkAnimator;
+        [SerializeField] private Character character;
         //MoveData for client simulation
 
         // Start is called before the first frame update
@@ -238,6 +239,7 @@ namespace ApocalipseZ
             {
                 GameObject go = Instantiate(cha.PrefabCharacter, transform.GetChild(0).transform);
                 meshteste = go.GetComponent<MeshRenderer>();
+                character = go.GetComponent<Character>();
                 Moviment.SetMesh(go.transform);
                 AnimatorController = go.GetComponent<Animator>();
                 networkAnimator.SetAnimator(AnimatorController);
@@ -328,7 +330,10 @@ namespace ApocalipseZ
         }
         // Update is called once per frame
 
-
+        public void SetFlag(Flag flag)
+        {
+            character.SetFlag(flag);
+        }
         public void Animation()
         {
             if (AnimatorController == null)

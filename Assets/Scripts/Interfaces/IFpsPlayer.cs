@@ -11,4 +11,6 @@ public interface IFpsPlayer
     FirstPersonCamera GetFirstPersonCamera();
     WeaponManager GetWeaponManager();
     Inventory GetInventory();
+
+    void SetFlag(Flag flag);
 }

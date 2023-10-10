@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using FishNet;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -56,25 +57,26 @@ namespace ApocalipseZ
 
         }
 
-        internal void AddPlayerSpawPointManager(PlayerSpawPointsManager playerSpawPointsManager)
+        public void AddPlayerSpawPointManager(PlayerSpawPointsManager playerSpawPointsManager)
         {
             playerSpawPointsManagers.Add(playerSpawPointsManager);
         }
-        internal void RemovePlayerSpawPointManager(PlayerSpawPointsManager playerSpawPointsManager)
+        public void RemovePlayerSpawPointManager(PlayerSpawPointsManager playerSpawPointsManager)
         {
             playerSpawPointsManagers.Remove(playerSpawPointsManager);
         }
 
-        internal PlayerSpawPointsManager GetPlayerSpawPointManagerRandom()
+        public PlayerSpawPointsManager GetPlayerSpawPointManager(int currentScene)
         {
-            return playerSpawPointsManagers[Random.Range(0, playerSpawPointsManagers.Count)];
-        }
-
-        internal PlayerSpawPointsManager GetPlayerSpawPointManager(int currentScene)
-        {
-            print(currentScene);
-            PlayerSpawPointsManager teste = playerSpawPointsManagers.Find(x => x.currentScene == currentScene);
+           
+            PlayerSpawPointsManager teste = playerSpawPointsManagers.Find(x => x.currentSceneHandle == currentScene);
+            if(teste){
             return teste;
+            }
+            System.Random rng = new System.Random();
+            playerSpawPointsManagers = playerSpawPointsManagers.OrderBy(item => rng.Next()).ToList();
+            var randomItem = playerSpawPointsManagers.FirstOrDefault(x => x.currentSceneName != "SceneFlagTest");
+            return randomItem;
         }
 
 

@@ -14,9 +14,10 @@ namespace ApocalipseZ
     public class SceneLoader : MonoBehaviour
     {
         public PVPFLAGManager flagPvpManager;
+
         [SerializeField, Scene]
         public string[] ArrayScenes;
-        List<NetworkConnection> ListConns = new List<NetworkConnection>();
+
         public bool SceneStack = false;
         protected int _stackedSceneHandle = 0;
 
@@ -35,14 +36,22 @@ namespace ApocalipseZ
             */
             GetScene();
         }
+     
         protected virtual void OnEnable()
         {
-            if (flagPvpManager != null)
-            {
-                GameController.Instance.SceneManager.AddSceneLoaderPvpFlag(flagPvpManager);
-            }
+                GameController.Instance.SceneManager.AddSceneLoader(gameObject.scene.name , gameObject.scene.handle , this);
 
+
+                InstanceFinder.SceneManager.OnClientPresenceChangeStart += SceneManager_OnClientPresenceChangeStart;;
         }
+
+        private void SceneManager_OnClientPresenceChangeStart(ClientPresenceChangeEventArgs args)
+        {
+            if(flagPvpManager !=null){
+                flagPvpManager.OnPlayer?.Invoke(args.Connection.FirstObject.GetComponent<PlayerController>());
+            }
+        }
+
         private void SceneManager_OnLoadEnd(SceneLoadEndEventArgs obj)
         {
             if (!obj.QueueData.AsServer)
@@ -65,11 +74,7 @@ namespace ApocalipseZ
         }
         protected void OnDisable()
         {
-            if (flagPvpManager != null)
-            {
-                GameController.Instance.SceneManager.RemoveSceneLoaderPvpFlag(flagPvpManager);
-            }
-
+               GameController.Instance.SceneManager.RemoveSceneLoader( this);
         }
 
 

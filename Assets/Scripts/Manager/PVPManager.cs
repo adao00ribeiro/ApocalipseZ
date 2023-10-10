@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 
 public class PVPManager : NetworkBehaviour
 {
+    public int TotalConexoes;
     [SerializeField] List<NetworkConnection> ListEspera = new List<NetworkConnection>();
     [SerializeField] private int MaxPlayerPvpFlag;
 
@@ -24,6 +25,7 @@ public class PVPManager : NetworkBehaviour
     }
     void Update()
     {
+        TotalConexoes = ListEspera.Count;
         if (CreateScene)
         {
 
@@ -39,11 +41,11 @@ public class PVPManager : NetworkBehaviour
     }
     IEnumerator ReunirPlayer()
     {
+         yield return new WaitForSeconds(2);
+
         if (ListEspera.Count == MaxPlayerPvpFlag)
         {
-            yield return new WaitForSeconds(2);
-
-            AddScenePvpFlag();
+             CreateScenePvpFlag();
 
         }
         yield return new WaitForEndOfFrame();
@@ -53,43 +55,22 @@ public class PVPManager : NetworkBehaviour
         GameController.Instance.PvpManager = this;
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    public void CmdAddWaitinLine(NetworkConnection conn = null)
+
+    public void AddWaitinLine(NetworkConnection conn )
     {
         ListEspera.Add(conn);
     }
-    [ServerRpc(RequireOwnership = false)]
-    public void CmdRemoveWaitinLine(NetworkConnection conn = null)
+    
+    public void RemoveWaitinLine(NetworkConnection conn)
     {
         ListEspera.Remove(conn);
     }
-    public void LoadScenePvpFlag()
+    public void CreateScenePvpFlag()
     {
-        List<NetworkConnection> grupo = new List<NetworkConnection>();
-        List<NetworkObject> objetos = new List<NetworkObject>();
-        for (int i = 0; i < MaxPlayerPvpFlag; i++)
-        {
-            grupo.Add(ListEspera[i]);
-            objetos.Add(ListEspera[i].FirstObject);
-            ListEspera[i].FirstObject.GetComponent<PlayerController>().DespawnPlayer();
-            ListEspera.RemoveAt(i);
-        }
-        SceneLookupData SceneLook = new SceneLookupData("SceneFlagTest");
-        List<NetworkObject> objects = new List<NetworkObject>();
-        SceneLoadData sld = new SceneLoadData(SceneLook)
-        {
-            Options = new LoadOptions()
-            {
-                AutomaticallyUnload = true,
-                AllowStacking = true,
-                LocalPhysics = LocalPhysicsMode.Physics3D
-            },
-            MovedNetworkObjects = objetos.ToArray(),
-            ReplaceScenes = ReplaceOption.All,
-            PreferredActiveScene = SceneLook
-
-        };
-        base.SceneManager.LoadConnectionScenes(grupo.ToArray(), sld);
+        List<NetworkConnection> grupo = ListEspera.GetRange(0,MaxPlayerPvpFlag);
+        GameController.Instance.SceneManager.CreateFlagPvpConn(grupo);
+        ListEspera.RemoveRange(0,MaxPlayerPvpFlag);
+    
     }
     public void AddScenePvpFlag()
     {
@@ -97,9 +78,9 @@ public class PVPManager : NetworkBehaviour
         for (int i = 0; i < MaxPlayerPvpFlag; i++)
         {
             grupo.Add(ListEspera[i]);
-            ListEspera.RemoveAt(i);
         }
         GameController.Instance.SceneManager.AddScenePvpFlag(grupo.ToArray(), 1);
+        ListEspera.RemoveRange(0,MaxPlayerPvpFlag);
     }
 
 }

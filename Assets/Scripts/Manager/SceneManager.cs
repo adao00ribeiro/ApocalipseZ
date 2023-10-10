@@ -12,35 +12,26 @@ using GameKit.Utilities.Types;
 
 namespace ApocalipseZ
 {
+    [System.Serializable]
+    public struct SceneData{
+
+        [SerializeField, Scene]
+        public string Name;
+        public int handle;
+        public SceneLoader SceneLoader;
+        public SceneData(string _name, int _handle, SceneLoader _loader) : this()
+        {
+            this.Name = _name;
+            this.handle = _handle;
+            this.SceneLoader = _loader;
+        }
+    }
     public class SceneManager : MonoBehaviour
     {
-        [SerializeField, Scene]
-        public List<string> ScenesLoadedGlobal = new();
-        public List<PVPFLAGManager> ScenesLoadedPvpFlag = new();
-        public void OnEnable()
-        {
-            InstanceFinder.SceneManager.OnLoadEnd += RegisterScenes;
-        }
-
-        public void RegisterScenes(SceneLoadEndEventArgs args)
-        {
-            //Only Register on Server
-            if (!args.QueueData.AsServer) return;
-
-            //if you know you only loaded one scene you could just grab index [0]
-            foreach (var scene in args.LoadedScenes)
-            {
-                if (scene.name != "SceneFlagTest")
-                {
-                    ScenesLoadedGlobal.Add(scene.name);
-                }
-
-            }
-        }
-        public void OnDisable()
-        {
-            InstanceFinder.SceneManager.OnLoadEnd -= RegisterScenes;
-        }
+     
+        public List<SceneData> ScenesLoaded = new();
+      
+       
         internal void LoadScene(NetworkObject nob, bool IsPvpScene, string currentScene, int _stackedSceneHandle, string[] ArrayScenes, bool SceneStack, bool AutomaticallyUnload)
         {
 
@@ -84,19 +75,23 @@ namespace ApocalipseZ
             throw new NotImplementedException();
         }
 
-        internal void AddSceneLoaderPvpFlag(PVPFLAGManager loader)
+        internal void AddSceneLoader(string nameScene, int handle ,  SceneLoader loader)
         {
-            ScenesLoadedPvpFlag.Add(loader);
+            ScenesLoaded.Add(new SceneData(nameScene , handle , loader));
         }
-        internal void RemoveSceneLoaderPvpFlag(PVPFLAGManager loader)
+        internal void RemoveSceneLoader(SceneLoader loader)
         {
-            ScenesLoadedPvpFlag.Remove(loader);
+            foreach (var item in ScenesLoaded)
+            {
+                    if(item.SceneLoader == loader){
+                        ScenesLoaded.Remove(item);
+                    }
+            }
         }
 
         public void CreateFlagPvp()
         {
             SceneLookupData SceneLook = new SceneLookupData("SceneFlagTest");
-
             SceneLoadData sld = new SceneLoadData(SceneLook)
             {
                 Options = new LoadOptions()
@@ -109,10 +104,33 @@ namespace ApocalipseZ
             };
             InstanceFinder.SceneManager.LoadConnectionScenes(sld);
         }
+        public void CreateFlagPvpConn(List<NetworkConnection> grupo){
+        List<NetworkObject> objects = new List<NetworkObject>();
+        for (int i = 0; i < grupo.Count; i++)
+        {
+            grupo[i].FirstObject.GetComponent<PlayerController>().DespawnPlayer();
+            objects.Add(grupo[i].FirstObject);
+        }
+        SceneLookupData SceneLook = new SceneLookupData("SceneFlagTest");
+        SceneLoadData sld = new SceneLoadData(SceneLook)
+        {
+            Options = new LoadOptions()
+            {
+                AutomaticallyUnload = true,
+                AllowStacking = true,
+                LocalPhysics = LocalPhysicsMode.Physics3D
+            },
+            MovedNetworkObjects = objects.ToArray(),
+            ReplaceScenes = ReplaceOption.All,
+            PreferredActiveScene = SceneLook
 
+        };
+        InstanceFinder.SceneManager.LoadConnectionScenes(grupo.ToArray(), sld);
+        }
         internal void AddScenePvpFlag(NetworkConnection[] conns, int index)
         {
-            SceneLookupData SceneLook = new SceneLookupData(ScenesLoadedPvpFlag[index].gameObject.scene.handle);
+           
+            SceneLookupData SceneLook = new SceneLookupData(ScenesLoaded[index].handle);
             List<NetworkObject> objects = new List<NetworkObject>();
             for (int i = 0; i < conns.Length; i++)
             {
@@ -124,11 +142,9 @@ namespace ApocalipseZ
             sld.MovedNetworkObjects = objects.ToArray();
             sld.PreferredActiveScene = SceneLook;
             InstanceFinder.SceneManager.LoadConnectionScenes(conns, sld);
-            for (int i = 0; i < conns.Length; i++)
-            {
-                ScenesLoadedPvpFlag[index].OnPlayer?.Invoke(conns[i].FirstObject.GetComponent<PlayerController>());
-            }
-
+            
+       
         }
+       
     }
 }

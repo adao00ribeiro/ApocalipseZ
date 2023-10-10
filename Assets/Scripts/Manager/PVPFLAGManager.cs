@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using FishNet;
 using UnityEngine;
 
-public class PVPFLAGManager : MonoBehaviour
+public class PVPFLAGManager : MonoBehaviour,IPvpManager
 {
     public Action<PlayerController> OnPlayer;
     public List<PlayerController> arrayPlayercontroller;
@@ -18,11 +18,17 @@ public class PVPFLAGManager : MonoBehaviour
 
     private void OnChangeOnPlayer(PlayerController controller)
     {
+        foreach (var item in arrayPlayercontroller)
+        {
+            if(item == controller){
+                return;
+            }
+        }
         if (InstanceFinder.IsServer)
         {
             controller.transform.position = point.position;
-            controller.SpawPlayerFlag();
-            //   controller.GetPlayer().GetMoviment().EnableCharacterController();
+            controller.currentScene = gameObject.scene.handle;
+            controller.SpawPlayer();
             arrayPlayercontroller.Add(controller);
         }
 

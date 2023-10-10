@@ -83,18 +83,27 @@ public class PlayerController : NetworkBehaviour
                 print("PVP APERTADO");
                 if (!IsChecked)
                 {
-                    GameController.Instance.PvpManager.CmdAddWaitinLine(base.Owner);
+                    CmdAddWaitinLine();
                     IsChecked = true;
                 }
                 else
                 {
-                    GameController.Instance.PvpManager.CmdRemoveWaitinLine(base.Owner);
+                   CmdRemoveWaitinLine();
                     IsChecked = false;
                 }
 
             }
         }
 
+    }
+    [ServerRpc]
+    public void CmdAddWaitinLine(){
+        
+          GameController.Instance.PvpManager.AddWaitinLine(base.Owner);
+    }
+     [ServerRpc]
+    public void CmdRemoveWaitinLine(){
+           GameController.Instance.PvpManager.RemoveWaitinLine(base.Owner);
     }
     public override void OnStartClient()
     {
@@ -122,26 +131,15 @@ public class PlayerController : NetworkBehaviour
     }
     public void SpawPlayer()
     {
-        PlayerSpawPointsManager playerspaw = GameController.Instance.GetPlayerSpawPointManagerRandom();
-        SpawPointPlayer point = playerspaw.GetPointSpaw();
-        NetworkBehaviour go = Instantiate(PrefabPlayer, point.transform.position, Quaternion.identity);
-        player = go.GetComponent<FpsPlayer>();
-        go.transform.SetParent(this.transform);
-        base.Spawn(go.gameObject, base.Owner);
-        ObserverSpawPlayer(go.gameObject);
-    }
-    public void SpawPlayerFlag()
-    {
-
         PlayerSpawPointsManager playerspaw = GameController.Instance.GetPlayerSpawPointManager(CurrentScene);
         SpawPointPlayer point = playerspaw.GetPointSpaw();
-        print(point.gameObject.transform.position);
         NetworkBehaviour go = Instantiate(PrefabPlayer, point.transform.position, Quaternion.identity);
         player = go.GetComponent<FpsPlayer>();
         go.transform.SetParent(this.transform);
         base.Spawn(go.gameObject, base.Owner);
         ObserverSpawPlayer(go.gameObject);
     }
+   
     [ObserversRpc]
     public void ObserverSpawPlayer(GameObject player)
     {

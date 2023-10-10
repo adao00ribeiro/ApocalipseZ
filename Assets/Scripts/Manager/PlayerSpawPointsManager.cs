@@ -6,10 +6,12 @@ using Random = UnityEngine.Random;
 public class PlayerSpawPointsManager : MonoBehaviour
 {
     [SerializeField] private SpawPointPlayer[] array;
-    public int currentScene;
+    public int currentSceneHandle;
+    public string currentSceneName;
     void OnEnable()
     {
-        currentScene = gameObject.scene.handle;
+        currentSceneHandle = gameObject.scene.handle;
+        currentSceneName = gameObject.scene.name;
         array = GameObject.FindObjectsByType<SpawPointPlayer>(FindObjectsSortMode.None);
         GameController.Instance.AddPlayerSpawPointManager(this);
     }

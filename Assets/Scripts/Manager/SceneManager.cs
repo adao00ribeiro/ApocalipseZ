@@ -9,11 +9,13 @@ using FishNet.Managing.Scened;
 using FishNet;
 using FishNet.Connection;
 using GameKit.Utilities.Types;
+using System.Linq;
 
 namespace ApocalipseZ
 {
     [System.Serializable]
-    public struct SceneData{
+    public struct SceneData
+    {
 
         [SerializeField, Scene]
         public string Name;
@@ -28,10 +30,31 @@ namespace ApocalipseZ
     }
     public class SceneManager : MonoBehaviour
     {
-     
         public List<SceneData> ScenesLoaded = new();
-      
-       
+        public void LoadSceneC(NetworkObject nob)
+        {
+            if (!nob.Owner.IsActive)
+            {
+                return;
+            }
+            SceneLookupData SceneLook = new SceneLookupData("CenaC");
+            List<NetworkObject> objects = new List<NetworkObject>();
+
+            SceneLoadData sld = new SceneLoadData(SceneLook)
+            {
+                Options = new LoadOptions()
+                {
+                    AutomaticallyUnload = false,
+                    AllowStacking = false,
+                },
+                MovedNetworkObjects = new NetworkObject[] { nob },
+                ReplaceScenes = ReplaceOption.None,
+                PreferredActiveScene = SceneLook,
+            };
+            InstanceFinder.SceneManager.LoadConnectionScenes(nob.Owner, sld);
+            nob.GetComponent<PlayerController>().SpawPlayer();
+            UnloadScene(nob, 0, new string[0]);
+        }
         internal void LoadScene(NetworkObject nob, bool IsPvpScene, string currentScene, int _stackedSceneHandle, string[] ArrayScenes, bool SceneStack, bool AutomaticallyUnload)
         {
 
@@ -39,7 +62,7 @@ namespace ApocalipseZ
             {
                 return;
             }
-            // UnloadScene(nob, "CenaC");
+
             List<SceneLookupData> ListSceneLook = new List<SceneLookupData>();
             if (!IsPvpScene)
             {
@@ -65,27 +88,67 @@ namespace ApocalipseZ
                 PreferredActiveScene = ListSceneLook.ToArray()[0],
             };
             InstanceFinder.SceneManager.LoadConnectionScenes(nob.Owner, sld);
-        }
-        public void LoadScenePvpFlag(List<NetworkConnection> ListEspera, int MaxPlayerPvpFlag)
-        {
-
-        }
-        internal void UnloadScene(NetworkObject networkObject)
-        {
-            throw new NotImplementedException();
+            UnloadScene(nob, _stackedSceneHandle, ArrayScenes);
         }
 
-        internal void AddSceneLoader(string nameScene, int handle ,  SceneLoader loader)
+        internal void UnloadScene(NetworkObject nob, int _stackedSceneHandle, string[] ArrayScenes)
         {
-            ScenesLoaded.Add(new SceneData(nameScene , handle , loader));
+            List<string> removeScenes = new List<string>();
+
+            foreach (var pair in InstanceFinder.SceneManager.SceneConnections)
+            {
+                removeScenes.Add(pair.Key.name);
+            }
+            removeScenes.Remove("CenaC");
+            List<string> ListScenes = ArrayScenes.ToList();
+            List<string> filteredScenes = new List<string>();
+            ListScenes.Add(gameObject.scene.name);
+            foreach (var item in removeScenes)
+            {
+                if (!ListScenes.Contains(item))
+                {
+                    filteredScenes.Add(item);
+                }
+            }
+            foreach (var pair in filteredScenes)
+            {
+                print(pair);
+            }
+            if (filteredScenes.Count == 0)
+            {
+                return;
+            }
+            List<SceneLookupData> ListSceneLook = new List<SceneLookupData>();
+            foreach (var item in filteredScenes)
+            {
+                print(item);
+                SceneLookupData lookupData = new SceneLookupData(_stackedSceneHandle, item);
+                ListSceneLook.Add(lookupData);
+            }
+
+            SceneUnloadData sud = new SceneUnloadData(ListSceneLook.ToArray())
+            {
+                Options = new UnloadOptions()
+                {
+                    Mode = UnloadOptions.ServerUnloadMode.UnloadUnused
+                }
+            };
+
+            InstanceFinder.SceneManager.UnloadConnectionScenes(nob.Owner, sud);
+        }
+
+        internal void AddSceneLoader(string nameScene, int handle, SceneLoader loader)
+        {
+            ScenesLoaded.Add(new SceneData(nameScene, handle, loader));
         }
         internal void RemoveSceneLoader(SceneLoader loader)
         {
             foreach (var item in ScenesLoaded)
             {
-                    if(item.SceneLoader == loader){
-                        ScenesLoaded.Remove(item);
-                    }
+                if (item.SceneLoader == loader)
+                {
+                    ScenesLoaded.Remove(item);
+                }
             }
         }
 
@@ -104,32 +167,33 @@ namespace ApocalipseZ
             };
             InstanceFinder.SceneManager.LoadConnectionScenes(sld);
         }
-        public void CreateFlagPvpConn(List<NetworkConnection> grupo){
-        List<NetworkObject> objects = new List<NetworkObject>();
-        for (int i = 0; i < grupo.Count; i++)
+        public void CreateFlagPvpConn(List<NetworkConnection> grupo)
         {
-            grupo[i].FirstObject.GetComponent<PlayerController>().DespawnPlayer();
-            objects.Add(grupo[i].FirstObject);
-        }
-        SceneLookupData SceneLook = new SceneLookupData("SceneFlagTest");
-        SceneLoadData sld = new SceneLoadData(SceneLook)
-        {
-            Options = new LoadOptions()
+            List<NetworkObject> objects = new List<NetworkObject>();
+            for (int i = 0; i < grupo.Count; i++)
             {
-                AutomaticallyUnload = true,
-                AllowStacking = true,
-                LocalPhysics = LocalPhysicsMode.Physics3D
-            },
-            MovedNetworkObjects = objects.ToArray(),
-            ReplaceScenes = ReplaceOption.All,
-            PreferredActiveScene = SceneLook
+                grupo[i].FirstObject.GetComponent<PlayerController>().DespawnPlayer();
+                objects.Add(grupo[i].FirstObject);
+            }
+            SceneLookupData SceneLook = new SceneLookupData("SceneFlagTest");
+            SceneLoadData sld = new SceneLoadData(SceneLook)
+            {
+                Options = new LoadOptions()
+                {
+                    AutomaticallyUnload = true,
+                    AllowStacking = true,
+                    LocalPhysics = LocalPhysicsMode.Physics3D
+                },
+                MovedNetworkObjects = objects.ToArray(),
+                ReplaceScenes = ReplaceOption.All,
+                PreferredActiveScene = SceneLook
 
-        };
-        InstanceFinder.SceneManager.LoadConnectionScenes(grupo.ToArray(), sld);
+            };
+            InstanceFinder.SceneManager.LoadConnectionScenes(grupo.ToArray(), sld);
         }
         internal void AddScenePvpFlag(NetworkConnection[] conns, int index)
         {
-           
+
             SceneLookupData SceneLook = new SceneLookupData(ScenesLoaded[index].handle);
             List<NetworkObject> objects = new List<NetworkObject>();
             for (int i = 0; i < conns.Length; i++)
@@ -142,9 +206,9 @@ namespace ApocalipseZ
             sld.MovedNetworkObjects = objects.ToArray();
             sld.PreferredActiveScene = SceneLook;
             InstanceFinder.SceneManager.LoadConnectionScenes(conns, sld);
-            
-       
+
+
         }
-       
+
     }
 }

@@ -36,18 +36,19 @@ namespace ApocalipseZ
             */
             GetScene();
         }
-     
+
         protected virtual void OnEnable()
         {
-                GameController.Instance.SceneManager.AddSceneLoader(gameObject.scene.name , gameObject.scene.handle , this);
+            GameController.Instance.SceneManager.AddSceneLoader(gameObject.scene.name, gameObject.scene.handle, this);
 
 
-                InstanceFinder.SceneManager.OnClientPresenceChangeStart += SceneManager_OnClientPresenceChangeStart;;
+            InstanceFinder.SceneManager.OnClientPresenceChangeStart += SceneManager_OnClientPresenceChangeStart; ;
         }
 
         private void SceneManager_OnClientPresenceChangeStart(ClientPresenceChangeEventArgs args)
         {
-            if(flagPvpManager !=null){
+            if (flagPvpManager != null)
+            {
                 flagPvpManager.OnPlayer?.Invoke(args.Connection.FirstObject.GetComponent<PlayerController>());
             }
         }
@@ -74,54 +75,13 @@ namespace ApocalipseZ
         }
         protected void OnDisable()
         {
-               GameController.Instance.SceneManager.RemoveSceneLoader( this);
+            GameController.Instance.SceneManager.RemoveSceneLoader(this);
         }
 
 
-        public void UnloadScene(NetworkObject nob, string noremovecena)
+        public void UnloadScene(NetworkObject nob)
         {
-            List<string> removeScenes = new List<string>();
 
-            foreach (var pair in InstanceFinder.SceneManager.SceneConnections)
-            {
-                removeScenes.Add(pair.Key.name);
-            }
-            removeScenes.Remove(noremovecena);
-            List<string> ListScenes = ArrayScenes.ToList();
-            List<string> filteredScenes = new List<string>();
-            ListScenes.Add(gameObject.scene.name);
-            foreach (var item in removeScenes)
-            {
-                if (!ListScenes.Contains(item))
-                {
-                    filteredScenes.Add(item);
-                }
-            }
-            foreach (var pair in filteredScenes)
-            {
-                print(pair);
-            }
-            if (filteredScenes.Count == 0)
-            {
-                return;
-            }
-            List<SceneLookupData> ListSceneLook = new List<SceneLookupData>();
-            foreach (var item in filteredScenes)
-            {
-                print(item);
-                SceneLookupData lookupData = new SceneLookupData(_stackedSceneHandle, item);
-                ListSceneLook.Add(lookupData);
-            }
-
-            SceneUnloadData sud = new SceneUnloadData(ListSceneLook.ToArray())
-            {
-                Options = new UnloadOptions()
-                {
-                    Mode = UnloadOptions.ServerUnloadMode.UnloadUnused
-                }
-            };
-
-            InstanceFinder.SceneManager.UnloadConnectionScenes(nob.Owner, sud);
         }
 
 

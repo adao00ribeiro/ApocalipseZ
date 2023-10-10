@@ -88,7 +88,7 @@ public class PlayerController : NetworkBehaviour
                 }
                 else
                 {
-                   CmdRemoveWaitinLine();
+                    CmdRemoveWaitinLine();
                     IsChecked = false;
                 }
 
@@ -97,13 +97,15 @@ public class PlayerController : NetworkBehaviour
 
     }
     [ServerRpc]
-    public void CmdAddWaitinLine(){
-        
-          GameController.Instance.PvpManager.AddWaitinLine(base.Owner);
+    public void CmdAddWaitinLine()
+    {
+
+        GameController.Instance.PvpManager.AddWaitinLine(base.Owner);
     }
-     [ServerRpc]
-    public void CmdRemoveWaitinLine(){
-           GameController.Instance.PvpManager.RemoveWaitinLine(base.Owner);
+    [ServerRpc]
+    public void CmdRemoveWaitinLine()
+    {
+        GameController.Instance.PvpManager.RemoveWaitinLine(base.Owner);
     }
     public override void OnStartClient()
     {
@@ -139,7 +141,16 @@ public class PlayerController : NetworkBehaviour
         base.Spawn(go.gameObject, base.Owner);
         ObserverSpawPlayer(go.gameObject);
     }
-   
+    public void SpawPlayerPvp(Transform point, string tag)
+    {
+
+        NetworkBehaviour go = Instantiate(PrefabPlayer, point.position, point.rotation);
+        player = go.GetComponent<FpsPlayer>();
+        player.tag = tag;
+        go.transform.SetParent(this.transform);
+        base.Spawn(go.gameObject, base.Owner);
+        ObserverSpawPlayer(go.gameObject);
+    }
     [ObserversRpc]
     public void ObserverSpawPlayer(GameObject player)
     {

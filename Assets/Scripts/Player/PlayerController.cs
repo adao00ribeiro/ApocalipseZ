@@ -134,7 +134,7 @@ public class PlayerController : NetworkBehaviour
     public void SpawPlayer()
     {
         PlayerSpawPointsManager playerspaw = GameController.Instance.GetPlayerSpawPointManager(CurrentScene);
-        SpawPointPlayer point = playerspaw.GetPointSpaw();
+        SpawPointPlayer point = playerspaw.GetPointSpaw(gameObject.tag);
         NetworkBehaviour go = Instantiate(PrefabPlayer, point.transform.position, Quaternion.identity);
         player = go.GetComponent<FpsPlayer>();
         go.transform.SetParent(this.transform);

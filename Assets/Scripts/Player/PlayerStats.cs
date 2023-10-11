@@ -80,8 +80,8 @@ namespace ApocalipseZ
                 if (IsDead())
                 {
                     PlayerController playerController = transform.parent.GetComponent<PlayerController>();
-                    deadStatsManager.ObserveViewUiDeadStats(playerController.PlayerName);
-                    deadStatsManager.TargewtViewSeFudeo(base.Owner);
+                    //deadStatsManager.ObserveViewUiDeadStats(playerController.PlayerName);
+                    //deadStatsManager.TargewtViewSeFudeo(base.Owner);
                     playerController.GetPlayer().GetMoviment().DisableCharacterController();
                     playerController.GetPlayer().DroppAllItems();
                     PlayerSpawPointsManager playerSpawPointManager = GameController.Instance.GetPlayerSpawPointManager(playerController.CurrentScene);

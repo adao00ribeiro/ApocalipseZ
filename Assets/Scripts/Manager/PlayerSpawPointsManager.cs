@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ApocalipseZ;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -23,20 +24,38 @@ public class PlayerSpawPointsManager : MonoBehaviour
     // Start is called before the first frame update
     public void RespawPlayer(PlayerController playerController)
     {
+
+
+
         GameController.Instance.TimerManager.Add(() =>
      {
          playerController.GetPlayer().GetMoviment().EnableCharacterController();
-         SpawPointPlayer point = GameObject.FindAnyObjectByType<PlayerSpawPointsManager>().GetPointSpaw();
+         SpawPointPlayer point = GetPointSpaw(playerController.GetPlayer().tag);
          transform.position = point.transform.position;
          playerController.GetPlayer().GetPlayerStats().AddHealth(200);
          playerController.GetPlayer().GetPlayerStats().AddHydratation(100);
          playerController.GetPlayer().GetPlayerStats().AddSatiety(100);
-         playerController.GetPlayer().TargetRespaw(playerController.Owner);
+         playerController.GetPlayer().TargetRespaw(playerController.GetPlayer().Owner);
      }, 5);
     }
-    internal SpawPointPlayer GetPointSpaw()
+    internal SpawPointPlayer GetPointSpaw(string tag)
     {
-        SpawPointPlayer point = array[Random.Range(0, array.Length)];
+        SpawPointPlayer point = null;
+        if (tag != "TeamA" && tag != "TeamB")
+        {
+            point = array[Random.Range(0, array.Length)];
+        }
+        {
+            foreach (var item in array)
+            {
+                if (item.tag.Contains(tag))
+                {
+                    point = item;
+                    break;
+                }
+            }
+        }
+
         return point;
     }
 

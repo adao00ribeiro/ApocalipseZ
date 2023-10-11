@@ -5,6 +5,7 @@ using ApocalipseZ;
 using FishNet;
 using UnityEngine;
 
+
 public class PVPFLAGManager : MonoBehaviour, IPvpManager
 {
     public Action<PlayerController> OnPlayer;

@@ -19,9 +19,7 @@ public class Character : MonoBehaviour
     {
         if (testeDropFlag)
         {
-
             DropFlag();
-
             testeDropFlag = false;
         }
     }
@@ -29,8 +27,8 @@ public class Character : MonoBehaviour
     public void SetFlag(Flag _flag)
     {
         _flag.transform.SetParent(spine);
-        _flag.transform.position = Vector3.zero;
-        _flag.transform.rotation = Quaternion.identity;
+        _flag.transform.localPosition = Vector3.zero;
+        _flag.transform.localRotation = Quaternion.identity;
         flag = _flag;
     }
     public void DropFlag()

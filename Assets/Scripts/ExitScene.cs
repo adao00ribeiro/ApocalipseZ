@@ -17,6 +17,7 @@ public class ExitScene : MonoBehaviour
         PlayerController nob = other.GetComponentInParent<PlayerController>();
         if (nob != null)
         {
+            nob.DespawnPlayer();
             GameController.Instance.SceneManager.LoadSceneC(nob.NetworkObject);
         }
     }

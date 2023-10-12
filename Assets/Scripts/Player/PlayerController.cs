@@ -99,7 +99,6 @@ public class PlayerController : NetworkBehaviour
     [ServerRpc]
     public void CmdAddWaitinLine()
     {
-
         GameController.Instance.PvpManager.AddWaitinLine(base.Owner);
     }
     [ServerRpc]
@@ -143,7 +142,6 @@ public class PlayerController : NetworkBehaviour
     }
     public void SpawPlayerPvp(Transform point, string tag)
     {
-
         NetworkBehaviour go = Instantiate(PrefabPlayer, point.position, point.rotation);
         player = go.GetComponent<FpsPlayer>();
         player.tag = tag;
@@ -151,6 +149,7 @@ public class PlayerController : NetworkBehaviour
         base.Spawn(go.gameObject, base.Owner);
         ObserverSpawPlayer(go.gameObject);
     }
+    
     [ObserversRpc]
     public void ObserverSpawPlayer(GameObject player)
     {

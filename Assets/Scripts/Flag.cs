@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using FishNet.Component.Transforming;
@@ -12,7 +13,6 @@ namespace ApocalipseZ
         private PVPFLAGManager manager;
         public Transform pointSpawFlag;
         public bool IsLocalPoint;
-
         public float timeRespawLocal;
         // Start is called before the first frame update
         void Start()
@@ -49,12 +49,13 @@ namespace ApocalipseZ
             }
 
         }
+       
         public void ReturnLocalPosition()
         {
+            transform.SetParent(pointSpawFlag);
             transform.position = pointSpawFlag.position;
             timeRespawLocal = 0;
             IsLocalPoint = true;
-
         }
         public void EndFocus()
         {
@@ -65,12 +66,16 @@ namespace ApocalipseZ
         {
             return "Flag";
         }
-
+        [ObserversRpc]
+        public void ObserverInteract(GameObject player){
+             GetComponent<Rigidbody>().useGravity = false;
+                player.GetComponent<FpsPlayer>().SetFlag(this);
+        }   
         public void OnInteract(IFpsPlayer player)
         {
             GetComponent<Rigidbody>().useGravity = false;
             player.SetFlag(this);
-
+            ObserverInteract(player.gameobject);
         }
 
         public void StartFocus()

@@ -62,7 +62,7 @@ namespace ApocalipseZ
             {
                 return;
             }
-
+            UnloadScene(nob, _stackedSceneHandle, ArrayScenes);
             List<SceneLookupData> ListSceneLook = new List<SceneLookupData>();
             if (!IsPvpScene)
             {
@@ -88,7 +88,7 @@ namespace ApocalipseZ
                 PreferredActiveScene = ListSceneLook.ToArray()[0],
             };
             InstanceFinder.SceneManager.LoadConnectionScenes(nob.Owner, sld);
-            UnloadScene(nob, _stackedSceneHandle, ArrayScenes);
+          
         }
 
         internal void UnloadScene(NetworkObject nob, int _stackedSceneHandle, string[] ArrayScenes)

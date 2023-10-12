@@ -25,13 +25,14 @@ public class PVPManager : NetworkBehaviour
     }
     void Update()
     {
-        TotalConexoes = ListEspera.Count;
-        if (CreateScene)
+        if (base.IsServer)
         {
-
-            GameController.Instance.SceneManager.CreateFlagPvp();
-
-            CreateScene = false;
+            TotalConexoes = ListEspera.Count;
+            if (CreateScene)
+            {
+                GameController.Instance.SceneManager.CreateFlagPvp();
+                CreateScene = false;
+            }
         }
     }
     public void InvokeReunirPlayer()
@@ -41,11 +42,11 @@ public class PVPManager : NetworkBehaviour
     }
     IEnumerator ReunirPlayer()
     {
-         yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(2);
 
         if (ListEspera.Count == MaxPlayerPvpFlag)
         {
-             CreateScenePvpFlag();
+            CreateScenePvpFlag();
 
         }
         yield return new WaitForEndOfFrame();
@@ -56,21 +57,21 @@ public class PVPManager : NetworkBehaviour
     }
 
 
-    public void AddWaitinLine(NetworkConnection conn )
+    public void AddWaitinLine(NetworkConnection conn)
     {
         ListEspera.Add(conn);
     }
-    
+
     public void RemoveWaitinLine(NetworkConnection conn)
     {
         ListEspera.Remove(conn);
     }
     public void CreateScenePvpFlag()
     {
-        List<NetworkConnection> grupo = ListEspera.GetRange(0,MaxPlayerPvpFlag);
+        List<NetworkConnection> grupo = ListEspera.GetRange(0, MaxPlayerPvpFlag);
         GameController.Instance.SceneManager.CreateFlagPvpConn(grupo);
-        ListEspera.RemoveRange(0,MaxPlayerPvpFlag);
-    
+        ListEspera.RemoveRange(0, MaxPlayerPvpFlag);
+
     }
     public void AddScenePvpFlag()
     {
@@ -80,7 +81,7 @@ public class PVPManager : NetworkBehaviour
             grupo.Add(ListEspera[i]);
         }
         GameController.Instance.SceneManager.AddScenePvpFlag(grupo.ToArray(), 1);
-        ListEspera.RemoveRange(0,MaxPlayerPvpFlag);
+        ListEspera.RemoveRange(0, MaxPlayerPvpFlag);
     }
 
 }

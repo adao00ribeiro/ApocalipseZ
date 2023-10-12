@@ -77,13 +77,7 @@ namespace ApocalipseZ
         {
             GameController.Instance.SceneManager.RemoveSceneLoader(this);
         }
-
-
-        public void UnloadScene(NetworkObject nob)
-        {
-
-        }
-
+       
 
         public void GetScene()
         {

@@ -14,8 +14,10 @@ public class PVPFLAGManager : MonoBehaviour, IPvpManager
 
     [SerializeField] private int MaxTimeGameMinutes = 15;
     [SerializeField] private float currentTime;
-    private int FlagsTeamA;
-    private int FlagsTeamB;
+
+      [Header("Team Points")]
+    [SerializeField]private int FlagsTeamA;
+    [SerializeField]private int FlagsTeamB;
 
     [Header("Spaw Setup")]
 
@@ -58,7 +60,7 @@ public class PVPFLAGManager : MonoBehaviour, IPvpManager
             }
             else
             {
-                point = TeamA[indexB];
+                point = TeamB[indexB];
                 indexB++;
                 tag = "TeamB";
             }

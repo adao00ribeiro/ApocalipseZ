@@ -10,6 +10,7 @@ using UnityEngine.Rendering.Universal;
 
 public class PlayerController : NetworkBehaviour
 {
+    public string IDCONNETION;
     [Header("Ui Components")]
     [SerializeField] private UiPrimaryAndSecondWeapons uiPrimaryAndSecondWeapons;
     [SerializeField] private UiInventory uiInventory;
@@ -19,7 +20,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private UiDeadStats uiDeadStats;
 
     [SyncVar]
-    public int currentScene;
+    private int currentScene;
     public int CurrentScene
     {
         get
@@ -96,6 +97,17 @@ public class PlayerController : NetworkBehaviour
         }
 
     }
+    public override void OnStartNetwork()
+    {
+        base.OnStartNetwork();
+        IDCONNETION = base.Owner.ClientId.ToString();
+        GameObject.FindAnyObjectByType<ConnectionManager>().AddConnection(base.Owner.ClientId, this);
+    }
+    public override void OnStopNetwork()
+    {
+        base.OnStopNetwork();
+        GameObject.FindAnyObjectByType<ConnectionManager>().RemoveConnection(base.Owner.ClientId);
+    }
     [ServerRpc]
     public void CmdAddWaitinLine()
     {
@@ -149,7 +161,7 @@ public class PlayerController : NetworkBehaviour
         base.Spawn(go.gameObject, base.Owner);
         ObserverSpawPlayer(go.gameObject);
     }
-    
+
     [ObserversRpc]
     public void ObserverSpawPlayer(GameObject player)
     {
@@ -183,6 +195,7 @@ public class PlayerController : NetworkBehaviour
     internal void DespawnPlayer()
     {
         base.Despawn(player.gameObject);
+        player = null;
     }
 
     public UiPrimaryAndSecondWeapons UiPrimaryAndSecondWeapons
@@ -253,5 +266,5 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
-
+    public bool IsPlayer { get => player != null ? true : false; }
 }

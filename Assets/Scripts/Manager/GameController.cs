@@ -9,7 +9,7 @@ namespace ApocalipseZ
 {
     public class GameController : MonoBehaviour
     {
-
+        [SerializeField] private ConnectionManager connectionManager;
         [Header("Prefab Managers")]
         public string playerName;
         public string characterName;
@@ -68,10 +68,11 @@ namespace ApocalipseZ
 
         public PlayerSpawPointsManager GetPlayerSpawPointManager(int currentScene)
         {
-           
+
             PlayerSpawPointsManager teste = playerSpawPointsManagers.Find(x => x.currentSceneHandle == currentScene);
-            if(teste){
-            return teste;
+            if (teste)
+            {
+                return teste;
             }
             System.Random rng = new System.Random();
             playerSpawPointsManagers = playerSpawPointsManagers.OrderBy(item => rng.Next()).ToList();
@@ -126,6 +127,17 @@ namespace ApocalipseZ
             {
 
                 return _instance;
+            }
+        }
+        public ConnectionManager ConnectionManager
+        {
+            get
+            {
+                return connectionManager;
+            }
+            set
+            {
+                connectionManager = value;
             }
         }
         public PVPManager PvpManager

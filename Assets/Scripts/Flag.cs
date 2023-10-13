@@ -1,10 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using FishNet.Component.Transforming;
 using FishNet.Connection;
 using FishNet.Object;
 using UnityEngine;
+
 namespace ApocalipseZ
 {
     [RequireComponent(typeof(NetworkTransform))]
@@ -49,40 +47,44 @@ namespace ApocalipseZ
             }
 
         }
-       
+
         public void ReturnLocalPosition()
         {
             transform.SetParent(pointSpawFlag);
             transform.position = pointSpawFlag.position;
             timeRespawLocal = 0;
             IsLocalPoint = true;
+            ObserverReturnLocalPosition();
+        }
+        [ObserversRpc]
+        public void ObserverReturnLocalPosition()
+        {
+            transform.SetParent(pointSpawFlag);
+            transform.position = pointSpawFlag.position;
         }
         public void EndFocus()
         {
 
         }
-
         public string GetTitle()
         {
             return "Flag";
         }
         [ObserversRpc]
-        public void ObserverInteract(GameObject player){
-             GetComponent<Rigidbody>().useGravity = false;
-                player.GetComponent<FpsPlayer>().SetFlag(this);
-        }   
+        public void ObserverInteract(GameObject player)
+        {
+            GetComponent<Rigidbody>().useGravity = false;
+            player.GetComponent<FpsPlayer>().SetFlag(this);
+        }
         public void OnInteract(IFpsPlayer player)
         {
             GetComponent<Rigidbody>().useGravity = false;
             player.SetFlag(this);
             ObserverInteract(player.gameobject);
         }
-
         public void StartFocus()
         {
 
         }
-
-
     }
 }

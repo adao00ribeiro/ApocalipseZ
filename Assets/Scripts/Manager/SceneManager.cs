@@ -20,17 +20,51 @@ namespace ApocalipseZ
         [SerializeField, Scene]
         public string Name;
         public int handle;
-        public SceneLoader SceneLoader;
-        public SceneData(string _name, int _handle, SceneLoader _loader) : this()
+        public ConnectionManager ConnectionManager;
+        public SceneData(string _name, int _handle, ConnectionManager _loader) : this()
         {
             this.Name = _name;
             this.handle = _handle;
-            this.SceneLoader = _loader;
+            this.ConnectionManager = _loader;
         }
     }
     public class SceneManager : MonoBehaviour
     {
         public List<SceneData> ScenesLoaded = new();
+        void OnEnable()
+        {
+            InstanceFinder.SceneManager.OnClientPresenceChangeStart += SceneManager_OnClientPresenceChangeStart; ;
+
+        }
+        void OnDisable()
+        {
+            InstanceFinder.SceneManager.OnClientPresenceChangeStart -= SceneManager_OnClientPresenceChangeStart; ;
+        }
+
+        private void SceneManager_OnClientPresenceChangeStart(ClientPresenceChangeEventArgs args)
+        {
+            PlayerController controller = GameController.Instance.ConnectionManager.GetPlayerController(args.Connection.ClientId);
+
+            if (controller == null)
+            {
+                return;
+            }
+
+            if (controller.CurrentScene == args.Scene.handle)
+            {
+                foreach (SceneData item in ScenesLoaded)
+                {
+
+                    if (controller.CurrentScene == item.handle)
+                    {
+                        item.ConnectionManager?.OnPlayer(args.Connection.ClientId, controller);
+                        break;
+                    }
+
+                }
+            }
+        }
+
         public void LoadSceneC(NetworkObject nob)
         {
             if (!nob.Owner.IsActive)
@@ -48,13 +82,13 @@ namespace ApocalipseZ
                     AllowStacking = false,
                 },
                 MovedNetworkObjects = new NetworkObject[] { nob },
-                ReplaceScenes = ReplaceOption.None,
+                ReplaceScenes = ReplaceOption.All,
                 PreferredActiveScene = SceneLook,
             };
             InstanceFinder.SceneManager.LoadConnectionScenes(nob.Owner, sld);
-            nob.GetComponent<PlayerController>().SpawPlayer();
-            UnloadScene(nob, 0, new string[0]);
         }
+
+
         internal void LoadScene(NetworkObject nob, bool IsPvpScene, string currentScene, int _stackedSceneHandle, string[] ArrayScenes, bool SceneStack, bool AutomaticallyUnload)
         {
 
@@ -88,7 +122,7 @@ namespace ApocalipseZ
                 PreferredActiveScene = ListSceneLook.ToArray()[0],
             };
             InstanceFinder.SceneManager.LoadConnectionScenes(nob.Owner, sld);
-          
+
         }
 
         internal void UnloadScene(NetworkObject nob, int _stackedSceneHandle, string[] ArrayScenes)
@@ -136,20 +170,47 @@ namespace ApocalipseZ
 
             InstanceFinder.SceneManager.UnloadConnectionScenes(nob.Owner, sud);
         }
-
-        internal void AddSceneLoader(string nameScene, int handle, SceneLoader loader)
+        private void UnloadPvpScene(List<NetworkConnection> grupo)
         {
-            ScenesLoaded.Add(new SceneData(nameScene, handle, loader));
+            List<string> removeScenes = new List<string>();
+
+            foreach (var pair in InstanceFinder.SceneManager.SceneConnections)
+            {
+                removeScenes.Add(pair.Key.name);
+            }
+
+            List<SceneLookupData> ListSceneLook = new List<SceneLookupData>();
+            foreach (var item in removeScenes)
+            {
+                SceneLookupData lookupData = new SceneLookupData(0, item);
+                ListSceneLook.Add(lookupData);
+            }
+
+            SceneUnloadData sud = new SceneUnloadData(ListSceneLook.ToArray())
+            {
+                Options = new UnloadOptions()
+                {
+                    Mode = UnloadOptions.ServerUnloadMode.KeepUnused
+                }
+            };
+
+            InstanceFinder.SceneManager.UnloadConnectionScenes(grupo.ToArray(), sud);
         }
-        internal void RemoveSceneLoader(SceneLoader loader)
+        internal void AddSceneLoader(string nameScene, int handle, ConnectionManager loader)
         {
             foreach (var item in ScenesLoaded)
             {
-                if (item.SceneLoader == loader)
+                if (item.handle == handle)
                 {
-                    ScenesLoaded.Remove(item);
+                    return;
                 }
             }
+            ScenesLoaded.Add(new SceneData(nameScene, handle, loader));
+        }
+        internal void RemoveSceneLoader(int handle)
+        {
+
+
         }
 
         public void CreateFlagPvp()
@@ -166,13 +227,18 @@ namespace ApocalipseZ
                 ReplaceScenes = ReplaceOption.All,
             };
             InstanceFinder.SceneManager.LoadConnectionScenes(sld);
+
+
         }
         public void CreateFlagPvpConn(List<NetworkConnection> grupo)
         {
+
+
             List<NetworkObject> objects = new List<NetworkObject>();
             for (int i = 0; i < grupo.Count; i++)
             {
                 grupo[i].FirstObject.GetComponent<PlayerController>().DespawnPlayer();
+                grupo[i].FirstObject.GetComponent<PlayerController>().IsLoading = true;
                 objects.Add(grupo[i].FirstObject);
             }
             SceneLookupData SceneLook = new SceneLookupData("SceneFlagTest");
@@ -190,7 +256,11 @@ namespace ApocalipseZ
 
             };
             InstanceFinder.SceneManager.LoadConnectionScenes(grupo.ToArray(), sld);
+            UnloadPvpScene(grupo);
         }
+
+
+
         internal void AddScenePvpFlag(NetworkConnection[] conns, int index)
         {
 

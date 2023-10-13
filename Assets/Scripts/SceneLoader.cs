@@ -9,11 +9,11 @@ using UnityEngine.SceneManagement;
 using FishNet;
 using System;
 using Unity.VisualScripting;
+using FishNet.Demo.AdditiveScenes;
 namespace ApocalipseZ
 {
     public class SceneLoader : MonoBehaviour
     {
-        public PVPFLAGManager flagPvpManager;
 
         [SerializeField, Scene]
         public string[] ArrayScenes;
@@ -39,18 +39,13 @@ namespace ApocalipseZ
 
         protected virtual void OnEnable()
         {
-            GameController.Instance.SceneManager.AddSceneLoader(gameObject.scene.name, gameObject.scene.handle, this);
 
-
-            InstanceFinder.SceneManager.OnClientPresenceChangeStart += SceneManager_OnClientPresenceChangeStart; ;
+            InstanceFinder.SceneManager.OnLoadEnd += SceneManager_OnLoadEnd; ;
         }
-
-        private void SceneManager_OnClientPresenceChangeStart(ClientPresenceChangeEventArgs args)
+        protected void OnDisable()
         {
-            if (flagPvpManager != null)
-            {
-                flagPvpManager.OnPlayer?.Invoke(args.Connection.FirstObject.GetComponent<PlayerController>());
-            }
+
+            InstanceFinder.SceneManager.OnLoadEnd -= SceneManager_OnLoadEnd; ;
         }
 
         private void SceneManager_OnLoadEnd(SceneLoadEndEventArgs obj)
@@ -73,11 +68,8 @@ namespace ApocalipseZ
                 _stackedSceneHandle = obj.LoadedScenes[0].handle;
             }
         }
-        protected void OnDisable()
-        {
-            GameController.Instance.SceneManager.RemoveSceneLoader(this);
-        }
-       
+
+
 
         public void GetScene()
         {

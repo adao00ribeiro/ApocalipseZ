@@ -3,25 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using ApocalipseZ;
 using FishNet;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
-public class PVPFLAGManager : MonoBehaviour, IPvpManager
+public class PVPFLAGManager : ConnectionManager, IPvpManager
 {
-    public Action<PlayerController> OnPlayer;
-
     [Header("PVP Setup")]
-
     [SerializeField] private int MaxTimeGameMinutes = 15;
     [SerializeField] private float currentTime;
 
-      [Header("Team Points")]
-    [SerializeField]private int FlagsTeamA;
-    [SerializeField]private int FlagsTeamB;
+    [Header("Team Points")]
+    [SerializeField] private int FlagsTeamA;
+    [SerializeField] private int FlagsTeamB;
 
     [Header("Spaw Setup")]
 
-    public List<PlayerController> arrayPlayercontroller;
+
     public SpawPointPlayer[] TeamA;
     private int indexA;
     public SpawPointPlayer RespawPointTeamA;
@@ -39,20 +37,18 @@ public class PVPFLAGManager : MonoBehaviour, IPvpManager
         currentTime = MaxTimeGameMinutes * 60;
     }
 
-    private void OnChangeOnPlayer(PlayerController controller)
+    private void OnChangeOnPlayer(int clientId, PlayerController controller)
     {
-        foreach (var item in arrayPlayercontroller)
+        if (players.ContainsKey(clientId))
         {
-            if (item == controller)
-            {
-                return;
-            }
+            return;
         }
+
         if (InstanceFinder.IsServer)
         {
-            controller.currentScene = gameObject.scene.handle;
+
             SpawPointPlayer point;
-            if (arrayPlayercontroller.Count % 2 == 0)
+            if (players.Count % 2 == 0)
             {
                 point = TeamA[indexA];
                 indexA++;
@@ -65,7 +61,7 @@ public class PVPFLAGManager : MonoBehaviour, IPvpManager
                 tag = "TeamB";
             }
             controller.SpawPlayerPvp(point.transform, tag);
-            arrayPlayercontroller.Add(controller);
+            players.Add(clientId, controller);
         }
 
     }
@@ -90,17 +86,16 @@ public class PVPFLAGManager : MonoBehaviour, IPvpManager
         int seconds = Mathf.FloorToInt(currentTime % 60);
 
 
-        Debug.Log("Tempo Restante: " + minutes + " minutos " + seconds + " segundos");
+        // Debug.Log("Tempo Restante: " + minutes + " minutos " + seconds + " segundos");
     }
 
     IEnumerator Desconecta()
     {
         yield return new WaitForSeconds(10f);
 
-        foreach (var item in arrayPlayercontroller)
+        foreach (var item in players.Values)
         {
             item.DespawnPlayer();
-
             GameController.Instance.SceneManager.LoadSceneC(item.Owner.FirstObject);
         }
         yield return new WaitForEndOfFrame();

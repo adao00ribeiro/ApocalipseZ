@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using ApocalipseZ;
+using FishNet;
 using FishNet.Connection;
-using FishNet.Managing.Scened;
 using FishNet.Object;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class PVPManager : NetworkBehaviour
+
+public class PVPManager : MonoBehaviour
 {
     public int TotalConexoes;
     [SerializeField] List<NetworkConnection> ListEspera = new List<NetworkConnection>();
@@ -17,7 +17,7 @@ public class PVPManager : NetworkBehaviour
 
     void Start()
     {
-        if (base.IsServer)
+        if (InstanceFinder.IsServer)
         {
             InvokeRepeating("InvokeReunirPlayer", 5, 5);
         }
@@ -25,7 +25,7 @@ public class PVPManager : NetworkBehaviour
     }
     void Update()
     {
-        if (base.IsServer)
+        if (InstanceFinder.IsServer)
         {
             TotalConexoes = ListEspera.Count;
             if (CreateScene)
@@ -47,7 +47,6 @@ public class PVPManager : NetworkBehaviour
         if (ListEspera.Count == MaxPlayerPvpFlag)
         {
             CreateScenePvpFlag();
-
         }
         yield return new WaitForEndOfFrame();
     }
@@ -85,6 +84,3 @@ public class PVPManager : NetworkBehaviour
     }
 
 }
-
-
-

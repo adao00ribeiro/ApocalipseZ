@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.17730814, g: 0.2219736, b: 0.3042106, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2307,11 +2307,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 881f6134057752c4dbb3ff830d43a2af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visuPLayerKeys: 
+  visuPLayer: []
   MaxTimeGameMinutes: 15
   currentTime: 0
   FlagsTeamA: 0
   FlagsTeamB: 0
-  arrayPlayercontroller: []
   TeamA:
   - {fileID: 1744139626}
   - {fileID: 1626602057}
@@ -2718,7 +2719,7 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 1249505709}
   _networkObjectCache: {fileID: 1249505709}
   _componentConfiguration: 0
-  _synchronizeParent: 1
+  _synchronizeParent: 0
   _packing:
     Position: 1
     Rotation: 1
@@ -2937,7 +2938,7 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 1358650157}
   _networkObjectCache: {fileID: 1358650157}
   _componentConfiguration: 0
-  _synchronizeParent: 1
+  _synchronizeParent: 0
   _packing:
     Position: 1
     Rotation: 1
@@ -3361,7 +3362,7 @@ Transform:
   m_GameObject: {fileID: 1531863996}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.006, y: 0.181, z: -6.09}
+  m_LocalPosition: {x: -14.006, y: 0.181, z: -36.7}
   m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

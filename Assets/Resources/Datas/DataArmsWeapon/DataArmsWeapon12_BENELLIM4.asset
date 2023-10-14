@@ -15,12 +15,13 @@ MonoBehaviour:
   GuidId: d41d18d0-91b2-485e-aaa4-957e6f9a21b3
   Name: 12_BENELLIM4
   Type: 3
+  fireMode: 0
   Damage: 11
-  fireRate: 1
+  fireRate: 0.32
   spread: 0
   recoil:
-    recolTop: {x: 1, y: 1}
-    recolDown: {x: -1, y: -1}
+    recolTop: {x: -2, y: -1}
+    recolDown: {x: 0, y: 1}
   MuzzleFlashParticlesFX: {fileID: 0}
   shotSFX: ScarShot
   reloadingSFX: ScarReload

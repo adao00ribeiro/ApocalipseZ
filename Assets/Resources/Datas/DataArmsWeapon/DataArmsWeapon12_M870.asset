@@ -17,11 +17,11 @@ MonoBehaviour:
   Type: 3
   fireMode: 1
   Damage: 22
-  fireRate: 1
+  fireRate: 0.9
   spread: 0
   recoil:
-    recolTop: {x: 1, y: 1}
-    recolDown: {x: -1, y: -1}
+    recolTop: {x: -1, y: -1}
+    recolDown: {x: 0, y: 1}
   MuzzleFlashParticlesFX: {fileID: 0}
   shotSFX: ScarShot
   reloadingSFX: ScarReload

@@ -16,7 +16,7 @@ MonoBehaviour:
   Type: 1
   Name: RPG
   isStackable: 0
-  Thumbnail: {fileID: 21300000, guid: 7de4afdb99c368b41b392913f70e2e65, type: 3}
+  Thumbnail: {fileID: 21300000, guid: 356d1df09c64daf42adefa99d54b05d2, type: 3}
   Description: NONE
   maxStacksize: 1
   Ammo: 30

@@ -6236,7 +6236,7 @@ PrefabInstance:
     - target: {fileID: -9087933097046833057, guid: 13da6ae7301774b49828ddf85fe842a9,
         type: 3}
       propertyPath: WeaponSpaw
-      value: 20
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: -9087933097046833057, guid: 13da6ae7301774b49828ddf85fe842a9,
         type: 3}

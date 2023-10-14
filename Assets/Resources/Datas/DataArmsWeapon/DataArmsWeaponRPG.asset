@@ -23,7 +23,7 @@ MonoBehaviour:
     recolTop: {x: 0, y: 0}
     recolDown: {x: 0, y: 0}
   MuzzleFlashParticlesFX: {fileID: 0}
-  shotSFX: ScarShot
+  shotSFX: RPGSHOT
   reloadingSFX: ScarReload
   emptySFX: Empty
   shell: {fileID: 0}

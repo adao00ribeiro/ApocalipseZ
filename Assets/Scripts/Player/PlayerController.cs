@@ -40,7 +40,7 @@ public class PlayerController : NetworkBehaviour
     public static bool IsInventoryOpen;
     [SyncVar]
     public bool IsLoading;
-
+    public bool IsCombat;
 
     [SerializeField] bool IsChecked;
     private void Awake()
@@ -79,7 +79,7 @@ public class PlayerController : NetworkBehaviour
 
         if (base.IsOwner)
         {
-            if (GameController.Instance.InputManager.GetPvpFlag())
+            if (GameController.Instance.InputManager.GetPvpFlag() && IsCombat)
             {
                 print("PVP APERTADO");
                 if (!IsChecked)

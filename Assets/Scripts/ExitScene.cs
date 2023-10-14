@@ -18,6 +18,7 @@ public class ExitScene : MonoBehaviour
         if (nob != null)
         {
             nob.DespawnPlayer();
+            nob.IsCombat = false;
             GameController.Instance.SceneManager.LoadSceneC(nob.NetworkObject);
         }
     }

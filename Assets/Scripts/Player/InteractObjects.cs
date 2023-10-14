@@ -24,9 +24,9 @@ namespace ApocalipseZ
         {
 
             RaycastHit hit;
+            PhysicsScene physicsScene = gameObject.scene.GetPhysicsScene();
 
-
-            if (Physics.Raycast(transform.position, transform.forward, out hit, distance, layer))
+            if (physicsScene.Raycast(transform.position, transform.forward, out hit, distance, layer, QueryTriggerInteraction.Collide))
             {
 
                 if (hit.collider.gameObject.TryGetComponent<IInteract>(out IInteract interact))

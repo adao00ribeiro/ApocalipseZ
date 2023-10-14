@@ -59,7 +59,7 @@ namespace ApocalipseZ
     [RequireComponent(typeof(WeaponManager))]
     public class FpsPlayer : NetworkBehaviour, IFpsPlayer
     {
-
+        public GameObject gameobject{ get=> this.gameObject;}
         Moviment Moviment;
         WeaponManager WeaponManager;
         IFastItemsManager FastItemsManager;
@@ -86,6 +86,7 @@ namespace ApocalipseZ
         MoveData md = new();
         ReconcileData rd = new();
         private NetworkAnimator networkAnimator;
+        [SerializeField] private Character character;
         //MoveData for client simulation
 
         // Start is called before the first frame update
@@ -119,7 +120,7 @@ namespace ApocalipseZ
             if (base.TimeManager != null)
             {
                 base.TimeManager.OnTick -= TimeManager_OnTick;
-
+                base.TimeManager.OnUpdate -= TimeManager_OnUpdate;
                 base.TimeManager.OnPostTick -= TimeManager_OnPostTick;
             }
         }
@@ -238,6 +239,7 @@ namespace ApocalipseZ
             {
                 GameObject go = Instantiate(cha.PrefabCharacter, transform.GetChild(0).transform);
                 meshteste = go.GetComponent<MeshRenderer>();
+                character = go.GetComponent<Character>();
                 Moviment.SetMesh(go.transform);
                 AnimatorController = go.GetComponent<Animator>();
                 networkAnimator.SetAnimator(AnimatorController);
@@ -288,11 +290,7 @@ namespace ApocalipseZ
             }
         }
         */
-            if (asServer)
-            {
-                return;
-
-            }
+          
             SpawCharacter(newPlayerColor);
 
         }
@@ -304,7 +302,6 @@ namespace ApocalipseZ
         [TargetRpc]
         public void TargetRespaw(NetworkConnection conn)
         {
-
             AnimatorController.Play("Walk");
             FirstPersonCamera.CameraAlive();
             Moviment.EnableCharacterController();
@@ -328,7 +325,16 @@ namespace ApocalipseZ
         }
         // Update is called once per frame
 
-
+        public void SetFlag(Flag flag)
+        {
+            character.SetFlag(flag);
+        }
+        public void DropFlag(){
+            character.DropFlag();
+        }
+        public Flag GetFlag(){
+            return character.flag;
+        }
         public void Animation()
         {
             if (AnimatorController == null)
@@ -351,7 +357,6 @@ namespace ApocalipseZ
             AnimatorController.SetBool("IsJump", !Moviment.isGrounded());
             AnimatorController.SetBool("IsRun", Moviment.CheckMovement() && InputManager.GetRun());
             AnimatorController.SetBool("IsCrouch", InputManager.GetCrouch());
-
             AnimatorWeaponHolderController.SetBool("Walk", Moviment.CheckMovement() && Moviment.isGrounded() && !PlayerStats.IsDead());
             AnimatorWeaponHolderController.SetBool("Run", Moviment.CheckMovement() && InputManager.GetRun() && Moviment.isGrounded() && !PlayerStats.IsDead());
             AnimatorWeaponHolderController.SetBool("Crouch", Moviment.CheckMovement() && InputManager.GetCrouch() && Moviment.isGrounded() && !PlayerStats.IsDead());
@@ -401,6 +406,7 @@ namespace ApocalipseZ
                 return PInputManager;
             }
         }
+
 
 
         #region command

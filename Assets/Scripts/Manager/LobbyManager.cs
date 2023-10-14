@@ -15,8 +15,8 @@ public class LobbyManager : MonoBehaviour
         DataCharacter cha = GameController.Instance.DataManager.GetDataCharacter(nameCharacter);
         if (cha)
         {
-            Transform point = GameController.Instance.PlayerSpawPoints.GetPointSpaw();
-            model = Instantiate(cha.PrefabCharacter, point.position, point.rotation);
+            SpawPointPlayer point = GameController.Instance.GetPlayerSpawPointManager(gameObject.scene.handle).GetPointSpaw(gameObject.tag);
+            model = Instantiate(cha.PrefabCharacter, point.transform.position, point.transform.rotation);
             //  model.GetComponent<Animator>().runtimeAnimatorController = npcanimator.runtimeAnimatorController;
         }
     }

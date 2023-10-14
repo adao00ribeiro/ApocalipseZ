@@ -4,19 +4,12 @@ using UnityEngine;
 
 public class SpawPointPlayer : MonoBehaviour
 {
+
+    public string currentScene;
+
     public void Start()
     {
-        if (InstanceFinder.NetworkManager.IsClient)
-        {
-            Destroy(gameObject);
-        }
+        currentScene = gameObject.scene.name;
     }
-    public void OnEnable()
-    {
-        GameController.Instance.PlayerSpawPoints.Add(this.gameObject);
-    }
-    public void OnDisable()
-    {
-        GameController.Instance.PlayerSpawPoints.Remove(this.gameObject);
-    }
+
 }

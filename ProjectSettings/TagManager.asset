@@ -16,6 +16,8 @@ TagManager:
   - Wood
   - Metal
   - Dirt
+  - TeamA
+  - TeamB
   layers:
   - Default
   - TransparentFX

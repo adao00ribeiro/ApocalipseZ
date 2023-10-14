@@ -111,6 +111,11 @@ namespace ApocalipseZ
         {
             return playerControls.Player.Use.triggered;
         }
+        public bool GetPvpFlag()
+        {
+            return playerControls.Player.PVPFLAG.WasPressedThisFrame();
+
+        }
         public bool GetAim()
         {
             if (playerControls.Player.Aim.ReadValue<float>() == 0)

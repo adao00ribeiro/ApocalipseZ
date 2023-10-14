@@ -1,13 +1,16 @@
+using System;
 using ApocalipseZ;
 using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 public class PlayerController : NetworkBehaviour
 {
+    public string IDCONNETION;
     [Header("Ui Components")]
     [SerializeField] private UiPrimaryAndSecondWeapons uiPrimaryAndSecondWeapons;
     [SerializeField] private UiInventory uiInventory;
@@ -17,6 +20,16 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private UiDeadStats uiDeadStats;
 
     [SyncVar]
+    private int currentScene;
+    public int CurrentScene
+    {
+        get
+        {
+            return currentScene = gameObject.scene.handle;
+
+        }
+    }
+    [SyncVar]
     public string PlayerName;
     [SerializeField] private FpsPlayer player;
     [SerializeField] private NetworkBehaviour PrefabPlayer;
@@ -25,6 +38,11 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] MotionBlur motionBlur;
     [SerializeField] Volume volume;
     public static bool IsInventoryOpen;
+    [SyncVar]
+    public bool IsLoading;
+
+
+    [SerializeField] bool IsChecked;
     private void Awake()
     {
         PrefabCanvasUi = Resources.LoadAll<GameObject>("UI");
@@ -35,6 +53,11 @@ public class PlayerController : NetworkBehaviour
     }
     void Update()
     {
+
+        if (player == null)
+        {
+            return;
+        }
         if (GameController.Instance.InputManager.GetInventory() && !player.GetPlayerStats().IsDead())
         {
             IsInventoryOpen = !IsInventoryOpen;
@@ -53,6 +76,47 @@ public class PlayerController : NetworkBehaviour
             UiFastItems.Canvas.enabled = IsInventoryOpen;
             ActiveMotionBlur(IsInventoryOpen);
         }
+
+        if (base.IsOwner)
+        {
+            if (GameController.Instance.InputManager.GetPvpFlag())
+            {
+                print("PVP APERTADO");
+                if (!IsChecked)
+                {
+                    CmdAddWaitinLine();
+                    IsChecked = true;
+                }
+                else
+                {
+                    CmdRemoveWaitinLine();
+                    IsChecked = false;
+                }
+
+            }
+        }
+
+    }
+    public override void OnStartNetwork()
+    {
+        base.OnStartNetwork();
+        IDCONNETION = base.Owner.ClientId.ToString();
+        GameObject.FindAnyObjectByType<ConnectionManager>().AddConnection(base.Owner.ClientId, this);
+    }
+    public override void OnStopNetwork()
+    {
+        base.OnStopNetwork();
+        GameObject.FindAnyObjectByType<ConnectionManager>().RemoveConnection(base.Owner.ClientId);
+    }
+    [ServerRpc]
+    public void CmdAddWaitinLine()
+    {
+        GameController.Instance.PvpManager.AddWaitinLine(base.Owner);
+    }
+    [ServerRpc]
+    public void CmdRemoveWaitinLine()
+    {
+        GameController.Instance.PvpManager.RemoveWaitinLine(base.Owner);
     }
     public override void OnStartClient()
     {
@@ -74,16 +138,30 @@ public class PlayerController : NetworkBehaviour
         PlayerName = playerName;
     }
     [ServerRpc]
-    public void CmdSpawPlayer(NetworkConnection sender = null)
+    public void CmdSpawPlayer()
     {
-        PlayerSpawPointsManager playerspaw = GameController.Instance.PlayerSpawPoints;
-        Transform novo = playerspaw.GetPointSpaw();
-        NetworkBehaviour go = Instantiate(PrefabPlayer, novo.position, Quaternion.identity);
+        SpawPlayer();
+    }
+    public void SpawPlayer()
+    {
+        PlayerSpawPointsManager playerspaw = GameController.Instance.GetPlayerSpawPointManager(CurrentScene);
+        SpawPointPlayer point = playerspaw.GetPointSpaw(gameObject.tag);
+        NetworkBehaviour go = Instantiate(PrefabPlayer, point.transform.position, Quaternion.identity);
         player = go.GetComponent<FpsPlayer>();
         go.transform.SetParent(this.transform);
-        base.Spawn(go.gameObject, sender);
+        base.Spawn(go.gameObject, base.Owner);
         ObserverSpawPlayer(go.gameObject);
     }
+    public void SpawPlayerPvp(Transform point, string tag)
+    {
+        NetworkBehaviour go = Instantiate(PrefabPlayer, point.position, point.rotation);
+        player = go.GetComponent<FpsPlayer>();
+        player.tag = tag;
+        go.transform.SetParent(this.transform);
+        base.Spawn(go.gameObject, base.Owner);
+        ObserverSpawPlayer(go.gameObject);
+    }
+
     [ObserversRpc]
     public void ObserverSpawPlayer(GameObject player)
     {
@@ -114,6 +192,11 @@ public class PlayerController : NetworkBehaviour
         //  Time.timeScale = active ? 0 : 1;
     }
 
+    internal void DespawnPlayer()
+    {
+        base.Despawn(player.gameObject);
+        player = null;
+    }
 
     public UiPrimaryAndSecondWeapons UiPrimaryAndSecondWeapons
     {
@@ -183,5 +266,5 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
-
+    public bool IsPlayer { get => player != null ? true : false; }
 }

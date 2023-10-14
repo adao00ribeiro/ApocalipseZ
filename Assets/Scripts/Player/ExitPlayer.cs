@@ -24,7 +24,7 @@ namespace ApocalipseZ
             if (other.CompareTag("Player"))
             {
                 other.GetComponent<IFpsPlayer>().GetFirstPersonCamera().ActiveCursor(true);
-                scene.CarregarCenaAsync("Missao");
+                //  scene.CarregarCenaAsync("Missao");
             }
         }
     }

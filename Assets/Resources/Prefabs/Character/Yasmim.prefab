@@ -4190,6 +4190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5154680733061473965}
   - component: {fileID: 3012108856139448713}
+  - component: {fileID: -229400336103498459}
   m_Layer: 0
   m_Name: Yasmim
   m_TagString: Untagged
@@ -4242,6 +4243,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-229400336103498459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7976913702392388145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e703e40124cd1cd448c52e2ca9857ea6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spine: {fileID: 7539366793228304090}
+  flag: {fileID: 0}
 --- !u!1 &8232927781287001929
 GameObject:
   m_ObjectHideFlags: 0

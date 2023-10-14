@@ -238,6 +238,7 @@ namespace ApocalipseZ
             for (int i = 0; i < grupo.Count; i++)
             {
                 grupo[i].FirstObject.GetComponent<PlayerController>().DespawnPlayer();
+                grupo[i].FirstObject.GetComponent<PlayerController>().IsCombat = true;
                 grupo[i].FirstObject.GetComponent<PlayerController>().IsLoading = true;
                 objects.Add(grupo[i].FirstObject);
             }

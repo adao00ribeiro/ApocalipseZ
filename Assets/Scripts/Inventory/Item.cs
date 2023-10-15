@@ -15,11 +15,10 @@ namespace ApocalipseZ
         [SerializeField] private DataItem dataItem;
         private int Ammo;
         [SerializeField] private int dropQuantity;
-
         public bool IsServerSpaw = false;
-
         [SerializeField] private Material Outiline;
 
+        SpawObjectsManager spawObjectManager;
         private void OnEnable()
         {
             transform.position += Vector3.up * 2;
@@ -40,6 +39,10 @@ namespace ApocalipseZ
                 return;
             }
             // Destroy(GetComponent<Rigidbody>());
+        }
+
+        public void SetSpawObjectManager(SpawObjectsManager objectsManager){
+            spawObjectManager = objectsManager;
         }
         public void SetAmmo(int _ammo)
         {
@@ -83,8 +86,8 @@ namespace ApocalipseZ
             {
                 DataAudio audioPickup = GameController.Instance.DataManager.GetDataAudio("Pickup");
                 GameController.Instance.SoundManager.PlayOneShot(transform.position, audioPickup.Audio);
-                GameController.Instance.SpawObjectsManager.SpawTimeObject();
-                NetworkBehaviour.Destroy(gameObject);
+               // GameController.Instance.SpawObjectsManager.SpawTimeObject();
+                base.Despawn(gameObject);
             }
         }
 

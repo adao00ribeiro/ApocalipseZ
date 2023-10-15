@@ -22,8 +22,16 @@ public struct ConnectMessage : IBroadcast
 }
 public class SpawObjectsManager : MonoBehaviour
 {
-    [SerializeField] private List<PointItem> ListPointItems = new List<PointItem>();
-    private float timeSpaw;
+    [SerializeField] private PointItem[] ListPointItems ;
+
+    [Header("Config")]
+    [SerializeField]private float TimeSpaw;
+    float currentTimeSpaw;
+
+
+    [Header("Scene Info")]
+    public int currentSceneHandle;
+    public string currentSceneName;
     private void Start()
     {
         if (InstanceFinder.IsClient)
@@ -33,11 +41,21 @@ public class SpawObjectsManager : MonoBehaviour
         }
 
     }
-
+    public void OnEnable()
+    {
+        currentSceneHandle = gameObject.scene.handle;
+        currentSceneName = gameObject.scene.name;
+        ListPointItems = GameObject.FindObjectsByType<PointItem>(FindObjectsSortMode.None);
+        GameController.Instance.AddSpawObjectsManager(this);
+    }
+    public void OnDisable()
+    {
+        GameController.Instance.RemoveSpawObjectsManager(this);
+    }
     public void SpawTimeObject()
     {
 
-        int randnumber = Random.Range(0, ListPointItems.Count - 1);
+        int randnumber = Random.Range(0, ListPointItems.Length - 1);
         GameController.Instance.TimerManager.Add(() =>
         {
             Spawn(ListPointItems[randnumber].GetPrefab(), ListPointItems[randnumber].transform);
@@ -63,17 +81,10 @@ public class SpawObjectsManager : MonoBehaviour
         {
             return;
         }
-        GameObject treeGo = Instantiate(prefab, pointSpawn.position, pointSpawn.rotation, pointSpawn);
+        GameObject treeGo = Instantiate(prefab, pointSpawn.position, pointSpawn.rotation);
+        treeGo.GetComponent<Item>().SetSpawObjectManager(this);
         treeGo.GetComponent<Item>().IsServerSpaw = true;
         InstanceFinder.ServerManager.Spawn(treeGo);
     }
-    internal void Add(PointItem pointItem)
-    {
-        ListPointItems.Add(pointItem);
-    }
-
-    internal void Remove(PointItem pointItem)
-    {
-        ListPointItems.Remove(pointItem);
-    }
+  
 }

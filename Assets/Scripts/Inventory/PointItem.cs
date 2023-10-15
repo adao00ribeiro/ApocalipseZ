@@ -24,15 +24,7 @@ namespace ApocalipseZ
                 WeaponSpaw = EWeapon.DEFAULT;
             }
         }
-        public void OnEnable()
-        {
-            GameController.Instance.SpawObjectsManager.Add(this);
-        }
-
-        public void OnDisable()
-        {
-            GameController.Instance.SpawObjectsManager.Remove(this);
-        }
+     
         private void Start()
         {
             if (type == ItemType.none)

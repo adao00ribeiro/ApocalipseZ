@@ -24,10 +24,7 @@ public class Explosion : NetworkBehaviour
 
     void Explosions()
     {
-        if (base.IsClient)
-        {
-            return;
-        }
+      
         colliders = Physics.OverlapSphere(transform.position, damageRadius);
 
         foreach (Collider collider in colliders)

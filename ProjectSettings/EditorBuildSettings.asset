@@ -253,7 +253,7 @@ EditorBuildSettings:
     guid: ef91c0786d4e59d41b074c62aa206e03
   - enabled: 1
     path: Assets/Scenes/PVPFLAG/SceneFlagTest.unity
-    guid: 39373c742f06285439c7e777fbeafbbf
+    guid: 5ac40730c6365b44c8667aea1855f08c
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 0fc0c198df89501429357ed0495b694d,
       type: 2}

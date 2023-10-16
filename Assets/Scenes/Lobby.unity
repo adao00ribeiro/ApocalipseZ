@@ -15,15 +15,15 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
   m_Fog: 1
-  m_FogColor: {r: 0.8482398, g: 0.8773662, b: 0.9356972, a: 0.7893076}
-  m_FogMode: 2
-  m_FogDensity: 0.000005
+  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  m_FogMode: 1
+  m_FogDensity: 0.2
   m_LinearFogStart: 0
   m_LinearFogEnd: 38.1
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 0.75147897
+  m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
@@ -7320,10 +7320,10 @@ RectTransform:
   - {fileID: 1131715432}
   m_Father: {fileID: 1041976174}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.08455555}
-  m_AnchorMax: {x: 0.19239585, y: 0.8277408}
-  m_AnchoredPosition: {x: 0, y: 1.7647705}
-  m_SizeDelta: {x: 3.4236002, y: 5.200001}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -26.4926}
+  m_SizeDelta: {x: 373.4236, y: 846.6851}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1032889841
 MonoBehaviour:
@@ -7345,7 +7345,7 @@ MonoBehaviour:
   m_ChildAlignment: 1
   m_StartCorner: 0
   m_StartAxis: 1
-  m_CellSize: {x: 500, y: 180}
+  m_CellSize: {x: 500, y: 196.2}
   m_Spacing: {x: 0, y: 10}
   m_Constraint: 1
   m_ConstraintCount: 1
@@ -15899,7 +15899,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &2069297559
+--- !u!1001 &2025826912
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -16190,7 +16190,7 @@ MonoBehaviour:
   _unreliableMTU: 1023
   _ipv4BindAddress: 
   _ipv6BindAddress: 
-  _port: 7778
+  _port: 7777
   _maximumClients: 4095
   _clientAddress: localhost
   _timeout: 15
@@ -16536,7 +16536,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 650800795}
-  - {fileID: 2069297559}
+  - {fileID: 2025826912}
   - {fileID: 1506668972}
   - {fileID: 977553533}
   - {fileID: 773866090}

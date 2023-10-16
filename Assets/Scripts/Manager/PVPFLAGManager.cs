@@ -9,7 +9,9 @@ using UnityEngine;
 
 public class PVPFLAGManager : ConnectionManager, IPvpManager
 {
+    public Action<string> OnTimeFormat;
     [Header("PVP Setup")]
+    [SerializeField] private int TimePreparationMinutes = 3;
     [SerializeField] private int MaxTimeGameMinutes = 15;
     [SerializeField] private float currentTime;
 
@@ -33,10 +35,25 @@ public class PVPFLAGManager : ConnectionManager, IPvpManager
     void Start()
     {
         OnPlayer += OnChangeOnPlayer; ;
-
-        currentTime = MaxTimeGameMinutes * 60;
+        currentTime = TimePreparationMinutes * 60;
+        StartCoroutine(Preparation());
     }
-
+    IEnumerator Preparation()
+    {
+        while (currentTime > 0)
+        {
+            // Exibe o tempo restante no console (você pode atualizar a interface gráfica aqui)
+            // Debug.Log("Tempo Restante: " + FormatTime(currentTime));
+            OnTimeFormat?.Invoke(FormatTime(currentTime));
+            yield return new WaitForSeconds(1.0f);
+            currentTime--;
+        }
+        // O contador chegou a zero
+        Debug.Log("Tempo Esgotado!");
+        currentTime = MaxTimeGameMinutes * 60;
+        IsStart = true;
+        StopCoroutine(Preparation());
+    }
     private void OnChangeOnPlayer(int clientId, PlayerController controller)
     {
         if (players.ContainsKey(clientId))
@@ -68,25 +85,20 @@ public class PVPFLAGManager : ConnectionManager, IPvpManager
     private void Update()
     {
 
+        if (!IsStart)
+        {
+            return;
+        }
         currentTime -= Time.deltaTime;
-
-
         if (!IsEnd && currentTime <= 0 || FlagsTeamA == 3 || FlagsTeamB == 3)
         {
-
-
             StartCoroutine(Desconecta());
             //desconecta todo mundo
             currentTime = 0;
             IsEnd = true;
         }
-
-
-        int minutes = Mathf.FloorToInt(currentTime / 60);
-        int seconds = Mathf.FloorToInt(currentTime % 60);
-
-
         // Debug.Log("Tempo Restante: " + minutes + " minutos " + seconds + " segundos");
+        OnTimeFormat?.Invoke(FormatTime(currentTime));
     }
 
     IEnumerator Desconecta()
@@ -107,6 +119,14 @@ public class PVPFLAGManager : ConnectionManager, IPvpManager
     public void IncrementFlagTeamB()
     {
         FlagsTeamB++;
+    }
+
+
+    string FormatTime(float time)
+    {
+        int minutes = Mathf.FloorToInt(time / 60);
+        int seconds = Mathf.FloorToInt(time % 60);
+        return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 }
 

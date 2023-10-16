@@ -16245,7 +16245,6 @@ MonoBehaviour:
   _updateHostVisibility: 1
   _defaultConditions:
   - {fileID: 11400000, guid: 37bd3d466aaa29b4da784cddaaa365ea, type: 2}
-  - {fileID: 11400000, guid: 2033f54fd2794464bae08fa5a55c8996, type: 2}
 --- !u!1 &2128308855
 GameObject:
   m_ObjectHideFlags: 0

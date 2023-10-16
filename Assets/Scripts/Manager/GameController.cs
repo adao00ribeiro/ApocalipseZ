@@ -24,7 +24,7 @@ namespace ApocalipseZ
         private HitFXManager hitfxManager;
         private DecalFxManager decalfxManager;
         [SerializeField] private List<PlayerSpawPointsManager> playerSpawPointsManagers;
-        private SpawObjectsManager spawObjectsManager;
+         [SerializeField] private List<SpawObjectsManager> SpawsObjectsManager;
         [SerializeField] private PVPManager pvpManager;
 
 
@@ -79,8 +79,14 @@ namespace ApocalipseZ
             var randomItem = playerSpawPointsManagers.FirstOrDefault(x => x.currentSceneName != "SceneFlagTest");
             return randomItem;
         }
-
-
+        internal void AddSpawObjectsManager(SpawObjectsManager spawObjectsManager)
+        {
+           SpawsObjectsManager.Add(spawObjectsManager);
+        }
+        internal void RemoveSpawObjectsManager(SpawObjectsManager spawObjectsManager)
+        {
+          SpawsObjectsManager.Remove(spawObjectsManager);
+        }
 
         /*
        public void SpawPlayer(GameObject player = null)
@@ -231,17 +237,7 @@ namespace ApocalipseZ
         }
 
 
-        public SpawObjectsManager SpawObjectsManager
-        {
-            get
-            {
-                if (spawObjectsManager == null)
-                {
-                    spawObjectsManager = transform.GetComponentInChildren<SpawObjectsManager>();
-                }
-                return spawObjectsManager;
-            }
-        }
+      
 
 
     }

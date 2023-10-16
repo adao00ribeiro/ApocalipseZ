@@ -13,7 +13,6 @@ public class ServerSceneNetworkManager : NetworkBehaviour
         private List<string> ListScenes = new List<string>();
  
         public override void OnStartServer()
-
         {
             foreach (string item in ListScenes)
             {
@@ -27,12 +26,6 @@ public class ServerSceneNetworkManager : NetworkBehaviour
                 };
                 base.SceneManager.LoadConnectionScenes(sld);
             }
-             GameController.Instance.TimerManager.Add(() =>
-            {
-                GameController.Instance.SpawObjectsManager.InitSpaw();
-              //  Destroy(item.gameObject);
-            },20);
-          
         }
 
     public void UpdateSceneList()

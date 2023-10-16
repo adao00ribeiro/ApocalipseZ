@@ -29,7 +29,6 @@ namespace ApocalipseZ
 
         [Tooltip("If you have animations for your weapon so better to use animator. Play animations if true and not if false")]
         public bool useAnimator = true;
-
         [Tooltip("How long reload animation is? Time in seconds to synch reloading animation with script")]
         public float reloadAnimationDuration = 3.0f;
 
@@ -71,6 +70,13 @@ namespace ApocalipseZ
         public bool IsFire;
         [SyncVar]
         public Vector2 recoil;
+
+
+
+        void Awake()
+        {
+            animator = GetComponentInChildren<Animator>();
+        }
         // Start is called before the first frame update
         void Start()
         {
@@ -83,14 +89,17 @@ namespace ApocalipseZ
             audioSource = GetComponent<AudioSource>();
             MuzzleList = transform.Find("Arms/MuzzleList");
             temp_MuzzleFlashParticlesFX = Instantiate(DataParticles.Particles, MuzzleList.GetChild(0));
-            animator = GetComponentInChildren<Animator>();
+
             networkAnimator = GetComponent<NetworkAnimator>();
             sway = transform.GetComponentInParent<Sway>();
             if (weaponSetting.canUseScope)
             {
                 SetRenderTextureScope.UpdateScope();
             }
+            Animator.SetFloat("ShotSpeed", weaponSetting.ShotSpeedAnimation);
+            Animator.SetFloat("RealodSpeed", weaponSetting.RealodSpeedAnimation);
         }
+
         public void RecoilChange(Vector2 _, Vector2 newRecoil, bool asServer)
         {
             recoilComponent.AddRecoil(newRecoil);
@@ -147,6 +156,7 @@ namespace ApocalipseZ
                 {
                     if (!reloading && autoReload)
                     {
+
                         ReloadBegin();
                     }
                     else
@@ -227,6 +237,7 @@ namespace ApocalipseZ
             {
                 return;
             }
+
             if (CalculateTotalAmmo() > 0)
             {
                 setAim = false;
@@ -235,6 +246,7 @@ namespace ApocalipseZ
 
                 if (useAnimator)
                 {
+                    Animator.SetFloat("RealodSpeed", weaponSetting.RealodSpeedAnimation);
                     Animator.SetBool("Reloading", true);
                     Animator.SetBool("Aim", false);
                     Animator.SetBool("Reload", true);
@@ -338,6 +350,7 @@ namespace ApocalipseZ
                 }
                 else
                 {
+                    Animator.SetFloat("ShotSpeed", weaponSetting.ShotSpeedAnimation);
                     Animator.SetTrigger("Shot");
                     temp_MuzzleFlashParticlesFX.time = 0;
                     temp_MuzzleFlashParticlesFX.Play();

@@ -22,12 +22,14 @@ public struct ConnectMessage : IBroadcast
 }
 public class SpawObjectsManager : MonoBehaviour
 {
-    [SerializeField] private PointItem[] ListPointItems ;
+    [SerializeField] private PointItem[] ListPointItems;
+    [SerializeField] private List<Item> ListItems;
 
     [Header("Config")]
-    [SerializeField]private float TimeSpaw;
+    private float MaxSpawItems;
+    [SerializeField] private float TimeSpaw;
     float currentTimeSpaw;
-
+    private float ItemTimeInTheWorldMinutes = 10;
 
     [Header("Scene Info")]
     public int currentSceneHandle;
@@ -59,8 +61,7 @@ public class SpawObjectsManager : MonoBehaviour
         GameController.Instance.TimerManager.Add(() =>
         {
             Spawn(ListPointItems[randnumber].GetPrefab(), ListPointItems[randnumber].transform);
-            //  Destroy(item.gameObject);
-        }, Random.Range(1, 20));
+        }, Random.Range(0, TimeSpaw));
 
     }
 
@@ -81,10 +82,22 @@ public class SpawObjectsManager : MonoBehaviour
         {
             return;
         }
-        GameObject treeGo = Instantiate(prefab, pointSpawn.position, pointSpawn.rotation);
-        treeGo.GetComponent<Item>().SetSpawObjectManager(this);
-        treeGo.GetComponent<Item>().IsServerSpaw = true;
-        InstanceFinder.ServerManager.Spawn(treeGo);
+        if (MaxSpawItems >= ListItems.Count)
+        {
+            return;
+        }
+        Item tempItem = Instantiate(prefab, pointSpawn.position, pointSpawn.rotation).GetComponent<Item>();
+        tempItem.SetSpawObjectManager(this);
+        InstanceFinder.ServerManager.Spawn(tempItem.gameObject);
+        AddItem(tempItem);
+
     }
-  
+    public void AddItem(Item Item)
+    {
+        ListItems.Add(Item);
+    }
+    public void RemoveItem(Item Item)
+    {
+        ListItems.Remove(Item);
+    }
 }

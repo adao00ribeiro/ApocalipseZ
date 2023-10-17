@@ -29,8 +29,7 @@ namespace ApocalipseZ
 
         [Tooltip("If you have animations for your weapon so better to use animator. Play animations if true and not if false")]
         public bool useAnimator = true;
-        [Tooltip("How long reload animation is? Time in seconds to synch reloading animation with script")]
-        public float reloadAnimationDuration = 3.0f;
+       
 
         [Tooltip("Should weapon reload when ammo is 0")]
         public bool autoReload = true;
@@ -96,8 +95,8 @@ namespace ApocalipseZ
             {
                 SetRenderTextureScope.UpdateScope();
             }
-            Animator.SetFloat("ShotSpeed", weaponSetting.ShotSpeedAnimation);
-            Animator.SetFloat("RealodSpeed", weaponSetting.RealodSpeedAnimation);
+            Animator.SetFloat("ShotSpeed", weaponSetting.ShotAnimationSpeed);
+            Animator.SetFloat("RealodSpeed", weaponSetting.RealodAnimationSpeed);
         }
 
         public void RecoilChange(Vector2 _, Vector2 newRecoil, bool asServer)
@@ -179,7 +178,6 @@ namespace ApocalipseZ
             }
             IProjectile go = Instantiate(PrefabProjectile, position, rotation).GetComponent<IProjectile>();
             go.Initialize(passedTime, weaponSetting.Damage);
-
         }
         [ServerRpc(RequireOwnership = false)]
         private void CmdSpawBullet(Vector3 position, Quaternion rotation, uint tick, NetworkConnection conn = null)
@@ -246,7 +244,7 @@ namespace ApocalipseZ
 
                 if (useAnimator)
                 {
-                    Animator.SetFloat("RealodSpeed", weaponSetting.RealodSpeedAnimation);
+                    Animator.SetFloat("RealodSpeed", weaponSetting.RealodAnimationSpeed);
                     Animator.SetBool("Reloading", true);
                     Animator.SetBool("Aim", false);
                     Animator.SetBool("Reload", true);
@@ -254,7 +252,7 @@ namespace ApocalipseZ
 
                 audioSource.PlayOneShot(reloadSFX);
 
-                StartCoroutine(ReloadCycle(reloadAnimationDuration));
+                StartCoroutine(ReloadCycle(weaponSetting.ReloadAnimationDuration));
             }
             else
                 return;
@@ -350,7 +348,7 @@ namespace ApocalipseZ
                 }
                 else
                 {
-                    Animator.SetFloat("ShotSpeed", weaponSetting.ShotSpeedAnimation);
+                    Animator.SetFloat("ShotSpeed", weaponSetting.ShotAnimationSpeed);
                     Animator.SetTrigger("Shot");
                     temp_MuzzleFlashParticlesFX.time = 0;
                     temp_MuzzleFlashParticlesFX.Play();

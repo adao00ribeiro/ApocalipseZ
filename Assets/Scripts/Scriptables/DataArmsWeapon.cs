@@ -45,9 +45,9 @@ public class DataArmsWeapon : ScriptableObject
     public float spread;
 
     [Header("Animation Setup")]
-    public float ShotSpeedAnimation;
-    public float RealodSpeedAnimation;
-
+    public float ShotAnimationSpeed = 3f;
+    public float RealodAnimationSpeed = 1.035f;
+    public float ReloadAnimationDuration = 3.0f;
     public ContantsRecoil recoil;
     public ParticleSystem MuzzleFlashParticlesFX;
     public string shotSFX, reloadingSFX, emptySFX;

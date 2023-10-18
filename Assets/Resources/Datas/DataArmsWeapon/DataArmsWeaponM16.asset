@@ -19,11 +19,14 @@ MonoBehaviour:
   Damage: 16
   fireRate: 0.2
   spread: 0
+  ShotAnimationSpeed: 3
+  RealodAnimationSpeed: 1.035
+  ReloadAnimationDuration: 3
   recoil:
     recolTop: {x: 0, y: 0}
     recolDown: {x: 0, y: 0}
   MuzzleFlashParticlesFX: {fileID: 0}
-  shotSFX: ScarShot
+  shotSFX: M16SHOT
   reloadingSFX: ScarReload
   emptySFX: Empty
   shell: {fileID: 0}

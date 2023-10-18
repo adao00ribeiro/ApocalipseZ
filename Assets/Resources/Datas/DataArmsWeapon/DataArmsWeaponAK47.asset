@@ -19,8 +19,9 @@ MonoBehaviour:
   Damage: 70
   fireRate: 0.10365
   spread: 0
-  ShotSpeedAnimation: 3
-  RealodSpeedAnimation: 1
+  ShotAnimationSpeed: 4.5
+  RealodAnimationSpeed: 1.23
+  ReloadAnimationDuration: 3
   recoil:
     recolTop: {x: -3, y: -2.4}
     recolDown: {x: 0, y: 2.4}

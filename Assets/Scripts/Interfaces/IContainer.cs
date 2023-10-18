@@ -20,5 +20,4 @@ public interface IContainer
     void InvokeOnContainer();
     TypeContainer GetTypeContainer();
     void Update(SlotInventoryTemp slot);
-
 }

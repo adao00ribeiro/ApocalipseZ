@@ -2289,7 +2289,7 @@ GameObject:
   - component: {fileID: 1074151636}
   - component: {fileID: 1074151638}
   m_Layer: 0
-  m_Name: PVPMANAGER
+  m_Name: PVPFLAGMANAGER
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2309,6 +2309,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visuPLayerKeys: 
   visuPLayer: []
+  TimePreparationMinutes: 3
   MaxTimeGameMinutes: 15
   currentTime: 0
   FlagsTeamA: 0
@@ -2391,8 +2392,8 @@ MonoBehaviour:
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 0
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 1819386597
-  <SceneId>k__BackingField: 7814205935012724951
+  _scenePathHash: 1481237057
+  <SceneId>k__BackingField: 6361864720626137318
   <AssetPathHash>k__BackingField: 0
 --- !u!1 &1131973897
 GameObject:
@@ -2700,8 +2701,8 @@ MonoBehaviour:
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 0
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 1819386597
-  <SceneId>k__BackingField: 7814205934188321973
+  _scenePathHash: 1481237057
+  <SceneId>k__BackingField: 6361864719941309577
   <AssetPathHash>k__BackingField: 0
 --- !u!114 &1249505710
 MonoBehaviour:
@@ -2919,8 +2920,8 @@ MonoBehaviour:
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 0
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 1819386597
-  <SceneId>k__BackingField: 7814205933678009634
+  _scenePathHash: 1481237057
+  <SceneId>k__BackingField: 6361864718886334734
   <AssetPathHash>k__BackingField: 0
 --- !u!114 &1358650158
 MonoBehaviour:

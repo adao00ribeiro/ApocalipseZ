@@ -9,6 +9,7 @@ using UnityEngine;
 
 public class PVPFLAGManager : ConnectionManager, IPvpManager
 {
+    public Action<bool> OnStart;
     public Action<string> OnTimeFormat;
     [Header("PVP Setup")]
     [SerializeField] private int TimePreparationMinutes = 3;
@@ -31,15 +32,25 @@ public class PVPFLAGManager : ConnectionManager, IPvpManager
     public bool IsStart;
 
     public bool IsEnd;
-    // Start is called before the first frame update
-    void Start()
+
+
+    [SerializeField] private SpawObjectsManager SpawObjectsManager;
+
+
+    void Awake()
     {
         OnPlayer += OnChangeOnPlayer; ;
         currentTime = TimePreparationMinutes * 60;
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
         StartCoroutine(Preparation());
+        SpawObjectsManager.InitSpawPvpFlag();
     }
     IEnumerator Preparation()
     {
+
         while (currentTime > 0)
         {
             // Exibe o tempo restante no console (você pode atualizar a interface gráfica aqui)
@@ -52,6 +63,7 @@ public class PVPFLAGManager : ConnectionManager, IPvpManager
         Debug.Log("Tempo Esgotado!");
         currentTime = MaxTimeGameMinutes * 60;
         IsStart = true;
+        OnStart?.Invoke(true);
         StopCoroutine(Preparation());
     }
     private void OnChangeOnPlayer(int clientId, PlayerController controller)

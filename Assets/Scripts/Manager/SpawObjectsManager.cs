@@ -24,6 +24,7 @@ public struct ConnectMessage : IBroadcast
 }
 public class SpawObjectsManager : MonoBehaviour
 {
+    public bool IsWorld = true;
     [SerializeField] private PointItem[] ListPointItems;
     [SerializeField] private List<Item> ListItems;
 
@@ -50,7 +51,9 @@ public class SpawObjectsManager : MonoBehaviour
         .SelectMany(root => root.GetComponentsInChildren<PointItem>())
         .ToArray();
 
-
+        if(IsWorld){
+            InitSpaw();
+        }
 
     }
     public void OnEnable()

@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using ApocalipseZ;
 using FishNet;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -11,6 +9,9 @@ public class PVPFLAGManager : ConnectionManager, IPvpManager
 {
     public Action<bool> OnStart;
     public Action<string> OnTimeFormat;
+    public Action<int> OnPointsFlagsTeamA;
+    public Action<int> OnPointsFlagsTeamB;
+
     [Header("PVP Setup")]
     [SerializeField] private int TimePreparationMinutes = 3;
     [SerializeField] private int MaxTimeGameMinutes = 15;
@@ -21,8 +22,6 @@ public class PVPFLAGManager : ConnectionManager, IPvpManager
     [SerializeField] private int FlagsTeamB;
 
     [Header("Spaw Setup")]
-
-
     public SpawPointPlayer[] TeamA;
     private int indexA;
     public SpawPointPlayer RespawPointTeamA;
@@ -127,10 +126,12 @@ public class PVPFLAGManager : ConnectionManager, IPvpManager
     public void IncrementFlagTeamA()
     {
         FlagsTeamA++;
+        OnPointsFlagsTeamA?.Invoke(FlagsTeamA);
     }
     public void IncrementFlagTeamB()
     {
         FlagsTeamB++;
+        OnPointsFlagsTeamA?.Invoke(FlagsTeamB);
     }
 
 

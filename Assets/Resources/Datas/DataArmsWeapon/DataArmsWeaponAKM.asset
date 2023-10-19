@@ -15,15 +15,19 @@ MonoBehaviour:
   GuidId: 1b679e8a-506b-4231-83f7-b2bdb9b176f8
   Name: AKM
   Type: 0
+  fireMode: 0
   Damage: 65
   fireRate: 0.1
   spread: 0
+  ShotAnimationSpeed: 4.5
+  RealodAnimationSpeed: 1.23
+  ReloadAnimationDuration: 3
   recoil:
     recolTop: {x: -2.8, y: -2.2}
     recolDown: {x: 0, y: 2.2}
   MuzzleFlashParticlesFX: {fileID: 0}
-  shotSFX: ScarShot
-  reloadingSFX: ScarReload
+  shotSFX: AKMSHOT
+  reloadingSFX: AKMRELOAD
   emptySFX: Empty
   shell: {fileID: 0}
   shellsPoolSize: 0
@@ -41,5 +45,4 @@ MonoBehaviour:
   bulletInitialVelocity: 0
   airResistanceForce: 0
   projectile: Bullet
-  PrefabArmsWeapon: {fileID: 3921184682229974682, guid: add1668a05eb5604fbcb11cb85f4d83d,
-    type: 3}
+  PrefabArmsWeapon: {fileID: 3921184682229974682, guid: add1668a05eb5604fbcb11cb85f4d83d, type: 3}

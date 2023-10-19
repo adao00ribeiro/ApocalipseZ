@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DataAudioRPGSHOT
   m_EditorClassIdentifier: 
   Name: RPGSHOT
-  Audio: {fileID: 8300000, guid: 8c607d129683f924cb9ea499cd2f5c94, type: 3}
+  Audio: {fileID: 8300000, guid: de5431a6404e6474aa15e6cfb3914340, type: 3}

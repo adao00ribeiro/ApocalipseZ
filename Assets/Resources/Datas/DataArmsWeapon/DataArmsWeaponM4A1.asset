@@ -19,8 +19,9 @@ MonoBehaviour:
   Damage: 55
   fireRate: 0.101
   spread: 0
-  ShotSpeedAnimation: 0
-  RealodSpeedAnimation: 0
+  ShotAnimationSpeed: 3
+  RealodAnimationSpeed: 1.035
+  ReloadAnimationDuration: 3
   recoil:
     recolTop: {x: -2, y: -1.5}
     recolDown: {x: 0, y: 1.5}
@@ -44,5 +45,4 @@ MonoBehaviour:
   bulletInitialVelocity: 0
   airResistanceForce: 0
   projectile: Bullet
-  PrefabArmsWeapon: {fileID: 1872763360101503043, guid: 1ec38c5e93dabfb45b0ed936d7b86782,
-    type: 3}
+  PrefabArmsWeapon: {fileID: 1872763360101503043, guid: 1ec38c5e93dabfb45b0ed936d7b86782, type: 3}

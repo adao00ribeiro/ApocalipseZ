@@ -6749,6 +6749,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpawObjectManager
       objectReference: {fileID: 0}
+    - target: {fileID: 844439531859764830, guid: e5151fe9cbf01794f92a8aa409214f3f, type: 3}
+      propertyPath: MaxSpawItems
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 3776248067272128428, guid: e5151fe9cbf01794f92a8aa409214f3f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 382.51196

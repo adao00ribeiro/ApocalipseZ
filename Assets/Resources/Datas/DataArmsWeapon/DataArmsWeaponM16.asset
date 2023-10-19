@@ -23,8 +23,8 @@ MonoBehaviour:
   RealodAnimationSpeed: 1.035
   ReloadAnimationDuration: 3
   recoil:
-    recolTop: {x: 0, y: 0}
-    recolDown: {x: 0, y: 0}
+    recolTop: {x: -2, y: -1.5}
+    recolDown: {x: 0, y: 1.5}
   MuzzleFlashParticlesFX: {fileID: 0}
   shotSFX: M16SHOT
   reloadingSFX: ScarReload
@@ -45,5 +45,4 @@ MonoBehaviour:
   bulletInitialVelocity: 0
   airResistanceForce: 0
   projectile: Bullet
-  PrefabArmsWeapon: {fileID: 3921184682229974682, guid: b1d5db327f3db654c81f847d32f5c3f2,
-    type: 3}
+  PrefabArmsWeapon: {fileID: 3921184682229974682, guid: b1d5db327f3db654c81f847d32f5c3f2, type: 3}

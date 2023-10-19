@@ -19,6 +19,9 @@ MonoBehaviour:
   Damage: 300
   fireRate: 6
   spread: 0
+  ShotAnimationSpeed: 3
+  RealodAnimationSpeed: 1.035
+  ReloadAnimationDuration: 3
   recoil:
     recolTop: {x: 0, y: 0}
     recolDown: {x: 0, y: 0}
@@ -29,7 +32,7 @@ MonoBehaviour:
   shell: {fileID: 0}
   shellsPoolSize: 0
   shellEjectingForce: 0
-  canUseScope: 1
+  canUseScope: 0
   scopeFOV: 0
   scopeSensitivityX: 0
   scopeSensitivityY: 0
@@ -42,5 +45,4 @@ MonoBehaviour:
   bulletInitialVelocity: 0
   airResistanceForce: 0
   projectile: Rocket
-  PrefabArmsWeapon: {fileID: 1967601972646034812, guid: 8c0ed03ee4e8141469bfbf6c7c7ce0d3,
-    type: 3}
+  PrefabArmsWeapon: {fileID: 1967601972646034812, guid: 8c0ed03ee4e8141469bfbf6c7c7ce0d3, type: 3}

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DataAudioAK47RELOAD
   m_EditorClassIdentifier: 
   Name: AK47RELOAD
-  Audio: {fileID: 8300000, guid: dba8235daf4b0464aaf3129df1d25a42, type: 3}
+  Audio: {fileID: 8300000, guid: 2602fee9633f4f04b8039b3d41d1d5ba, type: 3}

@@ -15,7 +15,6 @@ public class Barrier : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         manager = FindObjectOfType<PVPFLAGManager>();
         childMesh = GetComponentInChildren<MeshRenderer>();
         childMesh.material = new Material(Shader.Find("Shader Graphs/ShaderBarrier"));
@@ -36,16 +35,16 @@ public class Barrier : MonoBehaviour
         GetComponent<BoxCollider>().enabled = false;
         while (time > 0)
         {
-            SetHeight(time);
+            SetTime(time);
             yield return new WaitForSeconds(0.1f);
             time -= 0.01f;
         }
 
         StopCoroutine(DisableBarrier());
     }
-    private void SetHeight(float height)
+    private void SetTime(float time)
     {
-        childMesh.material.SetFloat("_time", height);
+        childMesh.material.SetFloat("_time", time);
 
     }
 }

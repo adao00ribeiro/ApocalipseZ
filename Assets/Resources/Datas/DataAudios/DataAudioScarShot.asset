@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e314713a71acdfb49960ebf34c85e955, type: 3}
-  m_Name: DataAudioSCARSHOT
+  m_Name: DataAudioScarShot
   m_EditorClassIdentifier: 
   Name: ScarShot
   Audio: {fileID: 8300000, guid: e163e6f50049c6e458bd510554326475, type: 3}

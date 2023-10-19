@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e314713a71acdfb49960ebf34c85e955, type: 3}
   m_Name: DataAudioM4A1RELOAD
   m_EditorClassIdentifier: 
-  Name: M4A1REALOD
+  Name: M4A1RELOAD
   Audio: {fileID: 8300000, guid: efd80d0b96a87f244a52e8a97cfed1a5, type: 3}

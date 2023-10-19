@@ -48,11 +48,22 @@ MonoBehaviour:
   _componentIndexCache: 0
   _addedNetworkObject: {fileID: 4848930099070904954}
   _networkObjectCache: {fileID: 4848930099070904954}
-  playerName: 
-  PrefabPlayer: {fileID: -5810222880455609214, guid: dbcf82867e2696c488a93ef1ecdf3839,
-    type: 3}
-  currentSCENE_NAME: 
-  anteriorSCENE_NAME: 
+  IDCONNETION: 
+  uiPrimaryAndSecondWeapons: {fileID: 0}
+  uiInventory: {fileID: 0}
+  uiFastItems: {fileID: 0}
+  uiFpsScopeCursorReticles: {fileID: 0}
+  uiPlayerStats: {fileID: 0}
+  uiDeadStats: {fileID: 0}
+  currentScene: 0
+  PlayerName: 
+  player: {fileID: 0}
+  PrefabPlayer: {fileID: -5810222880455609214, guid: dbcf82867e2696c488a93ef1ecdf3839, type: 3}
+  motionBlur: {fileID: 0}
+  volume: {fileID: 0}
+  IsLoading: 0
+  IsCombat: 1
+  IsChecked: 0
 --- !u!114 &4848930099070904954
 MonoBehaviour:
   m_ObjectHideFlags: 0

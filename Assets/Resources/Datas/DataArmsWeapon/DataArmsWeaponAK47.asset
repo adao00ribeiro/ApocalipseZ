@@ -27,7 +27,7 @@ MonoBehaviour:
     recolDown: {x: 0, y: 2.4}
   MuzzleFlashParticlesFX: {fileID: 0}
   shotSFX: AK47SHOT
-  reloadingSFX: ScarReload
+  reloadingSFX: AK47RELOAD
   emptySFX: Empty
   shell: {fileID: 0}
   shellsPoolSize: 0
@@ -45,5 +45,4 @@ MonoBehaviour:
   bulletInitialVelocity: 0
   airResistanceForce: 0
   projectile: Bullet
-  PrefabArmsWeapon: {fileID: 3921184682229974682, guid: 65d9c8621d4849f48aacf071dcc4aa94,
-    type: 3}
+  PrefabArmsWeapon: {fileID: 3921184682229974682, guid: 65d9c8621d4849f48aacf071dcc4aa94, type: 3}

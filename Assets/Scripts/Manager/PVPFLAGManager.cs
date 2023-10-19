@@ -1,15 +1,17 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using ApocalipseZ;
 using FishNet;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
 public class PVPFLAGManager : ConnectionManager, IPvpManager
 {
+    public Action<bool> OnStart;
     public Action<string> OnTimeFormat;
+    public Action<int> OnPointsFlagsTeamA;
+    public Action<int> OnPointsFlagsTeamB;
+
     [Header("PVP Setup")]
     [SerializeField] private int TimePreparationMinutes = 3;
     [SerializeField] private int MaxTimeGameMinutes = 15;
@@ -20,8 +22,6 @@ public class PVPFLAGManager : ConnectionManager, IPvpManager
     [SerializeField] private int FlagsTeamB;
 
     [Header("Spaw Setup")]
-
-
     public SpawPointPlayer[] TeamA;
     private int indexA;
     public SpawPointPlayer RespawPointTeamA;
@@ -31,15 +31,25 @@ public class PVPFLAGManager : ConnectionManager, IPvpManager
     public bool IsStart;
 
     public bool IsEnd;
-    // Start is called before the first frame update
-    void Start()
+
+
+    [SerializeField] private SpawObjectsManager SpawObjectsManager;
+
+
+    void Awake()
     {
         OnPlayer += OnChangeOnPlayer; ;
         currentTime = TimePreparationMinutes * 60;
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
         StartCoroutine(Preparation());
+        SpawObjectsManager.InitSpawPvpFlag();
     }
     IEnumerator Preparation()
     {
+
         while (currentTime > 0)
         {
             // Exibe o tempo restante no console (você pode atualizar a interface gráfica aqui)
@@ -52,6 +62,7 @@ public class PVPFLAGManager : ConnectionManager, IPvpManager
         Debug.Log("Tempo Esgotado!");
         currentTime = MaxTimeGameMinutes * 60;
         IsStart = true;
+        OnStart?.Invoke(true);
         StopCoroutine(Preparation());
     }
     private void OnChangeOnPlayer(int clientId, PlayerController controller)
@@ -115,10 +126,12 @@ public class PVPFLAGManager : ConnectionManager, IPvpManager
     public void IncrementFlagTeamA()
     {
         FlagsTeamA++;
+        OnPointsFlagsTeamA?.Invoke(FlagsTeamA);
     }
     public void IncrementFlagTeamB()
     {
         FlagsTeamB++;
+        OnPointsFlagsTeamA?.Invoke(FlagsTeamB);
     }
 
 

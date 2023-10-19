@@ -8,6 +8,8 @@ using System;
 using Random = UnityEngine.Random;
 using FishNet.Managing.Scened;
 using FishNet.Connection;
+using UnityEngine.SceneManagement;
+using System.Linq;
 public struct SpawObjectTransform
 {
     public string guidid;
@@ -26,7 +28,7 @@ public class SpawObjectsManager : MonoBehaviour
     [SerializeField] private List<Item> ListItems;
 
     [Header("Config")]
-    private float MaxSpawItems;
+    [SerializeField] private float MaxSpawItems;
     [SerializeField] private float TimeSpaw;
     float currentTimeSpaw;
     private float ItemTimeInTheWorldMinutes = 10;
@@ -36,18 +38,26 @@ public class SpawObjectsManager : MonoBehaviour
     public string currentSceneName;
     private void Start()
     {
+        /*
         if (InstanceFinder.IsClient)
         {
             Destroy(gameObject);
             return;
         }
+*/
+        Scene cena = gameObject.scene;
+        ListPointItems = cena.GetRootGameObjects()
+        .SelectMany(root => root.GetComponentsInChildren<PointItem>())
+        .ToArray();
+
+
 
     }
     public void OnEnable()
     {
         currentSceneHandle = gameObject.scene.handle;
         currentSceneName = gameObject.scene.name;
-        ListPointItems = GameObject.FindObjectsByType<PointItem>(FindObjectsSortMode.None);
+
         GameController.Instance.AddSpawObjectsManager(this);
     }
     public void OnDisable()
@@ -64,7 +74,15 @@ public class SpawObjectsManager : MonoBehaviour
         }, Random.Range(0, TimeSpaw));
 
     }
+    public void InitSpawPvpFlag()
+    {
+        foreach (var item in ListPointItems)
+        {
 
+            Spawn(item.GetPrefab(), item.transform);
+
+        }
+    }
     public void InitSpaw()
     {
         foreach (var item in ListPointItems)
@@ -82,15 +100,14 @@ public class SpawObjectsManager : MonoBehaviour
         {
             return;
         }
-        if (MaxSpawItems >= ListItems.Count)
+        if (ListItems.Count > MaxSpawItems)
         {
             return;
         }
-        Item tempItem = Instantiate(prefab, pointSpawn.position, pointSpawn.rotation).GetComponent<Item>();
+        Item tempItem = Instantiate(prefab, pointSpawn.position, pointSpawn.rotation, pointSpawn).GetComponent<Item>();
         tempItem.SetSpawObjectManager(this);
         InstanceFinder.ServerManager.Spawn(tempItem.gameObject);
         AddItem(tempItem);
-
     }
     public void AddItem(Item Item)
     {

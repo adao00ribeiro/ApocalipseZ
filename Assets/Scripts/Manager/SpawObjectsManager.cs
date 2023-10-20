@@ -10,6 +10,7 @@ using FishNet.Managing.Scened;
 using FishNet.Connection;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using FishNet.Object;
 public struct SpawObjectTransform
 {
     public string guidid;
@@ -51,7 +52,8 @@ public class SpawObjectsManager : MonoBehaviour
         .SelectMany(root => root.GetComponentsInChildren<PointItem>())
         .ToArray();
 
-        if(IsWorld){
+        if (IsWorld)
+        {
             InitSpaw();
         }
 
@@ -107,7 +109,8 @@ public class SpawObjectsManager : MonoBehaviour
         {
             return;
         }
-        Item tempItem = Instantiate(prefab, pointSpawn.position, pointSpawn.rotation).GetComponent<Item>();
+        Item tempItem = Instantiate(prefab, pointSpawn.position, pointSpawn.rotation, pointSpawn).GetComponent<Item>();
+        tempItem.GetComponent<NetworkObject>().SetIsGlobal(IsWorld);
         tempItem.SetSpawObjectManager(this);
         InstanceFinder.ServerManager.Spawn(tempItem.gameObject);
         AddItem(tempItem);

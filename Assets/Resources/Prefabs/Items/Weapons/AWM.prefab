@@ -443,8 +443,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4492599865697419844}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00000020861623, y: -0.0000004993413, z: 0.00000016348369,
-    w: 1}
+  m_LocalRotation: {x: -0.00000020861623, y: -0.0000004993413, z: 0.00000016348369, w: 1}
   m_LocalPosition: {x: 0.036224365, y: -0.0134887695, z: -0.05206299}
   m_LocalScale: {x: 0.49385, y: 0.49385, z: 0.49385}
   m_ConstrainProportionsScale: 0
@@ -587,6 +586,7 @@ MonoBehaviour:
   dataItem: {fileID: 0}
   dropQuantity: 1
   IsServerSpaw: 0
+  Outiline: {fileID: 0}
 --- !u!114 &2482981960543252098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -613,8 +613,8 @@ MonoBehaviour:
   _enableTeleport: 0
   _teleportThreshold: 1
   _scaleThreshold: 1
-  _clientAuthoritative: 1
-  _sendToOwner: 1
+  _clientAuthoritative: 0
+  _sendToOwner: 0
   _enableNetworkLod: 1
   _interval: 1
   _synchronizePosition: 1
@@ -681,7 +681,7 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 10
+  <PrefabId>k__BackingField: 16
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 770706984
   <SceneId>k__BackingField: 0
@@ -734,8 +734,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8994553953485968657}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00000008940697, y: 1.646362e-10, z: 0.0000000011524528,
-    w: 1}
+  m_LocalRotation: {x: -0.00000008940697, y: 1.646362e-10, z: 0.0000000011524528, w: 1}
   m_LocalPosition: {x: -0.079, y: -0.066, z: -0.015}
   m_LocalScale: {x: 0.49385, y: 0.49385, z: 0.49385}
   m_ConstrainProportionsScale: 0

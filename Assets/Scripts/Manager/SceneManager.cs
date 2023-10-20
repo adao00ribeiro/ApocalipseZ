@@ -44,12 +44,12 @@ namespace ApocalipseZ
         private void SceneManager_OnClientPresenceChangeStart(ClientPresenceChangeEventArgs args)
         {
             PlayerController controller = GameController.Instance.ConnectionManager.GetPlayerController(args.Connection.ClientId);
-
+        
             if (controller == null)
             {
                 return;
             }
-
+          
             if (controller.CurrentScene == args.Scene.handle)
             {
                 foreach (SceneData item in ScenesLoaded)
@@ -96,7 +96,7 @@ namespace ApocalipseZ
             {
                 return;
             }
-            UnloadScene(nob, _stackedSceneHandle, ArrayScenes);
+            //UnloadScene(nob, _stackedSceneHandle, ArrayScenes);
             List<SceneLookupData> ListSceneLook = new List<SceneLookupData>();
             if (!IsPvpScene)
             {
@@ -232,8 +232,6 @@ namespace ApocalipseZ
         }
         public void CreateFlagPvpConn(List<NetworkConnection> grupo)
         {
-
-
             List<NetworkObject> objects = new List<NetworkObject>();
             for (int i = 0; i < grupo.Count; i++)
             {
@@ -271,7 +269,6 @@ namespace ApocalipseZ
             {
                 conns[i].FirstObject.GetComponent<PlayerController>().DespawnPlayer();
                 objects.Add(conns[i].FirstObject);
-
             }
             SceneLoadData sld = new(SceneLook);
             sld.MovedNetworkObjects = objects.ToArray();

@@ -107,7 +107,7 @@ public class SpawObjectsManager : MonoBehaviour
         {
             return;
         }
-        Item tempItem = Instantiate(prefab, pointSpawn.position, pointSpawn.rotation, pointSpawn).GetComponent<Item>();
+        Item tempItem = Instantiate(prefab, pointSpawn.position, pointSpawn.rotation).GetComponent<Item>();
         tempItem.SetSpawObjectManager(this);
         InstanceFinder.ServerManager.Spawn(tempItem.gameObject);
         AddItem(tempItem);

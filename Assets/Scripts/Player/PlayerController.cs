@@ -26,7 +26,9 @@ public class PlayerController : NetworkBehaviour
         get
         {
             return currentScene = gameObject.scene.handle;
-
+        }
+        set{
+            currentScene = value;
         }
     }
     [SyncVar]
@@ -145,7 +147,8 @@ public class PlayerController : NetworkBehaviour
     public void SpawPlayer()
     {
         PlayerSpawPointsManager playerspaw = GameController.Instance.GetPlayerSpawPointManager(CurrentScene);
-        SpawPointPlayer point = playerspaw.GetPointSpaw(gameObject.tag);
+        SpawPointPlayer point = playerspaw.GetPointSpaw();
+        CurrentScene = point.currentSceneHandle;
         NetworkBehaviour go = Instantiate(PrefabPlayer, point.transform.position, Quaternion.identity);
         player = go.GetComponent<FpsPlayer>();
         go.transform.SetParent(this.transform);

@@ -121,6 +121,7 @@ GameObject:
   - component: {fileID: -4237787485676476484}
   - component: {fileID: 7514212565308727006}
   - component: {fileID: 9030590096886287961}
+  - component: {fileID: -8341667830542502330}
   m_Layer: 0
   m_Name: RPG
   m_TagString: Untagged
@@ -237,8 +238,8 @@ MonoBehaviour:
   _enableTeleport: 0
   _teleportThreshold: 1
   _scaleThreshold: 1
-  _clientAuthoritative: 1
-  _sendToOwner: 1
+  _clientAuthoritative: 0
+  _sendToOwner: 0
   _enableNetworkLod: 1
   _interval: 1
   _synchronizePosition: 1
@@ -305,8 +306,23 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 22
+  <PrefabId>k__BackingField: 29
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 7649300363047786882
+--- !u!114 &-8341667830542502330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6594048609170016072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _overrideType: 2
+  _updateHostVisibility: 1
+  _observerConditions: []

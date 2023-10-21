@@ -310,6 +310,7 @@ GameObject:
   - component: {fileID: -4811204848361078545}
   - component: {fileID: 172540518600539519}
   - component: {fileID: 2389191641346556427}
+  - component: {fileID: -4009931503038773565}
   m_Layer: 0
   m_Name: GLOCK
   m_TagString: Untagged
@@ -380,6 +381,7 @@ MonoBehaviour:
   dataItem: {fileID: 0}
   dropQuantity: 1
   IsServerSpaw: 0
+  Outiline: {fileID: 0}
 --- !u!135 &-4811204848361078545
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -427,8 +429,8 @@ MonoBehaviour:
   _enableTeleport: 0
   _teleportThreshold: 1
   _scaleThreshold: 1
-  _clientAuthoritative: 1
-  _sendToOwner: 1
+  _clientAuthoritative: 0
+  _sendToOwner: 0
   _enableNetworkLod: 1
   _interval: 1
   _synchronizePosition: 1
@@ -495,11 +497,26 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 39
+  <PrefabId>k__BackingField: 50
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 770706984
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 13350331998078209286
+--- !u!114 &-4009931503038773565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5106662521076766715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _overrideType: 2
+  _updateHostVisibility: 1
+  _observerConditions: []
 --- !u!1 &5278577674861093196
 GameObject:
   m_ObjectHideFlags: 0

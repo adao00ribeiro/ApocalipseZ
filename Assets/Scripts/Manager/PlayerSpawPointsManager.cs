@@ -24,38 +24,41 @@ public class PlayerSpawPointsManager : MonoBehaviour
     // Start is called before the first frame update
     public void RespawPlayer(PlayerController playerController)
     {
-          playerController.GetPlayer().DropFlag();
-        GameController.Instance.TimerManager.Add(() =>
-     {
-         SpawPointPlayer point = GetPointSpaw(playerController.GetPlayer().tag);
-         playerController.GetPlayer().gameObject.transform.position = point.transform.position;
-         playerController.GetPlayer().GetMoviment().EnableCharacterController();
-         playerController.GetPlayer().GetPlayerStats().AddHealth(200);
-         playerController.GetPlayer().GetPlayerStats().AddHydratation(100);
-         playerController.GetPlayer().GetPlayerStats().AddSatiety(100);
-       
-         playerController.GetPlayer().TargetRespaw(playerController.GetPlayer().Owner);
-     }, 5);
-    }
-    internal SpawPointPlayer GetPointSpaw(string tag)
-    {
-        print(tag);
+        playerController.GetPlayer().DropFlag();
+
         SpawPointPlayer point = null;
-        if (tag != "TeamA" && tag != "TeamB")
+        if (playerController.GetPlayer().tag == "TeamA" || playerController.GetPlayer().tag == "TeamB")
         {
-            point = array[Random.Range(0, array.Length)];
-        }else
+             point   = GetPointSpawPvpFlag(playerController.GetPlayer().tag);
+        }else{
+            point   = GetPointSpaw();
+        }
+        GameController.Instance.TimerManager.Add(() =>
+    {
+        playerController.GetPlayer().gameObject.transform.position = point.transform.position;
+        playerController.GetPlayer().GetMoviment().EnableCharacterController();
+        playerController.GetPlayer().GetPlayerStats().AddHealth(200);
+        playerController.GetPlayer().GetPlayerStats().AddHydratation(100);
+        playerController.GetPlayer().GetPlayerStats().AddSatiety(100);
+        playerController.GetPlayer().TargetRespaw(playerController.GetPlayer().Owner);
+    }, 5);
+
+    }
+    public SpawPointPlayer GetPointSpaw()
+    {
+        return array[Random.Range(0, array.Length)];
+    }
+    internal SpawPointPlayer GetPointSpawPvpFlag(string tag)
+    {
+        SpawPointPlayer point = null;
+        foreach (var item in array)
         {
-            foreach (var item in array)
+            if (item.tag.Contains(tag))
             {
-                if (item.tag.Contains(tag))
-                {
-                    point = item;
-                    break;
-                }
+                point = item;
+                break;
             }
         }
-
         return point;
     }
 

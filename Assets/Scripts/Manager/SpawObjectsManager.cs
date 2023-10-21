@@ -10,6 +10,8 @@ using FishNet.Managing.Scened;
 using FishNet.Connection;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using FishNet.Object;
+using Unity.VisualScripting;
 public struct SpawObjectTransform
 {
     public string guidid;
@@ -22,7 +24,7 @@ public struct ConnectMessage : IBroadcast
     public Vector3 scorePos;
     public int lives;
 }
-public class SpawObjectsManager : MonoBehaviour
+public class SpawObjectsManager : NetworkBehaviour
 {
     public bool IsWorld = true;
     [SerializeField] private PointItem[] ListPointItems;
@@ -45,13 +47,19 @@ public class SpawObjectsManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-*/
+        */
+
         Scene cena = gameObject.scene;
         ListPointItems = cena.GetRootGameObjects()
         .SelectMany(root => root.GetComponentsInChildren<PointItem>())
         .ToArray();
 
-        if(IsWorld){
+        if (!base.IsServer)
+        {
+            return;
+        }
+        if (IsWorld)
+        {
             InitSpaw();
         }
 
@@ -107,7 +115,16 @@ public class SpawObjectsManager : MonoBehaviour
         {
             return;
         }
-        Item tempItem = Instantiate(prefab, pointSpawn.position, pointSpawn.rotation, pointSpawn).GetComponent<Item>();
+        Item tempItem = null;
+
+        if (IsWorld)
+        {
+            tempItem = Instantiate(prefab, pointSpawn.position, pointSpawn.rotation).GetComponent<Item>();
+        }
+        else
+        {
+            tempItem = Instantiate(prefab, pointSpawn.position, pointSpawn.rotation, pointSpawn).GetComponent<Item>();
+        }
         tempItem.SetSpawObjectManager(this);
         InstanceFinder.ServerManager.Spawn(tempItem.gameObject);
         AddItem(tempItem);

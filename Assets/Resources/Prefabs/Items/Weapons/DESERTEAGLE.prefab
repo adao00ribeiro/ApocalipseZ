@@ -393,6 +393,7 @@ GameObject:
   - component: {fileID: 7404081393385732000}
   - component: {fileID: 16575289973718531}
   - component: {fileID: 930593548478299948}
+  - component: {fileID: 1995827126709995723}
   m_Layer: 0
   m_Name: DESERTEAGLE
   m_TagString: Untagged
@@ -463,6 +464,7 @@ MonoBehaviour:
   dataItem: {fileID: 0}
   dropQuantity: 1
   IsServerSpaw: 0
+  Outiline: {fileID: 0}
 --- !u!135 &7404081393385732000
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -510,8 +512,8 @@ MonoBehaviour:
   _enableTeleport: 0
   _teleportThreshold: 1
   _scaleThreshold: 1
-  _clientAuthoritative: 1
-  _sendToOwner: 1
+  _clientAuthoritative: 0
+  _sendToOwner: 0
   _enableNetworkLod: 1
   _interval: 1
   _synchronizePosition: 1
@@ -578,8 +580,23 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 41
+  <PrefabId>k__BackingField: 52
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 770706984
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 13821848244850847198
+--- !u!114 &1995827126709995723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7131653920370141193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _overrideType: 2
+  _updateHostVisibility: 1
+  _observerConditions: []

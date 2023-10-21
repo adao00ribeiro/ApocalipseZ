@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5949238082693695685}
   - component: {fileID: 5356273121379420410}
   - component: {fileID: 4786726447185629183}
+  - component: {fileID: 2021162661766819325}
   m_Layer: 0
   m_Name: 12_BENELLIM4
   m_TagString: Untagged
@@ -82,6 +83,7 @@ MonoBehaviour:
   dataItem: {fileID: 0}
   dropQuantity: 1
   IsServerSpaw: 0
+  Outiline: {fileID: 0}
 --- !u!135 &5949238082693695685
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -129,8 +131,8 @@ MonoBehaviour:
   _enableTeleport: 0
   _teleportThreshold: 1
   _scaleThreshold: 1
-  _clientAuthoritative: 1
-  _sendToOwner: 1
+  _clientAuthoritative: 0
+  _sendToOwner: 0
   _enableNetworkLod: 1
   _interval: 1
   _synchronizePosition: 1
@@ -197,11 +199,26 @@ MonoBehaviour:
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 9
+  <PrefabId>k__BackingField: 14
   <SpawnableCollectionId>k__BackingField: 0
   _scenePathHash: 770706984
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 4084938961229761242
+--- !u!114 &2021162661766819325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3478702939152235599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _overrideType: 2
+  _updateHostVisibility: 1
+  _observerConditions: []
 --- !u!1 &5886981695743827133
 GameObject:
   m_ObjectHideFlags: 0

@@ -89,7 +89,6 @@ public class ConnectionManager : MonoBehaviour
     {
         PlayerController player = null;
         players.TryGetValue(id, out player);
-        print(player);
         return player;
     }
 }

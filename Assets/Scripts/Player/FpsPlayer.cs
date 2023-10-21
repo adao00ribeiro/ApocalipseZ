@@ -330,7 +330,8 @@ namespace ApocalipseZ
             character.SetFlag(flag);
         }
         public void DropFlag(){
-            character.DropFlag();
+           
+            character?.DropFlag();
         }
         public Flag GetFlag(){
             return character.flag;
@@ -348,7 +349,6 @@ namespace ApocalipseZ
                 AnimatorController.SetFloat("SelectDeath", InputManager.GetCrouch() ? 0 : Random.Range(1, 5));
                 AnimatorController.SetBool("IsDead", true);
                 AnimatorWeaponHolderController.SetBool("HideWeapon", true);
-
                 return;
             }
             //animatorcontroller

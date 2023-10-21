@@ -120,6 +120,7 @@ GameObject:
   - component: {fileID: 503701597}
   - component: {fileID: 5899017146571248529}
   - component: {fileID: 7629081787922511158}
+  - component: {fileID: 375002006779389312}
   m_Layer: 0
   m_Name: GREATORDOAMENTO
   m_TagString: Untagged
@@ -312,6 +313,21 @@ MonoBehaviour:
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 7464141983678206490
+--- !u!114 &375002006779389312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793213720044310199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _overrideType: 2
+  _updateHostVisibility: 1
+  _observerConditions: []
 --- !u!1 &4119760728498498380
 GameObject:
   m_ObjectHideFlags: 0

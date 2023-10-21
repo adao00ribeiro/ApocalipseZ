@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 8447906105191955235}
   - component: {fileID: 5219489878339944043}
   - component: {fileID: 8787214051509436513}
+  - component: {fileID: -8092349801182409150}
   m_Layer: 0
   m_Name: P250
   m_TagString: Untagged
@@ -477,3 +478,18 @@ MonoBehaviour:
   _scenePathHash: 770706984
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 10245545315293733140
+--- !u!114 &-8092349801182409150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7086186773877032381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _overrideType: 2
+  _updateHostVisibility: 1
+  _observerConditions: []

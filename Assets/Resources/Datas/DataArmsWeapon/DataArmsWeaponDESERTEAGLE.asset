@@ -19,12 +19,15 @@ MonoBehaviour:
   Damage: 44
   fireRate: 0.192
   spread: 0
+  ShotAnimationSpeed: 3
+  RealodAnimationSpeed: 1.035
+  ReloadAnimationDuration: 3
   recoil:
     recolTop: {x: -10, y: -1.5}
     recolDown: {x: 0, y: 1.5}
   MuzzleFlashParticlesFX: {fileID: 0}
-  shotSFX: ScarShot
-  reloadingSFX: ScarReload
+  shotSFX: DESERTEAGLESHOT
+  reloadingSFX: DESERTEAGLERELOAD
   emptySFX: Empty
   shell: {fileID: 0}
   shellsPoolSize: 0
@@ -42,5 +45,4 @@ MonoBehaviour:
   bulletInitialVelocity: 0
   airResistanceForce: 0
   projectile: Bullet
-  PrefabArmsWeapon: {fileID: 6980962201273613714, guid: 4d867149930c1fc4dbc0145d973ffd89,
-    type: 3}
+  PrefabArmsWeapon: {fileID: 6980962201273613714, guid: 4d867149930c1fc4dbc0145d973ffd89, type: 3}

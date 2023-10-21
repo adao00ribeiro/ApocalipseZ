@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 8551147871405540597}
   - component: {fileID: 5010649499839572318}
   - component: {fileID: 3288861873688063623}
+  - component: {fileID: 391810017896228346}
   m_Layer: 0
   m_Name: BARRETI
   m_TagString: Untagged
@@ -371,6 +372,21 @@ MonoBehaviour:
   _scenePathHash: 1772421895
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 228004750247357146
+--- !u!114 &391810017896228346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221173368710141021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _overrideType: 2
+  _updateHostVisibility: 1
+  _observerConditions: []
 --- !u!1 &221173369411793608
 GameObject:
   m_ObjectHideFlags: 0

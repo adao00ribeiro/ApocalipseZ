@@ -263,6 +263,7 @@ GameObject:
   - component: {fileID: 6153256084151532560}
   - component: {fileID: 9094054136786240471}
   - component: {fileID: 7262364747577771703}
+  - component: {fileID: -8506080924474748655}
   m_Layer: 0
   m_Name: BERETTA
   m_TagString: Untagged
@@ -455,6 +456,21 @@ MonoBehaviour:
   _scenePathHash: 770706984
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 10778340351815125338
+--- !u!114 &-8506080924474748655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5692025895549707305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _overrideType: 2
+  _updateHostVisibility: 1
+  _observerConditions: []
 --- !u!1 &8849314117695057592
 GameObject:
   m_ObjectHideFlags: 0

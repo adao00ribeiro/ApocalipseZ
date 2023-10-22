@@ -96,7 +96,7 @@ namespace ApocalipseZ
                 SetRenderTextureScope.UpdateScope();
             }
             Animator.SetFloat("ShotSpeed", weaponSetting.ShotAnimationSpeed);
-            Animator.SetFloat("RealodSpeed", weaponSetting.RealodAnimationSpeed);
+            Animator.SetFloat("ReloadSpeed", weaponSetting.RealodAnimationSpeed);
         }
 
         public void RecoilChange(Vector2 _, Vector2 newRecoil, bool asServer)
@@ -244,7 +244,7 @@ namespace ApocalipseZ
 
                 if (useAnimator)
                 {
-                    Animator.SetFloat("RealodSpeed", weaponSetting.RealodAnimationSpeed);
+                    Animator.SetFloat("ReloadSpeed", weaponSetting.RealodAnimationSpeed);
                     Animator.SetBool("Reloading", true);
                     Animator.SetBool("Aim", false);
                     Animator.SetBool("Reload", true);

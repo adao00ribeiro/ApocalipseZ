@@ -19,6 +19,9 @@ MonoBehaviour:
   Damage: 170
   fireRate: 1.9
   spread: 0
+  ShotAnimationSpeed: 1
+  RealodAnimationSpeed: 2
+  ReloadAnimationDuration: 3
   recoil:
     recolTop: {x: -0.5, y: -0.5}
     recolDown: {x: 0, y: 0.5}
@@ -42,5 +45,4 @@ MonoBehaviour:
   bulletInitialVelocity: 0
   airResistanceForce: 0
   projectile: BarretiBullet
-  PrefabArmsWeapon: {fileID: 2271651885792713846, guid: d19d1de9cf786fa4485e7f31d4cde360,
-    type: 3}
+  PrefabArmsWeapon: {fileID: 2271651885792713846, guid: d19d1de9cf786fa4485e7f31d4cde360, type: 3}

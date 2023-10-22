@@ -15,15 +15,19 @@ MonoBehaviour:
   GuidId: 9f565452-0bc1-4f95-8468-18bc62d01079
   Name: BIZON
   Type: 0
+  fireMode: 0
   Damage: 30
   fireRate: 0.0825
   spread: 0
+  ShotAnimationSpeed: 3
+  RealodAnimationSpeed: 1.8
+  ReloadAnimationDuration: 2.25
   recoil:
     recolTop: {x: -2.5, y: -1.85}
     recolDown: {x: 0, y: 1.85}
   MuzzleFlashParticlesFX: {fileID: 0}
-  shotSFX: ScarShot
-  reloadingSFX: ScarReload
+  shotSFX: BIZONSHOT
+  reloadingSFX: BIZONRELOAD
   emptySFX: Empty
   shell: {fileID: 0}
   shellsPoolSize: 0
@@ -41,5 +45,4 @@ MonoBehaviour:
   bulletInitialVelocity: 0
   airResistanceForce: 0
   projectile: Bullet
-  PrefabArmsWeapon: {fileID: 3921184682229974682, guid: bc9cd3e78ded41a4c90fb1d505ce687b,
-    type: 3}
+  PrefabArmsWeapon: {fileID: 3921184682229974682, guid: bc9cd3e78ded41a4c90fb1d505ce687b, type: 3}

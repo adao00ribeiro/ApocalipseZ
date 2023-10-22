@@ -97,7 +97,6 @@ GameObject:
   - component: {fileID: 5816199648909428041}
   - component: {fileID: 549324225167255849}
   - component: {fileID: 78751195927269229}
-  - component: {fileID: 2861454624468966036}
   m_Layer: 0
   m_Name: M4A1
   m_TagString: Untagged
@@ -114,7 +113,7 @@ Transform:
   m_GameObject: {fileID: 5273078992747792979}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 269.354, y: 571.418, z: 202.3437}
+  m_LocalPosition: {x: 269.354, y: 0, z: 202.3437}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -146,7 +145,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 2
   m_Constraints: 0
@@ -281,7 +280,7 @@ MonoBehaviour:
     Rotation: {x: 0, y: 0, z: 0, w: 1}
     LocalScale: {x: 1, y: 1, z: 1}
   _isNetworked: 1
-  _isGlobal: 0
+  _isGlobal: 1
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
@@ -290,21 +289,6 @@ MonoBehaviour:
   _scenePathHash: 3833399256
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 6735055119244099660
---- !u!114 &2861454624468966036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5273078992747792979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _overrideType: 2
-  _updateHostVisibility: 1
-  _observerConditions: []
 --- !u!1 &5834727616273609678
 GameObject:
   m_ObjectHideFlags: 0

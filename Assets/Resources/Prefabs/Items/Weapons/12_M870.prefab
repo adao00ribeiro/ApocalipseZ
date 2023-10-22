@@ -203,7 +203,6 @@ GameObject:
   - component: {fileID: 2415334554076666824}
   - component: {fileID: 512483313704372414}
   - component: {fileID: 5532486585327156343}
-  - component: {fileID: 4512251146219811442}
   m_Layer: 0
   m_Name: 12_M870
   m_TagString: Untagged
@@ -220,7 +219,7 @@ Transform:
   m_GameObject: {fileID: 8826055231486090448}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.397, y: 4.22, z: 0}
+  m_LocalPosition: {x: 0.397, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -250,7 +249,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 2
   m_Constraints: 0
@@ -385,7 +384,7 @@ MonoBehaviour:
     Rotation: {x: 0, y: 0, z: 0, w: 1}
     LocalScale: {x: 1, y: 1, z: 1}
   _isNetworked: 1
-  _isGlobal: 0
+  _isGlobal: 1
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
@@ -394,18 +393,3 @@ MonoBehaviour:
   _scenePathHash: 770706984
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 10638076771532082386
---- !u!114 &4512251146219811442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8826055231486090448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _overrideType: 2
-  _updateHostVisibility: 1
-  _observerConditions: []

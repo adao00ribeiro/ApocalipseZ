@@ -121,7 +121,6 @@ GameObject:
   - component: {fileID: -4237787485676476484}
   - component: {fileID: 7514212565308727006}
   - component: {fileID: 9030590096886287961}
-  - component: {fileID: -8341667830542502330}
   m_Layer: 0
   m_Name: RPG
   m_TagString: Untagged
@@ -138,7 +137,7 @@ Transform:
   m_GameObject: {fileID: 6594048609170016072}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1082.439, y: 541.882, z: 1370.032}
+  m_LocalPosition: {x: 1082.439, y: 0, z: 1370.032}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -167,7 +166,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 2
   m_Constraints: 0
@@ -302,7 +301,7 @@ MonoBehaviour:
     Rotation: {x: 0, y: 0, z: 0, w: 1}
     LocalScale: {x: 1, y: 1, z: 1}
   _isNetworked: 1
-  _isGlobal: 0
+  _isGlobal: 1
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
@@ -311,18 +310,3 @@ MonoBehaviour:
   _scenePathHash: 0
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 7649300363047786882
---- !u!114 &-8341667830542502330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6594048609170016072}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _overrideType: 2
-  _updateHostVisibility: 1
-  _observerConditions: []

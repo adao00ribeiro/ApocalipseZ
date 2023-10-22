@@ -71,6 +71,7 @@ namespace ApocalipseZ
             {
                 return;
             }
+            
             SceneLookupData SceneLook = new SceneLookupData("CenaC");
             List<NetworkObject> objects = new List<NetworkObject>();
 
@@ -96,7 +97,7 @@ namespace ApocalipseZ
             {
                 return;
             }
-            //UnloadScene(nob, _stackedSceneHandle, ArrayScenes);
+            UnloadScene(nob, _stackedSceneHandle, ArrayScenes);
             List<SceneLookupData> ListSceneLook = new List<SceneLookupData>();
             if (!IsPvpScene)
             {

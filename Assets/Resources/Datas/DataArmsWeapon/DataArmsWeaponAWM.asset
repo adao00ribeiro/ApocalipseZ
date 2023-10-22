@@ -20,14 +20,14 @@ MonoBehaviour:
   fireRate: 1.9
   spread: 0
   ShotAnimationSpeed: 1
-  RealodAnimationSpeed: 2
-  ReloadAnimationDuration: 3
+  RealodAnimationSpeed: 1.1
+  ReloadAnimationDuration: 4
   recoil:
     recolTop: {x: -0.5, y: -0.5}
     recolDown: {x: 0, y: 0.5}
   MuzzleFlashParticlesFX: {fileID: 0}
-  shotSFX: M82A1Shot
-  reloadingSFX: M82A1Realod
+  shotSFX: AWMSHOT
+  reloadingSFX: AWMRELOAD
   emptySFX: Empty
   shell: {fileID: 0}
   shellsPoolSize: 0

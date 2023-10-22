@@ -16,8 +16,8 @@ MonoBehaviour:
   Name: GLOCK
   Type: 2
   fireMode: 0
-  Damage: 14
-  fireRate: 0.06
+  Damage: 24
+  fireRate: 0.125
   spread: 0
   ShotAnimationSpeed: 3
   RealodAnimationSpeed: 1.035

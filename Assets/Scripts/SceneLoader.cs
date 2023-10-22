@@ -192,7 +192,7 @@ namespace ApocalipseZ
             if (nob != null)
             {
                 // UnloadScene(nob.NetworkObject);
-                // GameController.Instance.SceneManager.UnloadScene(nob.NetworkObject);
+               // GameController.Instance.SceneManager.UnloadScene(nob.NetworkObject ,_stackedSceneHandle, ArrayScenes);
             }
         }
     }

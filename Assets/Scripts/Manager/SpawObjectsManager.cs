@@ -24,7 +24,7 @@ public struct ConnectMessage : IBroadcast
     public Vector3 scorePos;
     public int lives;
 }
-public class SpawObjectsManager : NetworkBehaviour
+public class SpawObjectsManager : MonoBehaviour
 {
     public bool IsWorld = true;
     [SerializeField] private PointItem[] ListPointItems;
@@ -54,7 +54,7 @@ public class SpawObjectsManager : NetworkBehaviour
         .SelectMany(root => root.GetComponentsInChildren<PointItem>())
         .ToArray();
 
-        if (!base.IsServer)
+        if (!InstanceFinder.IsServer)
         {
             return;
         }
@@ -115,16 +115,8 @@ public class SpawObjectsManager : NetworkBehaviour
         {
             return;
         }
-        Item tempItem = null;
-
-        if (IsWorld)
-        {
-            tempItem = Instantiate(prefab, pointSpawn.position, pointSpawn.rotation).GetComponent<Item>();
-        }
-        else
-        {
-            tempItem = Instantiate(prefab, pointSpawn.position, pointSpawn.rotation, pointSpawn).GetComponent<Item>();
-        }
+         
+        Item    tempItem = Instantiate(prefab, pointSpawn.position, pointSpawn.rotation).GetComponent<Item>();
         tempItem.SetSpawObjectManager(this);
         InstanceFinder.ServerManager.Spawn(tempItem.gameObject);
         AddItem(tempItem);

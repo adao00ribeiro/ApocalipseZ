@@ -514,7 +514,6 @@ GameObject:
   - component: {fileID: 2482981960543252098}
   - component: {fileID: 1440857857495642643}
   - component: {fileID: 6318983256263572352}
-  - component: {fileID: -3448536906669321857}
   m_Layer: 0
   m_Name: AWM
   m_TagString: Untagged
@@ -531,7 +530,7 @@ Transform:
   m_GameObject: {fileID: 8518200796887774403}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 267.164, y: 571.573, z: 202.07703}
+  m_LocalPosition: {x: 267.164, y: 0, z: 202.07703}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -564,7 +563,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 2
   m_Constraints: 0
@@ -678,7 +677,7 @@ MonoBehaviour:
     Rotation: {x: -0, y: -0, z: -0, w: 1}
     LocalScale: {x: 1, y: 1, z: 1}
   _isNetworked: 1
-  _isGlobal: 0
+  _isGlobal: 1
   _initializeOrder: 0
   _defaultDespawnType: 0
   NetworkObserver: {fileID: 0}
@@ -708,21 +707,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.14962769, y: 0.39544678, z: 1.8665314}
   m_Center: {x: -0.002029419, y: -0.056427002, z: 0.268013}
---- !u!114 &-3448536906669321857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8518200796887774403}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c71fd7f855ec523429999fc4e14a1928, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _overrideType: 2
-  _updateHostVisibility: 1
-  _observerConditions: []
 --- !u!1 &8994553953485968657
 GameObject:
   m_ObjectHideFlags: 0

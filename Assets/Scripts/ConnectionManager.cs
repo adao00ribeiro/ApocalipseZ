@@ -36,7 +36,7 @@ public class SerializableDictionary<TKey, TValue>
         }
     }
 }
-public class ConnectionManager : MonoBehaviour
+public class ConnectionManager : NetworkBehaviour
 {
     public Action<int, PlayerController> OnPlayer;
     public Dictionary<int, PlayerController> players = new Dictionary<int, PlayerController>();

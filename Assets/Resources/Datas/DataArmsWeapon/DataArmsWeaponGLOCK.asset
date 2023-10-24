@@ -15,7 +15,7 @@ MonoBehaviour:
   GuidId: 3acd0ca3-c621-44c3-b3e5-8a9aafaae549
   Name: GLOCK
   Type: 2
-  fireMode: 0
+  fireMode: 1
   Damage: 24
   fireRate: 0.125
   spread: 0

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using ApocalipseZ;
 using FishNet;
+using FishNet.Object.Synchronizing;
 using UnityEngine;
 
 
@@ -15,7 +16,12 @@ public class PVPFLAGManager : ConnectionManager, IPvpManager
     [Header("PVP Setup")]
     [SerializeField] private int TimePreparationMinutes = 3;
     [SerializeField] private int MaxTimeGameMinutes = 15;
+
+
+    [SyncVar(Channel = FishNet.Transporting.Channel.Unreliable, OnChange = nameof(currentTimeChanged))]
     [SerializeField] private float currentTime;
+
+
 
     [Header("Team Points")]
     [SerializeField] private int FlagsTeamA;
@@ -36,17 +42,16 @@ public class PVPFLAGManager : ConnectionManager, IPvpManager
     [SerializeField] private SpawObjectsManager SpawObjectsManager;
 
 
-    void Awake()
+    public override void OnStartServer()
     {
-        OnPlayer += OnChangeOnPlayer; ;
+        base.OnStartServer();
+         OnPlayer += OnChangeOnPlayer; ;
         currentTime = TimePreparationMinutes * 60;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        StartCoroutine(Preparation());
+
+          StartCoroutine(Preparation());
         SpawObjectsManager.InitSpawPvpFlag();
     }
+   
     IEnumerator Preparation()
     {
 
@@ -123,15 +128,21 @@ public class PVPFLAGManager : ConnectionManager, IPvpManager
         }
         yield return new WaitForEndOfFrame();
     }
+
+    void currentTimeChanged(float _, float newCurrentTime, bool asServer)
+    {
+        OnTimeFormat?.Invoke(FormatTime(newCurrentTime));
+
+    }
     public void IncrementFlagTeamA()
     {
         FlagsTeamA++;
-        OnPointsFlagsTeamA?.Invoke(FlagsTeamA);
+
     }
     public void IncrementFlagTeamB()
     {
         FlagsTeamB++;
-        OnPointsFlagsTeamA?.Invoke(FlagsTeamB);
+
     }
 
 

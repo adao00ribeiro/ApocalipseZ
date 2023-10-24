@@ -16,8 +16,8 @@ MonoBehaviour:
   Name: M16
   Type: 0
   fireMode: 0
-  Damage: 16
-  fireRate: 0.2
+  Damage: 40
+  fireRate: 0.135
   spread: 0
   ShotAnimationSpeed: 3
   RealodAnimationSpeed: 1.035

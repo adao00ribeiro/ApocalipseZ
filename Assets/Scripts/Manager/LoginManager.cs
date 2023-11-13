@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,12 +12,22 @@ public class LoginManager : MonoBehaviour
     [SerializeField] private InputField SenhaInputField;
     [SerializeField] private Text debugText;
 
+    public GameObject panelLoading;
     private void Start()
     {
         EmailInputField.text = "adao-eduardo@hotmail.com";
         SenhaInputField.text = "123456";
-
+        RequestApi.IsLoading+= ActivePanelLoading;;
     }
+    void OnDisable(){
+    RequestApi.IsLoading-= ActivePanelLoading;;
+    }
+    private void ActivePanelLoading(bool obj)
+    {
+    
+       panelLoading.SetActive(obj);
+    }
+
     private bool ValidarInputField()
     {
         if (EmailInputField.text.Equals(""))
@@ -44,17 +56,14 @@ public class LoginManager : MonoBehaviour
         List<string> param = new List<string>();
         if (ValidarInputField())
         {
-            param.Add("user");
+          
             param.Add(EmailInputField.text);
             param.Add(SenhaInputField.text);
-            StartCoroutine(GameObject.FindObjectOfType<RequestApi>().Request<StructUser>(param.ToArray(), structuser =>
+
+            StartCoroutine(RequestApi.Request<string>( response =>
             {
 
-                if (!string.IsNullOrEmpty(structuser.username))
-                {
-                    GameObject.FindObjectOfType<InformacaoClient>().userdata = new User(structuser);
-                    // GameObject.FindObjectOfType<SceneController>().CarregarCenaAsync("Lobby");
-                }
+              Debug.Log(response);    
             }));
 
         }

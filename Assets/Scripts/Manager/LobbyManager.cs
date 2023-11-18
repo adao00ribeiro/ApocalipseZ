@@ -6,6 +6,14 @@ public class LobbyManager : MonoBehaviour
   //  public Animator npcanimator;
     public GameObject model;
 
+
+    void Start()
+    {
+
+    }
+
+
+
     public void SpawCharacter(string nameCharacter)
     {
         if (model)
@@ -23,11 +31,8 @@ public class LobbyManager : MonoBehaviour
 
     public void SelectCharacter(string name)
     {
-        GameController.Instance.characterName = name;
+        GameController.Instance.user.personagemSelecionado = name;
         SpawCharacter(name);
     }
-    public void SetPlayerName(string playerName)
-    {
-        GameController.Instance.playerName = playerName;
-    }
+
 }

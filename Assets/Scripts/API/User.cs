@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [System.Serializable]
@@ -18,34 +19,27 @@ public struct StructUser
 [System.Serializable]
 public class User
 {
-	[SerializeField] private int id;
-	[SerializeField] private string username;
-	[SerializeField] private string password;
-	[SerializeField] private string email;
-	[SerializeField] private int maxslot;
-	[SerializeField] private int dp;
-	[SerializeField] private int ap;
+	[SerializeField] private int Id;
+	[SerializeField] private string Name;
+	[SerializeField] private string Email;
+	[SerializeField] private int Maxslot;
+	[SerializeField] private int Dp;
+	[SerializeField] private int Ap;
 
-	public List<InfoPersonagem> PersonagensCriados;
-	public InfoPersonagem personagemSelecionado;
-	public List<int> ListIDCharacterComprados = new List<int>();
-	public List<int> ListIDSkinsComprados = new List<int>();
+	public string personagemSelecionado;
 
-	public User ( StructUser structuser )
+	public User(int id, string name, string email, int maxslot, int dp, int ap)
 	{
-		id = structuser.id;
-		username = structuser.username;
-		password = structuser.password;
-		email = structuser.email;
-		maxslot = structuser.maxslot;
-		dp = structuser.dp;
-		ap = structuser.ap;
+		Id = id;
+		Name = name;
+		Email = email;
+		Maxslot = maxslot;
+		Dp = dp;
+		Ap = ap;
 	}
-	public int Id { get => id; set => id = value; }
-	public string Username { get => username; set => username = value; }
-	public string Password { get => password; set => password = value; }
-	public string Email { get => email; set => email = value; }
-	public int Maxslot { get => maxslot; set => maxslot = value; }
-	public int Dp { get => dp; set => dp = value; }
-	public int Ap { get => ap; set => ap =  value ; }
+
+	internal string GetName()
+	{
+		return Name;
+	}
 }

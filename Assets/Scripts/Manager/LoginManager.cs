@@ -17,15 +17,13 @@ public class LoginManager : MonoBehaviour
     {
         EmailInputField.text = "adao-eduardo@hotmail.com";
         SenhaInputField.text = "123456";
-        RequestApi.IsLoading+= ActivePanelLoading;;
+
     }
-    void OnDisable(){
-    RequestApi.IsLoading-= ActivePanelLoading;;
-    }
+
     private void ActivePanelLoading(bool obj)
     {
-    
-       panelLoading.SetActive(obj);
+
+        panelLoading.SetActive(obj);
     }
 
     private bool ValidarInputField()
@@ -56,14 +54,23 @@ public class LoginManager : MonoBehaviour
         List<string> param = new List<string>();
         if (ValidarInputField())
         {
-          
+
             param.Add(EmailInputField.text);
             param.Add(SenhaInputField.text);
-
-            StartCoroutine(RequestApi.Request<string>( response =>
+            ActivePanelLoading(true);
+            StartCoroutine(RequestApi.Post<string>("asdasdasd", (result, error) =>
             {
+                if (error != null)
+                {
+                    // Lidar com o erro
+                    Debug.LogError("Erro na requisição: " + error);
+                }
+                else
+                {
+                    // Lidar com o resultado
+                    Debug.Log("Requisição bem-sucedida: " + result);
+                }
 
-              Debug.Log(response);    
             }));
 
         }

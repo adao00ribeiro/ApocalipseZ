@@ -9,10 +9,11 @@ namespace ApocalipseZ
 {
     public class GameController : MonoBehaviour
     {
+        public User user;
+
+        [Header("TESTE")]
         [SerializeField] private ConnectionManager connectionManager;
         [Header("Prefab Managers")]
-        public string playerName;
-        public string characterName;
         [SerializeField] private GameObject[] ObjectsManager;
         //privados 
         public PlayerController playerController;
@@ -24,14 +25,14 @@ namespace ApocalipseZ
         private HitFXManager hitfxManager;
         private DecalFxManager decalfxManager;
         [SerializeField] private List<PlayerSpawPointsManager> playerSpawPointsManagers;
-         [SerializeField] private List<SpawObjectsManager> SpawsObjectsManager;
+        [SerializeField] private List<SpawObjectsManager> SpawsObjectsManager;
         [SerializeField] private PVPManager pvpManager;
 
 
         // Start is called before the first frame update
         void Awake()
         {
-            characterName = "Yasmin";
+
             if (_instance != null && _instance != this)
             {
                 Destroy(this.gameObject);
@@ -81,11 +82,11 @@ namespace ApocalipseZ
         }
         internal void AddSpawObjectsManager(SpawObjectsManager spawObjectsManager)
         {
-           SpawsObjectsManager.Add(spawObjectsManager);
+            SpawsObjectsManager.Add(spawObjectsManager);
         }
         internal void RemoveSpawObjectsManager(SpawObjectsManager spawObjectsManager)
         {
-          SpawsObjectsManager.Remove(spawObjectsManager);
+            SpawsObjectsManager.Remove(spawObjectsManager);
         }
 
         /*
@@ -237,7 +238,7 @@ namespace ApocalipseZ
         }
 
 
-      
+
 
 
     }

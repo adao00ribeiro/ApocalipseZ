@@ -214,7 +214,7 @@ namespace ApocalipseZ
                 FirstPersonCamera.tag = "MainCamera";
                 FirstPersonCamera.GetComponent<Camera>().enabled = true;
                 FirstPersonCamera.ActiveCursor(false);
-                CmdSpawCharacter(GameController.Instance.user.personagemSelecionado);
+                CmdSpawCharacter(GameController.Instance.DataClient.User.personagemSelecionado);
             }
             else
             {

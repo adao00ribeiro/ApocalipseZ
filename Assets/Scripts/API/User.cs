@@ -23,23 +23,37 @@ public class User
 	[SerializeField] private string Name;
 	[SerializeField] private string Email;
 	[SerializeField] private int Maxslot;
-	[SerializeField] private int Dp;
-	[SerializeField] private int Ap;
-
+	//moeda global
+	[SerializeField] private int CoinAp;
+	//moeda conquistada dentro do jogo
+	[SerializeField] private int CoinDp;
 	public string personagemSelecionado;
 
-	public User(int id, string name, string email, int maxslot, int dp, int ap)
+	public User(int id, string name, string email, int maxslot, int coinap, int coindp)
 	{
 		Id = id;
 		Name = name;
 		Email = email;
 		Maxslot = maxslot;
-		Dp = dp;
-		Ap = ap;
+		CoinAp = coinap;
+		CoinDp = coindp;
+
 	}
 
 	internal string GetName()
 	{
 		return Name;
+	}
+
+	internal int GetCoinAp()
+	{
+		return CoinAp;
+
+	}
+
+	internal int GetCoinDp()
+	{
+		return CoinDp;
+
 	}
 }

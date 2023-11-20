@@ -129,7 +129,7 @@ public class PlayerController : NetworkBehaviour
         {
             //ChatUI.localPlayerName = playerName;
             CmdSpawPlayer();
-            CmdSetPlayerName(GameController.Instance.user.GetName());
+            CmdSetPlayerName(GameController.Instance.DataClient.User.GetName());
             GameController.Instance.playerController = this;
 
         }

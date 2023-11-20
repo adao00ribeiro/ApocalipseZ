@@ -9,8 +9,8 @@ namespace ApocalipseZ
 {
     public class GameController : MonoBehaviour
     {
-        public UserLogin UserLogin { get;  set; }
-        public User user;
+
+        public DataClient DataClient;
 
         [Header("TESTE")]
         [SerializeField] private ConnectionManager connectionManager;
@@ -238,6 +238,6 @@ namespace ApocalipseZ
             }
         }
 
-      
+
     }
 }

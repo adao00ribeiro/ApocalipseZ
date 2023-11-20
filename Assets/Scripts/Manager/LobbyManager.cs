@@ -5,11 +5,16 @@ public class LobbyManager : MonoBehaviour
     /// <summary>
   //  public Animator npcanimator;
     public GameObject model;
+    public UiLobby UiLobby;
+
+
 
 
     void Start()
     {
-       
+        UiLobby.SetTextUserName(GameController.Instance.DataClient.User.GetName());
+        UiLobby.SetTextCoinAP(GameController.Instance.DataClient.User.GetCoinAp().ToString());
+        UiLobby.SetTextCoinDP(GameController.Instance.DataClient.User.GetCoinDp().ToString());
     }
 
 
@@ -31,7 +36,7 @@ public class LobbyManager : MonoBehaviour
 
     public void SelectCharacter(string name)
     {
-        GameController.Instance.user.personagemSelecionado = name;
+        GameController.Instance.DataClient.User.personagemSelecionado = name;
         SpawCharacter(name);
     }
 

@@ -9,6 +9,7 @@ namespace ApocalipseZ
 {
     public class GameController : MonoBehaviour
     {
+        public UserLogin UserLogin { get;  set; }
         public User user;
 
         [Header("TESTE")]
@@ -237,9 +238,6 @@ namespace ApocalipseZ
             }
         }
 
-
-
-
-
+      
     }
 }

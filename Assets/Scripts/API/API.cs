@@ -8,5 +8,5 @@ using System.Net.Http;
 using System.Security.Policy;
 public class API
 {
-
+   public readonly static string url = "http://localhost:5272" ;
 }

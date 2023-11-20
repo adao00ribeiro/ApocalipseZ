@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using ApocalipseZ;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -55,28 +57,30 @@ public class LoginManager : MonoBehaviour
         if (ValidarInputField())
         {
 
-            param.Add(EmailInputField.text);
-            param.Add(SenhaInputField.text);
+        CadastroRequest dadosParaEnviar = new CadastroRequest();
+        dadosParaEnviar.email = "adao-eduardo@hotmail.com";
+        dadosParaEnviar.senha = "Adao1456+";
+        string json = JsonUtility.ToJson(dadosParaEnviar);
             ActivePanelLoading(true);
-            StartCoroutine(RequestApi.Post<string>("asdasdasd", (result, error) =>
+            StartCoroutine(UserService.Login(json,  (result, error) =>
             {
                 if (error != null)
                 {
-                    // Lidar com o erro
                     Debug.LogError("Erro na requisição: " + error);
                 }
-                else
+                if(result !=null)
                 {
-                    // Lidar com o resultado
-                    Debug.Log("Requisição bem-sucedida: " + result);
+                    PlayerPrefs.SetString("Token",result.accessToken);
+                  
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Lobby");
                 }
-
+                  ActivePanelLoading(false);
             }));
 
         }
     }
 
-    public void CenaServidor()
+    public void GetUser()
     {
         //GameObject.FindObjectOfType<NetworkManager>().StartServer();
     }

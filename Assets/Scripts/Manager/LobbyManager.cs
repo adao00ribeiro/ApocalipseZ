@@ -15,6 +15,8 @@ public class LobbyManager : MonoBehaviour
         UiLobby.SetTextUserName(GameController.Instance.DataClient.User.GetName());
         UiLobby.SetTextCoinAP(GameController.Instance.DataClient.User.GetCoinAp().ToString());
         UiLobby.SetTextCoinDP(GameController.Instance.DataClient.User.GetCoinDp().ToString());
+        UiLobby.PopuleContentCharacter(GameController.Instance.DataClient.ListCharacter,SpawCharacter);
+        
     }
 
 

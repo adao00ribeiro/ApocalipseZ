@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9d719bfb36b3d46a6aeef9c780660e, type: 3}
   m_Name: DataCharacterGordoTerrorista
   m_EditorClassIdentifier: 
-  Name: GordoTerrorista
-  PrefabCharacter: {fileID: 7048708336663733244, guid: c1573832d3706494f9cb9cc6df359311,
-    type: 3}
+  _name: Terrorista
+  _avatar: {fileID: 0}
+  _prefabCharacter: {fileID: 7048708336663733244, guid: c1573832d3706494f9cb9cc6df359311, type: 3}

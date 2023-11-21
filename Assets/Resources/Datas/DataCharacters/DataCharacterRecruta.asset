@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9d719bfb36b3d46a6aeef9c780660e, type: 3}
   m_Name: DataCharacterRecruta
   m_EditorClassIdentifier: 
-  Name: Recruta
-  PrefabCharacter: {fileID: 6009934511979596054, guid: b14393831a4f56c4fb65cfaa873ccb36,
-    type: 3}
+  _name: Recruta
+  _avatar: {fileID: 0}
+  _prefabCharacter: {fileID: 6009934511979596054, guid: b14393831a4f56c4fb65cfaa873ccb36, type: 3}

@@ -1,50 +1,81 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Printing;
+using System.Net;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Networking;
 public class RequestApi : MonoBehaviour
 {
-    [SerializeField] private  string url = "http://localhost:4000/api/";
-    [SerializeField] private  string user = "user/";
-    [SerializeField] private  string servidores = "servidores/";
-    [SerializeField] private  string inventariosglobal = "servidores/";
-    [SerializeField] private  string inventarioslocal = "servidores/";
-    [SerializeField] private  string listacharacter = "servidores/";
-    public IEnumerator Request <T>( string[] param , System.Action<T> callback = null )
+    private static string url = "http://localhost:5272";
+
+    public static IEnumerator Get<T>(Action<T, string> callback)
     {
-        string uri = url;
-        foreach ( string item in param )
-        {
-            uri += item + "/";
-        }
-        Debug.Log (uri);
-        using ( UnityWebRequest webRequest = UnityWebRequest.Get ( uri ) )
-        {
-            // Request and wait for the desired page.
-            yield return webRequest.SendWebRequest ( );
+        CadastroRequest dadosParaEnviar = new CadastroRequest();
+        dadosParaEnviar.email = "adao-eduardo@hotmail.com";
+        dadosParaEnviar.senha = "Adao1456+";
+        string json = JsonUtility.ToJson(dadosParaEnviar);
 
-            string[] pages = uri.Split('/');
-            int page = pages.Length - 1;
+        using (UnityWebRequest webRequest = UnityWebRequest.Post(url + "/api/usuario/login", json, "application/json"))
+        {
+            yield return webRequest.SendWebRequest();
 
-            switch ( webRequest.result )
+            string errorMessage = null;
+
+            switch (webRequest.result)
             {
                 case UnityWebRequest.Result.ConnectionError:
                 case UnityWebRequest.Result.DataProcessingError:
-                    Debug.LogError ( pages[page] + ": Error: " + webRequest.error );
+                    errorMessage = "Error: " + webRequest.error;
+                    Debug.LogError(errorMessage);
                     break;
                 case UnityWebRequest.Result.ProtocolError:
-                    Debug.LogError ( pages[page] + ": HTTP Error: " + webRequest.error );
+                    errorMessage = "HTTP Error: " + webRequest.error;
+                    Debug.LogError(errorMessage);
                     break;
                 case UnityWebRequest.Result.Success:
-                   // Debug.Log ( pages[page] + ":\nReceived: " + webRequest.downloadHandler.text );
-                    // Show results as text
-                    T tempuser = JsonUtility.FromJson<T>(webRequest.downloadHandler.text);
-                    // Or retrieve results as binary data
-                    byte[] results = webRequest.downloadHandler.data;
-                    callback(tempuser);
-                    break;
+                    T result = JsonUtility.FromJson<T>(webRequest.downloadHandler.text);
+                    callback(result, null); // Callback without error
+                    yield break;
             }
+
+            callback(default(T), errorMessage); // Callback with error
+        }
+    }
+
+    public static IEnumerator Post<T>(string json, Action<T, string> callback)
+    {
+        /*
+        CadastroRequest dadosParaEnviar = new CadastroRequest();
+        dadosParaEnviar.email = "adao-eduardo@hotmail.com";
+        dadosParaEnviar.senha = "Adao1456+";
+        string json = JsonUtility.ToJson(dadosParaEnviar);
+         */
+        using (UnityWebRequest webRequest = UnityWebRequest.Post(url + "/api/usuario/login", json, "application/json"))
+        {
+            yield return webRequest.SendWebRequest();
+
+            string errorMessage = null;
+
+            switch (webRequest.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                    errorMessage = "Error: " + webRequest.error;
+                    Debug.LogError(errorMessage);
+                    break;
+                case UnityWebRequest.Result.ProtocolError:
+                    errorMessage = "HTTP Error: " + webRequest.error;
+                    Debug.LogError(errorMessage);
+                    break;
+                case UnityWebRequest.Result.Success:
+                    T result = JsonUtility.FromJson<T>(webRequest.downloadHandler.text);
+                    callback(result, null); // Callback without error
+                    yield break;
+            }
+
+            callback(default(T), errorMessage); // Callback with error
         }
     }
 }

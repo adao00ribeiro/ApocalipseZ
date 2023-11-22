@@ -1,6 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using ApocalipseZ;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -10,12 +14,20 @@ public class LoginManager : MonoBehaviour
     [SerializeField] private InputField SenhaInputField;
     [SerializeField] private Text debugText;
 
+    public GameObject panelLoading;
     private void Start()
     {
         EmailInputField.text = "adao-eduardo@hotmail.com";
         SenhaInputField.text = "123456";
 
     }
+
+    private void ActivePanelLoading(bool obj)
+    {
+
+        panelLoading.SetActive(obj);
+    }
+
     private bool ValidarInputField()
     {
         if (EmailInputField.text.Equals(""))
@@ -44,23 +56,31 @@ public class LoginManager : MonoBehaviour
         List<string> param = new List<string>();
         if (ValidarInputField())
         {
-            param.Add("user");
-            param.Add(EmailInputField.text);
-            param.Add(SenhaInputField.text);
-            StartCoroutine(GameObject.FindObjectOfType<RequestApi>().Request<StructUser>(param.ToArray(), structuser =>
-            {
 
-                if (!string.IsNullOrEmpty(structuser.username))
+        CadastroRequest dadosParaEnviar = new CadastroRequest();
+        dadosParaEnviar.email = "adao-eduardo@hotmail.com";
+        dadosParaEnviar.senha = "Adao1456+";
+        string json = JsonUtility.ToJson(dadosParaEnviar);
+            ActivePanelLoading(true);
+            StartCoroutine(UserService.Login(json,  (result, error) =>
+            {
+                if (error != null)
                 {
-                    GameObject.FindObjectOfType<InformacaoClient>().userdata = new User(structuser);
-                    // GameObject.FindObjectOfType<SceneController>().CarregarCenaAsync("Lobby");
+                    Debug.LogError("Erro na requisição: " + error);
                 }
+                if(result !=null)
+                {
+                    PlayerPrefs.SetString("Token",result.accessToken);
+                  
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Lobby");
+                }
+                  ActivePanelLoading(false);
             }));
 
         }
     }
 
-    public void CenaServidor()
+    public void GetUser()
     {
         //GameObject.FindObjectOfType<NetworkManager>().StartServer();
     }

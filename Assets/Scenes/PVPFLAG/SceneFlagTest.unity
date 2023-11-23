@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.17730814, g: 0.2219736, b: 0.3042106, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2813,7 +2813,7 @@ MonoBehaviour:
     Position: {x: 0, y: 0, z: 0}
     Rotation: {x: 0, y: 0, z: 0, w: 1}
     LocalScale: {x: 1, y: 1, z: 1}
-  _isNetworked: 1
+  _isNetworked: 0
   _isGlobal: 0
   _initializeOrder: 0
   _defaultDespawnType: 0
@@ -3915,10 +3915,6 @@ PrefabInstance:
     - target: {fileID: 298013050760046529, guid: e5151fe9cbf01794f92a8aa409214f3f, type: 3}
       propertyPath: m_Name
       value: SpawObjectManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 844439531859764830, guid: e5151fe9cbf01794f92a8aa409214f3f, type: 3}
-      propertyPath: IsWorld
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 844439531859764830, guid: e5151fe9cbf01794f92a8aa409214f3f, type: 3}
       propertyPath: MaxSpawItems

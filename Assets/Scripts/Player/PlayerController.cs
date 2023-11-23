@@ -27,7 +27,8 @@ public class PlayerController : NetworkBehaviour
         {
             return currentScene = gameObject.scene.handle;
         }
-        set{
+        set
+        {
             currentScene = value;
         }
     }
@@ -128,7 +129,7 @@ public class PlayerController : NetworkBehaviour
         {
             //ChatUI.localPlayerName = playerName;
             CmdSpawPlayer();
-            CmdSetPlayerName(GameController.Instance.playerName);
+            CmdSetPlayerName(GameController.Instance.DataClient.User.GetName());
             GameController.Instance.playerController = this;
 
         }

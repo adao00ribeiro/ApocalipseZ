@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9d719bfb36b3d46a6aeef9c780660e, type: 3}
   m_Name: DataCharacterEmpresaria
   m_EditorClassIdentifier: 
-  Name: Empresaria
-  PrefabCharacter: {fileID: 4200630599105095920, guid: a85e69acf36ca044288cdb1c40ad026e,
-    type: 3}
+  _name: Empresaria
+  _avatar: {fileID: 0}
+  _prefabCharacter: {fileID: 4200630599105095920, guid: a85e69acf36ca044288cdb1c40ad026e, type: 3}

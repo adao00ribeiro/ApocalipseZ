@@ -59,7 +59,7 @@ namespace ApocalipseZ
     [RequireComponent(typeof(WeaponManager))]
     public class FpsPlayer : NetworkBehaviour, IFpsPlayer
     {
-        public GameObject gameobject{ get=> this.gameObject;}
+        public GameObject gameobject { get => this.gameObject; }
         Moviment Moviment;
         WeaponManager WeaponManager;
         IFastItemsManager FastItemsManager;
@@ -214,7 +214,7 @@ namespace ApocalipseZ
                 FirstPersonCamera.tag = "MainCamera";
                 FirstPersonCamera.GetComponent<Camera>().enabled = true;
                 FirstPersonCamera.ActiveCursor(false);
-                CmdSpawCharacter(GameController.Instance.characterName);
+                CmdSpawCharacter(GameController.Instance.DataClient.User.personagemSelecionado);
             }
             else
             {
@@ -290,7 +290,7 @@ namespace ApocalipseZ
             }
         }
         */
-          
+
             SpawCharacter(newPlayerColor);
 
         }
@@ -329,11 +329,13 @@ namespace ApocalipseZ
         {
             character.SetFlag(flag);
         }
-        public void DropFlag(){
-           
+        public void DropFlag()
+        {
+
             character?.DropFlag();
         }
-        public Flag GetFlag(){
+        public Flag GetFlag()
+        {
             return character.flag;
         }
         public void Animation()

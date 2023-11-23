@@ -44,12 +44,12 @@ namespace ApocalipseZ
         private void SceneManager_OnClientPresenceChangeStart(ClientPresenceChangeEventArgs args)
         {
             PlayerController controller = GameController.Instance.ConnectionManager.GetPlayerController(args.Connection.ClientId);
-        
+
             if (controller == null)
             {
                 return;
             }
-          
+
             if (controller.CurrentScene == args.Scene.handle)
             {
                 foreach (SceneData item in ScenesLoaded)
@@ -71,7 +71,7 @@ namespace ApocalipseZ
             {
                 return;
             }
-            
+
             SceneLookupData SceneLook = new SceneLookupData("CenaC");
             List<NetworkObject> objects = new List<NetworkObject>();
 

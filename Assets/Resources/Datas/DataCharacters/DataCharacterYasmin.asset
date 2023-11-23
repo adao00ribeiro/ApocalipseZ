@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9d719bfb36b3d46a6aeef9c780660e, type: 3}
   m_Name: DataCharacterYasmin
   m_EditorClassIdentifier: 
-  Name: Yasmim
-  PrefabCharacter: {fileID: 7976913702392388145, guid: b480f0405685e344788bd5c826de93a8,
-    type: 3}
+  _name: Yasmin
+  _avatar: {fileID: 21300000, guid: 587b988f9235c614da346b0ae4fdc068, type: 3}
+  _prefabCharacter: {fileID: 7976913702392388145, guid: b480f0405685e344788bd5c826de93a8, type: 3}

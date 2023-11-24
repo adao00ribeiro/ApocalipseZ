@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: DataCharacterRecruta
   m_EditorClassIdentifier: 
   _name: Recruta
-  _avatar: {fileID: 0}
+  _avatar: {fileID: 21300000, guid: 7838db628d837e7448eab0444cbdd9bb, type: 3}
   _prefabCharacter: {fileID: 6009934511979596054, guid: b14393831a4f56c4fb65cfaa873ccb36, type: 3}

@@ -15,6 +15,5 @@ public class UserLogin
     public override string ToString()
     {
         return accessToken;
-
     }
 }

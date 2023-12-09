@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: DataAudioAKMSHOT
   m_EditorClassIdentifier: 
   Name: AKMSHOT
-  Audio: {fileID: 8300000, guid: 18905ac6d73a6f74f8e2756ce2bed1ff, type: 3}
+  Audio: {fileID: 8300000, guid: 1ec918eef66c69a4b9c0c8d89a2d9789, type: 3}

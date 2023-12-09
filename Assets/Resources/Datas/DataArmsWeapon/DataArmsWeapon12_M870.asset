@@ -19,12 +19,15 @@ MonoBehaviour:
   Damage: 22
   fireRate: 0.9
   spread: 0
+  ShotAnimationSpeed: 1
+  RealodAnimationSpeed: 1
+  ReloadAnimationDuration: 1
   recoil:
     recolTop: {x: -1, y: -1}
     recolDown: {x: 0, y: 1}
   MuzzleFlashParticlesFX: {fileID: 0}
-  shotSFX: ScarShot
-  reloadingSFX: ScarReload
+  shotSFX: 12_M870SHOT
+  reloadingSFX: 12_M870RELOAD
   emptySFX: Empty
   shell: {fileID: 0}
   shellsPoolSize: 0
@@ -42,5 +45,4 @@ MonoBehaviour:
   bulletInitialVelocity: 0
   airResistanceForce: 0
   projectile: Bullet
-  PrefabArmsWeapon: {fileID: 3921184682229974682, guid: 1e15a53e13318244a92e7cb218ad567f,
-    type: 3}
+  PrefabArmsWeapon: {fileID: 3921184682229974682, guid: 1e15a53e13318244a92e7cb218ad567f, type: 3}
